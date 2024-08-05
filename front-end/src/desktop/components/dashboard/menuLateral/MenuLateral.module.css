@@ -1,0 +1,74 @@
+.menuLateralDashboard{
+    width: 12%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 0px 15px 0px 10px;
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.infoUsuario{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.fotoPerfilMenu{
+    width: 20%;
+    margin-right: 5%;
+}
+
+.paginasDashboard{
+    /* margin-top: 20px; */
+    /* padding: 15px 0px 0px 0px; */
+    display: flex;
+    flex-direction: column;
+}
+
+.infoPaginasDashboard, .infoPaginasPaginas{
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 12px;
+    margin: 10px 0px 5px 0px;   
+}
+
+.paginaDaDashboard{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    height: 25px;
+    background-color: rgba(0, 0, 0, 0.06);
+    border-radius: 6px;
+    font-size: 12px;
+    padding-left: 10px;
+}
+
+.paginaPaginas{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    height: 25px;
+    font-size: 12px;
+    padding-left: 10px;
+    width: 100%;
+}
+
+.btnSair{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 25px;
+    font-size: 13px;
+    margin-top: 10%;
+}
+
+.iconePaginaDaDashboard, .iconePaginaPaginas{
+    margin-right: 5px;
+    width: 20px; 
+}
+
+.divisaoSair{
+    width: 100%;
+    border-color: rgba(0, 0, 0, 0.1);
+    margin-top: 220%;
+}

@@ -1,0 +1,15 @@
+/* @font-face {
+    font-family: NunitoSans;
+    src: url('../../utils/fonts/Nunito_Sans/static/NunitoSans_10pt-Light.ttf');
+} */
+
+.botaoVermelho{
+    background-color: #A80301;
+    color: #F3F3F3;
+    border-radius: 5px;
+    width: 90%;
+    height: 41px;
+    border: none;
+    font-size: 16px;
+    font-family: Merriweather;
+}

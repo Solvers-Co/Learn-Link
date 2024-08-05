@@ -1,0 +1,77 @@
+package co.solvers.apilearnlink.api.controller.comentario;
+
+import co.solvers.apilearnlink.domain.comentario.Comentario;
+import co.solvers.apilearnlink.domain.reacao.Reacao;
+import co.solvers.apilearnlink.service.comentario.ComentarioService;
+import co.solvers.apilearnlink.service.comentario.dto.ComentarioListagemDto;
+import co.solvers.apilearnlink.service.comentario.dto.RequisicaoMesAnoDto;
+import co.solvers.apilearnlink.service.comentario.dto.mapper.ComentarioMapper;
+import co.solvers.apilearnlink.service.reacao.ReacaoService;
+import co.solvers.apilearnlink.service.reacao.dto.ReacaoComentarioListarDto;
+import co.solvers.apilearnlink.service.reacao.dto.ReacaoCriarDto;
+import co.solvers.apilearnlink.service.reacao.dto.mapper.ReacaoMapper;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/comentarios")
+@RequiredArgsConstructor
+public class ComentarioController {
+
+    private final ComentarioService comentarioService;
+    private final ReacaoService reacaoService;
+
+    @ApiResponse(responseCode = "200", description = "Comentário encontrado")
+    @ApiResponse(responseCode = "404", description = "Comentário não encontrado")
+    @Operation(summary = "Listar por id", description = "Método que lista um comentário pelo id", tags = {"Comentários"})
+    @GetMapping("/{id}")
+    public ResponseEntity<ComentarioListagemDto> buscarPorId (
+            @PathVariable
+            @Parameter(name = "id", description = "Comentário id", example = "1") int id){
+        Comentario comentario = comentarioService.buscarPorId(id);
+        ComentarioListagemDto comentarioListagemDto = ComentarioMapper.toDto(comentario);
+        return ResponseEntity.ok(comentarioListagemDto);
+    }
+
+    @ApiResponse(responseCode = "200", description = "Comentário atualizado")
+    @ApiResponse(responseCode = "404", description = "Comentário não encontrado")
+    @Operation(summary = "Editar comentário", description = "Método que atualiza um comentário", tags = {"Comentários"})
+    @PatchMapping("/{id}")
+    public ResponseEntity<ComentarioListagemDto> editarComentario(
+            @PathVariable
+            @Parameter(name = "id", description = "Comentário id", example = "1") int id,
+            @RequestParam
+            @Parameter(name = "comentarioAlterar", description = "Novo comentário", example = "A resposta é 4!") String comentarioAlterar){
+        Comentario comentarioEditado = comentarioService.editarComentario(id, comentarioAlterar);
+        ComentarioListagemDto comentarioListagemDto = ComentarioMapper.toDto(comentarioEditado);
+        return ResponseEntity.ok(comentarioListagemDto);
+    }
+
+    @PostMapping("/{idComentario}/reagir")
+    public ResponseEntity<ReacaoComentarioListarDto> reagirComentario (@PathVariable int idComentario, @RequestBody ReacaoCriarDto reacaoCriarDto){
+        Reacao reacao = reacaoService.reagirComentario(idComentario, reacaoCriarDto);
+        ReacaoComentarioListarDto reacaoDto = ReacaoMapper.toReacaoComentarioListarDto(reacao);
+        return ResponseEntity.created(null).body(reacaoDto);
+    }
+
+    @DeleteMapping("/{idComentario}/reagir/{idReacao}")
+    public ResponseEntity<Void> removerReacao (@PathVariable int idComentario, @PathVariable int idReacao){
+        reacaoService.removerReacao(idComentario, idReacao);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/quantidade-comentarios-por-dia-mes")
+    public ResponseEntity<String[][]> quantidadeDePublicacoesPorDia(@RequestParam int mes, @RequestParam int ano){
+        String[][] quantidadeComentarios = comentarioService.buscaQuantidadeDeComentariosPorDiaMatriz(mes, ano);
+
+        if (quantidadeComentarios == null) return ResponseEntity.noContent().build();
+
+        return ResponseEntity.ok(quantidadeComentarios);
+    }
+
+}

@@ -1,0 +1,10 @@
+* {
+    font-family: "Nunito Sans", sans-serif;
+  }
+  
+.telaDashboard {
+    width: 100%;
+    display: flex;
+}
+
+

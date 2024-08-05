@@ -1,0 +1,7 @@
+.kpi {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border-radius: 16px;
+    background: #E3F5FF
+}

@@ -1,0 +1,55 @@
+@font-face {
+    font-family: "NunitoSans";
+    src: url('../../utils/fonts/Nunito_Sans/static/NunitoSans_10pt-ExtraBold.ttf') format("truetype");
+}
+
+* {
+    margin: 0;
+    justify-content: center;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    background-image: url("../../utils/assets/BubblesLogin.png");
+    background-repeat: no-repeat;
+    background-position: top;
+    flex-direction: column;
+}
+
+.loginMobileTitulo {
+    font-family: "NunitoSans", sans-serif;
+    font-size: 64px;
+    margin-left: 3%;
+}
+
+h3 {
+    font-family: "NunitoSans", sans-serif;
+    font-size: 24px;
+    margin-left: 3%;
+}
+
+h2 {
+    font-family: "NunitoSans", sans-serif;
+    font-size: 16px;
+    margin-left: 3%;
+    color: red;
+    text-decoration: underline;
+}
+
+.divInputs {
+    height: 26vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.divBotao {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    align-items: center;
+    /* justify-content: space-evenly; */
+}

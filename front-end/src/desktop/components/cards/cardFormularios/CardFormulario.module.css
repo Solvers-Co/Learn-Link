@@ -1,0 +1,16 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-evenly; */
+    border: black;
+    border-radius: 20px;
+    min-height: 500px;
+    height: auto;
+    width: 594px;
+    box-shadow: 5px 5px 10px black;
+    background-color: #FFF;
+    align-items: center;
+    padding-bottom: 35px;
+    padding-top: 35px;
+    border: black 1px solid;
+}

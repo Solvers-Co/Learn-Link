@@ -1,0 +1,15 @@
+.input{
+    width: 90%;
+    align-items: center;
+    border-radius: 20px;
+    height: 52px;
+    background-color: hsla(0, 2%, 51%, 0.1);
+    border: none;
+    text-align: left;
+    padding-left: 20px;
+}
+
+
+.placeholder{
+    color: hsla(0, 0%, 0%, 0.5);
+}
