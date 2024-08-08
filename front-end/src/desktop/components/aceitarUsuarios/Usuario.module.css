@@ -1,0 +1,63 @@
+  
+  .userRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: #f5f5f5;
+    border: 1px solid #000000;
+    padding: 10px;
+    border-radius: 8px;
+    width: 100%;
+    height: 45px;
+    font-family: Arial, sans-serif;
+    margin-top: 10px;
+  }
+  
+  .userCpf, .userName, .userEmail, .userStatus {
+    margin-right: 20px;
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 16px;
+  }
+  
+  .userEmail {
+    color: #0000EE;
+    text-decoration: none;
+  }
+  
+  .userEmail:hover {
+    text-decoration: underline;
+  }
+  
+  .userStatus {
+    display: flex;
+    align-items: center;
+  }
+  
+  .statusIndicator {
+    width: 10px;
+    height: 10px;
+    background-color: yellow;
+    border-radius: 50%;
+    margin-right: 5px;
+  }
+  
+  .btn {
+    padding: 5px 10px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    background-color: #fff;
+    cursor: pointer;
+    margin-left: 10px;
+    width: 120px;
+  }
+  
+  .activateBtn {
+    border-color: #000;
+
+  }
+  
+  .denyBtn {
+    border-color: red;
+    color: red;
+  }
+  

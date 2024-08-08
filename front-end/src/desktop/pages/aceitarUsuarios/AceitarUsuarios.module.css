@@ -1,0 +1,9 @@
+* {
+    font-family: "Nunito Sans", sans-serif;
+  }
+  
+.telaAceitarUsuarios {
+    width: 100%;
+    display: flex;
+    
+}

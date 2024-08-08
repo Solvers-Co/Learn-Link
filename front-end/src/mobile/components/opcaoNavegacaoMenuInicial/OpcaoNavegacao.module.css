@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
+
+
+.opcaoNavegacao {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    padding: 5px;
+    margin-top: 20px;
+}
+
+.opcaoNavegacao img {
+    padding: 5px;
+}
+
+.opcaoNavegacao p {
+    font-family: 'Merriweather', serif;
+}

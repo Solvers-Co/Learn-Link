@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 import styles from "./Cadastro.module.css";
 import InputFormulario from "../../components/inputs/inputFormularios/InputFormulario";
-import Botao from "../../components/botoes/Botao";
+import Botao from "../../components/botoes/botaoLoginCadastro/Botao";
 
 const Cadastro = () => {
     const navigate = useNavigate();

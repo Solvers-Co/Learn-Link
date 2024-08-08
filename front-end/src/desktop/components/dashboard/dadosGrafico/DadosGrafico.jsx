@@ -18,6 +18,10 @@ function DadosGrafico(props) {
 
     api.get(`/publicacoes/quantidade-publicacoes-por-dia-mes`, {params:{mes, ano}}).then((response) => {
       setPublicacao(response.data);
+      console.log("oie")
+      console.log(mes)
+      console.log(response.data)
+      console.log(quantidadePublicacao)
 
     }).catch((error) => {
       console.error('Erro ao buscar dados das publicações:', error);
@@ -25,6 +29,9 @@ function DadosGrafico(props) {
 
     api.get(`/comentarios/quantidade-comentarios-por-dia-mes`, {params:{mes, ano}}).then((response) => {
       setComentario(response.data);
+      console.log("olá")
+      console.log(response)
+      console.log(quantidadeComentario);
     }).catch((error) => {
       console.error('Erro ao buscar dados dos comentários:', error);
     });

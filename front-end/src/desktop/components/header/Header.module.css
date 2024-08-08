@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
+
+.header {
+    background-color: transparent;
+    width: 100vw;
+    height: 15vh;
+    display: flex;
+    justify-content: space-around;
+    gap: 45px;
+    position: absolute;
+}
+
+.logo {
+    padding: 15px 0px 22px 0px;
+    cursor: pointer;
+}
+
+.secoes {
+    display: flex;
+    justify-content: space-around;
+    width: 18vw;
+    align-items: center;
+    padding-left: 150px;
+}
+
+.secoes a {
+    font-size: 18px;
+    text-decoration: none;
+    color: #fff;
+    font-family: 'Merriweather', serif;
+    font-weight: lighter;
+}
+
+.botoes {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 18vw;
+}

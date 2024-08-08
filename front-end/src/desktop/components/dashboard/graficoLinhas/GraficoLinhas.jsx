@@ -15,7 +15,7 @@ class GraficoLinhas extends Component {
                     id: "basic-line"
                 },
                 xaxis: {
-                    categories: props.data.map(item => item[0]||[])
+                    categories: props.data.map(item => item[0])
                 },
                 colors: ['#000000', '#808080'],
                 legend: {
