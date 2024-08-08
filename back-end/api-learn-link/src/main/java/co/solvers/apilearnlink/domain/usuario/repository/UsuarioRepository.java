@@ -2,6 +2,8 @@ package co.solvers.apilearnlink.domain.usuario.repository;
 
 import co.solvers.apilearnlink.domain.tipostatus.TipoStatus;
 import co.solvers.apilearnlink.domain.usuario.Usuario;
+import co.solvers.apilearnlink.service.usuario.dto.UsuarioAceitacaoListagemDto;
+import co.solvers.apilearnlink.service.usuario.dto.UsuarioListagemDto;
 import co.solvers.apilearnlink.service.usuario.dto.UsuarioListagemRankingDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -31,4 +33,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     /*@Query("SELECT tipo_status.status FROM usuario JOIN tipo_status ON tipo_status_id = tipo_status.id WHERE usuario.id = ?1")
     String findStatusById(long id);*/
+
+    @Query("SELECT new co.solvers.apilearnlink.service.usuario.dto.UsuarioAceitacaoListagemDto(u.id, u.nome, u.cpf, u.email, ts.status) " + "FROM Usuario u JOIN u.tipoStatus ts")
+    List<UsuarioAceitacaoListagemDto> findAllUsuarios();
 }
