@@ -5,6 +5,7 @@ import co.solvers.apilearnlink.service.reacao.ReacaoService;
 import co.solvers.apilearnlink.service.usuario.UsuarioService;
 import co.solvers.apilearnlink.service.usuario.autenticacao.dto.UsuarioLoginDto;
 import co.solvers.apilearnlink.service.usuario.autenticacao.dto.UsuarioTokenDto;
+import co.solvers.apilearnlink.service.usuario.dto.UsuarioAceitacaoListagemDto;
 import co.solvers.apilearnlink.service.usuario.dto.UsuarioCriacaoRequestDto;
 import co.solvers.apilearnlink.service.usuario.dto.UsuarioListagemDto;
 import co.solvers.apilearnlink.service.usuario.dto.UsuarioListagemRankingDto;
@@ -138,4 +139,17 @@ public class UsuarioController {
 
         return ResponseEntity.ok(usuarios);
     }
+
+    @GetMapping
+    public ResponseEntity<List<UsuarioAceitacaoListagemDto>> listagemDeUsuarios(){
+
+        List<UsuarioAceitacaoListagemDto> usuarios = usuarioService.listagemDeUsuarios();
+
+        if (usuarios.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(usuarios);
+    }
+
 }

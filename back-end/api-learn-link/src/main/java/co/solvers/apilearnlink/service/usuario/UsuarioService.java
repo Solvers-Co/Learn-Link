@@ -21,6 +21,8 @@ import co.solvers.apilearnlink.service.tipoStatus.TipoStatusService;
 import co.solvers.apilearnlink.service.tipousuario.escolaridade.TipoUsuarioService;
 import co.solvers.apilearnlink.service.usuario.autenticacao.dto.UsuarioLoginDto;
 import co.solvers.apilearnlink.service.usuario.autenticacao.dto.UsuarioTokenDto;
+import co.solvers.apilearnlink.service.usuario.dto.UsuarioAceitacaoListagemDto;
+import co.solvers.apilearnlink.service.usuario.dto.UsuarioListagemDto;
 import co.solvers.apilearnlink.service.usuario.dto.UsuarioListagemRankingDto;
 import co.solvers.apilearnlink.service.usuario.dto.mapper.UsuarioMapper;
 import lombok.RequiredArgsConstructor;
@@ -220,6 +222,11 @@ public class UsuarioService {
 //            throw new NaoEncontradoException("Usuário");
 //        }
     }
+
+    public List<UsuarioAceitacaoListagemDto> listagemDeUsuarios(){
+        return usuarioRepository.findAllUsuarios();
+    }
+
 
 
 }
