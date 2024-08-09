@@ -9,6 +9,7 @@
     outline: none;
     background-color: transparent;
     opacity: 75%;
+    font-family: "Nunito Sans", sans-serif;
 }
 
 .dropdown {
@@ -46,5 +47,8 @@
     margin: 0;
     font: inherit;
     cursor: pointer;
-    
+}
+
+.option {
+    font-family: "Nunito Sans", sans-serif;
 }

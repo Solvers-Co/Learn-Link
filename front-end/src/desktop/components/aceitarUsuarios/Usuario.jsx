@@ -1,5 +1,8 @@
 import React from 'react';
 import styles from './Usuario.module.css';
+import api from "../../../../src/api";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Usuario = ({ usuario }) => {
 
@@ -22,6 +25,27 @@ const Usuario = ({ usuario }) => {
         var descricao = "Negar";
     }
 
+    function definirStatus() {
+        if (usuario.tipoStatus === "APROVADO") {
+            alterarStatus(usuario.id, 1);
+        } else {
+            alterarStatus(usuario.id, 3);
+        }
+    }
+
+    const alterarStatus = (id, novoStatus) => {
+        api.patch(`/usuarios/${id}/status/${novoStatus}`)
+            .then(response => {
+                toast.success('Status alterado com sucesso!');
+                console.log('Resposta da API:', response.data);
+                // Aqui você pode adicionar lógica para atualizar a interface, se necessário
+            })
+            .catch(error => {
+                toast.error('Erro ao alterar status!');
+                console.error('Erro na requisição:', error);
+            });
+    };
+
     return (
         <div className={styles.userRow}>
             <div className={styles['divNome']}><span className={styles.userCpf}>{usuario.nome}</span></div>
@@ -32,8 +56,11 @@ const Usuario = ({ usuario }) => {
                 <span className={styles.userStatus}>{usuario.tipoStatus}</span>
             </div>
             </div>
-            <button className={`${styles.btn} ${statuSituacaoBtn}`}>Ativar</button>
-            <button className={`${styles.btn} ${statusBtn}`}>{descricao}</button>
+            <button className={`${styles.btn} ${statuSituacaoBtn}`}
+                onClick={() => alterarStatus(usuario.id, 2)}>Ativar</button>
+
+            <button className={`${styles.btn} ${statusBtn}`}
+                onClick={() => definirStatus()}>{descricao}</button>
         </div>
     );
 };

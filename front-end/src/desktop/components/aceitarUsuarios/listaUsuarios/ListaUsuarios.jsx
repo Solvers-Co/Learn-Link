@@ -69,6 +69,7 @@ const ListaUsuarios = () => {
                     <div className={styles['divEmail']}>E-mail</div>
                     <div className={styles['divStatus']}>Status</div>
                 </div>
+                
                 {usuarios.map((usuario) => (
                     <Usuario key={usuario.id} usuario={usuario} />
                 ))}
@@ -84,7 +85,7 @@ const ListaUsuarios = () => {
                 draggable
                 pauseOnHover
                 theme="light"
-                />
+            />
         </>
     );
 };
