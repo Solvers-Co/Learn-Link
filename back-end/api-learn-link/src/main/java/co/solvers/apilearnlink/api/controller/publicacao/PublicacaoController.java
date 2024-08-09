@@ -10,7 +10,6 @@ import co.solvers.apilearnlink.service.publicacao.PublicacaoService;
 import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoCriacaoRequestDto;
 import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoListagemResponseDto;
 import co.solvers.apilearnlink.service.publicacao.dto.QuantidadePublicacaoMesCanalListagemDto;
-import co.solvers.apilearnlink.service.publicacao.dto.RequisicaoMesAnoDto;
 import co.solvers.apilearnlink.service.publicacao.dto.mapper.PublicacaoMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -155,13 +154,13 @@ public class PublicacaoController {
 
 
     @ApiResponse(responseCode = "204", description = "Publicações vazias")
-    @ApiResponse(responseCode = "200", description = "Publicações encontrados")
+    @ApiResponse(responseCode = "200", description = "Publicações encontradas")
     @ApiResponse(responseCode = "400", description = "Palavra chave inválida")
     @Operation(summary = "Listar publicações por palavra chave", description = "Método que lista todas as publicações por uma palavra chave ordenada pela mais recete", tags = {"Publicações"})
     @GetMapping("/buscar-palavra-chave")
     public ResponseEntity<List<PublicacaoListagemResponseDto>> buscarPublicacaoPorPalavraChave(
             @RequestParam
-            @Parameter(name = "palavraChave", description = "Palavra chave", example = "dificuldade") String palavraChave) {
+            @Parameter(name = "palavraChave", description = "Palavra chave", example = "Bhaskara") String palavraChave) {
 
         List<Publicacao> publicacoes = publicacaoService.listarPorPalavraChave(palavraChave);
         List<PublicacaoListagemResponseDto> dtos = PublicacaoMapper.toDto(publicacoes);
@@ -173,8 +172,15 @@ public class PublicacaoController {
         return ResponseEntity.status(200).body(dtos);
     }
 
+    @ApiResponse(responseCode = "200", description = "Publicações encontradas")
+    @ApiResponse(responseCode = "204", description = "Publicações vazias")
+    @Operation(summary = "Quantidade de publicações por dia", description = "Método que retorna a quantidade de publicações por dia", tags = {"Publicações"})
     @GetMapping("/quantidade-publicacoes-por-dia-mes")
-    public ResponseEntity<String[][]> quantidadeDePublicacoesPorDia(@RequestParam int mes, @RequestParam int ano){
+    public ResponseEntity<String[][]> quantidadeDePublicacoesPorDia(
+            @RequestParam
+            @Parameter(name = "mes", description = "Mês do ano", example = "5") int mes,
+            @RequestParam
+            @Parameter(name = "ano", description = "Ano Publicação", example = "2024") int ano) {
         String[][] quantidadePublicacoes = publicacaoService.buscaQuantidadeDePublicacoesPorDiaMatriz(mes, ano);
 
         if (quantidadePublicacoes == null) return ResponseEntity.noContent().build();
@@ -182,23 +188,35 @@ public class PublicacaoController {
         return ResponseEntity.ok(quantidadePublicacoes);
     }
 
+    @ApiResponse(responseCode = "200", description = "Publicações encontradas")
+    @ApiResponse(responseCode = "204", description = "Publicações vazias")
+    @Operation(summary = "Listar a quantidade de publicações por canal", description = "Método que retorna a quantidade de publicações por canal", tags = {"Publicações"})
     @GetMapping("/quantidade-de-publicacoes-em-cada-canal")
-    public ResponseEntity<List<QuantidadePublicacaoMesCanalListagemDto>> buscarQuantidadeDePublicacoesEmCadaCanal(@RequestBody @Valid RequisicaoMesAnoDto requisicaoDto){
-        List<QuantidadePublicacaoMesCanalListagemDto> quantidadePublicacoesEmCadaCanal = publicacaoService.buscaQuantidadePublicacoesEmCadaCanal(requisicaoDto.getMes(), requisicaoDto.getAno());
+    public ResponseEntity<List<QuantidadePublicacaoMesCanalListagemDto>> buscarQuantidadeDePublicacoesEmCadaCanal(
+            @RequestParam
+            @Parameter(name = "mes", description = "Mês do ano", example = "5") int mes,
+            @RequestParam
+            @Parameter(name = "ano", description = "Ano Publicação", example = "2024") int ano) {
+        List<QuantidadePublicacaoMesCanalListagemDto> quantidadePublicacoesEmCadaCanal = publicacaoService.buscaQuantidadePublicacoesEmCadaCanal(mes, ano);
 
         if (quantidadePublicacoesEmCadaCanal.isEmpty()) return ResponseEntity.noContent().build();
 
         return ResponseEntity.ok(quantidadePublicacoesEmCadaCanal);
     }
 
+    @ApiResponse(responseCode = "200", description = "Canal encontrado")
+    @ApiResponse(responseCode = "404", description = "Canal não encontrado")
+    @Operation(summary = "Canal com maior número de publicações", description = "Método que retorna o canal com maior número de publicações", tags = {"Publicações"})
     @GetMapping("/canal-com-maior-numero-de-publicacoes")
-    public ResponseEntity<QuantidadePublicacaoMesCanalListagemDto> buscarCanalComMaiorNumeroDePublicacoes(@RequestParam int mes, @RequestParam int ano){
+    public ResponseEntity<QuantidadePublicacaoMesCanalListagemDto> buscarCanalComMaiorNumeroDePublicacoes(
+            @RequestParam
+            @Parameter(name = "mes", description = "Mês do ano", example = "5") int mes,
+            @RequestParam
+            @Parameter(name = "ano", description = "Ano Publicação", example = "2024") int ano) {
         QuantidadePublicacaoMesCanalListagemDto canalMaisPublicacoes = publicacaoService.buscaCanalComMaiorNumeroDePublicacoes(mes, ano);
 
         return ResponseEntity.ok(canalMaisPublicacoes);
     }
-
-
 
 
 //    @PostMapping("/comentarios")

@@ -227,6 +227,16 @@ public class UsuarioService {
         return usuarioRepository.findAllUsuarios();
     }
 
+    public List<UsuarioAceitacaoListagemDto> listagemDeUsuariosAtivos(){
+        return usuarioRepository.findAllUsuariosAtivos();
+    }
 
+    public List<UsuarioAceitacaoListagemDto> listagemDeUsuariosPendentes(){
+        return usuarioRepository.findAllUsuariosPendentes();
+    }
+
+    public List<UsuarioAceitacaoListagemDto> listagemDeUsuariosNegados(){
+        return usuarioRepository.findAllUsuariosNegados();
+    }
 
 }

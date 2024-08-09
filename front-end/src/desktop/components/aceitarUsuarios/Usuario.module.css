@@ -1,8 +1,7 @@
-  
   .userRow {
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: start;
     background-color: #f5f5f5;
     border: 1px solid #000000;
     padding: 10px;
@@ -12,52 +11,120 @@
     font-family: Arial, sans-serif;
     margin-top: 10px;
   }
-  
-  .userCpf, .userName, .userEmail, .userStatus {
+
+  .userCpf,
+  .userName,
+  .userEmail,
+  .userStatus {
     margin-right: 20px;
     font-family: "Nunito Sans", sans-serif;
     font-size: 16px;
   }
-  
+
+  .divNome {
+    width: 145px;
+    display: flex;
+    justify-content: start;
+    margin-left: 23px;
+    font-family: "Nunito Sans", sans-serif;
+  }
+
+  .divCpf {
+    width: 149px;
+    display: flex;
+    justify-content: start;
+    font-family: "Nunito Sans", sans-serif;
+  }
+
+  .divEmail {
+    width: 230px;
+    display: flex;
+    justify-content: start;
+    font-family: "Nunito Sans", sans-serif;
+  }
+
+  .divStatus {
+    width: 180px;
+    display: flex;
+    justify-content: start;
+    font-family: "Nunito Sans", sans-serif;
+  }
+
   .userEmail {
-    color: #0000EE;
+    color: black;
     text-decoration: none;
   }
-  
+
   .userEmail:hover {
     text-decoration: underline;
   }
-  
+
   .userStatus {
     display: flex;
     align-items: center;
   }
-  
-  .statusIndicator {
+
+  .statusPendente {
     width: 10px;
     height: 10px;
     background-color: yellow;
     border-radius: 50%;
     margin-right: 5px;
   }
-  
+
+  .statusAprovado {
+    width: 10px;
+    height: 10px;
+    background-color: green;
+    border-radius: 50%;
+    margin-right: 5px;
+  }
+
+  .statusNegado {
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+    margin-right: 5px;
+  }
+
   .btn {
-    padding: 5px 10px;
+    padding: 7px 10px;
     border: 1px solid #000;
-    border-radius: 5px;
+    border-radius: 8px;
     background-color: #fff;
     cursor: pointer;
     margin-left: 10px;
     width: 120px;
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 16px;
+    font-weight: bold;
   }
-  
-  .activateBtn {
-    border-color: #000;
 
+  .ativarBtn {
+    border-color: #000;
   }
-  
-  .denyBtn {
+
+  .ativarDslgBtn {
+    border-color: #D4D4D4;
+    color: #D4D4D4;
+  }
+
+  .negarBtn {
     border-color: red;
     color: red;
   }
-  
+
+  .negarDslgBtn {
+    border-color: #D4D4D4;
+    color: #D4D4D4;
+  }
+
+  .desativarBtn {
+    border-color: red;
+    color: red;
+  }
+
+  .pendenteBtn {
+    border-color: #000;
+  }

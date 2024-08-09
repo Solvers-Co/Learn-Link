@@ -34,6 +34,26 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     /*@Query("SELECT tipo_status.status FROM usuario JOIN tipo_status ON tipo_status_id = tipo_status.id WHERE usuario.id = ?1")
     String findStatusById(long id);*/
 
-    @Query("SELECT new co.solvers.apilearnlink.service.usuario.dto.UsuarioAceitacaoListagemDto(u.id, u.nome, u.cpf, u.email, ts.status) " + "FROM Usuario u JOIN u.tipoStatus ts")
+    @Query("SELECT new co.solvers.apilearnlink.service.usuario.dto.UsuarioAceitacaoListagemDto(u.id, u.nome, u.cpf, u.email, ts.status) " +
+            "FROM Usuario u JOIN u.tipoStatus ts " +
+            "ORDER BY ts.status DESC")
     List<UsuarioAceitacaoListagemDto> findAllUsuarios();
+
+    @Query("SELECT new co.solvers.apilearnlink.service.usuario.dto.UsuarioAceitacaoListagemDto(u.id, u.nome, u.cpf, u.email, ts.status) " +
+            "FROM Usuario u JOIN u.tipoStatus ts " +
+            "WHERE ts.status = 'APROVADO' " +
+            "ORDER BY ts.status DESC")
+    List<UsuarioAceitacaoListagemDto> findAllUsuariosAtivos();
+
+    @Query("SELECT new co.solvers.apilearnlink.service.usuario.dto.UsuarioAceitacaoListagemDto(u.id, u.nome, u.cpf, u.email, ts.status) " +
+            "FROM Usuario u JOIN u.tipoStatus ts " +
+            "WHERE ts.status = 'PENDENTE' " +
+            "ORDER BY ts.status DESC")
+    List<UsuarioAceitacaoListagemDto> findAllUsuariosPendentes();
+
+    @Query("SELECT new co.solvers.apilearnlink.service.usuario.dto.UsuarioAceitacaoListagemDto(u.id, u.nome, u.cpf, u.email, ts.status) " +
+            "FROM Usuario u JOIN u.tipoStatus ts " +
+            "WHERE ts.status = 'NEGADO' " +
+            "ORDER BY ts.status DESC")
+    List<UsuarioAceitacaoListagemDto> findAllUsuariosNegados();
 }

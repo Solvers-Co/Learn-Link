@@ -15,8 +15,8 @@ const Home = () => {
         <div className={styles.home}>
             <Header />
             <div className={styles.conteudo}>
-                <h1>Learn Link</h1>
-                <p>Criada com o intuito de promover a colaboração entre alunos, Learn Link é uma plataforma completa e fácil de se usar.</p>
+                <h1 className={styles.titulo}>Learn Link</h1>
+                <p className={styles.subTitulo}>Criada com o intuito de promover a colaboração entre alunos, Learn Link é uma plataforma completa e fácil de se usar.</p>
                 <Botao 
                     className={stylesBotao.botaoHomeInteresse}
                     textoBotao="Tenho interesse"

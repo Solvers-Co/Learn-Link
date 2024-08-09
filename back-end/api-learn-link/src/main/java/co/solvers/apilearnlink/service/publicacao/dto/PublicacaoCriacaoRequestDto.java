@@ -21,8 +21,10 @@ public class PublicacaoCriacaoRequestDto {
     private int idTipoPublicacao;
     @NotNull
     @Positive
+    @Schema(description = "Id do usuário", example = "1")
     private Long idUsuario;
     @NotNull
     @Positive
+    @Schema(description = "Id do canal", example = "4")
     private int idCanal;
 }

@@ -13,8 +13,8 @@ import lombok.Setter;
 public class UsuarioAceitacaoListagemDto {
 
     private Long id;
-    private String email;
     private String nome;
     private String cpf;
+    private String email;
     private String tipoStatus;
 }

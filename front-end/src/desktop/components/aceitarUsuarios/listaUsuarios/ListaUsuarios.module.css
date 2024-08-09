@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+
+* {
+    font-family: "Nunito Sans", sans-serif;
+}
+
 .listaUsuarios {
     display: flex;
     flex-direction: column;
@@ -6,4 +12,57 @@
     width: 72%;
     margin-left: 40px;
     margin-right: 40px;
+}
+
+.cabecalho {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.descricaoColunas {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.divNome {
+    width: 145px;
+    display: flex;
+    justify-content: start;
+    margin-left: 23px;
+    font-family: "Nunito Sans", sans-serif;
+}
+
+.divCpf {
+    width: 149px;
+    display: flex;
+    justify-content: start;
+    font-family: "Nunito Sans", sans-serif;
+}
+
+.divEmail {
+    width: 230px;
+    display: flex;
+    justify-content: start;
+    font-family: "Nunito Sans", sans-serif;
+}
+
+.divStatus {
+    width: 100px;
+    display: flex;
+    justify-content: start;
+    font-family: "Nunito Sans", sans-serif;
+}
+
+
+.h1 {
+    color: black;
 }

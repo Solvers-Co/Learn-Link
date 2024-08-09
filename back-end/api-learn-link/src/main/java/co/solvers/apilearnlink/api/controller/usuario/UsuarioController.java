@@ -116,7 +116,6 @@ public class UsuarioController {
         Usuario usuarioAnalisado = usuarioService.alterarStatus(id, idTipoStatus);
         UsuarioListagemDto dto = UsuarioMapper.toUsuarioListagemResponseDto(usuarioAnalisado);
         return ResponseEntity.status(200).body(dto);
-
     }
 
     @GetMapping("/tipo-status")
@@ -140,7 +139,7 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarios);
     }
 
-    @GetMapping
+    @GetMapping("/buscar-todos-os-usuarios")
     public ResponseEntity<List<UsuarioAceitacaoListagemDto>> listagemDeUsuarios(){
 
         List<UsuarioAceitacaoListagemDto> usuarios = usuarioService.listagemDeUsuarios();
@@ -152,4 +151,39 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarios);
     }
 
+    @GetMapping("/usuarios-ativos")
+    public ResponseEntity<List<UsuarioAceitacaoListagemDto>> listagemDeUsuariosAtivos(){
+
+        List<UsuarioAceitacaoListagemDto> usuarios = usuarioService.listagemDeUsuariosAtivos();
+
+        if (usuarios.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(usuarios);
+    }
+
+    @GetMapping("/usuarios-pendentes")
+    public ResponseEntity<List<UsuarioAceitacaoListagemDto>> listagemDeUsuariosPendentes(){
+
+        List<UsuarioAceitacaoListagemDto> usuarios = usuarioService.listagemDeUsuariosPendentes();
+
+        if (usuarios.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(usuarios);
+    }
+
+    @GetMapping("/usuarios-negados")
+    public ResponseEntity<List<UsuarioAceitacaoListagemDto>> listagemDeUsuariosNegados(){
+
+        List<UsuarioAceitacaoListagemDto> usuarios = usuarioService.listagemDeUsuariosNegados();
+
+        if (usuarios.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(usuarios);
+    }
 }

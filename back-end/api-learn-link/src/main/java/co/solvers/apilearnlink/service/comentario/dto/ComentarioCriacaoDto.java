@@ -13,7 +13,7 @@ import lombok.Setter;
 public class ComentarioCriacaoDto {
     @Size(min = 3, max = 500)
     @NotBlank
-    @Schema(description = "Conteúdo do comentário", example = "Acho que a resposta é 3")
+    @Schema(description = "Conteúdo do comentário", example = "Acho que foi Pedro Álvares Cabral")
     private String comentario;
     @Positive
     @NotNull
