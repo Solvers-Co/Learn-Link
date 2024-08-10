@@ -26,6 +26,9 @@ import co.solvers.apilearnlink.service.usuario.dto.UsuarioListagemDto;
 import co.solvers.apilearnlink.service.usuario.dto.UsuarioListagemRankingDto;
 import co.solvers.apilearnlink.service.usuario.dto.mapper.UsuarioMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -68,7 +71,7 @@ public class UsuarioService {
         usuario.setTipoUsuario(tipoUsuario);
         usuario.setClassificacao(classificacao);
 
-        if(escolaridadeId != null) {
+        if (escolaridadeId != null) {
             Escolaridade escolaridade = escolaridadeService.buscarPorId(escolaridadeId);
             usuario.setEscolaridade(escolaridade);
         }
@@ -81,18 +84,18 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
-    public List<Usuario> listarUsuariosTipoStatus(String status){
+    public List<Usuario> listarUsuariosTipoStatus(String status) {
         TipoStatus tipoStatus = tipoStatusService.buscarPorStatus(status);
 
         List<Usuario> usuarios = usuarioRepository.findByTipoStatus(tipoStatus);
 
         FilaObj<Usuario> fila = new FilaObj<>(usuarios.size());
 
-        for (Usuario usuario : usuarios){
+        for (Usuario usuario : usuarios) {
             fila.insert(usuario);
         }
 
-        for (int i = 0 ; i < fila.getTamanho() ; i++){
+        for (int i = 0; i < fila.getTamanho(); i++) {
             usuarios.set(i, fila.poll());
         }
 
@@ -138,10 +141,10 @@ public class UsuarioService {
         return UsuarioMapper.of(usuarioAutenticado, token, registroLogin);
     }
 
-    public UsuarioTokenDto desconectar(Long id){
+    public UsuarioTokenDto desconectar(Long id) {
         final Usuario usuario = usuarioRepository.findById(id).get();
 
-        if(usuario == null){
+        if (usuario == null) {
             throw new NaoEncontradoException("Usuário");
         }
 
@@ -167,7 +170,8 @@ public class UsuarioService {
 
         TipoStatus tipoStatus = tipoStatusService.buscarPorId(idTipoStatus);
 
-        if (usuario.getTipoStatus().getStatus().equals(tipoStatus.getStatus())) throw new ConflitoException("Tipo status");
+        if (usuario.getTipoStatus().getStatus().equals(tipoStatus.getStatus()))
+            throw new ConflitoException("Tipo status");
 
         usuario.setTipoStatus(tipoStatus);
 
@@ -175,11 +179,11 @@ public class UsuarioService {
     }
 
 
-    public List<UsuarioListagemRankingDto> ranking(){
+    public List<UsuarioListagemRankingDto> ranking() {
 
         List<UsuarioListagemRankingDto> usuarios = usuarioRepository.findRanking();
 
-        if(usuarios.isEmpty()){
+        if (usuarios.isEmpty()) {
             throw new NaoEncontradoException("Usuario");
         }
 
@@ -223,20 +227,37 @@ public class UsuarioService {
 //        }
     }
 
-    public List<UsuarioAceitacaoListagemDto> listagemDeUsuarios(){
-        return usuarioRepository.findAllUsuarios();
+
+    public Page<UsuarioAceitacaoListagemDto> listagemDeUsuariosPaginado(Pageable pageable) {
+        return usuarioRepository.findAllUsuariosPaginado(pageable);
     }
 
-    public List<UsuarioAceitacaoListagemDto> listagemDeUsuariosAtivos(){
-        return usuarioRepository.findAllUsuariosAtivos();
+    public Page<UsuarioAceitacaoListagemDto> listagemDeUsuariosAtivosPaginado(Pageable pageable) {
+        return usuarioRepository.findAllUsuariosAtivosPaginado(pageable);
     }
 
-    public List<UsuarioAceitacaoListagemDto> listagemDeUsuariosPendentes(){
-        return usuarioRepository.findAllUsuariosPendentes();
+    public Page<UsuarioAceitacaoListagemDto> listagemDeUsuariosPendentesPaginado(Pageable pageable) {
+        return usuarioRepository.findAllUsuariosPendentesPaginado(pageable);
     }
 
-    public List<UsuarioAceitacaoListagemDto> listagemDeUsuariosNegados(){
-        return usuarioRepository.findAllUsuariosNegados();
+    public Page<UsuarioAceitacaoListagemDto> listagemDeUsuariosNegadosPaginado(Pageable pageable) {
+        return usuarioRepository.findAllUsuariosNegadosPaginado(pageable);
     }
+
+//    public List<UsuarioAceitacaoListagemDto> listagemDeUsuariosAtivos(){
+//        return usuarioRepository.findAllUsuariosAtivos();
+//    }
+//
+//    public List<UsuarioAceitacaoListagemDto> listagemDeUsuariosPendentes(){
+//        return usuarioRepository.findAllUsuariosPendentes();
+//    }
+
+//    public List<UsuarioAceitacaoListagemDto> listagemDeUsuariosNegados(){
+//        return usuarioRepository.findAllUsuariosNegados();
+//    }
+
+    //    public List<UsuarioAceitacaoListagemDto> listagemDeUsuarios(){
+//        return usuarioRepository.findAllUsuarios();
+//    }
 
 }

@@ -4,22 +4,22 @@ import api from "../../../../src/api";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const Usuario = ({ usuario }) => {
+const Usuario = ({usuario, fetchUsuarios, paginaAtual, statusAtual}) => {
 
-    var statusAtual = ""
+    var statusAtualTipo = ""
 
     if (usuario.tipoStatus === "APROVADO") {
-        statusAtual = styles.statusAprovado;
+        statusAtualTipo = styles.statusAprovado;
         var statuSituacaoBtn = styles.ativarDslgBtn;
         var statusBtn = styles.desativarBtn;
         var descricao = "Desativar";
     } else if (usuario.tipoStatus === "PENDENTE") {
-        statusAtual = styles.statusPendente;
+        statusAtualTipo = styles.statusPendente;
         var statusBtn = styles.negarBtn;
         var descricao = "Negar";
     }
     else {
-        statusAtual = styles.statusNegado;
+        statusAtualTipo = styles.statusNegado;
         var statuSituacaoBtn = styles.ativarBtn;
         var statusBtn = styles.negarDslgBtn;
         var descricao = "Negar";
@@ -38,7 +38,8 @@ const Usuario = ({ usuario }) => {
             .then(response => {
                 toast.success('Status alterado com sucesso!');
                 console.log('Resposta da API:', response.data);
-                // Aqui você pode adicionar lógica para atualizar a interface, se necessário
+
+                fetchUsuarios(statusAtual, paginaAtual);
             })
             .catch(error => {
                 toast.error('Erro ao alterar status!');
@@ -52,7 +53,7 @@ const Usuario = ({ usuario }) => {
             <div className={styles['divCpf']}><span className={styles.userName}>{usuario.cpf}</span></div>
             <div className={styles['divEmail']}><span className={styles.userEmail}>{usuario.email}</span></div>
             <div className={styles['divStatus']}><div className={styles.userStatus}>
-                <span className={statusAtual}></span>
+                <span className={statusAtualTipo}></span>
                 <span className={styles.userStatus}>{usuario.tipoStatus}</span>
             </div>
             </div>
