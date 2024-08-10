@@ -4,6 +4,10 @@
     font-family: 'Merriweather', serif;
 }
 
+body {
+    overflow-x: hidden;
+}
+
 .home {
     background-image: url("../../utils/assets/fundo-home.png");
     background-size: cover;
@@ -21,6 +25,7 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
+    justify-content: center;
 }
 
 .conteudo h1 {

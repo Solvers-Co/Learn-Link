@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
+
+.conteudo {
+    display: flex;
+    flex-direction: column;
+    width: var(--largura);
+    height: 55vh;
+    text-align: center;
+}
+
+.titulo {
+    text-decoration: none;
+    font-size: 32px;
+    margin-bottom: 10px; /* Espaço entre o título e a linha */
+    position: relative; /* Necessário para posicionar a linha */
+    font-weight: 700;
+    font-family: 'Merriweather', serif;
+}
+
+.titulo::after {
+    content: ""; 
+    display: block;
+    width: 50%; /* Largura da linha */
+    height: 3px; 
+    background-color: var(--cor-linha); 
+    margin: 10px auto 0; 
+    border-radius: 5px; 
+    margin-bottom: 15px;
+}
+
+.paragrafo {
+    font-size: 18px;
+    font-family: 'Merriweather', serif;
+    font-weight: 500;
+}
