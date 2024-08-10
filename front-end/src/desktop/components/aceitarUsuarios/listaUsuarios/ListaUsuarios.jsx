@@ -8,13 +8,19 @@ import Titulo from '../listaUsuarios/tituloAceitarUsuarios/Titulo';
 import Dropdown from '../listaUsuarios/dropdown/Dropdown';
 
 const ListaUsuarios = () => {
-    const [usuarios, setUsuarios] = useState([]);  // Garantindo que seja um array vazio por padrão
-    const [opcoes, setOpcoes] = useState('1'); // Valor inicial como string '1'
+    const [usuarios, setUsuarios] = useState([]);
+    const [opcoes, setOpcoes] = useState('1');
     const [pagina, setPagina] = useState(0);
     const [itensPorPagina, setItensPorPagina] = useState(7);
     const [totalPaginas, setTotalPaginas] = useState(0);
+    const [origemChamada, setOrigemChamada] = useState('');
 
     const fetchUsuarios = (status, paginaAtual = pagina, itens = itensPorPagina) => {
+        // Se a origem é o dropdown, reseta para a primeira página
+        if (origemChamada === 'dropdown') {
+            paginaAtual = 0;
+        }
+
         let endpoint = '';
         switch (status) {
             case '1':
@@ -36,20 +42,19 @@ const ListaUsuarios = () => {
         api.get(`${endpoint}?pagina=${paginaAtual}&itens=${itens}`)
             .then((response) => {
                 console.log(response);
-                setUsuarios(response.data.content || []);  // Garantindo que seja um array
+                const novaPagina = Math.min(paginaAtual, response.data.totalPages - 1);
+                setPagina(novaPagina);
+                setUsuarios(response.data.content || []);
                 setTotalPaginas(response.data.totalPages);
             })
             .catch((error) => {
                 console.error('erro', error);
             });
     };
-  
-    
+
     useEffect(() => {
-       
         fetchUsuarios(opcoes, pagina, itensPorPagina);
     }, [opcoes, pagina, itensPorPagina, totalPaginas]);
-    
 
     return (
         <>
@@ -60,6 +65,7 @@ const ListaUsuarios = () => {
                         value={opcoes}
                         onChange={(value) => {
                             setOpcoes(value);
+                            setOrigemChamada('dropdown'); // Marca que a origem é o dropdown
                         }}
                     />
                 </div>
@@ -83,7 +89,10 @@ const ListaUsuarios = () => {
                         ))}
                         <div className={styles.paginacao}>
                             <button
-                                onClick={() => setPagina(pagina - 1)}
+                                onClick={() => {
+                                    setPagina(pagina - 1);
+                                    setOrigemChamada('paginacao');
+                                }}
                                 disabled={pagina === 0}
                                 className={styles.btnPaginacao}
                             >
@@ -91,7 +100,10 @@ const ListaUsuarios = () => {
                             </button>
                             <span className={styles.spanNumeroPaginas}>{pagina + 1} de {totalPaginas}</span>
                             <button
-                                onClick={() => setPagina(pagina + 1)}
+                                onClick={() => {
+                                    setPagina(pagina + 1);
+                                    setOrigemChamada('paginacao');
+                                }}
                                 disabled={pagina + 1 === totalPaginas}
                                 className={styles.btnPaginacao}
                             >
@@ -100,7 +112,8 @@ const ListaUsuarios = () => {
                         </div>
                     </>
                 ) : (
-                    <p>Nenhum usuário encontrado.</p>
+                    <p className={styles['notFound']}>Nenhum usuário encontrado.</p>
+
                 )}
             </div>
             <ToastContainer

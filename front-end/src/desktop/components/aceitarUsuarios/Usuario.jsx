@@ -4,7 +4,15 @@ import api from "../../../../src/api";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const Usuario = ({usuario, fetchUsuarios, paginaAtual, statusAtual}) => {
+// Função utilitária para formatar CPF
+const formatarCPF = (cpf) => {
+    if (cpf.length === 11) {
+        return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+    }
+    return cpf; // Retorna o CPF sem formatação se não tiver 11 dígitos
+};
+
+const Usuario = ({ usuario, fetchUsuarios, paginaAtual, statusAtual }) => {
 
     var statusAtualTipo = ""
 
@@ -50,7 +58,7 @@ const Usuario = ({usuario, fetchUsuarios, paginaAtual, statusAtual}) => {
     return (
         <div className={styles.userRow}>
             <div className={styles['divNome']}><span className={styles.userCpf}>{usuario.nome}</span></div>
-            <div className={styles['divCpf']}><span className={styles.userName}>{usuario.cpf}</span></div>
+            <div className={styles['divCpf']}><span className={styles.userName}>{formatarCPF(usuario.cpf)}</span></div>
             <div className={styles['divEmail']}><span className={styles.userEmail}>{usuario.email}</span></div>
             <div className={styles['divStatus']}><div className={styles.userStatus}>
                 <span className={statusAtualTipo}></span>
