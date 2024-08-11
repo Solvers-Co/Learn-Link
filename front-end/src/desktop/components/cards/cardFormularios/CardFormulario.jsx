@@ -1,11 +1,11 @@
 import React from "react";
 import styles from "./CardFormulario.module.css";
 
-const Card = (props) =>{
+const Card = ({ children, altura }) =>{
     return(
         
-        <div className={styles['card']}>
-            {props.children}
+        <div style={{ height: altura }} className={styles['card']}>
+            {children}
         </div>
 
     )

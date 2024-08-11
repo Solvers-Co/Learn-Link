@@ -120,8 +120,8 @@ const Cadastro = () => {
 
     return (
         <div className={styles['container']}>
-            <Card >
-                <a href="/" className={styles['imagemClicavel']}><div className={styles['imageContainer']}></div></a>
+            <Card  altura="72vh">
+                <a href="/homeDesktop" className={styles['imagemClicavel']}><div className={styles['imageContainer']}></div></a>
                 <h1 className={styles['cadastroDesktopTitulo']}>CADASTRO</h1>
                 <h3 className={styles['tituloInput']}>Nome</h3>
                 <Input value={nome} onChange={(e) => handleInputChange(e, setNome)} />

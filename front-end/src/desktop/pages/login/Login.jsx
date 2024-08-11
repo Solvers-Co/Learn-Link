@@ -7,7 +7,6 @@ import styles from "./Login.module.css";
 import Card from "../../components/cards/cardFormularios/CardFormulario";
 import Input from "../../components/inputs/inputFormularios/InputFormulario";
 import Botao from "../../components/botoes/Botao";
-import Header from "../../../mobile/components/header/Header";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -82,8 +81,8 @@ const Login = () => {
 
     return (
         <div className={styles['container']}>
-            <Card >
-                <a href="/" className={styles['imagemClicavel']}><div className={styles['imageContainer']}></div></a>
+            <Card altura="55vh">
+                <a href="/homeDesktop" className={styles['imagemClicavel']}><div className={styles['imageContainer']}></div></a>
                 <h1 className={styles['loginDesktopTitulo']}>Bem-Vindo de Volta!</h1>
                 <h3 className={styles['tituloInput']}>E-mail</h3>
                 <Input value={email} onChange={(e) => handleInputChange(e, setEmail)} />
