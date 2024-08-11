@@ -11,7 +11,7 @@ const MenuLateral = () => {
     const location = useLocation(); // Crie uma instância do hook useLocation
 
     const sair = () => {
-        navigate("/"); // Redireciona para a rota de logout
+        navigate("/homeDesktop"); // Redireciona para a rota de logout
     };
 
     const paginaAcesso = () => {
