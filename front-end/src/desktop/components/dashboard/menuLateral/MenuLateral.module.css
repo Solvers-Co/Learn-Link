@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+
+* {
+    font-family: "Nunito Sans", sans-serif;
+}
+
 .menuLateralDashboard{
     width: 12%;
     height: 100vh;
@@ -12,6 +18,7 @@
     display: flex;
     align-items: center;
     margin-bottom: 40px;
+    font-family: "Nunito Sans", sans-serif;
 }
 
 .fotoPerfilMenu{
@@ -37,10 +44,10 @@
     justify-content: left;
     align-items: center;
     height: 25px;
-    background-color: rgba(0, 0, 0, 0.06);
     border-radius: 6px;
-    font-size: 12px;
+    font-size: 14px;
     padding-left: 10px;
+    font-family: "Nunito Sans", sans-serif;
 }
 
 .paginaPaginas{
@@ -48,9 +55,10 @@
     justify-content: left;
     align-items: center;
     height: 25px;
-    font-size: 12px;
+    border-radius: 6px;
+    font-size: 14px;
     padding-left: 10px;
-    width: 100%;
+    font-family: "Nunito Sans", sans-serif;
 }
 
 .btnSair{
@@ -71,4 +79,18 @@
     width: 100%;
     border-color: rgba(0, 0, 0, 0.1);
     margin-top: 220%;
+    font-family: "Nunito Sans", sans-serif;
+}
+
+.cursorPointer {
+    cursor: pointer;
+}
+
+.paginaAtiva {
+    background-color: rgba(0, 0, 0, 0.06);
+}
+
+.texto{
+    font-size: 16px;
+    font-family: "Nunito Sans", sans-serif;
 }
