@@ -8,9 +8,15 @@ const PaginaInicial = () => {
     return (
         <div className={styles.paginaInicial}>
             <Header />
-            <Home />
-            <Solucao />
-            <Beneficios />
+            <div id="home">
+                <Home />
+            </div>
+            <div id="solucao">
+                <Solucao />
+            </div>
+            <div id="beneficios">
+                <Beneficios />
+            </div>
         </div>
     )
 }
