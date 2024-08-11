@@ -15,6 +15,9 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,7 +48,7 @@ public class UsuarioController {
     @PostMapping("/logout/{id}")
     public ResponseEntity<UsuarioTokenDto> desconectar(
             @PathVariable
-            @Parameter(name = "id", description = "Usuario id", example = "1") Long id){
+            @Parameter(name = "id", description = "Usuario id", example = "1") Long id) {
         UsuarioTokenDto usuarioToken = usuarioService.desconectar(id);
 
         return ResponseEntity.status(200).body(usuarioToken);
@@ -96,8 +99,7 @@ public class UsuarioController {
             @PathVariable
             @Parameter(name = "id", description = "Usuario id", example = "1") Long id,
             @RequestParam
-            @Parameter(name = "senha", description = "Senha usuario", example = "12345") String senha
-    ) {
+            @Parameter(name = "senha", description = "Senha usuario", example = "12345") String senha) {
 
         Usuario usuarioNovo = usuarioService.atualizar(id, senha);
         UsuarioListagemDto dto = UsuarioMapper.toUsuarioListagemResponseDto(usuarioNovo);
@@ -112,14 +114,20 @@ public class UsuarioController {
             @PathVariable
             @Parameter(name = "id", description = "Usuario id", example = "1") Long id,
             @PathVariable
-            @Parameter(name = "idTipoStatus", description = "Tipo status id", example = "2") Integer idTipoStatus){
+            @Parameter(name = "idTipoStatus", description = "Tipo status id", example = "1") Integer idTipoStatus) {
         Usuario usuarioAnalisado = usuarioService.alterarStatus(id, idTipoStatus);
         UsuarioListagemDto dto = UsuarioMapper.toUsuarioListagemResponseDto(usuarioAnalisado);
         return ResponseEntity.status(200).body(dto);
     }
 
+    @ApiResponse(responseCode = "200", description = "Usuários encontrados")
+    @ApiResponse(responseCode = "204", description = "Nenhum usuário encontrado")
+    @Operation(summary = "Listar usuários por tipo de status", description = "Método que lista usuários por tipo de status", tags = {"Usuários"})
     @GetMapping("/tipo-status")
-    public ResponseEntity<List<UsuarioListagemDto>> listarUsuariosTipoStatus (@RequestParam String tipoStatus){
+    public ResponseEntity<List<UsuarioListagemDto>> listarUsuariosTipoStatus(
+            @RequestParam
+            @Parameter(name = "tipoStatus", description = "Tipo status", example = "APROVADO") String tipoStatus) {
+
         List<Usuario> usuarios = usuarioService.listarUsuariosTipoStatus(tipoStatus);
 
         if (usuarios.isEmpty()) return ResponseEntity.noContent().build();
@@ -129,9 +137,9 @@ public class UsuarioController {
         return ResponseEntity.ok(usuariosDto);
     }
 
-
+// **** Não funciona **** //
     @GetMapping("/ranking")
-    public ResponseEntity<List<UsuarioListagemRankingDto>> ranking(){
+    public ResponseEntity<List<UsuarioListagemRankingDto>> ranking() {
 
         List<UsuarioListagemRankingDto> usuarios = usuarioService.ranking();
 //        List<UsuarioListagemRankingDto> dtos = UsuarioMapper.toUsuarioListagemRankingDto(usuarios);
@@ -139,51 +147,122 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarios);
     }
 
-    @GetMapping("/buscar-todos-os-usuarios")
-    public ResponseEntity<List<UsuarioAceitacaoListagemDto>> listagemDeUsuarios(){
+    @ApiResponse(responseCode = "200", description = "Usuários encontrados")
+    @ApiResponse(responseCode = "204", description = "Nenhum usuário encontrado")
+    @Operation(summary = "Listar todos os usuários paginado", description = "Método que lista todos os usuários paginado", tags = {"Usuários"})
+    @GetMapping("/buscar-todos-os-usuarios-paginado")
+    public ResponseEntity<Page<UsuarioAceitacaoListagemDto>> listagemDeUsuarios(
+            @RequestParam(defaultValue = "0") int pagina,
+            @RequestParam(defaultValue = "7") int itens) {
 
-        List<UsuarioAceitacaoListagemDto> usuarios = usuarioService.listagemDeUsuarios();
+        Pageable pageable = PageRequest.of(pagina, itens);
+        Page<UsuarioAceitacaoListagemDto> usuarios = usuarioService.listagemDeUsuariosPaginado(pageable);
 
-        if (usuarios.isEmpty()){
+        if (usuarios.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
 
         return ResponseEntity.ok(usuarios);
     }
 
-    @GetMapping("/usuarios-ativos")
-    public ResponseEntity<List<UsuarioAceitacaoListagemDto>> listagemDeUsuariosAtivos(){
+    @ApiResponse(responseCode = "200", description = "Usuários encontrados")
+    @ApiResponse(responseCode = "204", description = "Nenhum usuário encontrado")
+    @Operation(summary = "Listar usuários ativos paginado", description = "Método que lista usuários ativos paginado", tags = {"Usuários"})
+    @GetMapping("/buscar-usuarios-ativos-paginado")
+    public ResponseEntity<Page<UsuarioAceitacaoListagemDto>> listagemDeUsuariosAtivos(
+            @RequestParam(defaultValue = "0") int pagina,
+            @RequestParam(defaultValue = "7") int itens) {
 
-        List<UsuarioAceitacaoListagemDto> usuarios = usuarioService.listagemDeUsuariosAtivos();
+        Pageable pageable = PageRequest.of(pagina, itens);
+        Page<UsuarioAceitacaoListagemDto> usuarios = usuarioService.listagemDeUsuariosAtivosPaginado(pageable);
 
-        if (usuarios.isEmpty()){
+        if (usuarios.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
 
         return ResponseEntity.ok(usuarios);
     }
 
-    @GetMapping("/usuarios-pendentes")
-    public ResponseEntity<List<UsuarioAceitacaoListagemDto>> listagemDeUsuariosPendentes(){
+    @ApiResponse(responseCode = "200", description = "Usuários encontrados")
+    @ApiResponse(responseCode = "204", description = "Nenhum usuário encontrado")
+    @Operation(summary = "Listar usuários pendentes paginado", description = "Método que lista usuários pendentes paginado", tags = {"Usuários"})
+    @GetMapping("/buscar-usuarios-pendentes-paginado")
+    public ResponseEntity<Page<UsuarioAceitacaoListagemDto>> listagemDeUsuariosPendentes(
+            @RequestParam(defaultValue = "0") int pagina,
+            @RequestParam(defaultValue = "7") int itens) {
 
-        List<UsuarioAceitacaoListagemDto> usuarios = usuarioService.listagemDeUsuariosPendentes();
+        Pageable pageable = PageRequest.of(pagina, itens);
+        Page<UsuarioAceitacaoListagemDto> usuarios = usuarioService.listagemDeUsuariosPendentesPaginado(pageable);
 
-        if (usuarios.isEmpty()){
+        if (usuarios.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
 
         return ResponseEntity.ok(usuarios);
     }
 
-    @GetMapping("/usuarios-negados")
-    public ResponseEntity<List<UsuarioAceitacaoListagemDto>> listagemDeUsuariosNegados(){
+    @ApiResponse(responseCode = "200", description = "Usuários encontrados")
+    @ApiResponse(responseCode = "204", description = "Nenhum usuário encontrado")
+    @Operation(summary = "Listar usuários negados paginado", description = "Método que lista usuários negados paginado", tags = {"Usuários"})
+    @GetMapping("/buscar-usuarios-negados-paginado")
+    public ResponseEntity<Page<UsuarioAceitacaoListagemDto>> listagemDeUsuariosNegados(
+            @RequestParam(defaultValue = "0") int pagina,
+            @RequestParam(defaultValue = "7") int itens) {
 
-        List<UsuarioAceitacaoListagemDto> usuarios = usuarioService.listagemDeUsuariosNegados();
+        Pageable pageable = PageRequest.of(pagina, itens);
+        Page<UsuarioAceitacaoListagemDto> usuarios = usuarioService.listagemDeUsuariosNegadosPaginado(pageable);
 
-        if (usuarios.isEmpty()){
+        if (usuarios.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
 
         return ResponseEntity.ok(usuarios);
     }
+
+    //    @GetMapping("/buscar-todos-os-usuarios")
+//    public ResponseEntity<List<UsuarioAceitacaoListagemDto>> listagemDeUsuarios() {
+//
+//        List<UsuarioAceitacaoListagemDto> usuarios = usuarioService.listagemDeUsuarios();
+//
+//        if (usuarios.isEmpty()) {
+//            return ResponseEntity.noContent().build();
+//        }
+//
+//        return ResponseEntity.ok(usuarios);
+//    }
+
+    //    @GetMapping("/usuarios-ativos")
+//    public ResponseEntity<List<UsuarioAceitacaoListagemDto>> listagemDeUsuariosAtivos() {
+//
+//        List<UsuarioAceitacaoListagemDto> usuarios = usuarioService.listagemDeUsuariosAtivos();
+//
+//        if (usuarios.isEmpty()) {
+//            return ResponseEntity.noContent().build();
+//        }
+//
+//        return ResponseEntity.ok(usuarios);
+//    }
+//    @GetMapping("/usuarios-pendentes")
+//    public ResponseEntity<List<UsuarioAceitacaoListagemDto>> listagemDeUsuariosPendentes() {
+//
+//        List<UsuarioAceitacaoListagemDto> usuarios = usuarioService.listagemDeUsuariosPendentes();
+//
+//        if (usuarios.isEmpty()) {
+//            return ResponseEntity.noContent().build();
+//        }
+//
+//        return ResponseEntity.ok(usuarios);
+//    }
+
+//    @GetMapping("/usuarios-negados")
+//    public ResponseEntity<List<UsuarioAceitacaoListagemDto>> listagemDeUsuariosNegados() {
+//
+//        List<UsuarioAceitacaoListagemDto> usuarios = usuarioService.listagemDeUsuariosNegados();
+//
+//        if (usuarios.isEmpty()) {
+//            return ResponseEntity.noContent().build();
+//        }
+//
+//        return ResponseEntity.ok(usuarios);
+//    }
 }

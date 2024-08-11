@@ -21,7 +21,6 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-
 }
 
 .descricaoColunas {
@@ -30,7 +29,6 @@
     justify-content: start;
     width: 100%;
     margin-top: 5px;
-    margin-bottom: 5px;
 }
 
 .divNome {
@@ -42,7 +40,7 @@
 }
 
 .divCpf {
-    width: 149px;
+    width: 160px;
     display: flex;
     justify-content: start;
     font-family: "Nunito Sans", sans-serif;
@@ -62,6 +60,36 @@
     font-family: "Nunito Sans", sans-serif;
 }
 
+.paginacao {
+    display: flex;
+    width: 20%;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.btnPaginacao {
+    border-radius: 7px;
+    background-color: #ffffff;
+    color: gray;
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 16px;
+}
+
+.spanNumeroPaginas {
+    font-family: "Nunito Sans", sans-serif;
+}
+
+.notFound {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 20px;
+    color: gray;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
 
 .h1 {
     color: black;

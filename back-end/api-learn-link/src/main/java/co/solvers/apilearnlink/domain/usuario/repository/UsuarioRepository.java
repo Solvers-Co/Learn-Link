@@ -3,11 +3,11 @@ package co.solvers.apilearnlink.domain.usuario.repository;
 import co.solvers.apilearnlink.domain.tipostatus.TipoStatus;
 import co.solvers.apilearnlink.domain.usuario.Usuario;
 import co.solvers.apilearnlink.service.usuario.dto.UsuarioAceitacaoListagemDto;
-import co.solvers.apilearnlink.service.usuario.dto.UsuarioListagemDto;
 import co.solvers.apilearnlink.service.usuario.dto.UsuarioListagemRankingDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,7 +15,9 @@ import java.util.Optional;
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     Optional<Usuario> findByEmail(String email);
+
     Optional<Usuario> findByNome(String nome);
+
     Optional<Usuario> findById(Long id);
 
     Usuario deleteAllById(long id);
@@ -37,23 +39,46 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     @Query("SELECT new co.solvers.apilearnlink.service.usuario.dto.UsuarioAceitacaoListagemDto(u.id, u.nome, u.cpf, u.email, ts.status) " +
             "FROM Usuario u JOIN u.tipoStatus ts " +
             "ORDER BY ts.status DESC")
-    List<UsuarioAceitacaoListagemDto> findAllUsuarios();
+    Page<UsuarioAceitacaoListagemDto> findAllUsuariosPaginado(Pageable pageable);
 
     @Query("SELECT new co.solvers.apilearnlink.service.usuario.dto.UsuarioAceitacaoListagemDto(u.id, u.nome, u.cpf, u.email, ts.status) " +
             "FROM Usuario u JOIN u.tipoStatus ts " +
             "WHERE ts.status = 'APROVADO' " +
             "ORDER BY ts.status DESC")
-    List<UsuarioAceitacaoListagemDto> findAllUsuariosAtivos();
+    Page<UsuarioAceitacaoListagemDto> findAllUsuariosAtivosPaginado(Pageable pageable);
 
     @Query("SELECT new co.solvers.apilearnlink.service.usuario.dto.UsuarioAceitacaoListagemDto(u.id, u.nome, u.cpf, u.email, ts.status) " +
             "FROM Usuario u JOIN u.tipoStatus ts " +
             "WHERE ts.status = 'PENDENTE' " +
             "ORDER BY ts.status DESC")
-    List<UsuarioAceitacaoListagemDto> findAllUsuariosPendentes();
+    Page<UsuarioAceitacaoListagemDto> findAllUsuariosPendentesPaginado(Pageable pageable);
 
     @Query("SELECT new co.solvers.apilearnlink.service.usuario.dto.UsuarioAceitacaoListagemDto(u.id, u.nome, u.cpf, u.email, ts.status) " +
             "FROM Usuario u JOIN u.tipoStatus ts " +
             "WHERE ts.status = 'NEGADO' " +
             "ORDER BY ts.status DESC")
-    List<UsuarioAceitacaoListagemDto> findAllUsuariosNegados();
+    Page<UsuarioAceitacaoListagemDto> findAllUsuariosNegadosPaginado(Pageable pageable);
+
+    //    @Query("SELECT new co.solvers.apilearnlink.service.usuario.dto.UsuarioAceitacaoListagemDto(u.id, u.nome, u.cpf, u.email, ts.status) " +
+//            "FROM Usuario u JOIN u.tipoStatus ts " +
+//            "ORDER BY ts.status DESC")
+//    List<UsuarioAceitacaoListagemDto> findAllUsuarios();
+
+//    @Query("SELECT new co.solvers.apilearnlink.service.usuario.dto.UsuarioAceitacaoListagemDto(u.id, u.nome, u.cpf, u.email, ts.status) " +
+//            "FROM Usuario u JOIN u.tipoStatus ts " +
+//            "WHERE ts.status = 'APROVADO' " +
+//            "ORDER BY ts.status DESC")
+//    List<UsuarioAceitacaoListagemDto> findAllUsuariosAtivos();
+
+//    @Query("SELECT new co.solvers.apilearnlink.service.usuario.dto.UsuarioAceitacaoListagemDto(u.id, u.nome, u.cpf, u.email, ts.status) " +
+//            "FROM Usuario u JOIN u.tipoStatus ts " +
+//            "WHERE ts.status = 'PENDENTE' " +
+//            "ORDER BY ts.status DESC")
+//    List<UsuarioAceitacaoListagemDto> findAllUsuariosPendentes();
+
+//    @Query("SELECT new co.solvers.apilearnlink.service.usuario.dto.UsuarioAceitacaoListagemDto(u.id, u.nome, u.cpf, u.email, ts.status) " +
+//            "FROM Usuario u JOIN u.tipoStatus ts " +
+//            "WHERE ts.status = 'NEGADO' " +
+//            "ORDER BY ts.status DESC")
+//    List<UsuarioAceitacaoListagemDto> findAllUsuariosNegados();
 }

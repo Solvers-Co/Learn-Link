@@ -2,41 +2,50 @@ import React, { useEffect, useState } from 'react';
 import styles from './ListaUsuarios.module.css';
 import Usuario from '../Usuario';
 import api from "../../../../../src/api";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useNavigate } from "react-router-dom";
 import Titulo from '../listaUsuarios/tituloAceitarUsuarios/Titulo';
 import Dropdown from '../listaUsuarios/dropdown/Dropdown';
 
-
 const ListaUsuarios = () => {
     const [usuarios, setUsuarios] = useState([]);
-    const [opcoes, setOpcoes] = useState(6);
+    const [opcoes, setOpcoes] = useState('1');
+    const [pagina, setPagina] = useState(0);
+    const [itensPorPagina, setItensPorPagina] = useState(7);
+    const [totalPaginas, setTotalPaginas] = useState(0);
+    const [origemChamada, setOrigemChamada] = useState('');
 
-    const fetchUsuarios = (status) => {
-        let endpoint = '/usuarios/buscar-todos-os-usuarios'; // Padrão para carregar todos os usuários
+    const fetchUsuarios = (status, paginaAtual = pagina, itens = itensPorPagina) => {
+        // Se a origem é o dropdown, reseta para a primeira página
+        if (origemChamada === 'dropdown') {
+            paginaAtual = 0;
+        }
+
+        let endpoint = '';
         switch (status) {
             case '1':
-                endpoint = '/usuarios/buscar-todos-os-usuarios';
+                endpoint = '/usuarios/buscar-todos-os-usuarios-paginado';
                 break;
             case '2':
-                endpoint = '/usuarios/usuarios-ativos';
+                endpoint = '/usuarios/buscar-usuarios-ativos-paginado';
                 break;
             case '3':
-                endpoint = '/usuarios/usuarios-pendentes';
+                endpoint = '/usuarios/buscar-usuarios-pendentes-paginado';
                 break;
             case '4':
-                endpoint = '/usuarios/usuarios-negados';
+                endpoint = '/usuarios/buscar-usuarios-negados-paginado';
                 break;
             default:
                 break;
         }
 
-        api.get(endpoint)
+        api.get(`${endpoint}?pagina=${paginaAtual}&itens=${itens}`)
             .then((response) => {
                 console.log(response);
-                setUsuarios(response.data);
-                toast.success("Usuários carregados com sucesso!");
+                const novaPagina = Math.min(paginaAtual, response.data.totalPages - 1);
+                setPagina(novaPagina);
+                setUsuarios(response.data.content || []);
+                setTotalPaginas(response.data.totalPages);
             })
             .catch((error) => {
                 console.error('erro', error);
@@ -44,34 +53,68 @@ const ListaUsuarios = () => {
     };
 
     useEffect(() => {
-        fetchUsuarios(opcoes); // Carrega os usuários de acordo com o valor inicial
-    }, [opcoes]);
-
-    useEffect(() => {
-        fetchUsuarios('1'); // Carrega todos os usuários quando a página é carregada
-    }, []);
+        fetchUsuarios(opcoes, pagina, itensPorPagina);
+    }, [opcoes, pagina, itensPorPagina, totalPaginas]);
 
     return (
         <>
-            <div className={styles['listaUsuarios']}>
-                <div className={styles['cabecalho']}>
+            <div className={styles.listaUsuarios}>
+                <div className={styles.cabecalho}>
                     <Titulo>Aceitar Usuários</Titulo>
                     <Dropdown
                         value={opcoes}
                         onChange={(value) => {
                             setOpcoes(value);
+                            setOrigemChamada('dropdown'); // Marca que a origem é o dropdown
                         }}
                     />
                 </div>
-                <div className={styles['descricaoColunas']}>
-                    <div className={styles['divNome']}>Nome</div>
-                    <div className={styles['divCpf']}>CPF</div>
-                    <div className={styles['divEmail']}>E-mail</div>
-                    <div className={styles['divStatus']}>Status</div>
+                <div className={styles.descricaoColunas}>
+                    <div className={styles.divNome}>Nome</div>
+                    <div className={styles.divCpf}>CPF</div>
+                    <div className={styles.divEmail}>E-mail</div>
+                    <div className={styles.divStatus}>Status</div>
                 </div>
-                {usuarios.map((usuario) => (
-                    <Usuario key={usuario.id} usuario={usuario} />
-                ))}
+
+                {usuarios && usuarios.length > 0 ? (
+                    <>
+                        {usuarios.map((usuario) => (
+                            <Usuario
+                                key={usuario.id}
+                                usuario={usuario}
+                                fetchUsuarios={fetchUsuarios}
+                                paginaAtual={pagina}
+                                statusAtual={opcoes}
+                            />
+                        ))}
+                        <div className={styles.paginacao}>
+                            <button
+                                onClick={() => {
+                                    setPagina(pagina - 1);
+                                    setOrigemChamada('paginacao');
+                                }}
+                                disabled={pagina === 0}
+                                className={styles.btnPaginacao}
+                            >
+                                Anterior
+                            </button>
+                            <span className={styles.spanNumeroPaginas}>{pagina + 1} de {totalPaginas}</span>
+                            <button
+                                onClick={() => {
+                                    setPagina(pagina + 1);
+                                    setOrigemChamada('paginacao');
+                                }}
+                                disabled={pagina + 1 === totalPaginas}
+                                className={styles.btnPaginacao}
+                            >
+                                Próximo
+                            </button>
+                        </div>
+                    </>
+                ) : (
+                    <p className={styles['notFound']}>Nenhum usuário encontrado.</p>
+
+                )}
             </div>
             <ToastContainer
                 position="top-right"
@@ -84,7 +127,7 @@ const ListaUsuarios = () => {
                 draggable
                 pauseOnHover
                 theme="light"
-                />
+            />
         </>
     );
 };

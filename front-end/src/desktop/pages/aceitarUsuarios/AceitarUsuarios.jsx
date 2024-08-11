@@ -1,4 +1,3 @@
-import '../../components/dashboard/graficoLinhas/GraficoLinhas.module.css';
 import ListaUsuarios from '../../components/aceitarUsuarios/listaUsuarios/ListaUsuarios.jsx';
 import styles from '../aceitarUsuarios/AceitarUsuarios.module.css';
 import MenuLateral from '../../components/dashboard/menuLateral/MenuLateral';

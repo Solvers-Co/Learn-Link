@@ -25,6 +25,7 @@ public class UsuarioCriacaoRequestDto {
 
     @CPF
     @NotBlank
+    @Schema(description = "CPF do usuário", example = "18219822821") //isso é um cpf de verdade não sei de qm é kkkk
     private String cpf;
 
     @NotBlank
@@ -36,7 +37,9 @@ public class UsuarioCriacaoRequestDto {
     @Schema(description = "Senha do usuário", example = "senha")
     private String senha;
 
+    @Schema(description = "Escolaridade do usuário", example = "1")
     private Integer escolaridadeId;
+
     private EnderecoCriacaoDto endereco;
 
     /*@NotBlank
