@@ -1,16 +1,14 @@
 .card {
     display: flex;
     flex-direction: column;
-    /* justify-content: space-evenly; */
     border: black;
     border-radius: 20px;
-    min-height: 500px;
-    height: auto;
-    width: 594px;
-    box-shadow: 5px 5px 10px black;
+    height: var(--altura);
+    width: 34vw;
+    box-shadow: 0px 8px 50.5px rgb(0, 0, 0, .25);
     background-color: #FFF;
     align-items: center;
     padding-bottom: 35px;
     padding-top: 35px;
-    border: black 1px solid;
+    border: rgb(0, 0, 0, 0.75) 1px solid;
 }
