@@ -7,12 +7,20 @@
     display: flex;
     justify-content: space-around;
     gap: 45px;
-    position: absolute;
+    position: fixed;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    z-index: 1;
+}
+
+.header.scrolled {
+    background-color: #ffffff; /* Cor do fundo quando rolado */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para destacar */
 }
 
 .logo {
     padding: 15px 0px 22px 0px;
     cursor: pointer;
+    transition: opacity 0.3s;
 }
 
 .secoes {
@@ -21,14 +29,19 @@
     width: 18vw;
     align-items: center;
     padding-left: 150px;
+    transition: color 0.3s;
 }
 
 .secoes a {
     font-size: 18px;
     text-decoration: none;
-    color: #fff;
+    color: #ffffff;
     font-family: 'Merriweather', serif;
-    font-weight: lighter;
+}
+
+.secoes a.active,  .header.scrolled .secoes a.active{
+    color: rgb(221, 0, 0); 
+    border-bottom: 2px solid rgb(221, 0, 0); 
 }
 
 .botoes {
@@ -37,4 +50,29 @@
     align-items: center;
     width: 18vw;
 }
+
+.header.scrolled .secoes a {
+    color: #000000; /* Cor da fonte quando rolado */
+}
+
+.botaoBrancoHeaderScroll, .botaoTransparenteHeaderScroll {
+    width: 130px;
+    height: 40px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-family: 'Merriweather', serif;
+    font-size: 20px;
+}
+
+.botaoBrancoHeaderScroll {
+    background-color: #A80301; /* Cor do botão quando rolado */
+    color: white;
+}
+
+.botaoTransparenteHeaderScroll {
+    border: 1px solid #771212; 
+    background-color: white;
+    color: #771212;
+}
+
 
