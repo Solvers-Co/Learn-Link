@@ -8,11 +8,17 @@ const PaginaInicial = () => {
     return (
         <div>
             <Header />
-            <Home />
-            <Solucao />
-            <Beneficios />
+            <div id="home">
+                <Home />
+            </div>
+            <div id="solucoes">
+                <Solucao />
+            </div>
+            <div id="beneficios">
+                <Beneficios />
+            </div>
         </div>
-    )
+    );
 }
 
 export default PaginaInicial;
