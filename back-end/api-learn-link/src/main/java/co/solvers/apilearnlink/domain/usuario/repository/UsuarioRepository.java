@@ -3,13 +3,11 @@ package co.solvers.apilearnlink.domain.usuario.repository;
 import co.solvers.apilearnlink.domain.tipostatus.TipoStatus;
 import co.solvers.apilearnlink.domain.usuario.Usuario;
 import co.solvers.apilearnlink.service.usuario.dto.UsuarioAceitacaoListagemDto;
-import co.solvers.apilearnlink.service.usuario.dto.UsuarioListagemDto;
 import co.solvers.apilearnlink.service.usuario.dto.UsuarioListagemRankingDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;

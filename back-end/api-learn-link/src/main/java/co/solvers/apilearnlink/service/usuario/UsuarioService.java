@@ -22,12 +22,10 @@ import co.solvers.apilearnlink.service.tipousuario.escolaridade.TipoUsuarioServi
 import co.solvers.apilearnlink.service.usuario.autenticacao.dto.UsuarioLoginDto;
 import co.solvers.apilearnlink.service.usuario.autenticacao.dto.UsuarioTokenDto;
 import co.solvers.apilearnlink.service.usuario.dto.UsuarioAceitacaoListagemDto;
-import co.solvers.apilearnlink.service.usuario.dto.UsuarioListagemDto;
 import co.solvers.apilearnlink.service.usuario.dto.UsuarioListagemRankingDto;
 import co.solvers.apilearnlink.service.usuario.dto.mapper.UsuarioMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -160,9 +158,8 @@ public class UsuarioService {
         String senhaCriptografada = passwordEncoder.encode(senha);
 
         usuario.get().setSenha(senhaCriptografada);
-        Usuario usuarioSenhaAlterada = usuarioRepository.save(usuario.get());
 
-        return usuarioSenhaAlterada;
+        return usuarioRepository.save(usuario.get());
     }
 
     public Usuario alterarStatus(Long id, Integer idTipoStatus) {
@@ -226,7 +223,6 @@ public class UsuarioService {
 //            throw new NaoEncontradoException("Usuário");
 //        }
     }
-
 
     public Page<UsuarioAceitacaoListagemDto> listagemDeUsuariosPaginado(Pageable pageable) {
         return usuarioRepository.findAllUsuariosPaginado(pageable);
