@@ -19,17 +19,17 @@ function Header() {
         navigate('/');
     };
 
-    const handleSearchClick = () => {
-        if (searchVisible && searchValue) {
-            console.log('Pesquisar por:', searchValue);
-        } else {
-            setSearchVisible(!searchVisible);
-        }
-    };
+    // const handleSearchClick = () => {
+    //     if (searchVisible && searchValue) {
+    //         console.log('Pesquisar por:', searchValue);
+    //     } else {
+    //         setSearchVisible(!searchVisible);
+    //     }
+    // };
 
-    const handleInputChange = (event) => {
-        setSearchValue(event.target.value);
-    };
+    // const handleInputChange = (event) => {
+    //     setSearchValue(event.target.value);
+    // };
 
     const handleClickOutside = (event) => {
         if (
@@ -60,7 +60,7 @@ function Header() {
                 <div className={styles.logo}>
                     <img src={Logo} alt='Logo Vermelha' onClick={handleHome}/>
                 </div>
-                <div className={styles.pesquisar}>
+                {/* <div className={styles.pesquisar}>
                     {searchVisible && (
                         <input
                             type="text"
@@ -76,7 +76,7 @@ function Header() {
                         onClick={handleSearchClick}
                         className={styles.searchIcon}
                     />
-                </div>
+                </div> */}
                 <div className={styles.menu}>
                     <img
                         src={IconeMenu}
