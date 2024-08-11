@@ -1,11 +1,11 @@
 import styles from './OpcaoNavegacao.module.css'
 
-const OpcaoNavegacao = (props) => {
+const OpcaoNavegacao = ({ icone, nomeSecao, onClick }) => {
     return (
-                <div className={styles.opcaoNavegacao}>
-                    <img src={props.icone} />
-                    <p>{props.nomeSecao}</p>
-                </div>
+        <div onClick={onClick} className={styles.opcaoNavegacao}>
+            <img src={icone} alt={`${nomeSecao} ícone`} />
+            <p>{nomeSecao}</p>
+        </div>
     )
 }
 

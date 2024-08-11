@@ -22,6 +22,13 @@ const MenuInicial = () => {
         navigate('/login'); 
     };
 
+    const scrollToSection = (sectionId) => {
+        const section = document.getElementById(sectionId);
+        if (section) {
+            section.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
     const handleClose = () => {
         setIsVisible(false); // Oculta o menu
     };
@@ -35,9 +42,21 @@ const MenuInicial = () => {
             <div className={styles.menuInicial}>
                 <img src={IconeX} className={styles.cancelar} onClick={handleClose} alt="Fechar Menu" />
                 <div className={styles.navegacaoSite}>
-                    <OpcaoNavegacao icone={IconeHome} nomeSecao="Home" />
-                    <OpcaoNavegacao icone={IconeSolucoes} nomeSecao="Soluções" />
-                    <OpcaoNavegacao icone={IconeBeneficios} nomeSecao="Benefícios" />
+                <OpcaoNavegacao 
+                        icone={IconeHome} 
+                        nomeSecao="Home" 
+                        onClick={() => scrollToSection('home')} 
+                    />
+                    <OpcaoNavegacao 
+                        icone={IconeSolucoes} 
+                        nomeSecao="Soluções" 
+                        onClick={() => scrollToSection('solucoes')} 
+                    />
+                    <OpcaoNavegacao 
+                        icone={IconeBeneficios} 
+                        nomeSecao="Benefícios" 
+                        onClick={() => scrollToSection('beneficios')} 
+                    />
                 </div>
                 <Linha />
                 <div className={styles.tituloBotoes}>
