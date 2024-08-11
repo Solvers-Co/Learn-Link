@@ -4,13 +4,13 @@
     display: flex;
     flex-direction: column;
     width: var(--largura);
-    height: 55vh;
+    height: var(--altura);
     text-align: center;
 }
 
 .titulo {
     text-decoration: none;
-    font-size: 32px;
+    font-size: var(--tamanhoFonteTitulo);
     margin-bottom: 10px; /* Espaço entre o título e a linha */
     position: relative; /* Necessário para posicionar a linha */
     font-weight: 700;
@@ -29,7 +29,7 @@
 }
 
 .paragrafo {
-    font-size: 18px;
+    font-size: var(--tamanhoFonteParagrafo);
     font-family: 'Merriweather', serif;
     font-weight: 500;
 }

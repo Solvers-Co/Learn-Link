@@ -3,17 +3,24 @@ import styles from './Header.module.css';
 import Logo from '../../utils/assets/logo_vermelha_fundo_branco.png';
 import IconePesquisar from '../../utils/assets/icone_pesquisar.svg';
 import IconeMenu from '../../utils/assets/icone_menu_hamburguer.svg';
-import MenuInicial from '../menuInicial/MenuInicial'; // Importe o MenuInicial
+import MenuInicial from '../menuInicial/MenuInicial';
+import { useNavigate } from 'react-router-dom';
 
 function Header() {
     const [searchVisible, setSearchVisible] = useState(false);
     const [searchValue, setSearchValue] = useState('');
-    const [menuVisible, setMenuVisible] = useState(false); // Estado para controlar a visibilidade do menu
+    const [menuVisible, setMenuVisible] = useState(false);
     const headerRef = useRef(null);
+    const menuIconRef = useRef(null);
+    const menuRef = useRef(null); // Ref para o MenuInicial
+    const navigate = useNavigate();
+
+    const handleHome = () => {
+        navigate('/');
+    };
 
     const handleSearchClick = () => {
         if (searchVisible && searchValue) {
-            // Realizar a pesquisa aqui
             console.log('Pesquisar por:', searchValue);
         } else {
             setSearchVisible(!searchVisible);
@@ -25,13 +32,19 @@ function Header() {
     };
 
     const handleClickOutside = (event) => {
-        if (headerRef.current && !headerRef.current.contains(event.target)) {
+        if (
+            headerRef.current &&
+            !headerRef.current.contains(event.target) &&
+            (!menuIconRef.current || !menuIconRef.current.contains(event.target)) &&
+            (!menuRef.current || !menuRef.current.contains(event.target)) // Verifica se o clique foi fora do MenuInicial
+        ) {
             setSearchVisible(false);
+            setMenuVisible(false);
         }
     };
 
     const handleMenuClick = () => {
-        setMenuVisible(!menuVisible); // Alterna a visibilidade do menu
+        setMenuVisible(!menuVisible);
     };
 
     useEffect(() => {
@@ -45,7 +58,7 @@ function Header() {
         <>
             <div className={styles.header} ref={headerRef}>
                 <div className={styles.logo}>
-                    <img src={Logo} alt='Logo Vermelha' />
+                    <img src={Logo} alt='Logo Vermelha' onClick={handleHome}/>
                 </div>
                 <div className={styles.pesquisar}>
                     {searchVisible && (
@@ -69,10 +82,15 @@ function Header() {
                         src={IconeMenu}
                         alt='Menu hamburguer'
                         onClick={handleMenuClick}
+                        ref={menuIconRef}
                     />
                 </div>
             </div>
-            {menuVisible && <MenuInicial />} {/* Renderize o MenuInicial baseado no estado */}
+            {menuVisible && (
+                <div ref={menuRef}>
+                    <MenuInicial />
+                </div>
+            )}
         </>
     );
 }

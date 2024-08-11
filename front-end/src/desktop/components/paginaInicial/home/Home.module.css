@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
+
+* {
+    font-family: 'Merriweather', serif;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+.home {
+    background-image: url("../../../utils/assets/fundo-home.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+}
+
+.conteudo {
+    width: 55vw;
+    height: 100vh;
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.conteudo h1 {
+    margin-top: 30px;
+    font-size: 76px;
+    text-shadow: 0px 2px 4px #000;
+}
+
+.conteudo p {
+    font-size: 26px;
+    font-weight: lighter;
+}
+
+.titulo, .subTitulo {
+    color: #ffffff;
+}

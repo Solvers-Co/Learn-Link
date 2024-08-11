@@ -37,3 +37,45 @@
     align-items: center;
     width: 18vw;
 }
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        height: auto;
+        padding: 10px 20px;
+    }
+
+    .logo {
+        padding: 10px 0;
+    }
+
+    .secoes {
+        width: 100%;
+        justify-content: center;
+        margin-left: 0;
+        margin-bottom: 10px;
+    }
+
+    .secoes a {
+        font-size: 16px;
+        margin-left: 10px;
+    }
+
+    .botoes {
+        width: 100%;
+        justify-content: center;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .secoes a {
+        font-size: 14px;
+        margin-left: 5px;
+    }
+
+    .botoes {
+        flex-direction: column;
+        gap: 5px;
+    }
+}

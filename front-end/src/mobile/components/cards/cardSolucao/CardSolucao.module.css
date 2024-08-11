@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
+
+.card {
+    display: flex;
+    width: 65vw;
+    height: 25vh;
+    border: #0000 1px solid;
+    border-radius: 20px;
+    box-shadow: 0px 8px 50.5px rgba(0, 0, 0, 0.25);
+    /* x | y | blur | cor */
+    align-self: center;
+    margin-bottom: 5%;
+    background-color: rgb(255, 255, 255, 0.9);
+}
+
+.conteudoCard {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    text-align: center;
+}
+
+.titulo {
+    color: #A80301;
+    text-decoration: none;
+    margin-bottom: 10px;
+    margin-left: 0;
+    font-weight: 800;
+    font-size: 16px;
+}
+
+.titulo, .paragrafo {
+    font-family: 'Merriweather', serif;
+    width: 80%;
+}
+
+.paragrafo {
+    font-size: 13px;
+}
+
+.botao {
+    margin-top: 10px;
+    width: 35%;
+    height: 28px;
+    border-radius: 5px;
+    font-weight: 800;
+    border: 2px solid #A80301;
+    color: #A80301;
+}
+
+.botao:hover {
+    background-color: #A80301;
+    color: white;
+}
+
+.imagem {
+    width: 80%;
+    height: 100%;
+    /* object-fit: cover;  */
+    /* border-radius: 20px; */
+    /* padding-top: 10px; */
+}

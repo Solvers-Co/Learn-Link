@@ -51,6 +51,8 @@ const MenuInicial = () => {
                         className={stylesBotao.botaoBrancoMenuInicial}
                         textoBotao="Login" 
                         funcao={handleLogin} 
+                        largura="60%"
+                        altura="40px"
                     />
                 </div>
             </div>
