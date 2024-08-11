@@ -9,4 +9,11 @@
 
 .conteudo {
     display: flex;
+    height: 48vh;
+}
+
+.cards {
+    display: flex;
+    gap: 5%;
+    align-items: center;
 }

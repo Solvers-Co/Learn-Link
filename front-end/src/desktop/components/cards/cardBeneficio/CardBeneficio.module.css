@@ -1,5 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
+
 .card {
-    width: 50%;
-    height: 50%;
+    width: var(--largura);
+    height: var(--altura);
     background-color: rgb(255, 255, 255, 0.9);
+    border-radius: 13px;
+    transition: transform 0.4s;
+    box-shadow: 10px 10px 37.9px rgba(255, 255, 255, 0.25);
+}
+
+.card:hover {
+    transform: scale(1.08);
+}
+
+.conteudoCard {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 30px;
+    height: 70%;
+    justify-content: center;
+}
+
+.titulo {
+    color: #A80301;
+    font-size: 18px;
+    margin-left: 0;
+    margin-bottom: 10px;
+}
+
+.paragrafo {
+    font-size: 14px;
+}
+
+.titulo, .paragrafo {
+    font-family: 'Merriweather', serif;
+}
+
+.botao {
+    margin-top: 20px;
+    width: 35%;
+    height: 28px;
+    border-radius: 5px;
+    font-weight: 800;
+    border: 2px solid #A80301;
+    color: #A80301;
+}
+
+.botao:hover {
+    background-color: #A80301;
+    color: white;
+}
+
+.imagem {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    border-radius: 20px;
+    padding-top: 10px;
 }
