@@ -62,7 +62,7 @@ function Footer() {
     return (
         <footer className={styles['footer']}>
             <div className={styles['logo']}>
-                <img src={Logo} alt="Learn Link Logo" className={styles['footer-logo']} onClick={() => scrollToSection('home')}/>
+                <img src={Logo} alt="Learn Link Logo" className={styles['footer-logo']} onClick={() => scrollToSection('home')} />
             </div>
 
             <div className={styles['direitos']}>
