@@ -1,0 +1,19 @@
+.beneficios {
+    background-image: url("../../../utils/assets/fundo-beneficios.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: rgb(255, 255, 255);
+    width: 100%;
+    height: 100vh;
+}
+
+.conteudo {
+    display: flex;
+    height: 48vh;
+}
+
+.cards {
+    display: flex;
+    gap: 5%;
+    align-items: center;
+}
