@@ -1,0 +1,67 @@
+.footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-top: 20px;
+    padding-bottom: 20px;   
+    background-color: #ffffff;
+    border-top: 1px solid #a5a5a5;
+  }
+  
+  .logo {
+    display: flex;
+    width: 15%;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .footer-logo {
+    height: 92px;
+    width: 157px;
+  }
+  
+  .direitos {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 67%;
+    font-size: 18px;
+    gap: 6px;
+  }
+  
+    
+.linha {
+    width: 1px;
+    height: 140px;
+    background-color: #959595;
+    margin: 0 20px;
+  }
+
+.paginas {
+    display: flex;
+    width: 10%;
+    justify-content: start;
+
+  }
+
+  .paginas ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .paginas ul li {
+    color: #959595;
+    text-decoration: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  .learnLink {
+    color: #170F49;
+    font-size: 20px;
+  }
+  
