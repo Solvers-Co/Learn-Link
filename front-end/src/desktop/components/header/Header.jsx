@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './Header.module.css';
 import stylesBotao from '../../../mobile/components/botoes/botaoLoginCadastro/Botao.module.css';
 import Logo from '../../utils/assets/logo-branca.png';
-import LogoScroll from '../../utils/assets/Logo_vermelha_fundo_branco-removebg-preview.png'; // Adicione uma nova logo para quando rolar
+import LogoScroll from '../../utils/assets/logo_vermelha.png'; // Adicione uma nova logo para quando rolar
 import Botao from '../../../mobile/components/botoes/botaoLoginCadastro/Botao';
 import { useNavigate } from 'react-router-dom';
 
