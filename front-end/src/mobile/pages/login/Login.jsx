@@ -24,7 +24,9 @@ const Login = () => {
         
         api.post(`/usuarios/login`, usuario).then(response => {
             const sessionData = response.data.token;
-            sessionStorage.setItem('token: ', sessionData)
+            const sessionUserId = response.data.userId;
+            sessionStorage.setItem('token', sessionData)
+            sessionStorage.setItem('userId', sessionUserId)
             
             toast.success("Login Efetuado com sucesso!"); // Exibe uma mensagem de sucesso
             navigate("/login"); // Redireciona para a página de músicas
