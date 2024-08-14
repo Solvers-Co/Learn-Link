@@ -1,0 +1,52 @@
+.card-container {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 16px;
+    Width: 85%;
+    text-align: center;
+    background-color: white;
+    margin-bottom: 10px;
+}
+
+.card-superior {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+
+.imagem {
+    width: 50px;
+    height: 50px;
+}
+
+.imagem img {
+    width: 100%;
+    height: 100%;
+}
+
+.card-button {
+    background-color: white;
+    border: 2px solid #A80301;
+    align-self: center;
+    width: 75%;
+    height: 40px;
+    color: #d32f2f;
+    border-radius: 50px;
+    font-size: 18px;
+    cursor: pointer;
+    font-family: "Nunito Sans", sans-serif;
+}
+
+.card-divider {
+    margin: 16px 0;
+    border: none;
+    border-top: 1px solid #e0e0e0;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #616161;
+}
