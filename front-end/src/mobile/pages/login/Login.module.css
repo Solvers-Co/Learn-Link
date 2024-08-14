@@ -3,6 +3,11 @@
     src: url('../../utils/fonts/Nunito_Sans/static/NunitoSans_10pt-ExtraBold.ttf') format("truetype");
 }
 
+@font-face {
+    font-family: "NunitoSansExtraLight";
+    src: url('../../utils/fonts/Nunito_Sans/static/NunitoSans_10pt-ExtraLight.ttf');
+}
+
 * {
     margin: 0;
     justify-content: center;
@@ -25,14 +30,14 @@
 }
 
 h3 {
-    font-family: "NunitoSans", sans-serif;
-    font-size: 24px;
+    font-family: "NunitoSansExtraLight", sans-serif;
+    font-size: 20px;
     margin-left: 3%;
 }
 
 h2 {
-    font-family: "NunitoSans", sans-serif;
-    font-size: 16px;
+    font-family: "NunitoSansExtraLight", sans-serif;
+    font-size: 18px;
     margin-left: 3%;
     color: red;
     text-decoration: underline;

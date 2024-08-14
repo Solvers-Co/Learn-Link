@@ -1,5 +1,5 @@
 @font-face {
-    font-family: NunitoSans;
+    font-family: "NunitoSansLight";
     src: url('../../../utils/fonts/Nunito_Sans/static/NunitoSans_10pt-Light.ttf');
 }
 
@@ -8,7 +8,7 @@
 :root {
     --primary-color: #A80301;
     --secondary-color: #FFFFFF;
-    --default-font: 'NunitoSans', sans-serif;
+    --default-font: 'NunitoSansLight', sans-serif;
     --secondary-font: 'Merriweather', serif;
 }
 
