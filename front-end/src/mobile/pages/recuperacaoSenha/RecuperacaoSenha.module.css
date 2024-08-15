@@ -1,0 +1,44 @@
+@font-face {
+    font-family: "NunitoSansExtraBold";
+    src: url('../../utils/fonts/Nunito_Sans/static/NunitoSans_10pt-ExtraBold.ttf') format("truetype");
+}
+
+@font-face {
+    font-family: "NunitoSansExtraLight";
+    src: url('../../utils/fonts/Nunito_Sans/static/NunitoSans_10pt-ExtraLight.ttf');
+}
+
+*{
+    margin: 0;
+    justify-content: center;
+}
+
+.container{
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    background-image: url("../../utils/assets/BubblesCadastro.png");
+    background-repeat: no-repeat;
+    background-position: top;
+    flex-direction: column;
+}
+
+.cadastroMobileTitulo{
+    font-family: "NunitoSansExtraBold", sans-serif;
+    font-size: 48px;
+    margin-left: 3%;
+}
+
+.divInputs{
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.container h3{
+    font-family: "NunitoSansExtraLight", sans-serif;
+    font-size: 18px;
+    margin-left: 3%;
+}
