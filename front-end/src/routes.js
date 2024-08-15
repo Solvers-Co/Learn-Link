@@ -11,6 +11,7 @@ import PaginaInicialDesktop from "./desktop/pages/paginaInicial/PaginaInicial";
 import MenuInicial from "./mobile/components/menuInicial/MenuInicial";
 import Header from "./mobile/components/header/Header";
 import PaginaInicial from "./mobile/pages/paginaInicial/PaginaInicial";
+import CompletarCadastro from "./mobile/pages/completarCadastro/CompletarCadastro";
 
 function Rotas() {
     return (
@@ -25,6 +26,7 @@ function Rotas() {
                     <Route path="/loginDesktop" element={<LoginDesktop />} />
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/aceitarUsuarios" element={<AceitarUsuarios />} />
+                    <Route path="/completarCadastro" element={<CompletarCadastro />} />
                 </Routes>
             </BrowserRouter>
         </>
