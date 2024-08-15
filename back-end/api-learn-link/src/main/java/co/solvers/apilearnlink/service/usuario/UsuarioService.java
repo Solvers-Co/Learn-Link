@@ -3,7 +3,6 @@ package co.solvers.apilearnlink.service.usuario;
 import co.solvers.apilearnlink.api.configuration.security.jwt.GerenciadorTokenJwt;
 import co.solvers.apilearnlink.domain.classificacao.Classificacao;
 import co.solvers.apilearnlink.domain.endereco.Endereco;
-import co.solvers.apilearnlink.domain.escolaridade.Escolaridade;
 import co.solvers.apilearnlink.domain.registroLogin.RegistroLogin;
 import co.solvers.apilearnlink.domain.tipostatus.TipoStatus;
 import co.solvers.apilearnlink.domain.tipostatus.repository.TipoStatusRepository;
@@ -15,10 +14,9 @@ import co.solvers.apilearnlink.exception.NaoEncontradoException;
 import co.solvers.apilearnlink.fila.FilaObj;
 import co.solvers.apilearnlink.service.classificacao.ClassificacaoService;
 import co.solvers.apilearnlink.service.endereco.EnderecoService;
-import co.solvers.apilearnlink.service.escolaridade.EscolaridadeService;
 import co.solvers.apilearnlink.service.registrologin.RegistroLoginService;
 import co.solvers.apilearnlink.service.tipoStatus.TipoStatusService;
-import co.solvers.apilearnlink.service.tipousuario.escolaridade.TipoUsuarioService;
+import co.solvers.apilearnlink.service.tipousuario.TipoUsuarioService;
 import co.solvers.apilearnlink.service.usuario.autenticacao.dto.UsuarioLoginDto;
 import co.solvers.apilearnlink.service.usuario.autenticacao.dto.UsuarioTokenDto;
 import co.solvers.apilearnlink.service.usuario.dto.UsuarioAceitacaoListagemDto;
@@ -48,13 +46,12 @@ public class UsuarioService {
     private final TipoStatusRepository tipoStatusRepository;
     private final GerenciadorTokenJwt gerenciadorTokenJwt;
     private final AuthenticationManager authenticationManager;
-    private final EscolaridadeService escolaridadeService;
     private final ClassificacaoService classificacaoService;
     private final EnderecoService enderecoService;
     private final TipoUsuarioService tipoUsuarioService;
     private final TipoStatusService tipoStatusService;
 
-    public Usuario criar(Usuario usuario, Integer escolaridadeId) {
+    public Usuario criar(Usuario usuario) {
 
         verificaEmailExistente(usuario.getEmail());
 
@@ -68,11 +65,6 @@ public class UsuarioService {
         usuario.setTipoStatus(tipoStatus);
         usuario.setTipoUsuario(tipoUsuario);
         usuario.setClassificacao(classificacao);
-
-        if (escolaridadeId != null) {
-            Escolaridade escolaridade = escolaridadeService.buscarPorId(escolaridadeId);
-            usuario.setEscolaridade(escolaridade);
-        }
 
         if (usuario.getEndereco() != null) {
             Endereco endereco = enderecoService.salvar(usuario.getEndereco());

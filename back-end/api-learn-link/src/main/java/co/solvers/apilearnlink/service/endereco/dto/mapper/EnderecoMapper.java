@@ -12,8 +12,6 @@ public class EnderecoMapper {
         if (dto == null) return null;
 
         Endereco entity = new Endereco();
-        entity.setLogradouro(dto.getLogradouro());
-        entity.setNumero(dto.getNumero());
         entity.setBairro(dto.getBairro());
         entity.setCidade(dto.getCidade());
         entity.setEstado(dto.getEstado());
@@ -26,8 +24,6 @@ public class EnderecoMapper {
         if (entity == null) return null;
 
         EnderecoListagemDto dto = new EnderecoListagemDto();
-        dto.setLogradouro(entity.getLogradouro());
-        dto.setNumero(entity.getNumero());
         dto.setBairro(entity.getBairro());
         dto.setCidade(entity.getCidade());
         dto.setEstado(entity.getEstado());

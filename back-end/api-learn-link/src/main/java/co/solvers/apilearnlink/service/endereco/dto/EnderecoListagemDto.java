@@ -6,8 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class EnderecoListagemDto {
-    private String logradouro;
-    private int numero;
     private String bairro;
     private String cidade;
     private String estado;

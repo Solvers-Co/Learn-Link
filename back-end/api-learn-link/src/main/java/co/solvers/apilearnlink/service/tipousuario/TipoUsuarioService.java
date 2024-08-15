@@ -1,7 +1,5 @@
-package co.solvers.apilearnlink.service.tipousuario.escolaridade;
+package co.solvers.apilearnlink.service.tipousuario;
 
-import co.solvers.apilearnlink.domain.escolaridade.Escolaridade;
-import co.solvers.apilearnlink.domain.escolaridade.repository.EscolaridadeRepository;
 import co.solvers.apilearnlink.domain.tipousuario.TipoUsuario;
 import co.solvers.apilearnlink.domain.tipousuario.respository.TipoUsuarioRepository;
 import co.solvers.apilearnlink.exception.NaoEncontradoException;
@@ -16,11 +14,11 @@ public class TipoUsuarioService {
     private final TipoUsuarioRepository tipoUsuarioRepository;
 
     public TipoUsuario buscarPorId(int id){
-        Optional<TipoUsuario> escolaridadeUsuario = tipoUsuarioRepository.findById(id);
+        Optional<TipoUsuario> tipoUsuario = tipoUsuarioRepository.findById(id);
 
-        if (escolaridadeUsuario.isEmpty()) throw new NaoEncontradoException("Tipo de usuário");
+        if (tipoUsuario.isEmpty()) throw new NaoEncontradoException("Tipo de usuário");
 
-        return escolaridadeUsuario.get();
+        return tipoUsuario.get();
     }
 
     public TipoUsuario buscarPorTipoUsuario(String tipoUsuario){
