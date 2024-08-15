@@ -62,14 +62,14 @@ public class PublicacaoService {
 
         List<Publicacao> publicacoes = publicacaoRepository.findAllByOrderByDataHora();
 
-        if (!publicacoes.isEmpty()){
+        if (!publicacoes.isEmpty()) {
             PilhaObj<Publicacao> pilha = new PilhaObj<>(publicacoes.size());
 
-            for (Publicacao publicacao:publicacoes){
+            for (Publicacao publicacao : publicacoes) {
                 pilha.push(publicacao);
             }
 
-            for (int i = 0 ; i < publicacoes.size() ; i++){
+            for (int i = 0; i < publicacoes.size(); i++) {
                 publicacoes.set(i, pilha.pop());
             }
         }
@@ -136,16 +136,17 @@ public class PublicacaoService {
 
         return publicacoes;
     }
-    public String[][] buscaQuantidadeDePublicacoesPorDiaMatriz (int mes, int ano){
+
+    public String[][] buscaQuantidadeDePublicacoesPorDiaMatriz(int mes, int ano) {
         List<QuantidadePublicacaoDiaListagemDto> quantidadePublicacoes = publicacaoRepository.buscaQuantidadeDePublicacaoPorDia(mes, ano);
         String[][] m = new String[31][2];
 
         if (quantidadePublicacoes.isEmpty()) return null;
 
-        for (int coluna = 0; coluna < m[0].length ; coluna++){
+        for (int coluna = 0; coluna < m[0].length; coluna++) {
 
-            for (int linha = 0 ; linha < m.length ; linha++){
-                if (coluna == 0){
+            for (int linha = 0; linha < m.length; linha++) {
+                if (coluna == 0) {
                     m[linha][coluna] = quantidadePublicacoes.get(linha).getDataPublicacao().toString();
                 } else {
                     m[linha][coluna] = quantidadePublicacoes.get(linha).getQuantidadePublicacoes().toString();
@@ -155,26 +156,25 @@ public class PublicacaoService {
         return m;
     }
 
-    public List<QuantidadePublicacaoDiaListagemDto> buscaQuantidadeDePublicacoesPorDia(int mes, int ano){
+    public List<QuantidadePublicacaoDiaListagemDto> buscaQuantidadeDePublicacoesPorDia(int mes, int ano) {
         List<QuantidadePublicacaoDiaListagemDto> quantidadePublicacoes = publicacaoRepository.buscaQuantidadeDePublicacaoPorDia(mes, ano);
 
         return quantidadePublicacoes;
     }
 
-    public List<QuantidadePublicacaoMesCanalListagemDto> buscaQuantidadePublicacoesEmCadaCanal(int mes, int ano){
+    public List<QuantidadePublicacaoMesCanalListagemDto> buscaQuantidadePublicacoesEmCadaCanal(int mes, int ano) {
         List<QuantidadePublicacaoMesCanalListagemDto> quantidadePublicacoes = publicacaoRepository.buscaQuantidadeDePublicacoesEmCadaCanal(mes, ano);
 
         return quantidadePublicacoes;
     }
 
-    public QuantidadePublicacaoMesCanalListagemDto buscaCanalComMaiorNumeroDePublicacoes(int mes, int ano){
+    public QuantidadePublicacaoMesCanalListagemDto buscaCanalComMaiorNumeroDePublicacoes(int mes, int ano) {
         Optional<QuantidadePublicacaoMesCanalListagemDto> canalMaisPublicacoes = publicacaoRepository.buscaCanalComMaiorNumeroDePublicacoes(mes, ano);
 
         if (canalMaisPublicacoes.isEmpty()) throw new NaoEncontradoException("Canal com maior número de publicações");
 
         return canalMaisPublicacoes.get();
     }
-
 
 
     // Verificaçoes de existencia e vazio
@@ -229,7 +229,6 @@ public class PublicacaoService {
 
         }
     }
-
 
 
 }

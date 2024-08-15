@@ -2,6 +2,7 @@
 import React from "react";
 import Cadastro from "./mobile/pages/cadastro/Cadastro";
 import Login from "./mobile/pages/login/Login";
+import Canais from "./mobile/pages/canais/Canais";
 import CadastroDesktop from "./desktop/pages/cadastro/Cadastro";
 import LoginDesktop from "./desktop/pages/login/Login";
 import Dashboard from "./desktop/pages/dashboard/Dashboard";
@@ -29,6 +30,7 @@ function Rotas() {
                     <Route path="/loginDesktop" element={<LoginDesktop />} />
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/aceitarUsuarios" element={<AceitarUsuarios />} />
+                    <Route path="/canais" element={<Canais />} />
                     <Route path="/completarCadastro" element={<CompletarCadastro />} />
                     <Route path="/recuperarSenha" element={<RecuperacaoSenha />} />
                     <Route path="/verificarSenha" element={<VerificacaoSenha />} />
