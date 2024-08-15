@@ -12,6 +12,7 @@ import MenuInicial from "./mobile/components/menuInicial/MenuInicial";
 import Header from "./mobile/components/header/Header";
 import PaginaInicial from "./mobile/pages/paginaInicial/PaginaInicial";
 import CompletarCadastro from "./mobile/pages/completarCadastro/CompletarCadastro";
+import RecuperacaoSenha from "./mobile/pages/recuperacaoSenha/RecuperacaoSenha";
 
 function Rotas() {
     return (
@@ -27,7 +28,8 @@ function Rotas() {
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/aceitarUsuarios" element={<AceitarUsuarios />} />
                     <Route path="/completarCadastro" element={<CompletarCadastro />} />
-                </Routes>
+                    <Route path="/recuperarSenha" element={<RecuperacaoSenha />} />
+                 </Routes>
             </BrowserRouter>
         </>
     );
