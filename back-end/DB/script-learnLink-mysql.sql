@@ -235,5 +235,53 @@ INSERT INTO escolaridade (escolaridade) VALUES
 ('CURSANDO ENSINO MEDIO');
 
 
+CREATE VIEW view_materias_nao_respondidas AS
+SELECT
+    canal.nome AS nome_materia,
+    COUNT(publicacao.id) AS qtd_publicacoes_nao_respondidas
+FROM
+    canal
+LEFT JOIN
+    publicacao ON canal.id = publicacao.canal_id
+LEFT JOIN
+    comentario ON publicacao.id = comentario.publicacao_id
+WHERE
+    comentario.id IS NULL
+GROUP BY
+    canal.id, canal.nome;
+    
+    select * from view_materias_nao_respondidas;
 
 
+
+INSERT INTO publicacao (conteudo, data_hora, tipo_publicacao_id, canal_id, usuario_id) VALUES
+('Qual a fórmula de Bhaskara?', '2024-05-01 10:00:00', 1, 1, 1),
+('Como resolver uma equação do segundo grau?', '2024-05-01 12:00:00', 1, 1, 2),
+('O que é um logaritmo?', '2024-05-01 14:00:00', 1, 1, 3),
+('Como resolver frações?', '2024-05-01 16:00:00', 1, 1, 4);
+
+INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) VALUES
+('A fórmula de Bhaskara é x = (-b ± √(b² - 4ac)) / 2a.', '2024-05-01 10:30:00', 1, 2),
+('Para resolver, você deve encontrar as raízes da equação.', '2024-05-01 12:30:00', 2, 3),
+('Um logaritmo é o expoente ao qual uma base deve ser elevada para obter um número.', '2024-05-01 14:30:00', 3, 1);
+-- ('Para resolver frações, encontre o denominador comum.', '2024-05-01 16:30:00', 4, 5);
+
+-- Para 2 de Maio de 2024
+INSERT INTO publicacao (conteudo, data_hora, tipo_publicacao_id, canal_id, usuario_id) VALUES
+('Qual a diferença entre ácidos e bases?', '2024-05-02 09:00:00', 1, 6, 1),
+('O que é a tabela periódica?', '2024-05-02 11:00:00', 1, 6, 2),
+('Como funciona a ligação covalente?', '2024-05-02 13:00:00', 1, 6, 3);
+
+INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) VALUES
+('Ácidos liberam H+ em solução, enquanto bases liberam OH-.', '2024-05-02 09:30:00', 5, 2),
+('A tabela periódica organiza os elementos químicos por propriedades.', '2024-05-02 11:30:00', 6, 1);
+
+
+INSERT INTO publicacao (conteudo, data_hora, tipo_publicacao_id, canal_id, usuario_id) VALUES
+('Como calcular a força resultante?', '2024-05-03 10:00:00', 1, 5, 1),
+('O que é inércia?', '2024-05-03 12:00:00', 1, 5, 2),
+('Explique a terceira lei de Newton.', '2024-05-03 14:00:00', 1, 5, 3);
+
+INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) VALUES
+('A força resultante é a soma vetorial de todas as forças atuantes.', '2024-05-03 10:30:00', 8, 4),
+('Inércia é a tendência de um objeto de resistir a mudanças em seu estado de movimento.', '2024-05-03 12:30:00', 9, 5);
