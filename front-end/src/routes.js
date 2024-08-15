@@ -13,6 +13,7 @@ import Header from "./mobile/components/header/Header";
 import PaginaInicial from "./mobile/pages/paginaInicial/PaginaInicial";
 import CompletarCadastro from "./mobile/pages/completarCadastro/CompletarCadastro";
 import RecuperacaoSenha from "./mobile/pages/recuperacaoSenha/RecuperacaoSenha";
+import VerificacaoSenha from "./mobile/pages/verificacaoSenha/VerificacaoSenha";
 
 function Rotas() {
     return (
@@ -29,6 +30,7 @@ function Rotas() {
                     <Route path="/aceitarUsuarios" element={<AceitarUsuarios />} />
                     <Route path="/completarCadastro" element={<CompletarCadastro />} />
                     <Route path="/recuperarSenha" element={<RecuperacaoSenha />} />
+                    <Route path="/verificarSenha" element={<VerificacaoSenha />} />
                  </Routes>
             </BrowserRouter>
         </>
