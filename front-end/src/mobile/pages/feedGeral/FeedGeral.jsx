@@ -35,11 +35,11 @@ const FeedGeral = ({ }) => {
     }, []);
 
     return (
-        // tem algum erro relacionado ao retorno do componente com key mas nn sei oq é (acho que isso é o de menos): https://react.dev/learn/rendering-lists#keeping-list-items-in-order-with-key
         <>
             <div className={Styles['feedGeral']}>
                 {publicacoes.map((publicacao) => (
                     <Publicacao
+                        key={publicacao.id} //tem q passar uma key p cada item (assim, o react consegue identificar cada item de forma única)
                         id={publicacao.id}
                         nome={publicacao.usuario.nome}
                         materia={formatSubjectName(publicacao.canal.nome)}
