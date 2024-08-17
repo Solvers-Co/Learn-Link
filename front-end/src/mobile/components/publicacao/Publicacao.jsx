@@ -44,7 +44,6 @@ const Publicacao = ({ id, nome, materia, mensagem, curtidas, comentarios }) => {
                     <span className={Styles['footerText']}>Curtir</span>
                 </div>
 
-                {/* os itens do footer estão meio tortos nn consegui ajustar 🙂 */}
                 <div className={Styles['footerItem']}>
                     <span className={Styles['numero']}>{comentarios}</span>
                     <img src={Comentar} alt="" />
