@@ -16,6 +16,7 @@ import CompletarCadastro from "./mobile/pages/completarCadastro/CompletarCadastr
 import RecuperacaoSenha from "./mobile/pages/recuperacaoSenha/RecuperacaoSenha";
 import VerificacaoSenha from "./mobile/pages/verificacaoSenha/VerificacaoSenha";
 import RedefinicaoSenha from "./mobile/pages/redefinicaoSenha/RedefinicaoSenha";
+import FeedGeral from "./mobile/pages/feedGeral/FeedGeral";
 
 function Rotas() {
     return (
@@ -35,6 +36,7 @@ function Rotas() {
                     <Route path="/recuperarSenha" element={<RecuperacaoSenha />} />
                     <Route path="/verificarSenha" element={<VerificacaoSenha />} />
                     <Route path="/redefinirSenha" element={<RedefinicaoSenha />} />
+                    <Route path="/feedGeral" element={<FeedGeral />} />
                  </Routes>
             </BrowserRouter>
         </>

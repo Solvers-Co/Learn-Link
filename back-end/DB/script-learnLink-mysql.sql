@@ -217,7 +217,10 @@ INSERT INTO canal (nome) VALUES
 ('HISTORIA'),
 ('FISICA'),
 ('QUIMICA'),
-('SOCIOLOGIA');
+('SOCIOLOGIA'),
+('GEOGRAFIA'),
+('INGLES'),
+('FILOSOFIA');
 
 
 INSERT INTO tipo_usuario (tipo_usuario) VALUES
@@ -249,9 +252,6 @@ WHERE
     comentario.id IS NULL
 GROUP BY
     canal.id, canal.nome;
-    
-    select * from view_materias_nao_respondidas;
-
 
 
 INSERT INTO publicacao (conteudo, data_hora, tipo_publicacao_id, canal_id, usuario_id) VALUES
@@ -276,7 +276,6 @@ INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) VALUES
 ('Ácidos liberam H+ em solução, enquanto bases liberam OH-.', '2024-05-02 09:30:00', 5, 2),
 ('A tabela periódica organiza os elementos químicos por propriedades.', '2024-05-02 11:30:00', 6, 1);
 
-
 INSERT INTO publicacao (conteudo, data_hora, tipo_publicacao_id, canal_id, usuario_id) VALUES
 ('Como calcular a força resultante?', '2024-05-03 10:00:00', 1, 5, 1),
 ('O que é inércia?', '2024-05-03 12:00:00', 1, 5, 2),
@@ -285,3 +284,19 @@ INSERT INTO publicacao (conteudo, data_hora, tipo_publicacao_id, canal_id, usuar
 INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) VALUES
 ('A força resultante é a soma vetorial de todas as forças atuantes.', '2024-05-03 10:30:00', 8, 4),
 ('Inércia é a tendência de um objeto de resistir a mudanças em seu estado de movimento.', '2024-05-03 12:30:00', 9, 5);
+
+select * from view_materias_nao_respondidas;
+
+-- SELECT (INCOMPLETO) para recuperar todos os comentarios de uma publicação especifica para o botão de comentarios (Ausencia de um campo de curtidas na tabela comentarios)
+-- SELECT c.id, c.comentario, u.nome AS autor
+-- FROM comentario c
+-- JOIN usuario u ON c.usuario_id = u.id
+-- WHERE c.publicacao_id =1;
+
+
+
+
+
+
+
+
