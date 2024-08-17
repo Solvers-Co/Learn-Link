@@ -1,0 +1,112 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #000000;
+    border-radius: 8px;
+    padding-right: 16px;
+    padding-left: 16px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #FFFFFF;
+    width: 80%;
+    margin-top: 10px;
+    margin-bottom: 16px;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: center;
+}
+
+.materiaBadge {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border: 2px solid #A80301;
+    align-self: center;
+    width: 33%;
+    height: 25px;
+    color: #A80301;
+    border-radius: 50px;
+    font-size: 14px;
+    font-family: "Nunito Sans", sans-serif;
+}
+
+.menuVertical{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.menuVertical img {
+    width: 25px;
+}
+
+.userInfo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    margin-bottom: 5px;
+}
+
+.avatar {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin-right: 12px;
+}
+
+.nome {
+    font-weight: bold;
+    font-size: 16px;
+    font-family: "Nunito Sans", sans-serif;
+}
+
+.mensagem {
+    color: #707070;
+    margin-bottom: 12px;
+    font-size: 14px;
+    font-family: "Nunito Sans", sans-serif;
+}
+
+.linha {
+    width: 100%;
+    height: 1px;
+    background-color: #959595;
+    margin-bottom: 5px;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.footerItem {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footerItem img {
+    display: flex;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+}
+
+.numero {
+    color: #707070;
+    margin-right: 4px;
+    font-size: 14px;
+    font-family: "Nunito Sans", sans-serif;
+}
+
+.footerText {
+    color: #707070;
+    margin-left: 4px;
+    font-size: 14px;
+    font-family: "Nunito Sans", sans-serif;
+}
