@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Styles from '../feedGeral/FeedGeral.module.css';
 import api from "../../../api";
 import Publicacao from '../../components/publicacao/Publicacao';
+import Header from '../../components/headerAplicacao/Header';
 
 const subjectNameMap = {
     'MATEMATICA': 'Matemática',
@@ -36,6 +37,7 @@ const FeedGeral = ({ }) => {
 
     return (
         <>
+            <Header />
             <div className={Styles['feedGeral']}>
                 {publicacoes.map((publicacao) => (
                     <Publicacao
