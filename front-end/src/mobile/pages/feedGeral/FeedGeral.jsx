@@ -21,27 +21,36 @@ const formatSubjectName = (name) => {
     return subjectNameMap[name] || name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
 };
 
-const FeedGeral = ({ }) => {
+const FeedGeral = () => {
     const [publicacoes, setPublicacoes] = useState([]);
+    const [searchResults, setSearchResults] = useState(null); // armazena resultados da busca
 
     useEffect(() => {
-        api.get('/publicacoes/publicacoes-mais-recentes')
-            .then(response => {
-                console.log("Dados recebidos:", response.data);
-                setPublicacoes(response.data); // Atualize o estado com os dados recebidos
-            })
-            .catch(error => {
-                console.error("Ocorreu um erro ao buscar os dados:", error);
-            });
-    }, []);
+        if (!searchResults) { // Apenas faz a requisição se não houver a busca
+            api.get('/publicacoes/publicacoes-mais-recentes')
+                .then(response => {
+                    console.log("Dados recebidos:", response.data);
+                    setPublicacoes(response.data);
+                })
+                .catch(error => {
+                    console.error("Ocorreu um erro ao buscar os dados:", error);
+                });
+        }
+    }, [searchResults]);
+
+    const handleSearchResult = (results) => {
+        setSearchResults(results);
+    };
+
+    const publicacoesParaExibir = searchResults || publicacoes;
 
     return (
         <>
-            <Header />
+            <Header onSearchResult={handleSearchResult} />
             <div className={Styles['feedGeral']}>
-                {publicacoes.map((publicacao) => (
+                {publicacoesParaExibir.map((publicacao) => (
                     <Publicacao
-                        key={publicacao.id} //tem q passar uma key p cada item (assim, o react consegue identificar cada item de forma única)
+                        key={publicacao.id}
                         id={publicacao.id}
                         nome={publicacao.usuario.nome}
                         materia={formatSubjectName(publicacao.canal.nome)}
@@ -51,10 +60,8 @@ const FeedGeral = ({ }) => {
                     />
                 ))}
             </div>
-
         </>
     );
-
 }
 
 export default FeedGeral;

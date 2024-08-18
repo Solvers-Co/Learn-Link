@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import api from "../../../api";
 import MenuLateral from '../menuLateral/MenuLateral';
 
-function Header() {
+function Header({ onSearchResult }) { // Recebe a função onSearchResult como prop
     const [searchVisible, setSearchVisible] = useState(false);
     const [searchValue, setSearchValue] = useState('');
     const [menuVisible, setMenuVisible] = useState(false);
@@ -15,7 +15,6 @@ function Header() {
     const menuIconRef = useRef(null);
     const menuRef = useRef(null); 
     const navigate = useNavigate();
-    const [busca, setBusca] = useState([]);
 
     const handleHome = () => {
         navigate('/');
@@ -28,13 +27,14 @@ function Header() {
             api.get(`/publicacoes/buscar-palavra-chave?palavraChave=${encodeURIComponent(searchValue)}`)
                 .then(response => {
                     console.log('Resultado da busca:', response.data);
-                    setBusca(response.data); 
+                    onSearchResult(response.data); // Passa os resultados da busca para o FeedGeral
                 })
                 .catch(error => {
                     if (error.response) {
                         const { status } = error.response;
                         if (status === 204) {
                             console.log("Nenhuma publicação encontrada.");
+                            onSearchResult([]); // Passa um array vazio se nada for encontrado
                         } else if (status === 400) {
                             console.error("Palavra chave inválida.");
                         } else {
@@ -59,7 +59,7 @@ function Header() {
             headerRef.current &&
             !headerRef.current.contains(event.target) &&
             (!menuIconRef.current || !menuIconRef.current.contains(event.target)) &&
-            (!menuRef.current || !menuRef.current.contains(event.target)) // faz c q o menu lateral só feche qnd clicar no X
+            (!menuRef.current || !menuRef.current.contains(event.target))
         ) {
             setSearchVisible(false);
             setMenuVisible(false);
