@@ -22,8 +22,9 @@ function Header() {
     };
 
     const handleSearchClick = () => {
+        // verifica se a barra de busca tá visível e se tem txt no campo
         if (searchVisible && searchValue) {
-            // Realiza a busca usando o searchValue
+            // encodeURIComponent: garantir q qualquer caractere especial seja corretamente codificado na URL
             api.get(`/publicacoes/buscar-palavra-chave?palavraChave=${encodeURIComponent(searchValue)}`)
                 .then(response => {
                     console.log('Resultado da busca:', response.data);
@@ -48,6 +49,7 @@ function Header() {
         }
     };
 
+    // sempre q algo é digitado no campo, o valor é capturado e atualizado no seachValue
     const handleInputChange = (event) => {
         setSearchValue(event.target.value);
     };
@@ -57,7 +59,7 @@ function Header() {
             headerRef.current &&
             !headerRef.current.contains(event.target) &&
             (!menuIconRef.current || !menuIconRef.current.contains(event.target)) &&
-            (!menuRef.current || !menuRef.current.contains(event.target)) // Verifica se o clique foi fora do MenuInicial
+            (!menuRef.current || !menuRef.current.contains(event.target)) // faz c q o menu lateral só feche qnd clicar no X
         ) {
             setSearchVisible(false);
             setMenuVisible(false);
@@ -68,6 +70,7 @@ function Header() {
         setMenuVisible(!menuVisible);
     };
 
+    // qnd clica fora da barra de busca, ela fecha
     useEffect(() => {
         document.addEventListener('mousedown', handleClickOutside);
         return () => {
