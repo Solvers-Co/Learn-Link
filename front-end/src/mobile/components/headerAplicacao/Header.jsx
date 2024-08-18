@@ -3,7 +3,6 @@ import styles from './Header.module.css';
 import Logo from '../../utils/assets/logo_vermelha_fundo_branco.png';
 import IconePesquisar from '../../utils/assets/icone_pesquisar.svg';
 import IconeMenu from '../../utils/assets/icone_menu_hamburguer.svg';
-import MenuInicial from '../menuInicial/MenuInicial';
 import { useNavigate } from 'react-router-dom';
 import api from "../../../api";
 import MenuLateral from '../menuLateral/MenuLateral';
@@ -14,7 +13,7 @@ function Header() {
     const [menuVisible, setMenuVisible] = useState(false);
     const headerRef = useRef(null);
     const menuIconRef = useRef(null);
-    const menuRef = useRef(null); // Ref para o MenuInicial
+    const menuRef = useRef(null); 
     const navigate = useNavigate();
     const [busca, setBusca] = useState([]);
 
@@ -28,7 +27,7 @@ function Header() {
             api.get(`/publicacoes/buscar-palavra-chave?palavraChave=${encodeURIComponent(searchValue)}`)
                 .then(response => {
                     console.log('Resultado da busca:', response.data);
-                    setBusca(response.data); // Atualize o estado com os resultados da busca
+                    setBusca(response.data); 
                 })
                 .catch(error => {
                     if (error.response) {
