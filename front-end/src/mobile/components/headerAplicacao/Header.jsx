@@ -3,38 +3,38 @@ import styles from './Header.module.css';
 import Logo from '../../utils/assets/logo_vermelha_fundo_branco.png';
 import IconePesquisar from '../../utils/assets/icone_pesquisar.svg';
 import IconeMenu from '../../utils/assets/icone_menu_hamburguer.svg';
-import MenuInicial from '../menuInicial/MenuInicial';
 import { useNavigate } from 'react-router-dom';
 import api from "../../../api";
 import MenuLateral from '../menuLateral/MenuLateral';
 
-function Header() {
+function Header({ onSearchResult }) { // Recebe a função onSearchResult como prop
     const [searchVisible, setSearchVisible] = useState(false);
     const [searchValue, setSearchValue] = useState('');
     const [menuVisible, setMenuVisible] = useState(false);
     const headerRef = useRef(null);
     const menuIconRef = useRef(null);
-    const menuRef = useRef(null); // Ref para o MenuInicial
+    const menuRef = useRef(null); 
     const navigate = useNavigate();
-    const [busca, setBusca] = useState([]);
 
     const handleHome = () => {
         navigate('/');
     };
 
     const handleSearchClick = () => {
+        // verifica se a barra de busca tá visível e se tem txt no campo
         if (searchVisible && searchValue) {
-            // Realiza a busca usando o searchValue
+            // encodeURIComponent: garantir q qualquer caractere especial seja corretamente codificado na URL
             api.get(`/publicacoes/buscar-palavra-chave?palavraChave=${encodeURIComponent(searchValue)}`)
                 .then(response => {
                     console.log('Resultado da busca:', response.data);
-                    setBusca(response.data); // Atualize o estado com os resultados da busca
+                    onSearchResult(response.data); // Passa os resultados da busca para o FeedGeral
                 })
                 .catch(error => {
                     if (error.response) {
                         const { status } = error.response;
                         if (status === 204) {
                             console.log("Nenhuma publicação encontrada.");
+                            onSearchResult([]); // Passa um array vazio se nada for encontrado
                         } else if (status === 400) {
                             console.error("Palavra chave inválida.");
                         } else {
@@ -49,6 +49,7 @@ function Header() {
         }
     };
 
+    // sempre q algo é digitado no campo, o valor é capturado e atualizado no seachValue
     const handleInputChange = (event) => {
         setSearchValue(event.target.value);
     };
@@ -58,7 +59,7 @@ function Header() {
             headerRef.current &&
             !headerRef.current.contains(event.target) &&
             (!menuIconRef.current || !menuIconRef.current.contains(event.target)) &&
-            (!menuRef.current || !menuRef.current.contains(event.target)) // Verifica se o clique foi fora do MenuInicial
+            (!menuRef.current || !menuRef.current.contains(event.target))
         ) {
             setSearchVisible(false);
             setMenuVisible(false);
@@ -69,6 +70,7 @@ function Header() {
         setMenuVisible(!menuVisible);
     };
 
+    // qnd clica fora da barra de busca, ela fecha
     useEffect(() => {
         document.addEventListener('mousedown', handleClickOutside);
         return () => {

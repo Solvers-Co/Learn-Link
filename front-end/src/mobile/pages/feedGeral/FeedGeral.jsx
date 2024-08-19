@@ -28,40 +28,34 @@ const FeedGeral = () => {
     const [publicacoes, setPublicacoes] = useState([]);
     const [showComentarios, setShowComentarios] = useState(false);
     const [comentariosPublicacao, setComentarios] = useState([]);
+    const [searchResults, setSearchResults] = useState(null); // armazena resultados da busca
 
     useEffect(() => {
-        api.get('/publicacoes/publicacoes-mais-recentes')
-            .then(response => {
-                console.log("Dados recebidos:", response.data);
-                setPublicacoes(response.data);
-            })
-            .catch(error => {
-                console.error("Ocorreu um erro ao buscar os dados:", error);
-            });
-    }, []);
+        if (!searchResults) { // Apenas faz a requisição se não houver a busca
+            api.get('/publicacoes/publicacoes-mais-recentes')
+                .then(response => {
+                    console.log("Dados recebidos:", response.data);
+                    setPublicacoes(response.data);
+                })
+                .catch(error => {
+                    console.error("Ocorreu um erro ao buscar os dados:", error);
+                });
+        }
+    }, [searchResults]);
 
-    const listarComentarios = (id) => {
-        api.get(`/comentarios/publicacao/${id}`)
-            .then(response => {
-                console.log("Comentários recebidos:", response.data);
-                setComentarios(response.data);
-            })
-            .catch(error => {
-                console.error("Ocorreu um erro ao buscar os comentários:", error);
-            });
+    const handleSearchResult = (results) => {
+        setSearchResults(results);
     };
 
-    const toggleComentarios = () => {
-        setShowComentarios(!showComentarios);
-    };
+    const publicacoesParaExibir = searchResults || publicacoes;
 
     return (
         <>
-            <Header />
+            <Header onSearchResult={handleSearchResult} />
             <div className={Styles['feedGeral']}>
                 {!showComentarios && (
                     <div className={Styles['publicacoes']}>
-                        {publicacoes.map((publicacao) => (
+                        {publicacoesParaExibir.map((publicacao) => (
                             <Publicacao
                                 key={publicacao.id}
                                 id={publicacao.id}
