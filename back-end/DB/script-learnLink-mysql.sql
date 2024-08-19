@@ -294,9 +294,3 @@ select * from view_materias_nao_respondidas;
 -- WHERE c.publicacao_id =1;
 
 
-
-
-
-
-
-

@@ -70,7 +70,7 @@ const FeedGeral = () => {
                                 mensagem={publicacao.conteudo}
                                 horario={publicacao.dataHora}
                                 curtidas={5}
-                                comentarios={2}
+                                comentarios={publicacao.comentarios.length}
                                 onComentariosClick={toggleComentarios} // Passa a função para o componente Publicacao
                                 listarComentarios={listarComentarios}
                             />
@@ -91,6 +91,7 @@ const FeedGeral = () => {
                                     nome={comentario.usuario.nome}
                                     mensagem={comentario.comentario}
                                     horario={comentario.dataHora}
+                                    curtidas={comentario.reacoes.length}
                                 />
                             ))
                         ): (

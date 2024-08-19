@@ -115,19 +115,7 @@ const Publicacao = ({ id, nome, materia, mensagem, horario, curtidas, comentario
                 theme="light"
             />
 
-        </div>
-
-        {/* <div className={Styles["comentarios"]}>
-            {comentariosPublicacao.map((comentario) => (
-                <Comentario
-                    key={comentario.id}
-                    id={comentario.id}
-                    nome={comentario.usuario.nome}
-                    mensagem={comentario.comentario}
-                />
-            ))}
-        </div> */}
-        
+        </div>        
         </>
     );
 };

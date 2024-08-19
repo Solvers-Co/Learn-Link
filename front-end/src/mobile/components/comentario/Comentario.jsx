@@ -29,7 +29,7 @@ function formatTimeAgo(dateString) {
     return 'agora mesmo';
 }
 
-const Comentario = ({ id, nome, mensagem, horario }) => {
+const Comentario = ({ id, nome, mensagem, horario, curtidas }) => {
     return (
         <>
             <div className={Styles['comentarioContainer']}>
@@ -42,7 +42,9 @@ const Comentario = ({ id, nome, mensagem, horario }) => {
 
                 <div className={Styles["footerComentario"]}>
                     <div className={Styles["horarioPublicacao"]}>{formatTimeAgo(horario)}</div>
-                    <div className={Styles["curtir"]}><img src={Curtir} alt="Curtir" /></div>
+                    <div className={Styles["curtir"]}>
+                        <span className={Styles['numero']}>{curtidas}</span>
+                        <img src={Curtir} alt="Curtir" /></div>
                 </div>
             </div>
             <div className={Styles['linha']}></div>

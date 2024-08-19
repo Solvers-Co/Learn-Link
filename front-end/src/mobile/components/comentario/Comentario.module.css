@@ -45,6 +45,14 @@
     font-family: "Nunito Sans", sans-serif;
 }
 
+.numero {
+    color: #707070;
+    margin-right: 4px;
+    margin-top: 4px;
+    font-size: 14px;
+    font-family: "Nunito Sans", sans-serif;
+}
+
 .curtir {
     display: flex;
     align-items: center;
