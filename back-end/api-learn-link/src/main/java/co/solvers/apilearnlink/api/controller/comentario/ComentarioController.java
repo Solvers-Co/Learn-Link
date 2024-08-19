@@ -17,6 +17,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/comentarios")
 @RequiredArgsConstructor
@@ -92,6 +94,19 @@ public class ComentarioController {
         if (quantidadeComentarios == null) return ResponseEntity.noContent().build();
 
         return ResponseEntity.ok(quantidadeComentarios);
+    }
+
+    //endpoint que lista todos os comentarios de uma publicacao pelo id da publicação
+    @ApiResponse(responseCode = "200", description = "Comentários encontrados")
+    @ApiResponse(responseCode = "404", description = "Comentários não encontrado")
+    @Operation(summary = "Listar todos os comentários de uma publicação", description = "Método que lista todos os comentários de uma publicação", tags = {"Comentários"})
+    @GetMapping("/publicacao/{idPublicacao}")
+    public ResponseEntity<List<ComentarioListagemDto>> listarComentariosPorPublicacao(
+            @PathVariable
+            @Parameter(name = "idPublicacao", description = "Publicação id", example = "1") int idPublicacao) {
+        List<Comentario> comentarios = comentarioService.listarPorPublicacao(idPublicacao);
+        List<ComentarioListagemDto> comentarioListagemDto = ComentarioMapper.toDto(comentarios);
+        return ResponseEntity.ok(comentarioListagemDto);
     }
 
 }

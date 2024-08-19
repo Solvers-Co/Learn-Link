@@ -8,3 +8,47 @@
     padding-top: 15%;
     background-color: #ffffff;
 }
+
+.publicacoes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+}
+
+.comentarios{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 1px solid #707070;
+    border-top-right-radius: 25px;
+    border-top-left-radius: 25px;
+}
+
+.listaComentarios{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin-top: 5px;
+}
+
+.fechar{
+    display: flex;
+    justify-content: end;
+    width: 90%;
+}
+
+.textoSemComentarios{
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    font-size: 20px;
+    color: #000000;
+    font-family: "Nunito Sans", sans-serif;
+}

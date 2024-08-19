@@ -76,4 +76,12 @@ public class ComentarioService {
         }
         return m;
     }
+
+    public List<Comentario> listarPorPublicacao (int idPublicacao){
+        Publicacao publicacao = publicacaoService.listarPorId(idPublicacao);
+
+        List<Comentario> comentarios = comentarioRepository.findByPublicacao(publicacao);
+
+        return comentarios;
+    }
 }
