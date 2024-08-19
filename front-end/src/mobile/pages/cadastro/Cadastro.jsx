@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./Cadastro.module.css";
 import InputFormulario from "../../components/inputs/inputFormularios/InputFormulario";
 import Botao from "../../components/botoes/botaoLoginCadastro/Botao";
+import BotaoFazerPublicacao from "../../components/botoes/botaoFazerPublicacao/BotaoFazerPublicacao";
 
 const Cadastro = () => {
     const navigate = useNavigate();
@@ -37,6 +38,7 @@ const Cadastro = () => {
     
     return (
         <div className={styles['container']}>
+            <BotaoFazerPublicacao />
             <h1 className={styles['cadastroMobileTitulo']}>Cadastro</h1>
             <div className={styles['divInputs']}>
                 <InputFormulario  placeHolder="Nome" value={nome} onChange={(e) => handleInputChange(e, setNome)}/>
