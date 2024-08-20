@@ -47,6 +47,21 @@ const FeedGeral = () => {
         setSearchResults(results);
     };
 
+    const listarComentarios = (id) => {
+        api.get(`/comentarios/publicacao/${id}`)
+            .then(response => {
+                console.log("Comentários recebidos:", response.data);
+                setComentarios(response.data);
+            })
+            .catch(error => {
+                console.error("Ocorreu um erro ao buscar os comentários:", error);
+            });
+    };
+
+    const toggleComentarios = () => {
+        setShowComentarios(!showComentarios);
+    };
+
     const publicacoesParaExibir = searchResults || publicacoes;
 
     return (
