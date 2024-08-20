@@ -37,9 +37,6 @@ public class UsuarioCriacaoRequestDto {
     @Schema(description = "Senha do usuário", example = "senha")
     private String senha;
 
-    @Schema(description = "Escolaridade do usuário", example = "1")
-    private Integer escolaridadeId;
-
     private EnderecoCriacaoDto endereco;
 
     /*@NotBlank
