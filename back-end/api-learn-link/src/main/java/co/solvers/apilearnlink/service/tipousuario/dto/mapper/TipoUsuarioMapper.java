@@ -1,8 +1,7 @@
-package co.solvers.apilearnlink.service.tipousuario.escolaridade.dto.mapper;
+package co.solvers.apilearnlink.service.tipousuario.dto.mapper;
 
-import co.solvers.apilearnlink.domain.escolaridade.Escolaridade;
 import co.solvers.apilearnlink.domain.tipousuario.TipoUsuario;
-import co.solvers.apilearnlink.service.tipousuario.escolaridade.dto.TipoUsuarioListagemDto;
+import co.solvers.apilearnlink.service.tipousuario.dto.TipoUsuarioListagemDto;
 
 public class TipoUsuarioMapper {
     public static TipoUsuarioListagemDto toDto (TipoUsuario entity){

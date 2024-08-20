@@ -1,14 +1,9 @@
--- Active: 1695823604597@@127.0.0.1@3306@learnLink
+-- Active: 1723763035288@@127.0.0.1@3306@learnLink
 DROP DATABASE learnLink;
 
 CREATE DATABASE learnLink;
 
 USE learnLink;
-
-CREATE TABLE escolaridade (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    escolaridade VARCHAR(45)
-);
 
 CREATE TABLE classificacao (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -17,8 +12,6 @@ CREATE TABLE classificacao (
 
 CREATE TABLE endereco (
 	id INT PRIMARY KEY AUTO_INCREMENT,
-    logradouro VARCHAR(255),
-    numero INT,
     bairro VARCHAR(155),
     cidade VARCHAR(45),
     estado VARCHAR(45),
@@ -42,13 +35,11 @@ CREATE TABLE usuario (
     email VARCHAR(45),
     senha VARCHAR(255),
     especialidade VARCHAR(45),
-    escolaridade_id INT,
     classificacao_id INT,
     endereco_id INT,
     tipo_status_id INT,
     tipo_usuario_id INT,
     PRIMARY KEY(id),
-    FOREIGN KEY (escolaridade_id) REFERENCES escolaridade(id),
     FOREIGN KEY (classificacao_id) REFERENCES classificacao(id),
     FOREIGN KEY (endereco_id) REFERENCES endereco(id),
     FOREIGN KEY (tipo_status_id) REFERENCES tipo_status(id),
@@ -233,9 +224,6 @@ INSERT INTO classificacao (classificacao) VALUES
 ('SENIOR'),
 ('ESPECIALISTA');
 
-INSERT INTO escolaridade (escolaridade) VALUES
-('ENSINO MEDIO COMPLETO'),
-('CURSANDO ENSINO MEDIO');
 
 
 CREATE VIEW view_materias_nao_respondidas AS

@@ -14,16 +14,6 @@ import lombok.Setter;
 public class EnderecoCriacaoDto {
 
     @NotBlank
-    @Size(min = 6, max = 255)
-    @Schema(description = "Logradouro do endereço", example = "Rua das Flores")
-    private String logradouro;
-
-    @NotNull
-    @PositiveOrZero
-    @Schema(description = "Número do endereço", example = "123")
-    private int numero;
-
-    @NotBlank
     @Size(min = 6, max = 155)
     @Schema(description = "Bairro do endereço", example = "Centro")
     private String bairro;

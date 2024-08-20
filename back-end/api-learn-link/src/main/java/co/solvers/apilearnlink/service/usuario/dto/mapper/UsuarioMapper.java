@@ -3,14 +3,11 @@ package co.solvers.apilearnlink.service.usuario.dto.mapper;
 import co.solvers.apilearnlink.domain.registroLogin.RegistroLogin;
 import co.solvers.apilearnlink.service.classificacao.dto.mapper.ClassificacaoMapper;
 import co.solvers.apilearnlink.service.endereco.dto.mapper.EnderecoMapper;
-import co.solvers.apilearnlink.service.escolaridade.dto.mapper.EscolaridadeMapper;
-import co.solvers.apilearnlink.service.publicacao.dto.mapper.PublicacaoMapper;
-import co.solvers.apilearnlink.service.tipousuario.escolaridade.dto.mapper.TipoUsuarioMapper;
+import co.solvers.apilearnlink.service.tipousuario.dto.mapper.TipoUsuarioMapper;
 import co.solvers.apilearnlink.service.usuario.autenticacao.dto.UsuarioTokenDto;
 import co.solvers.apilearnlink.service.usuario.dto.UsuarioCriacaoRequestDto;
 import co.solvers.apilearnlink.service.usuario.dto.UsuarioListagemDto;
 import co.solvers.apilearnlink.domain.usuario.Usuario;
-import co.solvers.apilearnlink.service.usuario.dto.UsuarioListagemRankingDto;
 import co.solvers.apilearnlink.service.usuario.dto.UsuarioListagemSimplesDto;
 
 import java.util.ArrayList;
@@ -33,7 +30,6 @@ public class UsuarioMapper {
 
         dto.setTipoStatus(tipoStatusDto);
         dto.setTipoUsuario(TipoUsuarioMapper.toDto(entity.getTipoUsuario()));
-        dto.setEscolaridade(EscolaridadeMapper.toDto(entity.getEscolaridade()));
         dto.setClassificacao(ClassificacaoMapper.toDto(entity.getClassificacao()));
         dto.setEndereco(EnderecoMapper.toDto(entity.getEndereco()));
 

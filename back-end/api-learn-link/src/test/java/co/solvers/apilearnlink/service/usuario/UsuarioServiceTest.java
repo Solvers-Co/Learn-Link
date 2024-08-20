@@ -13,9 +13,7 @@ import co.solvers.apilearnlink.service.classificacao.ClassificacaoService;
 import co.solvers.apilearnlink.service.endereco.EnderecoService;
 import co.solvers.apilearnlink.service.escolaridade.EscolaridadeService;
 import co.solvers.apilearnlink.service.tipoStatus.TipoStatusService;
-import co.solvers.apilearnlink.service.tipousuario.escolaridade.TipoUsuarioService;
-import co.solvers.apilearnlink.service.usuario.autenticacao.dto.UsuarioLoginDto;
-import co.solvers.apilearnlink.service.usuario.autenticacao.dto.UsuarioTokenDto;
+import co.solvers.apilearnlink.service.tipousuario.TipoUsuarioService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -26,7 +24,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

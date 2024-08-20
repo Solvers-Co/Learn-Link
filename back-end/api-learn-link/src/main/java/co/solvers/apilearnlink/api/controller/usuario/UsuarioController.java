@@ -61,7 +61,7 @@ public class UsuarioController {
     public ResponseEntity<UsuarioListagemDto> criarUsuario(
             @RequestBody @Valid UsuarioCriacaoRequestDto dto) {
 
-        Usuario usuarioCadastrado = usuarioService.criar(UsuarioMapper.toEntity(dto), dto.getEscolaridadeId());
+        Usuario usuarioCadastrado = usuarioService.criar(UsuarioMapper.toEntity(dto));
         UsuarioListagemDto listagemDto = UsuarioMapper.toUsuarioListagemResponseDto(usuarioCadastrado);
         return ResponseEntity.status(201).body(listagemDto);
     }

@@ -1,4 +1,4 @@
-package co.solvers.apilearnlink.service.tipousuario.escolaridade.dto;
+package co.solvers.apilearnlink.service.tipousuario.dto;
 
 import lombok.Getter;
 import lombok.Setter;

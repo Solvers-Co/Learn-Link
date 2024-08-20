@@ -2,8 +2,7 @@ package co.solvers.apilearnlink.service.usuario.dto;
 
 import co.solvers.apilearnlink.service.classificacao.dto.ClassificacaoListagemDto;
 import co.solvers.apilearnlink.service.endereco.dto.EnderecoListagemDto;
-import co.solvers.apilearnlink.service.escolaridade.dto.EscolaridadeListagemDto;
-import co.solvers.apilearnlink.service.tipousuario.escolaridade.dto.TipoUsuarioListagemDto;
+import co.solvers.apilearnlink.service.tipousuario.dto.TipoUsuarioListagemDto;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +16,6 @@ public class UsuarioListagemDto {
     private String cpf;
     private TipoStatusDto tipoStatus;
     private TipoUsuarioListagemDto tipoUsuario;
-    private EscolaridadeListagemDto escolaridade;
     private ClassificacaoListagemDto classificacao;
     private EnderecoListagemDto endereco;
 

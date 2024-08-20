@@ -7,6 +7,7 @@ import co.solvers.apilearnlink.domain.tipopublicacao.repository.TipoPublicacaoRe
 import co.solvers.apilearnlink.domain.usuario.Usuario;
 import co.solvers.apilearnlink.exception.InvalidoException;
 import co.solvers.apilearnlink.exception.NaoEncontradoException;
+import co.solvers.apilearnlink.service.canal.CanalService;
 import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoCriacaoRequestDto;
 import co.solvers.apilearnlink.service.usuario.UsuarioService;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,6 +29,12 @@ public class PublicacaoServiceTest {
 
     @InjectMocks
     private PublicacaoService service;
+
+    @InjectMocks
+    private CanalService canalService;
+
+    @Mock
+    private CanalService canalRepository;
 
     @Mock
     private PublicacaoRepository repository;
@@ -61,17 +68,16 @@ public class PublicacaoServiceTest {
         publicacao.setUsuario(usuario);
     }
 
-//    @Test
-//    @DisplayName("Deve criar uma publicação")
-//    void testCriarPublicacao() {
-//        Mockito.when(tipoPublicacaoRepository.findById(Mockito.any(Integer.class))).thenReturn(Optional.of(tipoPublicacao));
-//        Mockito.when(usuarioService.buscarPorId(Mockito.any(Long.class))).thenReturn(usuario);
-//        Mockito.when(repository.save(Mockito.any(Publicacao.class))).thenReturn(publicacao);
-//
-//        Publicacao result = service.criarPublicacao(publicacaoCriacaoRequestDto);
-//
-//        assertEquals(publicacao, result);
-//    }
+    @Test
+    @DisplayName("Deve criar uma publicação")
+    void testCriarPublicacao() {
+        Mockito.when(tipoPublicacaoRepository.findById(Mockito.any(Integer.class))).thenReturn(Optional.of(tipoPublicacao));
+        Mockito.when(usuarioService.buscarPorId(Mockito.any(Long.class))).thenReturn(usuario);
+        Mockito.when(repository.save(Mockito.any(Publicacao.class))).thenReturn(publicacao);
+        Publicacao result = service.criarPublicacao(publicacaoCriacaoRequestDto);
+
+        assertEquals(publicacao, result);
+    }
 
     @Test
     @DisplayName("Deve retornar lista com 2 publicações")
