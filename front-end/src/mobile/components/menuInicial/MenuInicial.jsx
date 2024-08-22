@@ -1,5 +1,6 @@
-import { useNavigate } from 'react-router-dom';  // Adicione esta linha
-import { useState } from 'react'; // Adicione esta linha
+import { useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom'; 
+import { useState } from 'react'; 
 import styles from './MenuInicial.module.css';
 import stylesBotao from '../botoes/botaoLoginCadastro/Botao.module.css';
 import IconeHome from '../../utils/assets/icone_home.svg';
@@ -11,8 +12,10 @@ import Linha from '../linha/Linha';
 import Botao from '../botoes/botaoLoginCadastro/Botao';
 
 const MenuInicial = () => {
-    const [isVisible, setIsVisible] = useState(true); // Adiciona estado para visibilidade
+    const [isVisible, setIsVisible] = useState(true);
+    const [sectionToScroll, setSectionToScroll] = useState(null); // Guarda a seção a ser rolada
     const navigate = useNavigate(); 
+    const location = useLocation(); // Para detectar mudanças na URL
 
     const handleCadastro = () => {
         navigate('/cadastro'); 
@@ -23,17 +26,28 @@ const MenuInicial = () => {
     };
 
     const scrollToSection = (sectionId) => {
-        const section = document.getElementById(sectionId);
-        if (section) {
-            section.scrollIntoView({ behavior: 'smooth' });
+        if (location.pathname !== '/') {
+            navigate('/', { state: { sectionId } });
+        } else {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
         }
     };
 
+    useEffect(() => {
+        if (location.pathname === '/' && sectionToScroll) {
+            scrollToSection(sectionToScroll);
+            setSectionToScroll(null); // Reseta a seção após a rolagem
+        }
+    }, [location.pathname]);
+
     const handleClose = () => {
-        setIsVisible(false); // Oculta o menu
+        setIsVisible(false); 
     };
 
-    if (!isVisible) return null; // Retorna null se o menu não estiver visível
+    if (!isVisible) return null;
 
     return (
         <div className={styles.container}>
@@ -42,7 +56,7 @@ const MenuInicial = () => {
             <div className={styles.menuInicial}>
                 <img src={IconeX} className={styles.cancelar} onClick={handleClose} alt="Fechar Menu" />
                 <div className={styles.navegacaoSite}>
-                <OpcaoNavegacao 
+                    <OpcaoNavegacao 
                         icone={IconeHome} 
                         nomeSecao="Home" 
                         onClick={() => scrollToSection('home')} 

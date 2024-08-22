@@ -1,5 +1,6 @@
 package co.solvers.apilearnlink.service.comentario.dto;
 
+import co.solvers.apilearnlink.service.especialidade.dto.EspecialidadeListagemDto;
 import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoListagemResponseDto;
 import co.solvers.apilearnlink.service.tiporeacao.dto.TipoReacaoListagemDto;
 import co.solvers.apilearnlink.service.usuario.dto.UsuarioListagemDto;
@@ -35,7 +36,7 @@ public class ComentarioListagemDto {
     public static class UsuarioDto {
         private String nome;
         private String email;
-        private String especialidade;
+        private EspecialidadeListagemDto especialidade;
     }
     @Getter
     @Setter

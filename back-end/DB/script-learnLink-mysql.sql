@@ -28,18 +28,24 @@ CREATE TABLE tipo_usuario (
     tipo_usuario VARCHAR(45)
 );
 
+CREATE TABLE especialidade (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    materia VARCHAR(45)
+);
+
 CREATE TABLE usuario (
     id INT AUTO_INCREMENT,
     nome VARCHAR(45),
     cpf CHAR(11),
     email VARCHAR(45),
     senha VARCHAR(255),
-    especialidade VARCHAR(45),
+    especialidade_id INT,
     classificacao_id INT,
     endereco_id INT,
     tipo_status_id INT,
     tipo_usuario_id INT,
     PRIMARY KEY(id),
+    FOREIGN KEY (especialidade_id) REFERENCES especialidade(id),
     FOREIGN KEY (classificacao_id) REFERENCES classificacao(id),
     FOREIGN KEY (endereco_id) REFERENCES endereco(id),
     FOREIGN KEY (tipo_status_id) REFERENCES tipo_status(id),
@@ -202,6 +208,18 @@ VALUES
 	('CURTIDA');
 
 INSERT INTO canal (nome) VALUES
+('MATEMATICA'),
+('PORTUGUES'),
+('BIOLOGIA'),
+('HISTORIA'),
+('FISICA'),
+('QUIMICA'),
+('SOCIOLOGIA'),
+('GEOGRAFIA'),
+('INGLES'),
+('FILOSOFIA');
+
+INSERT INTO especialidade (materia) VALUES
 ('MATEMATICA'),
 ('PORTUGUES'),
 ('BIOLOGIA'),
