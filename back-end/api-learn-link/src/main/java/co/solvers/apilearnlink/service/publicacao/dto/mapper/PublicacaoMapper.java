@@ -38,6 +38,7 @@ public class PublicacaoMapper {
         dto.setTipoPublicacao(toTipoPublicacaoDto(entity.getTipoPublicacao()));
         dto.setCanal(CanalMapper.toDto(entity.getCanal()));
         dto.setUsuario(toUsuarioDto(entity.getUsuario()));
+        dto.setReacoes(toReacaoDto(entity.getReacoes()));
         dto.setComentarios(toComentariosDto(entity.getComentarios()));
 
         return dto;
