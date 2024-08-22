@@ -21,4 +21,6 @@ public interface ComentarioRepository extends JpaRepository<Comentario, Integer>
     List<QuantidadeComentarioDiaListagemDto> buscaQuantidadeDeComentariosPorDia(@Param("mes") int mes, @Param("ano") int ano);
 
 
+    List<Comentario> findByPublicacao(Publicacao publicacao);
+
 }

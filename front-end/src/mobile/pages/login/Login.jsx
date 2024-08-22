@@ -33,7 +33,7 @@ const Login = () => {
             sessionStorage.setItem('nome', sessionUserName)
             
             toast.success("Login Efetuado com sucesso!"); // Exibe uma mensagem de sucesso
-            navigate("/login"); // Redireciona para a página de músicas
+            navigate("/feedGeral"); // Redireciona para a página de músicas
         }).catch(() => {
             toast.error("Ocorreu um erro ao salvar os dados, por favor, tente novamente."); // Exibe uma mensagem de erro se a requisição falhar
         });

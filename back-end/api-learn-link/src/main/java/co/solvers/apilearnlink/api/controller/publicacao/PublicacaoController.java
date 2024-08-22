@@ -11,11 +11,15 @@ import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoCriacaoRequestDt
 import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoListagemResponseDto;
 import co.solvers.apilearnlink.service.publicacao.dto.QuantidadePublicacaoMesCanalListagemDto;
 import co.solvers.apilearnlink.service.publicacao.dto.mapper.PublicacaoMapper;
+import co.solvers.apilearnlink.service.usuario.dto.UsuarioAceitacaoListagemDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,6 +62,29 @@ public class PublicacaoController {
 
         return ResponseEntity.status(200).body(dtos);
     }
+
+    //Listar publicacoes paginado
+
+//    @ApiResponse(responseCode = "204", description = "Publicações vazias")
+//    @ApiResponse(responseCode = "200", description = "Publicações encontradas")
+//    @Operation(summary = "Listar todas as publicações", description = "Método que Lista todas as publicações", tags = {"Publicações"})
+//    @GetMapping("/publicacoes-mais-recentes-paginado")
+//    public ResponseEntity<Page<PublicacaoListagemResponseDto>> listagemDePublicacoesPaginado(
+//            @RequestParam(defaultValue = "0") int pagina,
+//            @RequestParam(defaultValue = "3") int itens) {
+//
+//        Pageable pageable = PageRequest.of(pagina, itens);
+//        Page<PublicacaoListagemResponseDto> publicacoes = publicacaoService.listagemPublicacoesPaginado(pageable);
+//        List<PublicacaoListagemResponseDto> dtos = PublicacaoMapper.toDto(publicacoes);
+//
+//
+//        if (publicacoes.isEmpty()) {
+//            return ResponseEntity.noContent().build();
+//        }
+//
+//        return ResponseEntity.ok(publicacoes);
+//    }
+
 
 
     @ApiResponse(responseCode = "204", description = "Publicações vazias")

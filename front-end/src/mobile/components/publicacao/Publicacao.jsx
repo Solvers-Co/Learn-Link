@@ -1,58 +1,156 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Styles from '../publicacao/Publicacao.module.css';
-
+import api from '../../../api';
+import { toast, ToastContainer } from 'react-toastify';
 
 import Curtir from '../../utils/assets/Curtir.png';
 import Comentar from '../../utils/assets/Comentario.png';
 import MenuVertical from '../../utils/assets/MenuVertical.png';
-import Usuario from '../../utils/assets/Usuario.png';
+import Editar from '../../utils/assets/Editar.png';
+import Deletar from '../../utils/assets/Deletar.png';
+import Denunciar from '../../utils/assets/Deletar.png';
+
+function formatDateTime(dateString) {
+    const date = new Date(dateString);
+
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear().toString().slice(-2);
+
+    return `${hours}:${minutes} - ${day}/${month}/${year}`;
+}
+
+function deletarPublicacao(id) {
+    api.delete(`/publicacoes/${id}`)
+        .then(response => {
+            console.log("Publicação deletada com sucesso:", response.data);
+            toast.success("Publicação deletada com sucesso!");
+        })
+        .catch(error => {
+            console.error("Ocorreu um erro ao deletar a publicação:", error);
+        });
+}
 
 
-// tenho a ideia de separar um select(endpoint) para as publicações e outro para os comentários 
-// pq ai quando clicar no botão de comentar ele vai fazer um select para pegar os comentários da publicação especifica 
-// (não sei como pegar o id de uma publicação especifica dps do map do feedGeral, mas to passando o id como prop para usar nessa página)
+function generateInitials(name) {
+    const nameParts = name.trim().split(' ');
+    const firstInitial = nameParts[0].charAt(0).toUpperCase();
+    const lastInitial = nameParts[nameParts.length - 1].charAt(0).toUpperCase();
 
-//isso precisa de uma grande refatorção no backend e banco
+    const pastelColors = [
+        '#FFB3BA', '#FFDFBA', '#FFFFBA', '#BAFFC9', '#BAE1FF',
+        '#FFB3B3', '#FFCCB3', '#FFFFCC', '#CCFFCC', '#CCE5FF',
+        '#FFC3A0', '#FFEDCC', '#FFFFE0', '#E0FFCC', '#CCE0FF',
+        '#FFC4C4', '#FFE1C4', '#FFFFD1', '#D1FFD1', '#D1E8FF'
+    ];
 
-const Publicacao = ({ id, nome, materia, mensagem, curtidas, comentarios }) => {
+    const randomIndex = Math.floor(Math.random() * pastelColors.length);
+
+    const backgroundColor = pastelColors[randomIndex]
+
+    const avatar = {
+        borderRadius: '50%',
+        border: '1px solid rgba(0, 0, 0, .3)',
+        width: '35px',
+        height: '35px',
+        marginRight: '12px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontFamily: '"NunitoSansExtraBold", sans-serif',
+        backgroundColor
+    };
+
+    return <div style={avatar}>{firstInitial + lastInitial}</div>
+}
+
+const Publicacao = ({ id, nome, materia, mensagem, horario, curtidas, comentarios, listarComentarios }) => {
+    const [showPopup, setShowPopup] = useState(false);
+
+
+    const togglePopup = () => {
+        setShowPopup(!showPopup);
+    };
+
+    // Obtem o nome do usuário armazenado no sessionStorage
+    const nomeUsuarioLogado = sessionStorage.getItem('nome');
+
     return (
-        <div className={Styles['container']}>
+        <>
+            <div className={Styles['container']}>
 
-            <div className={Styles['header']}>
-                <div className={Styles['materiaBadge']}>{materia}</div>
-                <div className={Styles['menuVertical']}><img src={MenuVertical} alt="" /></div>
-            </div>
+                <div className={Styles['header']}>
+                    <div className={Styles['materiaBadge']}>{materia}</div>
+                    <div className={Styles['menuVertical']} onClick={togglePopup}>
+                        <img src={MenuVertical} alt="Menu" />
+                    </div>
+                </div>
 
-            <div className={Styles['userInfo']}>
-                <img
-                    src={Usuario} alt="User"
-                    className={Styles['avatar']}
+                <div className={Styles['userInfo']}>
+                    {generateInitials(nome)}
+                    {/* <img src={Usuario} alt="User" className={Styles['avatar']} /> */}
+                    <span className={Styles['nome']}>{nome}</span>
+                </div>
+
+                <div className={Styles['mensagem']}>{mensagem}</div>
+                <div className={Styles['dataHora']}>{formatDateTime(horario)}</div>
+
+                <div className={Styles['linha']}></div>
+
+                <div className={Styles['footer']}>
+                    <div className={Styles['footerItem']}>
+                        <span className={Styles['numero']}>{curtidas}</span>
+                        <img src={Curtir} alt="Curtir" />
+                        <span className={Styles['footerText']}>Curtir</span>
+                    </div>
+                    <div className={Styles['footerItem']}>
+                        <span className={Styles['numero']}>{comentarios}</span>
+                        <img src={Comentar} alt="Comentar" />
+                        <span className={Styles['footerText']} onClick={() => { listarComentarios(id); }}>Comentários</span>
+                    </div>
+                </div>
+
+                {showPopup && (
+                    <div className={Styles['popup']}>
+                        {nomeUsuarioLogado === nome ? (
+                            <>
+                                <button className={Styles['popupButton']} onClick={() => { setShowPopup(false); }}>
+                                    <img src={Editar} alt="Editar" />
+                                    Editar
+                                </button>
+
+                                <div className={Styles['linhaPopup']}></div>
+
+                                <button className={Styles['popupButton']} onClick={() => { setShowPopup(false); deletarPublicacao(id); }}>
+                                    <img src={Deletar} alt="Deletar" />
+                                    Excluir
+                                </button>
+                            </>
+                        ) : (
+                            <button className={Styles['popupButton']} onClick={() => { setShowPopup(false); /* Lógica para denunciar */ }}>
+                                <img src={Denunciar} alt="Denunciar" />
+                                Denunciar
+                            </button>
+                        )}
+                    </div>
+                )}
+                <ToastContainer
+                    position="top-right"
+                    autoClose={1000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="colored"
                 />
-                <span className={Styles['nome']}>{nome}</span>
             </div>
-
-            <div className={Styles['mensagem']}>{mensagem}</div>
-
-            <div className={Styles['linha']}></div>
-
-
-            <div className={Styles['footer']}>
-
-                <div className={Styles['footerItem']}>
-                    <span className={Styles['numero']}>{curtidas}</span>
-                    <img src={Curtir} alt="" />
-                    <span className={Styles['footerText']}>Curtir</span>
-                </div>
-
-                <div className={Styles['footerItem']}>
-                    <span className={Styles['numero']}>{comentarios}</span>
-                    <img src={Comentar} alt="" />
-                    <span className={Styles['footerText']}>Comentar</span>
-
-                </div>
-            </div>
-        </div>
+        </>
     );
-};
+}
 
 export default Publicacao;

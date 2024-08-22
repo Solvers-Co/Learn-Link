@@ -291,8 +291,12 @@ INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) VALUES
 ('A força resultante é a soma vetorial de todas as forças atuantes.', '2024-05-03 10:30:00', 8, 4),
 ('Inércia é a tendência de um objeto de resistir a mudanças em seu estado de movimento.', '2024-05-03 12:30:00', 9, 5);
 
-SELECT * FROM usuario;
+select * from view_materias_nao_respondidas;
 
-
+-- SELECT (INCOMPLETO) para recuperar todos os comentarios de uma publicação especifica para o botão de comentarios (Ausencia de um campo de curtidas na tabela comentarios)
+-- SELECT c.id, c.comentario, u.nome AS autor
+-- FROM comentario c
+-- JOIN usuario u ON c.usuario_id = u.id
+-- WHERE c.publicacao_id =1;
 
 

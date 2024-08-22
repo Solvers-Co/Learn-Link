@@ -18,6 +18,8 @@ const MenuLateral = ({ nome }) => {
     const [isVisible, setIsVisible] = useState(true); // Adiciona estado para visibilidade
     const navigate = useNavigate();
 
+    nome = sessionStorage.getItem('nome');
+
     const handlePerfil = () => {
         navigate('/perfil');
     };
@@ -63,7 +65,7 @@ const MenuLateral = ({ nome }) => {
                         src={Usuario} alt="User"
                         className={styles.avatar}
                     />
-                    <span className={styles.nome}>{nome}Sofhia Utaka</span>
+                    <span className={styles.nome}>{nome}</span>
                 </div>
                 <Linha />
                 <div className={styles.navegacaoSite}>
