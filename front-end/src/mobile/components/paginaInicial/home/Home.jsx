@@ -1,10 +1,21 @@
 import Botao from "../../botoes/botaoLoginCadastro/Botao"
 import styles from './Home.module.css'
 import stylesBotao from '../../botoes/botaoLoginCadastro/Botao.module.css'
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const Home = () => {
     const navigate = useNavigate(); 
+    const location = useLocation();
+
+    useEffect(() => {
+        if (location.state && location.state.sectionId) {
+            const section = document.getElementById(location.state.sectionId);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    }, [location]);
 
     const handleCadastro = () => {
         navigate('/cadastro'); 
