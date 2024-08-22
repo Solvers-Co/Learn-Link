@@ -7,6 +7,7 @@ import co.solvers.apilearnlink.domain.tipopublicacao.TipoPublicacao;
 import co.solvers.apilearnlink.domain.usuario.Usuario;
 import co.solvers.apilearnlink.service.comentario.dto.ComentarioCriacaoDto;
 import co.solvers.apilearnlink.service.comentario.dto.ComentarioListagemDto;
+import co.solvers.apilearnlink.service.especialidade.dto.mapper.EspecialidadeMapper;
 import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoCriacaoRequestDto;
 import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoListagemResponseDto;
 import co.solvers.apilearnlink.service.publicacao.dto.mapper.PublicacaoMapper;
@@ -55,7 +56,7 @@ public class ComentarioMapper {
         ComentarioListagemDto.UsuarioDto dto = new ComentarioListagemDto.UsuarioDto();
         dto.setNome(entity.getNome());
         dto.setEmail(entity.getEmail());
-        dto.setEspecialidade(entity.getEspecialidade());
+        dto.setEspecialidade(EspecialidadeMapper.toDto(entity.getEspecialidade()));
 
         return dto;
     }

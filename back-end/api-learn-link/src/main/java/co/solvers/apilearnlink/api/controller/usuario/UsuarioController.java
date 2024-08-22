@@ -5,10 +5,7 @@ import co.solvers.apilearnlink.service.reacao.ReacaoService;
 import co.solvers.apilearnlink.service.usuario.UsuarioService;
 import co.solvers.apilearnlink.service.usuario.autenticacao.dto.UsuarioLoginDto;
 import co.solvers.apilearnlink.service.usuario.autenticacao.dto.UsuarioTokenDto;
-import co.solvers.apilearnlink.service.usuario.dto.UsuarioAceitacaoListagemDto;
-import co.solvers.apilearnlink.service.usuario.dto.UsuarioCriacaoRequestDto;
-import co.solvers.apilearnlink.service.usuario.dto.UsuarioListagemDto;
-import co.solvers.apilearnlink.service.usuario.dto.UsuarioListagemRankingDto;
+import co.solvers.apilearnlink.service.usuario.dto.*;
 import co.solvers.apilearnlink.service.usuario.dto.mapper.UsuarioMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -65,6 +62,18 @@ public class UsuarioController {
         UsuarioListagemDto listagemDto = UsuarioMapper.toUsuarioListagemResponseDto(usuarioCadastrado);
         return ResponseEntity.status(201).body(listagemDto);
     }
+
+    @ApiResponse(responseCode = "201", description = "Usuário criado com sucesso")
+    @Operation(summary = "Finalizar cadastro usuário", description = "Método que finaliza cadastro do usuário após aprovação", tags = {"Usuários"})
+    @PatchMapping("/finalizar-cadastro")
+    public ResponseEntity<UsuarioListagemDto> finalizarCadastro(
+            @RequestBody @Valid UsuarioFinalizarCadastroDto dto) {
+
+        Usuario usuarioFinalizado = usuarioService.finalizarCadastro(dto.getIdUsuario(), dto.getIdEspecialidade(), dto.getEndereco());
+        return ResponseEntity.status(201).body(UsuarioMapper.toUsuarioListagemResponseDto(usuarioFinalizado));
+    }
+
+
 
     @ApiResponse(responseCode = "200", description = "Usuário encontrado")
     @ApiResponse(responseCode = "404", description = "Usuário não encontrado")

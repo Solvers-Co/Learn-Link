@@ -1,11 +1,14 @@
 package co.solvers.apilearnlink.service.usuario.dto.mapper;
 
+import co.solvers.apilearnlink.domain.especialidade.Especialidade;
 import co.solvers.apilearnlink.domain.registroLogin.RegistroLogin;
 import co.solvers.apilearnlink.service.classificacao.dto.mapper.ClassificacaoMapper;
 import co.solvers.apilearnlink.service.endereco.dto.mapper.EnderecoMapper;
+import co.solvers.apilearnlink.service.especialidade.dto.mapper.EspecialidadeMapper;
 import co.solvers.apilearnlink.service.tipousuario.dto.mapper.TipoUsuarioMapper;
 import co.solvers.apilearnlink.service.usuario.autenticacao.dto.UsuarioTokenDto;
 import co.solvers.apilearnlink.service.usuario.dto.UsuarioCriacaoRequestDto;
+import co.solvers.apilearnlink.service.usuario.dto.UsuarioFinalizarCadastroDto;
 import co.solvers.apilearnlink.service.usuario.dto.UsuarioListagemDto;
 import co.solvers.apilearnlink.domain.usuario.Usuario;
 import co.solvers.apilearnlink.service.usuario.dto.UsuarioListagemSimplesDto;
@@ -32,6 +35,7 @@ public class UsuarioMapper {
         dto.setTipoUsuario(TipoUsuarioMapper.toDto(entity.getTipoUsuario()));
         dto.setClassificacao(ClassificacaoMapper.toDto(entity.getClassificacao()));
         dto.setEndereco(EnderecoMapper.toDto(entity.getEndereco()));
+        dto.setEspecialidade(EspecialidadeMapper.toDto(entity.getEspecialidade()));
 
         return dto;
     };
@@ -92,7 +96,6 @@ public class UsuarioMapper {
         usuario.setCpf(dto.getCpf());
         usuario.setNome(dto.getNome());
         usuario.setSenha(dto.getSenha());
-        usuario.setEndereco(EnderecoMapper.toEntity(dto.getEndereco()));
 
         return usuario;
     };

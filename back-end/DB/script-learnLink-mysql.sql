@@ -28,18 +28,24 @@ CREATE TABLE tipo_usuario (
     tipo_usuario VARCHAR(45)
 );
 
+CREATE TABLE especialidade (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    materia VARCHAR(45)
+);
+
 CREATE TABLE usuario (
     id INT AUTO_INCREMENT,
     nome VARCHAR(45),
     cpf CHAR(11),
     email VARCHAR(45),
     senha VARCHAR(255),
-    especialidade VARCHAR(45),
+    especialidade_id INT,
     classificacao_id INT,
     endereco_id INT,
     tipo_status_id INT,
     tipo_usuario_id INT,
     PRIMARY KEY(id),
+    FOREIGN KEY (especialidade_id) REFERENCES especialidade(id),
     FOREIGN KEY (classificacao_id) REFERENCES classificacao(id),
     FOREIGN KEY (endereco_id) REFERENCES endereco(id),
     FOREIGN KEY (tipo_status_id) REFERENCES tipo_status(id),
@@ -213,6 +219,18 @@ INSERT INTO canal (nome) VALUES
 ('INGLES'),
 ('FILOSOFIA');
 
+INSERT INTO especialidade (materia) VALUES
+('MATEMATICA'),
+('PORTUGUES'),
+('BIOLOGIA'),
+('HISTORIA'),
+('FISICA'),
+('QUIMICA'),
+('SOCIOLOGIA'),
+('GEOGRAFIA'),
+('INGLES'),
+('FILOSOFIA');
+
 
 INSERT INTO tipo_usuario (tipo_usuario) VALUES
 ('COMUM'),
@@ -273,17 +291,7 @@ INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) VALUES
 ('A força resultante é a soma vetorial de todas as forças atuantes.', '2024-05-03 10:30:00', 8, 4),
 ('Inércia é a tendência de um objeto de resistir a mudanças em seu estado de movimento.', '2024-05-03 12:30:00', 9, 5);
 
-select * from view_materias_nao_respondidas;
-
--- SELECT (INCOMPLETO) para recuperar todos os comentarios de uma publicação especifica para o botão de comentarios (Ausencia de um campo de curtidas na tabela comentarios)
--- SELECT c.id, c.comentario, u.nome AS autor
--- FROM comentario c
--- JOIN usuario u ON c.usuario_id = u.id
--- WHERE c.publicacao_id =1;
-
-
-
-
+SELECT * FROM usuario;
 
 
 
