@@ -7,6 +7,9 @@ import Modal from 'react-modal';
 import Comentario from '../../components/comentario/Comentario';
 import fechar from '../../utils/assets/icone_x.svg';
 
+import Enviar from '../../utils/assets/Enviar.png';
+
+
 Modal.setAppElement('#root'); // Necessário para acessibilidade
 
 const subjectNameMap = {
@@ -110,6 +113,10 @@ const FeedGeral = () => {
                     ) : (
                         <p className={Styles["textoSemComentarios"]}>Ainda não há comentários nessa publicação <br /> Seja o primeiro!</p>
                     )}
+                </div>
+                <div className={Styles["postarComentario"]}>
+                    <textarea className={Styles["inputComentario"]} type="text" placeholder='Digite aqui...'/>
+                    <img className={Styles["botaoComentar"]} src={Enviar} alt="Curtir" />
                 </div>
             </Modal>
         </>

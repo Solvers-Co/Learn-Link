@@ -55,12 +55,7 @@
     align-self: center;
 }
 
-.avatar {
-    border-radius: 50%;
-    width: 35px;
-    height: 35px;
-    margin-right: 12px;
-}
+
 
 .nome {
     font-weight: bold;

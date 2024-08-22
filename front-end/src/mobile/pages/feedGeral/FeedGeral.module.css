@@ -99,3 +99,33 @@
     padding: 10px;
 }
 
+.postarComentario{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 110%;
+    background-color: white;
+    box-shadow: -1px -1px 5px rgba(0, 0, 0, .2);
+    border-top: 1px solid rgba(0, 0, 0, .3);
+    min-height: 50px;
+    max-height: 300px;
+}
+
+.inputComentario{
+    min-height: 32px;
+    max-height: 250px;
+    min-width: 80%;
+    max-width: 80%;
+    border-radius: 5px;
+    border: 1px solid black;
+    font-family: "NunitoSansRegular", sans-serif;
+    padding-left: 5px;
+    word-break: normal;
+}
+
+.botaoComentar{
+    height: 24px;
+    margin-left: 10px;
+}
+

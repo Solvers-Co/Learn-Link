@@ -16,7 +16,10 @@ import co.solvers.apilearnlink.service.publicacao.dto.QuantidadePublicacaoDiaLis
 import co.solvers.apilearnlink.service.publicacao.dto.QuantidadePublicacaoMesCanalListagemDto;
 import co.solvers.apilearnlink.service.publicacao.dto.mapper.PublicacaoMapper;
 import co.solvers.apilearnlink.service.usuario.UsuarioService;
+import co.solvers.apilearnlink.service.usuario.dto.UsuarioAceitacaoListagemDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -76,6 +79,13 @@ public class PublicacaoService {
 
         return publicacoes;
     }
+
+
+//    public Page<PublicacaoListagemResponseDto> listagemPublicacoesPaginado(Pageable pageable) {
+//        return publicacaoRepository.findAllPublicacoesPaginado(pageable);
+//    }
+
+
 
     public List<Publicacao> listarMaisAntigo() {
 
