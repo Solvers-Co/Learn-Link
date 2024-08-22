@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
 import InputFormulario from "../../components/inputs/inputFormularios/InputFormulario";
 import Botao from "../../components/botoes/botaoLoginCadastro/Botao";
+import Header from "../../components/header/Header";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -40,6 +41,7 @@ const Login = () => {
 
     return (
         <>
+            <Header />
             <div className={styles['container']}>
                 <h1 className={styles['loginMobileTitulo']}>Login</h1>
                 <h3>Bem-Vindo de volta</h3>
