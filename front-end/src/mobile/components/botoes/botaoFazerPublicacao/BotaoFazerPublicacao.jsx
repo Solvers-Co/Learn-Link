@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./BotaoFazerPublicacao.module.css";
-import editarIcone from "../../../utils/assets/editar.png";
+import editarIcone from "../../../utils/assets/Editar.png";
 import Popup from "../../popup/Popup";
 
 function BotaoFazerPublicacao() {
