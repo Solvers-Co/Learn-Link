@@ -3,6 +3,7 @@ package co.solvers.apilearnlink.service.usuario;
 import co.solvers.apilearnlink.api.configuration.security.jwt.GerenciadorTokenJwt;
 import co.solvers.apilearnlink.domain.classificacao.Classificacao;
 import co.solvers.apilearnlink.domain.endereco.Endereco;
+import co.solvers.apilearnlink.domain.especialidade.Especialidade;
 import co.solvers.apilearnlink.domain.registroLogin.RegistroLogin;
 import co.solvers.apilearnlink.domain.tipostatus.TipoStatus;
 import co.solvers.apilearnlink.domain.tipostatus.repository.TipoStatusRepository;
@@ -14,14 +15,20 @@ import co.solvers.apilearnlink.exception.NaoEncontradoException;
 import co.solvers.apilearnlink.fila.FilaObj;
 import co.solvers.apilearnlink.service.classificacao.ClassificacaoService;
 import co.solvers.apilearnlink.service.endereco.EnderecoService;
+import co.solvers.apilearnlink.service.endereco.dto.EnderecoCriacaoDto;
+import co.solvers.apilearnlink.service.endereco.dto.mapper.EnderecoMapper;
+import co.solvers.apilearnlink.service.especialidade.EspecialidadeService;
+import co.solvers.apilearnlink.service.especialidade.dto.mapper.EspecialidadeMapper;
 import co.solvers.apilearnlink.service.registrologin.RegistroLoginService;
 import co.solvers.apilearnlink.service.tipoStatus.TipoStatusService;
 import co.solvers.apilearnlink.service.tipousuario.TipoUsuarioService;
 import co.solvers.apilearnlink.service.usuario.autenticacao.dto.UsuarioLoginDto;
 import co.solvers.apilearnlink.service.usuario.autenticacao.dto.UsuarioTokenDto;
 import co.solvers.apilearnlink.service.usuario.dto.UsuarioAceitacaoListagemDto;
+import co.solvers.apilearnlink.service.usuario.dto.UsuarioFinalizarCadastroDto;
 import co.solvers.apilearnlink.service.usuario.dto.UsuarioListagemRankingDto;
 import co.solvers.apilearnlink.service.usuario.dto.mapper.UsuarioMapper;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -50,6 +57,7 @@ public class UsuarioService {
     private final EnderecoService enderecoService;
     private final TipoUsuarioService tipoUsuarioService;
     private final TipoStatusService tipoStatusService;
+    private final EspecialidadeService especialidadeService;
 
     public Usuario criar(Usuario usuario) {
 
@@ -72,6 +80,22 @@ public class UsuarioService {
         }
 
         return usuarioRepository.save(usuario);
+    }
+
+    public Usuario finalizarCadastro(Long idUsuario, Long idEspecialidade, @Valid EnderecoCriacaoDto enderecoCadastrar) {
+        Usuario usuarioBd = buscarPorId(idUsuario);
+
+        if (usuarioBd.getEndereco() != null && usuarioBd.getEspecialidade() != null){
+            throw new ConflitoException("Usuário");
+        }
+
+        Especialidade especialidade = especialidadeService.buscarPorId(idEspecialidade);
+        usuarioBd.setEspecialidade(especialidade);
+
+        Endereco endereco = enderecoService.salvar(EnderecoMapper.toEntity(enderecoCadastrar));
+        usuarioBd.setEndereco(endereco);
+
+        return usuarioRepository.save(usuarioBd);
     }
 
     public List<Usuario> listarUsuariosTipoStatus(String status) {

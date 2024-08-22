@@ -2,6 +2,7 @@ package co.solvers.apilearnlink.domain.usuario;
 
 import co.solvers.apilearnlink.domain.classificacao.Classificacao;
 import co.solvers.apilearnlink.domain.endereco.Endereco;
+import co.solvers.apilearnlink.domain.especialidade.Especialidade;
 import co.solvers.apilearnlink.domain.tipostatus.TipoStatus;
 import co.solvers.apilearnlink.domain.tipousuario.TipoUsuario;
 import jakarta.persistence.*;
@@ -24,7 +25,8 @@ public class Usuario {
     private String cpf;
     private String email;
     private String senha;
-    private String especialidade;
+    @OneToOne
+    private Especialidade especialidade;
     @OneToOne
     private Classificacao classificacao;
     @OneToOne
