@@ -1,30 +1,94 @@
 import React, { useState } from "react";
-import styles from "./BotaoFazerPublicacao.module.css";
-import editarIcone from "../../../utils/assets/Editar.png";
-import Popup from "../../popup/Popup";
+import Styles from "./BotaoFazerPublicacao.module.css";
+import publicarIcone from "../../../utils/assets/Publicar.png";
+import Modal from 'react-modal';
+import fechar from '../../../utils/assets/icone_x.svg';
+
+function generateInitials(name) {
+    const nameParts = name.trim().split(' ');
+    const firstInitial = nameParts[0].charAt(0).toUpperCase();
+    const lastInitial = nameParts[nameParts.length - 1].charAt(0).toUpperCase();
+
+    const pastelColors = [
+        '#FFB3BA', '#FFDFBA', '#FFFFBA', '#BAFFC9', '#BAE1FF',
+        '#FFB3B3', '#FFCCB3', '#FFFFCC', '#CCFFCC', '#CCE5FF',
+        '#FFC3A0', '#FFEDCC', '#FFFFE0', '#E0FFCC', '#CCE0FF',
+        '#FFC4C4', '#FFE1C4', '#FFFFD1', '#D1FFD1', '#D1E8FF'
+    ];
+
+    const randomIndex = Math.floor(Math.random() * pastelColors.length);
+
+    const backgroundColor = pastelColors[randomIndex]
+
+    const avatar = {
+        borderRadius: '50%',
+        border: '1px solid rgba(0, 0, 0, .3)',
+        width: '35px',
+        height: '35px',
+        marginRight: '12px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontFamily: '"NunitoSansExtraBold", sans-serif',
+        backgroundColor
+    };
+
+    return <div style={avatar}>{firstInitial + lastInitial}</div>
+}
 
 function BotaoFazerPublicacao() {
-    const [isPopupOpen, setPopupOpen] = useState(false);
 
-    const abrirPopup = () => {
-        setPopupOpen(true);
+    const [showComentarios, setShowComentarios] = useState(false);
+
+    const closeComentariosModal = () => {
+        setShowComentarios(false); // Fecha o modal
     };
 
-    const fecharPopup = () => {
-        setPopupOpen(false);
-    };
 
     return (
         <>
             <button
-                className={styles["botaoFazerPublicacao"]}
-                onClick={abrirPopup}
+                className={Styles["botaoFazerPublicacao"]}
+                onClick={() => { setShowComentarios(true); }}
             >
-                <img src={editarIcone} alt="Editar" />
+                <img src={publicarIcone} alt="Editar" />
                 Faça uma publicação
             </button>
 
-            {isPopupOpen && <Popup fecharPopup={fecharPopup} />}
+            <Modal
+                isOpen={showComentarios}
+                onRequestClose={closeComentariosModal}
+                className={Styles['publicarModal']}
+                overlayClassName={Styles['publicarOverlay']}
+            >
+                <div className={Styles["headerPublicar"]}>
+                    <img src={fechar} alt="icone fechar" onClick={closeComentariosModal} />
+                    <button className={Styles["botaoPostar"]}>Postar</button>
+                </div>
+
+                <div className={Styles["conteudoPublicacao"]}>
+                    {generateInitials(sessionStorage.nome)}
+                    <textarea className={Styles["textoPublicacao"]} placeholder="Digite aqui..."></textarea>
+                </div>
+
+
+                <div className={Styles["footerPublicar"]}>
+                    <span className={Styles["hashtag"]}>#</span>
+                    <select name="materias" id="materias" className={Styles["opcoesMaterias"]}>
+                        <option value="portugues">Português</option>
+                        <option value="matematica">Matemática</option>
+                        <option value="biologia">Biologia</option>
+                        <option value="quimica">Química</option>
+                        <option value="fisica">Física</option>
+                        <option value="historia">História</option>
+                        <option value="geografia">Geografia</option>
+                        <option value="filosofia">Filosofia</option>
+                        <option value="sociologia">Sociologia</option>
+                        <option value="ingles">Inglês</option>
+                    </select>
+                </div>
+
+            </Modal>
         </>
     );
 }

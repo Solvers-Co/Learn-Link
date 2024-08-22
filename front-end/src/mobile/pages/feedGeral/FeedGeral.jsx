@@ -6,6 +6,8 @@ import Header from '../../components/headerAplicacao/Header';
 import Modal from 'react-modal';
 import Comentario from '../../components/comentario/Comentario';
 import fechar from '../../utils/assets/icone_x.svg';
+import BotaoFazerPublicacao from '../../components/botoes/botaoFazerPublicacao/BotaoFazerPublicacao';
+import Filtro from '../../utils/assets/Filtro.png';
 
 import Enviar from '../../utils/assets/Enviar.png';
 
@@ -74,6 +76,10 @@ const FeedGeral = () => {
         <>
             <Header onSearchResult={handleSearchResult} />
             <div className={Styles['feedGeral']}>
+                <div className={Styles['publicarFiltro']}>
+                    <BotaoFazerPublicacao/>
+                    <img src={Filtro}></img>
+                </div>
                 <div className={Styles['publicacoes']}>
                     {publicacoesParaExibir.map((publicacao) => (
                         <Publicacao

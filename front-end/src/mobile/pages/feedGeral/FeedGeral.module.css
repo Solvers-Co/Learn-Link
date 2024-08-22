@@ -9,6 +9,18 @@
     background-color: #ffffff;
 }
 
+.publicarFiltro{
+    margin-top: 10px;
+    width: 92%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.publicarFiltro img{
+    width: 24px;
+}
+
 .publicacoes {
     display: flex;
     flex-direction: column;
@@ -32,11 +44,12 @@
 }
 
 .listaComentarios{
-    display: flex;
-    flex-direction: column;
-    width: 90%;
-    margin-top: 5px;
+    margin-bottom: 3rem;
 }
+
+/* .listaComentarios:nth-last-child(){
+    margin-bottom: 3rem;
+} */
 
 .fechar{
     display: flex;
@@ -68,16 +81,16 @@
 .comentariosModal {
     width: 100%;
     max-width: 600px;
-    height: 70%; /* O modal ocupará da base da tela até a metade */
+    height: 70%; 
     background-color: #fff;
-    border-radius: 25px 25px 0 0; /* Canto superior arredondado */
+    border-radius: 25px 25px 0 0; 
     padding: 15px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: start;
-    overflow-y: auto; /* Permite rolagem do conteúdo */
+    overflow-y: auto;
 }
 
 .listaComentarios {
@@ -100,6 +113,8 @@
 }
 
 .postarComentario{
+    position: fixed;
+    bottom: 0;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -108,15 +123,15 @@
     background-color: white;
     box-shadow: -1px -1px 5px rgba(0, 0, 0, .2);
     border-top: 1px solid rgba(0, 0, 0, .3);
-    min-height: 50px;
+    min-height: 70px;
     max-height: 300px;
 }
 
 .inputComentario{
     min-height: 32px;
     max-height: 250px;
-    min-width: 80%;
-    max-width: 80%;
+    min-width: 77%;
+    max-width: 77%;
     border-radius: 5px;
     border: 1px solid black;
     font-family: "NunitoSansRegular", sans-serif;
@@ -128,4 +143,5 @@
     height: 24px;
     margin-left: 10px;
 }
+
 
