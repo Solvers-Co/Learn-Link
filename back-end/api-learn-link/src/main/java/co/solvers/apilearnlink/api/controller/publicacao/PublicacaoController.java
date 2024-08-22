@@ -2,6 +2,7 @@ package co.solvers.apilearnlink.api.controller.publicacao;
 
 import co.solvers.apilearnlink.domain.comentario.Comentario;
 import co.solvers.apilearnlink.domain.publicacao.Publicacao;
+import co.solvers.apilearnlink.domain.reacao.Reacao;
 import co.solvers.apilearnlink.service.comentario.ComentarioService;
 import co.solvers.apilearnlink.service.comentario.dto.ComentarioCriacaoDto;
 import co.solvers.apilearnlink.service.comentario.dto.ComentarioListagemDto;
@@ -11,6 +12,11 @@ import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoCriacaoRequestDt
 import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoListagemResponseDto;
 import co.solvers.apilearnlink.service.publicacao.dto.QuantidadePublicacaoMesCanalListagemDto;
 import co.solvers.apilearnlink.service.publicacao.dto.mapper.PublicacaoMapper;
+import co.solvers.apilearnlink.service.reacao.ReacaoService;
+import co.solvers.apilearnlink.service.reacao.dto.ReacaoComentarioListarDto;
+import co.solvers.apilearnlink.service.reacao.dto.ReacaoCriarDto;
+import co.solvers.apilearnlink.service.reacao.dto.ReacaoPublicacaoListarDto;
+import co.solvers.apilearnlink.service.reacao.dto.mapper.ReacaoMapper;
 import co.solvers.apilearnlink.service.usuario.dto.UsuarioAceitacaoListagemDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -33,6 +39,7 @@ public class PublicacaoController {
 
     private final PublicacaoService publicacaoService;
     private final ComentarioService comentarioService;
+    private final ReacaoService reacaoService;
 
 
     @ApiResponse(responseCode = "201", description = "Publicação criada com sucesso")
@@ -243,6 +250,20 @@ public class PublicacaoController {
         QuantidadePublicacaoMesCanalListagemDto canalMaisPublicacoes = publicacaoService.buscaCanalComMaiorNumeroDePublicacoes(mes, ano);
 
         return ResponseEntity.ok(canalMaisPublicacoes);
+    }
+
+    @ApiResponse(responseCode = "200", description = "Comentário reagido")
+    @ApiResponse(responseCode = "404", description = "Comentário não encontrado")
+    @Operation(summary = "Reagir a uma publicação", description = "Método que reage a uma publicação", tags = {"Publicações"})
+    @PostMapping("/{idPublicacao}/reagir")
+    public ResponseEntity<ReacaoPublicacaoListarDto> reagirPublicacao(
+            @PathVariable
+            @Parameter(name = "idPublicacao", description = "Publicação id", example = "1") int idPublicacao,
+            @RequestBody ReacaoCriarDto reacaoCriarDto) {
+
+        Reacao reacao = reacaoService.reagirPublicacao(idPublicacao, reacaoCriarDto);
+        ReacaoPublicacaoListarDto reacaoDto = ReacaoMapper.toReacaoPublicacaoListarDto(reacao);
+        return ResponseEntity.created(null).body(reacaoDto);
     }
 
 

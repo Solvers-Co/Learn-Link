@@ -1,6 +1,7 @@
 package co.solvers.apilearnlink.service.publicacao.dto;
 
 import co.solvers.apilearnlink.service.canal.dto.CanalListagemDto;
+import co.solvers.apilearnlink.service.comentario.dto.ComentarioListagemDto;
 import co.solvers.apilearnlink.service.especialidade.dto.EspecialidadeListagemDto;
 import co.solvers.apilearnlink.service.tiporeacao.dto.TipoReacaoListagemDto;
 import co.solvers.apilearnlink.service.usuario.dto.UsuarioListagemDto;
@@ -20,6 +21,7 @@ public class PublicacaoListagemResponseDto {
     private TipoPublicacaoDto tipoPublicacao;
     private CanalListagemDto canal;
     private UsuarioPublicacaoListagemDto usuario;
+    private List<ReacaoDto> reacoes;
     private List<ComentarioDto> comentarios;
 
     @Getter
