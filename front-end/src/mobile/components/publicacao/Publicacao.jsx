@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Styles from '../publicacao/Publicacao.module.css';
 import api from '../../../api';
 import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Curtir from '../../utils/assets/Curtir.png';
 import Comentar from '../../utils/assets/Comentario.png';
@@ -33,7 +34,6 @@ function deletarPublicacao(id) {
         });
 }
 
-
 function generateInitials(name) {
     const nameParts = name.trim().split(' ');
     const firstInitial = nameParts[0].charAt(0).toUpperCase();
@@ -48,7 +48,7 @@ function generateInitials(name) {
 
     const randomIndex = Math.floor(Math.random() * pastelColors.length);
 
-    const backgroundColor = pastelColors[randomIndex]
+    const backgroundColor = pastelColors[randomIndex];
 
     const avatar = {
         borderRadius: '50%',
@@ -68,10 +68,15 @@ function generateInitials(name) {
 
 const Publicacao = ({ id, nome, materia, mensagem, horario, curtidas, comentarios, listarComentarios }) => {
     const [showPopup, setShowPopup] = useState(false);
-
+    const [showConfirmation, setShowConfirmation] = useState(false);
 
     const togglePopup = () => {
-        setShowPopup(!showPopup);
+        setShowPopup(!showPopup);    
+    };
+
+    const confirmarDelecao = () => {
+        deletarPublicacao(id);
+        setShowConfirmation(false);
     };
 
     // Obtem o nome do usuário armazenado no sessionStorage
@@ -90,7 +95,6 @@ const Publicacao = ({ id, nome, materia, mensagem, horario, curtidas, comentario
 
                 <div className={Styles['userInfo']}>
                     {generateInitials(nome)}
-                    {/* <img src={Usuario} alt="User" className={Styles['avatar']} /> */}
                     <span className={Styles['nome']}>{nome}</span>
                 </div>
 
@@ -123,7 +127,7 @@ const Publicacao = ({ id, nome, materia, mensagem, horario, curtidas, comentario
 
                                 <div className={Styles['linhaPopup']}></div>
 
-                                <button className={Styles['popupButton']} onClick={() => { setShowPopup(false); deletarPublicacao(id); }}>
+                                <button className={Styles['popupButton']} onClick={() => { setShowPopup(false); setShowConfirmation(true); }}>
                                     <img src={Deletar} alt="Deletar" />
                                     Excluir
                                 </button>
@@ -136,6 +140,18 @@ const Publicacao = ({ id, nome, materia, mensagem, horario, curtidas, comentario
                         )}
                     </div>
                 )}
+
+                {showConfirmation && (
+                    <div className={Styles['modalOverlay']}>
+                        <div className={Styles['modalContent']}>
+                            <h3>Confirmar Exclusão</h3>
+                            <p>Tem certeza de que deseja excluir esta publicação?</p>
+                            <button className={Styles['confirmButton']} onClick={confirmarDelecao}>Sim</button>
+                            <button className={Styles['cancelButton']} onClick={() => setShowConfirmation(false)}>Cancelar</button>
+                        </div>
+                    </div>
+                )}
+
                 <ToastContainer
                     position="top-right"
                     autoClose={1000}

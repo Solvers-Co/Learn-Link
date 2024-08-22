@@ -106,7 +106,7 @@ const FeedGeral = () => {
                 <div className={Styles["fechar"]}><img src={fechar} alt="icone fechar" onClick={closeComentariosModal} /></div>
                 <div className={Styles["listaComentarios"]}>
                     {comentariosPublicacao.length > 0 ? (
-                        comentariosPublicacao.map((comentario) => (
+                        comentariosPublicacao?.map((comentario) => (
                             <Comentario
                                 key={comentario.id}
                                 id={comentario.id}
@@ -114,6 +114,7 @@ const FeedGeral = () => {
                                 mensagem={comentario.comentario}
                                 horario={comentario.dataHora}
                                 curtidas={comentario.reacoes.length}
+                                nomePublicacao={comentario.publicacao.usuario.nome}
                             />
                         ))
                     ) : (

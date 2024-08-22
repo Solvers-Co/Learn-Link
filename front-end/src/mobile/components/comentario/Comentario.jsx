@@ -4,6 +4,11 @@ import Styles from '../comentario/Comentario.module.css';
 
 import Usuario from '../../utils/assets/Usuario.png';
 import Curtir from '../../utils/assets/Curtir.png';
+import MenuVertical from '../../utils/assets/MenuVertical.png';
+import Editar from '../../utils/assets/Editar.png';
+import Deletar from '../../utils/assets/Deletar.png';
+import Denunciar from '../../utils/assets/Deletar.png';
+import api from '../../../api';
 
 function formatTimeAgo(dateString) {
     const date = new Date(dateString);
@@ -29,14 +34,72 @@ function formatTimeAgo(dateString) {
     return 'agora mesmo';
 }
 
-const Comentario = ({ id, nome, mensagem, horario, curtidas }) => {
+function deletarComentario(id) {
+    api.delete(`/comentarios/${id}`)
+        .then(response => {
+            console.log("Comentário deletado com sucesso:", response.data);
+        })
+        .catch(error => {
+            console.error("Ocorreu um erro ao deletar o comentário:", error);
+        });
+}
+
+
+
+const Comentario = ({ id, nome, mensagem, horario, curtidas, nomePublicacao }) => {
+    const [showPopup, setShowPopup] = useState(false);
+    const [showConfirmation, setShowConfirmation] = useState(false);
+
+    const togglePopup = () => {
+        setShowPopup(!showPopup);
+    };
+
+    const confirmarDelecao = () => {
+        deletarComentario(id);
+        setShowConfirmation(false);
+    };
+
+    // Obtem o nome do usuário armazenado no sessionStorage
+    const nomeUsuarioLogado = sessionStorage.getItem('nome');
+
     return (
         <>
             <div className={Styles['comentarioContainer']}>
                 <div className={Styles['comentarioUserInfo']}>
-                    <img src={Usuario} alt="User" className={Styles['avatar']} />
-                    <span className={Styles['comentarioNome']}>{nome}</span>
+                    <div className={Styles["userComentario"]}>
+                        <img src={Usuario} alt="User" className={Styles['avatar']} />
+                        <span className={Styles['comentarioNome']}>{nome}</span>
+                    </div>
+                    <div className={Styles['menuVertical']} onClick={togglePopup}>
+                        <img src={MenuVertical} alt="Menu" />
+                    </div>
                 </div>
+
+
+                {showPopup && (
+                    <div className={Styles['popup']}>
+                        {nomeUsuarioLogado === nomePublicacao ? (
+                            <>
+                                {/* <button className={Styles['popupButton']} onClick={() => { setShowPopup(false); }}>
+                                    <img src={Editar} alt="Editar" />
+                                    Editar
+                                </button> */}
+
+                                <div className={Styles['linhaPopup']}></div>
+
+                                <button className={Styles['popupButton']} onClick={() => { setShowPopup(false); setShowConfirmation(true); }}>
+                                    <img src={Deletar} alt="Deletar" />
+                                    Excluir
+                                </button>
+                            </>
+                        ) : (
+                            <button className={Styles['popupButton']} onClick={() => { setShowPopup(false); /* Lógica para denunciar */ }}>
+                                <img src={Denunciar} alt="Denunciar" />
+                                Denunciar
+                            </button>
+                        )}
+                    </div>
+                )}
 
                 <div className={Styles['comentarioMensagem']}>{mensagem}</div>
 
