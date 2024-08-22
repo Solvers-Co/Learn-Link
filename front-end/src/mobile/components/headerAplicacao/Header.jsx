@@ -16,8 +16,8 @@ function Header({ onSearchResult }) { // Recebe a função onSearchResult como p
     const menuRef = useRef(null); 
     const navigate = useNavigate();
 
-    const handleHome = () => {
-        navigate('/');
+    const handleFeedGeral = () => {
+        navigate('/feedGeral');
     };
 
     const handleSearchClick = () => {
@@ -82,7 +82,7 @@ function Header({ onSearchResult }) { // Recebe a função onSearchResult como p
         <>
             <div className={styles.header} ref={headerRef}>
                 <div className={styles.logo}>
-                    <img src={Logo} alt='Logo Vermelha' onClick={handleHome}/>
+                    <img src={Logo} alt='Logo Vermelha' onClick={handleFeedGeral}/>
                 </div>
                 <div className={styles.pesquisar}>
                     {searchVisible && (
