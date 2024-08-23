@@ -118,7 +118,7 @@ const FeedGeral = () => {
                             materia={formatSubjectName(publicacao.canal.nome)}
                             mensagem={publicacao.conteudo}
                             horario={publicacao.dataHora}
-                            curtidas={5}
+                            curtidas={publicacao.reacoes.length}
                             comentarios={publicacao.comentarios.length}
                             listarComentarios={listarComentarios}
                         />

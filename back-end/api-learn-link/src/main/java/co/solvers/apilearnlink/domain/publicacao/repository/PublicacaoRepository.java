@@ -7,6 +7,7 @@ import co.solvers.apilearnlink.service.publicacao.dto.QuantidadePublicacaoMesCan
 import co.solvers.apilearnlink.service.usuario.dto.UsuarioAceitacaoListagemDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -24,6 +25,8 @@ public interface PublicacaoRepository extends JpaRepository<Publicacao, Integer>
 
     Page<Publicacao> findAllByOrderByDataHoraDesc(Pageable pageable);
 
+    @Query("SELECT p FROM Publicacao p WHERE p.canal.id = :canalId")
+    Page<Publicacao> findByCanalId(@Param("canalId") Long canalId, Pageable pageable);
 
     List<Publicacao> findAllByTipoPublicacaoTipoOrderByDataHoraDesc(String tipo);
 

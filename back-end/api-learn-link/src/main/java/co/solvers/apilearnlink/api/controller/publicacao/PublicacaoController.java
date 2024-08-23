@@ -75,7 +75,7 @@ public class PublicacaoController {
 
     @ApiResponse(responseCode = "204", description = "Publicações vazias")
     @ApiResponse(responseCode = "200", description = "Publicações encontradas")
-    @Operation(summary = "Listar todas as publicações", description = "Método que Lista todas as publicações paginadas", tags = {"Publicações"})
+    @Operation(summary = "Listar todas as publicações de maneira páginada", description = "Método que Lista todas as publicações paginadas", tags = {"Publicações"})
     @GetMapping("/publicacoes-mais-recentes-paginado")
     public ResponseEntity<Page<PublicacaoListagemResponseDto>> listarPublicacoes(
             @RequestParam(defaultValue = "0") int page,
@@ -91,6 +91,27 @@ public class PublicacaoController {
 
         return ResponseEntity.ok(dtosPage);
     }
+
+    @ApiResponse(responseCode = "204", description = "Publicações vazias")
+    @ApiResponse(responseCode = "200", description = "Publicações encontradas")
+    @Operation(summary = "Listar publicações por canal e ordenação de forma páginada", description = "Método que lista publicações filtradas por canal e ordenadas", tags = {"Publicações"})
+    @GetMapping("/publicacoes-por-canal-paginado")
+    public ResponseEntity<Page<PublicacaoListagemResponseDto>> listarPublicacoesPorCanal(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "DESC") String sortDirection,
+            @RequestParam Long canalId) {
+
+        Page<Publicacao> publicacoesPage = publicacaoService.listarPublicacoesPorCanal(canalId, page, size, sortDirection);
+        Page<PublicacaoListagemResponseDto> dtosPage = publicacoesPage.map(PublicacaoMapper::toDto);
+
+        if (dtosPage.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(dtosPage);
+    }
+    
 
     @ApiResponse(responseCode = "204", description = "Publicações vazias")
     @ApiResponse(responseCode = "200", description = "Publicações encontradas")

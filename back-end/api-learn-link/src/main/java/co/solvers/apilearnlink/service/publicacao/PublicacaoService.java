@@ -19,7 +19,9 @@ import co.solvers.apilearnlink.service.usuario.UsuarioService;
 import co.solvers.apilearnlink.service.usuario.dto.UsuarioAceitacaoListagemDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -84,6 +86,22 @@ public class PublicacaoService {
     public Page<Publicacao> listarMaisRecentesPaginado(Pageable pageable) {
         return publicacaoRepository.findAllByOrderByDataHoraDesc(pageable);
     }
+
+
+
+
+    public Page<Publicacao> listarPublicacoesPorCanal(Long canalId, int page, int size, String sortDirection) {
+        Sort sort = Sort.by("dataHora");
+        sort = sortDirection.equalsIgnoreCase("ASC") ? sort.ascending() : sort.descending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        return publicacaoRepository.findByCanalId(canalId, pageable);
+    }
+
+
+
+
+
 
 
 
