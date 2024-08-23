@@ -129,19 +129,26 @@
     flex-direction: column;
     align-items: center;
     gap: 8px;
+    font-family: "Nunito Sans", sans-serif;
 }
 
-.popupButton {
-    background-color: transparent;
-    border: none;
-    color: #333;
-    padding: 6px 10px;
-    text-align: left;
-    font-size: 14px;
-    cursor: pointer;
-    width: 100%;
-    transition: background-color 0.3s;
+.popup img {
+    margin-right: 5px;
+    width: 20px;
+}
+
+.opcao{
+    display: flex;
     align-items: center;
+    justify-content: center;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.opcao span{
+    font-size: 12px;
     font-family: "Nunito Sans", sans-serif;
 }
 

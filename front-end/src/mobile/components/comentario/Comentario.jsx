@@ -7,7 +7,7 @@ import Curtir from '../../utils/assets/Curtir.png';
 import MenuVertical from '../../utils/assets/MenuVertical.png';
 import Editar from '../../utils/assets/Editar.png';
 import Deletar from '../../utils/assets/Deletar.png';
-import Denunciar from '../../utils/assets/Deletar.png';
+import Denunciar from '../../utils/assets/Denuncia.png';
 import api from '../../../api';
 
 function formatTimeAgo(dateString) {
@@ -73,33 +73,50 @@ const Comentario = ({ id, nome, mensagem, horario, curtidas, nomePublicacao }) =
                     <div className={Styles['menuVertical']} onClick={togglePopup}>
                         <img src={MenuVertical} alt="Menu" />
                     </div>
+
+                    {showPopup && (
+                        <div className={Styles['popup']}>
+                            {nomeUsuarioLogado === nomePublicacao ? (
+                                <>
+                                    {nomeUsuarioLogado === nome  ? (
+                                        <div className={Styles['opcao']} onClick={() => { setShowPopup(false); }}>
+                                            <img src={Editar} alt="Editar" />
+                                            <span>Editar</span>
+                                        </div>
+                                    ): null}
+
+                                    <div className={Styles['linhaPopup']}></div>
+
+                                    <div className={Styles['opcao']} onClick={() => { setShowPopup(false); setShowConfirmation(true); }}>
+                                        <img src={Deletar} alt="Deletar" />
+                                        <span>Excluir</span>
+                                    </div>
+                                </>
+                            ) : (
+                                <button className={Styles['popupButton']} onClick={() => { setShowPopup(false); /* Lógica para denunciar */ }}>
+                                    <img src={Denunciar} alt="Denunciar" />
+                                    Denunciar
+                                </button>
+                            )}
+
+
+                        </div>
+                    )}
+
+                    {showConfirmation && (
+                        <div className={Styles['modalOverlay']}>
+                            <div className={Styles['modalContent']}>
+                                <h3>Confirmar Exclusão</h3>
+                                <p>Tem certeza de que deseja excluir este comentario?</p>
+                                <button className={Styles['confirmButton']} onClick={confirmarDelecao}>Sim</button>
+                                <button className={Styles['cancelButton']} onClick={() => setShowConfirmation(false)}>Cancelar</button>
+                            </div>
+                        </div>
+                    )}
                 </div>
 
 
-                {showPopup && (
-                    <div className={Styles['popup']}>
-                        {nomeUsuarioLogado === nomePublicacao ? (
-                            <>
-                                {/* <button className={Styles['popupButton']} onClick={() => { setShowPopup(false); }}>
-                                    <img src={Editar} alt="Editar" />
-                                    Editar
-                                </button> */}
 
-                                <div className={Styles['linhaPopup']}></div>
-
-                                <button className={Styles['popupButton']} onClick={() => { setShowPopup(false); setShowConfirmation(true); }}>
-                                    <img src={Deletar} alt="Deletar" />
-                                    Excluir
-                                </button>
-                            </>
-                        ) : (
-                            <button className={Styles['popupButton']} onClick={() => { setShowPopup(false); /* Lógica para denunciar */ }}>
-                                <img src={Denunciar} alt="Denunciar" />
-                                Denunciar
-                            </button>
-                        )}
-                    </div>
-                )}
 
                 <div className={Styles['comentarioMensagem']}>{mensagem}</div>
 
