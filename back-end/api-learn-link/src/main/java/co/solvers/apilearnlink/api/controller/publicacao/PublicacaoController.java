@@ -20,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -65,27 +66,24 @@ public class PublicacaoController {
 
     //Listar publicacoes paginado
 
-//    @ApiResponse(responseCode = "204", description = "Publicações vazias")
-//    @ApiResponse(responseCode = "200", description = "Publicações encontradas")
-//    @Operation(summary = "Listar todas as publicações", description = "Método que Lista todas as publicações", tags = {"Publicações"})
-//    @GetMapping("/publicacoes-mais-recentes-paginado")
-//    public ResponseEntity<Page<PublicacaoListagemResponseDto>> listagemDePublicacoesPaginado(
-//            @RequestParam(defaultValue = "0") int pagina,
-//            @RequestParam(defaultValue = "3") int itens) {
-//
-//        Pageable pageable = PageRequest.of(pagina, itens);
-//        Page<PublicacaoListagemResponseDto> publicacoes = publicacaoService.listagemPublicacoesPaginado(pageable);
-//        List<PublicacaoListagemResponseDto> dtos = PublicacaoMapper.toDto(publicacoes);
-//
-//
-//        if (publicacoes.isEmpty()) {
-//            return ResponseEntity.noContent().build();
-//        }
-//
-//        return ResponseEntity.ok(publicacoes);
-//    }
+    @ApiResponse(responseCode = "204", description = "Publicações vazias")
+    @ApiResponse(responseCode = "200", description = "Publicações encontradas")
+    @Operation(summary = "Listar todas as publicações", description = "Método que Lista todas as publicações paginadas", tags = {"Publicações"})
+    @GetMapping("/publicacoes-mais-recentes-paginado")
+    public ResponseEntity<Page<PublicacaoListagemResponseDto>> listarPublicacoes(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
 
+        Pageable pageable = PageRequest.of(page, size, Sort.by("dataHora").descending());
+        Page<Publicacao> publicacoesPage = publicacaoService.listarMaisRecentesPaginado(pageable);
+        Page<PublicacaoListagemResponseDto> dtosPage = publicacoesPage.map(PublicacaoMapper::toDto);
 
+        if (dtosPage.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(dtosPage);
+    }
 
     @ApiResponse(responseCode = "204", description = "Publicações vazias")
     @ApiResponse(responseCode = "200", description = "Publicações encontradas")

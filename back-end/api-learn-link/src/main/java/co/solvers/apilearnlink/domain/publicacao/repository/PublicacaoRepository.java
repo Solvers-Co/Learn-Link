@@ -22,8 +22,8 @@ public interface PublicacaoRepository extends JpaRepository<Publicacao, Integer>
 
     List<Publicacao> findAllByOrderByDataHora();
 
-//    @Query("SELECT p FROM Publicacao p")
-//    Page<PublicacaoListagemResponseDto> findAllPublicacoesPaginado(Pageable pageable);
+    Page<Publicacao> findAllByOrderByDataHoraDesc(Pageable pageable);
+
 
     List<Publicacao> findAllByTipoPublicacaoTipoOrderByDataHoraDesc(String tipo);
 
