@@ -1,24 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import Styles from '../publicacao/Publicacao.module.css';
 import api from '../../../api';
 import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Curtir from '../../utils/assets/Curtir.png';
 import Comentar from '../../utils/assets/Comentario.png';
 import MenuVertical from '../../utils/assets/MenuVertical.png';
 import Editar from '../../utils/assets/Editar.png';
 import Deletar from '../../utils/assets/Deletar.png';
-import Denunciar from '../../utils/assets/Deletar.png';
+import Denunciar from '../../utils/assets/Denuncia.png';
 
 function formatDateTime(dateString) {
     const date = new Date(dateString);
-
     const hours = date.getHours().toString().padStart(2, '0');
     const minutes = date.getMinutes().toString().padStart(2, '0');
     const day = date.getDate().toString().padStart(2, '0');
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const year = date.getFullYear().toString().slice(-2);
-
     return `${hours}:${minutes} - ${day}/${month}/${year}`;
 }
 
@@ -33,7 +32,6 @@ function deletarPublicacao(id) {
         });
 }
 
-
 function generateInitials(name) {
     const nameParts = name.trim().split(' ');
     const firstInitial = nameParts[0].charAt(0).toUpperCase();
@@ -47,8 +45,7 @@ function generateInitials(name) {
     ];
 
     const randomIndex = Math.floor(Math.random() * pastelColors.length);
-
-    const backgroundColor = pastelColors[randomIndex]
+    const backgroundColor = pastelColors[randomIndex];
 
     const avatar = {
         borderRadius: '50%',
@@ -68,14 +65,23 @@ function generateInitials(name) {
 
 const Publicacao = ({ id, nome, materia, mensagem, horario, curtidas, comentarios, listarComentarios }) => {
     const [showPopup, setShowPopup] = useState(false);
-
+    const [showConfirmation, setShowConfirmation] = useState(false);
 
     const togglePopup = () => {
         setShowPopup(!showPopup);
     };
 
+    const confirmarDelecao = () => {
+        deletarPublicacao(id);
+        setShowConfirmation(false);
+        window.location.reload();
+    };
+
     // Obtem o nome do usuário armazenado no sessionStorage
     const nomeUsuarioLogado = sessionStorage.getItem('nome');
+
+    // Memorize o avatar gerado com base no nome
+    const avatar = useMemo(() => generateInitials(nome), [nome]);
 
     return (
         <>
@@ -89,8 +95,7 @@ const Publicacao = ({ id, nome, materia, mensagem, horario, curtidas, comentario
                 </div>
 
                 <div className={Styles['userInfo']}>
-                    {generateInitials(nome)}
-                    {/* <img src={Usuario} alt="User" className={Styles['avatar']} /> */}
+                    {avatar}
                     <span className={Styles['nome']}>{nome}</span>
                 </div>
 
@@ -116,26 +121,38 @@ const Publicacao = ({ id, nome, materia, mensagem, horario, curtidas, comentario
                     <div className={Styles['popup']}>
                         {nomeUsuarioLogado === nome ? (
                             <>
-                                <button className={Styles['popupButton']} onClick={() => { setShowPopup(false); }}>
+                                <div className={Styles['opcao']} onClick={() => { setShowPopup(false); }}>
                                     <img src={Editar} alt="Editar" />
-                                    Editar
-                                </button>
+                                    <span>Editar</span>
+                                </div>
 
                                 <div className={Styles['linhaPopup']}></div>
 
-                                <button className={Styles['popupButton']} onClick={() => { setShowPopup(false); deletarPublicacao(id); }}>
+                                <div className={Styles['opcao']} onClick={() => { setShowPopup(false); setShowConfirmation(true); }}>
                                     <img src={Deletar} alt="Deletar" />
-                                    Excluir
-                                </button>
+                                    <span>Excluir</span>
+                                </div>
                             </>
                         ) : (
-                            <button className={Styles['popupButton']} onClick={() => { setShowPopup(false); /* Lógica para denunciar */ }}>
+                            <div className={Styles['opcao']} onClick={() => { setShowPopup(false); /* Lógica para denunciar */ }}>
                                 <img src={Denunciar} alt="Denunciar" />
-                                Denunciar
-                            </button>
+                                <span>Denunciar</span>
+                            </div>
                         )}
                     </div>
                 )}
+
+                {showConfirmation && (
+                    <div className={Styles['modalOverlay']}>
+                        <div className={Styles['modalContent']}>
+                            <h3>Confirmar Exclusão</h3>
+                            <p>Tem certeza de que deseja excluir esta publicação?</p>
+                            <button className={Styles['confirmButton']} onClick={confirmarDelecao}>Sim</button>
+                            <button className={Styles['cancelButton']} onClick={() => setShowConfirmation(false)}>Cancelar</button>
+                        </div>
+                    </div>
+                )}
+
                 <ToastContainer
                     position="top-right"
                     autoClose={1000}

@@ -129,19 +129,26 @@
     flex-direction: column;
     align-items: center;
     gap: 8px;
+    font-family: "Nunito Sans", sans-serif;
 }
 
-.popupButton {
-    background-color: transparent;
-    border: none;
-    color: #333;
-    padding: 6px 10px;
-    text-align: left;
-    font-size: 14px;
-    cursor: pointer;
-    width: 100%;
-    transition: background-color 0.3s;
+.popup img {
+    margin-right: 5px;
+    width: 20px;
+}
+
+.opcao{
+    display: flex;
     align-items: center;
+    justify-content: center;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.opcao span{
+    font-size: 12px;
     font-family: "Nunito Sans", sans-serif;
 }
 
@@ -191,4 +198,61 @@
     color: #707070;
     font-size: 10px;
     font-family: "Nunito Sans", sans-serif;
+}
+
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modalContent {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: "Nunito Sans", sans-serif;
+}
+
+.modalContent h3, .modalContent p{
+    font-family: "Nunito Sans", sans-serif;
+    margin-bottom: 10px;
+    padding: 0;
+    margin-left: 0;
+}
+
+.confirmButton {
+    background-color: #A80301;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-right: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 16px;
+    width: 7rem;
+}
+
+.cancelButton {
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 16px;
+    width: 7rem;
+}
+
+.confirmButton:hover, .cancelButton:hover {
+    opacity: 0.8;
 }

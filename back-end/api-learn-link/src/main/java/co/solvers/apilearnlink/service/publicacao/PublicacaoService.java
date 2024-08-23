@@ -81,9 +81,9 @@ public class PublicacaoService {
     }
 
 
-//    public Page<PublicacaoListagemResponseDto> listagemPublicacoesPaginado(Pageable pageable) {
-//        return publicacaoRepository.findAllPublicacoesPaginado(pageable);
-//    }
+    public Page<Publicacao> listarMaisRecentesPaginado(Pageable pageable) {
+        return publicacaoRepository.findAllByOrderByDataHoraDesc(pageable);
+    }
 
 
 

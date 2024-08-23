@@ -69,7 +69,7 @@ public class ComentarioController {
 
     @ApiResponse(responseCode = "204", description = "Comentário deletado")
     @ApiResponse(responseCode = "404", description = "Comentário não encontrado")
-    @Operation(summary = "Deletar comentário", description = "Método que deleta um comentário", tags = {"Comentários"})
+    @Operation(summary = "Remover reacão", description = "Método que remove a reacao", tags = {"Comentários"})
     @DeleteMapping("/{idComentario}/reagir/{idReacao}")
     public ResponseEntity<Void> removerReacao(
             @PathVariable

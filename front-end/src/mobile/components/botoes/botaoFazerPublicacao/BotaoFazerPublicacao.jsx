@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import Styles from "./BotaoFazerPublicacao.module.css";
 import publicarIcone from "../../../utils/assets/Publicar.png";
 import Modal from 'react-modal';
@@ -17,8 +17,7 @@ function generateInitials(name) {
     ];
 
     const randomIndex = Math.floor(Math.random() * pastelColors.length);
-
-    const backgroundColor = pastelColors[randomIndex]
+    const backgroundColor = pastelColors[randomIndex];
 
     const avatar = {
         borderRadius: '50%',
@@ -37,13 +36,25 @@ function generateInitials(name) {
 }
 
 function BotaoFazerPublicacao() {
-
     const [showComentarios, setShowComentarios] = useState(false);
+    const [textoPublicacao, setTextoPublicacao] = useState("");
+    const maxCaracteres = 255;
+
+    const nomeUsuario = sessionStorage.getItem('nome');
+
+    // Memoriza o avatar gerado para o usuário
+    const avatar = useMemo(() => generateInitials(nomeUsuario), [nomeUsuario]);
 
     const closeComentariosModal = () => {
         setShowComentarios(false); // Fecha o modal
     };
 
+    const handleChange = (e) => {
+        const value = e.target.value;
+        if (value.length <= maxCaracteres) {
+            setTextoPublicacao(value);
+        }
+    };
 
     return (
         <>
@@ -67,10 +78,19 @@ function BotaoFazerPublicacao() {
                 </div>
 
                 <div className={Styles["conteudoPublicacao"]}>
-                    {generateInitials(sessionStorage.nome)}
-                    <textarea className={Styles["textoPublicacao"]} placeholder="Digite aqui..."></textarea>
+                    <div className={Styles["pessoaConteudo"]} >
+                        {avatar}
+                        <textarea
+                            className={Styles["textoPublicacao"]}
+                            placeholder="Digite aqui..."
+                            value={textoPublicacao}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className={Styles["contadorCaracteres"]}>
+                        {textoPublicacao.length} / {maxCaracteres}
+                    </div>
                 </div>
-
 
                 <div className={Styles["footerPublicar"]}>
                     <span className={Styles["hashtag"]}>#</span>
