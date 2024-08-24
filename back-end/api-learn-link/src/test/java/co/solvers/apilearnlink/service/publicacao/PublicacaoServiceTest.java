@@ -1,5 +1,6 @@
 package co.solvers.apilearnlink.service.publicacao;
 
+import co.solvers.apilearnlink.domain.canal.Canal;
 import co.solvers.apilearnlink.domain.publicacao.Publicacao;
 import co.solvers.apilearnlink.domain.publicacao.repository.PublicacaoRepository;
 import co.solvers.apilearnlink.domain.tipopublicacao.TipoPublicacao;
@@ -161,12 +162,23 @@ public class PublicacaoServiceTest {
         publicacao.setId(1);
         publicacao.setConteudo("Conteúdo original");
 
+        Canal canal = new Canal();
+        canal.setId(1);
+        canal.setNome("História");
+
+        publicacao.setCanal(canal);
+
         Mockito.when(repository.findById(Mockito.anyInt())).thenReturn(Optional.of(publicacao));
         Mockito.when(repository.save(Mockito.any(Publicacao.class))).thenReturn(publicacao);
 
-        Publicacao result = service.editarConteudo(1, "Novo conteúdo");
+        Canal novaMateria = new Canal();
+        novaMateria.setId(2);
+        novaMateria.setNome("Matemática");
+
+        Publicacao result = service.editarConteudo(1, "Novo conteúdo",2);
 
         assertEquals("Novo conteúdo", result.getConteudo());
+        assertEquals("Matemática", result.getCanal().getNome());
     }
 
     @Test

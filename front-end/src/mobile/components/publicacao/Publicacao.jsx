@@ -215,15 +215,6 @@ const Publicacao = ({ id, nome, materia, mensagem, horario, curtidas, comentario
                                 {textoPublicacao.length} / {maxCaracteres}
                             </div>
                         </div>
-                        {/* <div className={StylesModal["conteudoPublicacao"]}>
-                            {generateInitials(sessionStorage.nome)}
-                            <textarea
-                                className={StylesModal["textoPublicacao"]}
-                                value={novoConteudo}
-                                onChange={(e) => setNovoConteudo(e.target.value)}
-                                placeholder="Digite aqui..."
-                            ></textarea>
-                        </div> */}
 
                         <div className={StylesModal["footerPublicar"]}>
                             <span className={StylesModal["hashtag"]}>#</span>
