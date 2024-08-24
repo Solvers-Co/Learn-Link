@@ -4,6 +4,7 @@ import api from '../../../api';
 import { toast, ToastContainer } from 'react-toastify';
 import Modal from 'react-modal';
 import 'react-toastify/dist/ReactToastify.css';
+import StylesModal from '../../components/botoes/botaoFazerPublicacao/BotaoFazerPublicacao.module.css'
 
 import Curtir from '../../utils/assets/Curtir.png';
 import Comentar from '../../utils/assets/Comentario.png';
@@ -34,57 +35,17 @@ function deletarPublicacao(id) {
         });
 }
 
-function EditarPublicacao(id) {
-    const [showEditar, setshowEditar] = useState(false);
-
-    const closeEditarModal = () => {
-        setshowEditar(false); // Fecha o modal
-    };
-
-    api.patch(`/publicacoes/${id}/conteudo`)
+function editarPublicacao(id, novoConteudo, novaMateriaId) {
+    api.patch(`/publicacoes/${id}/conteudo?novoConteudo=${encodeURIComponent(novoConteudo)}&novaMateriaId=${encodeURIComponent(novaMateriaId)}`)
         .then(response => {
-            <Modal
-                isOpen={showEditar}
-                onRequestClose={closeEditarModal}
-                className={Styles['publicarModal']}
-                overlayClassName={Styles['publicarOverlay']}
-            >
-                <div className={Styles["headerPublicar"]}>
-                    <img src={Fechar} alt="icone fechar" onClick={closeEditarModal} />
-                    <button className={Styles["botaoPostar"]}>Editar</button>
-                </div>
-
-                <div className={Styles["conteudoPublicacao"]}>
-                    {generateInitials(sessionStorage.nome)}
-                    <textarea className={Styles["textoPublicacao"]} placeholder="Digite aqui..."></textarea>
-                </div>
-
-
-                <div className={Styles["footerPublicar"]}>
-                    <span className={Styles["hashtag"]}>#</span>
-                    <select name="materias" id="materias" className={Styles["opcoesMaterias"]}>
-                        <option value="portugues">Português</option>
-                        <option value="matematica">Matemática</option>
-                        <option value="biologia">Biologia</option>
-                        <option value="quimica">Química</option>
-                        <option value="fisica">Física</option>
-                        <option value="historia">História</option>
-                        <option value="geografia">Geografia</option>
-                        <option value="filosofia">Filosofia</option>
-                        <option value="sociologia">Sociologia</option>
-                        <option value="ingles">Inglês</option>
-                    </select>
-                </div>
-
-            </Modal>
-
-
             console.log("Publicação editada com sucesso:", response.data);
             toast.success("Publicação editada com sucesso!");
+            window.location.reload();
         })
         .catch(error => {
-            console.error("Ocorreu um erro ao editar a publicação:", error);
+            console.error("Erro ao editar a publicação:", error.response?.data || error.message);
         });
+
 }
 
 
@@ -122,6 +83,11 @@ function generateInitials(name) {
 const Publicacao = ({ id, nome, materia, mensagem, horario, curtidas, comentarios, listarComentarios }) => {
     const [showPopup, setShowPopup] = useState(false);
     const [showConfirmation, setShowConfirmation] = useState(false);
+    const [showEditar, setShowEditar] = useState(false);
+    const [novoConteudo, setNovoConteudo] = useState(mensagem);
+    const [novaMateria, setNovaMateria] = useState(materia);
+    const [textoPublicacao, setTextoPublicacao] = useState("");
+    const maxCaracteres = 255;
 
     const togglePopup = () => {
         setShowPopup(!showPopup);
@@ -133,11 +99,32 @@ const Publicacao = ({ id, nome, materia, mensagem, horario, curtidas, comentario
         window.location.reload();
     };
 
+    const abrirEditarModal = () => {
+        setShowPopup(false);
+        setShowEditar(true);
+    };
+
+    const closeEditarModal = () => {
+        setShowEditar(false);
+    };
+
+    const confirmarEdicao = () => {
+        editarPublicacao(id, novoConteudo, novaMateria);
+        closeEditarModal();
+    };
+
     // Obtem o nome do usuário armazenado no sessionStorage
     const nomeUsuarioLogado = sessionStorage.getItem('nome');
 
     // Memorize o avatar gerado com base no nome
     const avatar = useMemo(() => generateInitials(nome), [nome]);
+
+    const handleChange = (e) => {
+        const value = e.target.value;
+        if (value.length <= maxCaracteres) {
+            setTextoPublicacao(value);
+        }
+    };
 
     return (
         <>
@@ -158,7 +145,7 @@ const Publicacao = ({ id, nome, materia, mensagem, horario, curtidas, comentario
                 <div className={Styles['mensagem']}>{mensagem}</div>
                 <div className={Styles['dataHora']}>{formatDateTime(horario)}</div>
 
-                
+
                 <div className={Styles['linha']}></div>
 
                 <div className={Styles['footer']}>
@@ -178,7 +165,7 @@ const Publicacao = ({ id, nome, materia, mensagem, horario, curtidas, comentario
                     <div className={Styles['popup']}>
                         {nomeUsuarioLogado === nome ? (
                             <>
-                                <button className={Styles['popupButton']} onClick={() => { setShowPopup(false); setShowEditar(true); }}>
+                                <button className={Styles['popupButton']} onClick={abrirEditarModal}>
                                     <div className={Styles['opcao']}>
                                         <img src={Editar} alt="Editar" />
                                         <span>Editar</span>
@@ -199,6 +186,67 @@ const Publicacao = ({ id, nome, materia, mensagem, horario, curtidas, comentario
                             </div>
                         )}
                     </div>
+                )}
+
+                {showEditar && (
+                    <Modal
+                        isOpen={showEditar}
+                        onRequestClose={closeEditarModal}
+                        className={StylesModal['publicarModal']}
+                        overlayClassName={StylesModal['publicarOverlay']}
+                    >
+                        <div className={StylesModal["headerPublicar"]}>
+                            <img src={Fechar} alt="icone fechar" onClick={closeEditarModal} />
+                            <button className={StylesModal["botaoPostar"]} onClick={confirmarEdicao}>Editar</button>
+                        </div>
+
+
+                        <div className={StylesModal["conteudoPublicacao"]}>
+                            <div className={StylesModal["pessoaConteudo"]} >
+                                {avatar}
+                                <textarea
+                                    className={StylesModal["textoPublicacao"]}
+                                    placeholder="Digite aqui..."
+                                    value={novoConteudo}
+                                    onChange={(e) => setNovoConteudo(e.target.value) && handleChange}
+                                />
+                            </div>
+                            <div className={StylesModal["contadorCaracteres"]}>
+                                {textoPublicacao.length} / {maxCaracteres}
+                            </div>
+                        </div>
+                        {/* <div className={StylesModal["conteudoPublicacao"]}>
+                            {generateInitials(sessionStorage.nome)}
+                            <textarea
+                                className={StylesModal["textoPublicacao"]}
+                                value={novoConteudo}
+                                onChange={(e) => setNovoConteudo(e.target.value)}
+                                placeholder="Digite aqui..."
+                            ></textarea>
+                        </div> */}
+
+                        <div className={StylesModal["footerPublicar"]}>
+                            <span className={StylesModal["hashtag"]}>#</span>
+                            <select
+                                name="materias"
+                                id="materias"
+                                className={StylesModal["opcoesMaterias"]}
+                                value={novaMateria}
+                                onChange={(e) => setNovaMateria(e.target.value)}
+                            >
+                                <option value="portugues">Português</option>
+                                <option value="matematica">Matemática</option>
+                                <option value="biologia">Biologia</option>
+                                <option value="quimica">Química</option>
+                                <option value="fisica">Física</option>
+                                <option value="historia">História</option>
+                                <option value="geografia">Geografia</option>
+                                <option value="filosofia">Filosofia</option>
+                                <option value="sociologia">Sociologia</option>
+                                <option value="ingles">Inglês</option>
+                            </select>
+                        </div>
+                    </Modal>
                 )}
 
                 {showConfirmation && (
