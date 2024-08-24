@@ -115,7 +115,7 @@ public class PublicacaoService {
         return publicacao;
     }
 
-    public Publicacao editarConteudo(int id, String novoConteudo, Integer novoCanalId) {
+    public Publicacao editarConteudo(int id, String novoConteudo, String novoCanal) {
         verificaConteudoVazio(novoConteudo);
         verificaIdVazio(id);
 
@@ -123,14 +123,9 @@ public class PublicacaoService {
 
         Publicacao publicacao = optPublicacao.get();
         publicacao.setConteudo(novoConteudo);
+        Canal novoCanalNome = canalRepository.findByNome(novoCanal);
+        publicacao.setCanal(novoCanalNome);
 
-        if (novoCanalId != null) {
-            Optional<Canal> optCanal = canalRepository.findById(novoCanalId);
-            if (optCanal.isEmpty()) {
-                throw new NaoEncontradoException("Canal não encontrado");
-            }
-            publicacao.setCanal(optCanal.get());
-        }
 
         Publicacao publicacaoAlterada = publicacaoRepository.save(publicacao);
         return publicacaoAlterada;

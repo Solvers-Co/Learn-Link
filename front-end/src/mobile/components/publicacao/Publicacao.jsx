@@ -35,8 +35,8 @@ function deletarPublicacao(id) {
         });
 }
 
-function editarPublicacao(id, novoConteudo, novaMateriaId) {
-    api.patch(`/publicacoes/${id}/conteudo?novoConteudo=${encodeURIComponent(novoConteudo)}&novaMateriaId=${encodeURIComponent(novaMateriaId)}`)
+function editarPublicacao(id, novoConteudo, novoCanal) {
+    api.patch(`/publicacoes/${id}/conteudo?novoConteudo=${encodeURIComponent(novoConteudo)}&novoCanal=${encodeURIComponent(novoCanal)}`)
         .then(response => {
             console.log("Publicação editada com sucesso:", response.data);
             toast.success("Publicação editada com sucesso!");
@@ -45,7 +45,6 @@ function editarPublicacao(id, novoConteudo, novaMateriaId) {
         .catch(error => {
             console.error("Erro ao editar a publicação:", error.response?.data || error.message);
         });
-
 }
 
 
@@ -197,7 +196,7 @@ const Publicacao = ({ id, nome, materia, mensagem, horario, curtidas, comentario
                     >
                         <div className={StylesModal["headerPublicar"]}>
                             <img src={Fechar} alt="icone fechar" onClick={closeEditarModal} />
-                            <button className={StylesModal["botaoPostar"]} onClick={confirmarEdicao}>Editar</button>
+                            <button className={StylesModal["botaoPostar"]} onClick={() => editarPublicacao(id, novoConteudo, novaMateria)}>Editar</button>
                         </div>
 
 

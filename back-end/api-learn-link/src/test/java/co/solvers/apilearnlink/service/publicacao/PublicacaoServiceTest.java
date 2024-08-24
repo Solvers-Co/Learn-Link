@@ -175,7 +175,7 @@ public class PublicacaoServiceTest {
         novaMateria.setId(2);
         novaMateria.setNome("Matemática");
 
-        Publicacao result = service.editarConteudo(1, "Novo conteúdo",2);
+        Publicacao result = service.editarConteudo(1, "Novo conteúdo","Matemática");
 
         assertEquals("Novo conteúdo", result.getConteudo());
         assertEquals("Matemática", result.getCanal().getNome());

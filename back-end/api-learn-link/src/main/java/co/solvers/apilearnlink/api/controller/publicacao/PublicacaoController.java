@@ -153,11 +153,11 @@ public class PublicacaoController {
             @Parameter(name = "id", description = "Publicação id", example = "1") int id,
             @RequestParam
             @Parameter(name = "novoConteudo", description = "Novo conteúdo", example = "Qual o valor de PI?") String novoConteudo,
-            @RequestParam(required = false)
-            @Parameter(name = "novoCanalId", description = "ID do novo canal", example = "2") Integer novoCanalId
+            @RequestParam
+            @Parameter(name = "novoCanalId", description = "ID do novo canal", example = "Matemática") String novoCanal
     ) {
 
-        Publicacao publicacaoAlterada = publicacaoService.editarConteudo(id, novoConteudo, novoCanalId);
+        Publicacao publicacaoAlterada = publicacaoService.editarConteudo(id, novoConteudo, novoCanal);
         PublicacaoListagemResponseDto dto = PublicacaoMapper.toDto(publicacaoAlterada);
         return ResponseEntity.ok(dto);
     }
