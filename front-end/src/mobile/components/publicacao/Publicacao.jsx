@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Styles from '../publicacao/Publicacao.module.css';
 import api from '../../../api';
 import { toast, ToastContainer } from 'react-toastify';
+import Modal from 'react-modal';
 
 import Curtir from '../../utils/assets/Curtir.png';
 import Comentar from '../../utils/assets/Comentario.png';
@@ -9,6 +10,7 @@ import MenuVertical from '../../utils/assets/MenuVertical.png';
 import Editar from '../../utils/assets/Editar.png';
 import Deletar from '../../utils/assets/Deletar.png';
 import Denunciar from '../../utils/assets/Deletar.png';
+import Fechar from '../../utils/assets/icone_x.svg'
 
 function formatDateTime(dateString) {
     const date = new Date(dateString);
@@ -30,6 +32,59 @@ function deletarPublicacao(id) {
         })
         .catch(error => {
             console.error("Ocorreu um erro ao deletar a publicação:", error);
+        });
+}
+
+function EditarPublicacao(id) {
+    const [showEditar, setshowEditar] = useState(false);
+
+    const closeEditarModal = () => {
+        setshowEditar(false); // Fecha o modal
+    };
+
+    api.patch(`/publicacoes/${id}/conteudo`)
+        .then(response => {
+            <Modal
+                isOpen={showEditar}
+                onRequestClose={closeEditarModal}
+                className={Styles['publicarModal']}
+                overlayClassName={Styles['publicarOverlay']}
+            >
+                <div className={Styles["headerPublicar"]}>
+                    <img src={Fechar} alt="icone fechar" onClick={closeEditarModal} />
+                    <button className={Styles["botaoPostar"]}>Editar</button>
+                </div>
+
+                <div className={Styles["conteudoPublicacao"]}>
+                    {generateInitials(sessionStorage.nome)}
+                    <textarea className={Styles["textoPublicacao"]} placeholder="Digite aqui..."></textarea>
+                </div>
+
+
+                <div className={Styles["footerPublicar"]}>
+                    <span className={Styles["hashtag"]}>#</span>
+                    <select name="materias" id="materias" className={Styles["opcoesMaterias"]}>
+                        <option value="portugues">Português</option>
+                        <option value="matematica">Matemática</option>
+                        <option value="biologia">Biologia</option>
+                        <option value="quimica">Química</option>
+                        <option value="fisica">Física</option>
+                        <option value="historia">História</option>
+                        <option value="geografia">Geografia</option>
+                        <option value="filosofia">Filosofia</option>
+                        <option value="sociologia">Sociologia</option>
+                        <option value="ingles">Inglês</option>
+                    </select>
+                </div>
+
+            </Modal>
+
+
+            console.log("Publicação editada com sucesso:", response.data);
+            toast.success("Publicação editada com sucesso!");
+        })
+        .catch(error => {
+            console.error("Ocorreu um erro ao editar a publicação:", error);
         });
 }
 
@@ -116,7 +171,7 @@ const Publicacao = ({ id, nome, materia, mensagem, horario, curtidas, comentario
                     <div className={Styles['popup']}>
                         {nomeUsuarioLogado === nome ? (
                             <>
-                                <button className={Styles['popupButton']} onClick={() => { setShowPopup(false); }}>
+                                <button className={Styles['popupButton']} onClick={() => { setShowPopup(false); EditarPublicacao(id) }}>
                                     <img src={Editar} alt="Editar" />
                                     Editar
                                 </button>
