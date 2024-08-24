@@ -291,6 +291,43 @@ INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) VALUES
 ('A força resultante é a soma vetorial de todas as forças atuantes.', '2024-05-03 10:30:00', 8, 4),
 ('Inércia é a tendência de um objeto de resistir a mudanças em seu estado de movimento.', '2024-05-03 12:30:00', 9, 5);
 
+
+
+
+-- Para 4 de Maio de 2024
+INSERT INTO publicacao (conteudo, data_hora, tipo_publicacao_id, canal_id, usuario_id) VALUES
+('Como calcular a área de um triângulo?', '2024-05-04 09:00:00', 1, 1, 1),
+('Qual é a soma dos ângulos internos de um quadrilátero?', '2024-05-04 11:00:00', 1, 1, 2),
+('O que é um ângulo reto?', '2024-05-04 13:00:00', 1, 1, 3);
+
+INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) VALUES
+('A área de um triângulo é base vezes altura dividido por dois.', '2024-05-04 09:30:00', 10, 3),
+('A soma dos ângulos internos de um quadrilátero é 360 graus.', '2024-05-04 11:30:00', 11, 1),
+('Um ângulo reto é um ângulo de 90 graus.', '2024-05-04 13:30:00', 12, 2);
+
+-- Para 5 de Maio de 2024
+INSERT INTO publicacao (conteudo, data_hora, tipo_publicacao_id, canal_id, usuario_id) VALUES
+('Como calcular o volume de um cubo?', '2024-05-05 10:00:00', 1, 2, 4),
+('O que é uma equação linear?', '2024-05-05 12:00:00', 1, 2, 5),
+('Como se define uma função?', '2024-05-05 14:00:00', 1, 2, 6);
+
+INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) VALUES
+('O volume de um cubo é dado pelo cubo do comprimento da sua aresta.', '2024-05-05 10:30:00', 13, 6),
+('Uma equação linear é uma equação de primeiro grau.', '2024-05-05 12:30:00', 14, 4),
+('Uma função relaciona um conjunto de entradas a um conjunto de saídas.', '2024-05-05 14:30:00', 15, 5);
+
+-- Para 6 de Maio de 2024
+INSERT INTO publicacao (conteudo, data_hora, tipo_publicacao_id, canal_id, usuario_id) VALUES
+('O que é uma célula?', '2024-05-06 09:00:00', 1, 3, 1),
+('Explique o processo de fotossíntese.', '2024-05-06 11:00:00', 1, 3, 2),
+('O que são organelas celulares?', '2024-05-06 13:00:00', 1, 3, 3);
+
+INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) VALUES
+('Uma célula é a unidade básica da vida.', '2024-05-06 09:30:00', 16, 2),
+('Fotossíntese é o processo pelo qual as plantas produzem energia.', '2024-05-06 11:30:00', 17, 3),
+('Organelas são estruturas especializadas dentro das células.', '2024-05-06 13:30:00', 18, 1);
+
+
 select * from view_materias_nao_respondidas;
 
 -- SELECT (INCOMPLETO) para recuperar todos os comentarios de uma publicação especifica para o botão de comentarios (Ausencia de um campo de curtidas na tabela comentarios)
@@ -298,5 +335,6 @@ select * from view_materias_nao_respondidas;
 -- FROM comentario c
 -- JOIN usuario u ON c.usuario_id = u.id
 -- WHERE c.publicacao_id =1;
+
 
 

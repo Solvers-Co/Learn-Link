@@ -72,18 +72,31 @@
     font-family: "NunitoSansRegular", sans-serif;
 }
 
+.pessoaConteudo{
+    display: flex;
+    flex-direction: row;
+}
+
 .conteudoPublicacao{
     margin-top: 50px;
     display: flex;
+    flex-direction: column;
 }
 
 .textoPublicacao{
     width: 280px;
-    height: 200px;
+    height: 250px;
     font-family: "NunitoSansRegular", sans-serif;
     border-style: none;
     font-size: 18px;
     padding-top: 5px;
+}
+
+.contadorCaracteres{
+    font-family: "NunitoSansRegular", sans-serif;
+    font-size: 16px;
+    color: #000000;
+    margin-left: 47px;
 }
 
 .opcoesMaterias{
