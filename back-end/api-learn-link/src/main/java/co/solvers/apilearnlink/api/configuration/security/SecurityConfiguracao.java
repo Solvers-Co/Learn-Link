@@ -77,6 +77,7 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/publicacoes/{idPublicacao}/comentar"),
             new AntPathRequestMatcher("/publicacoes/quantidade-de-publicacoes-em-cada-canal"),
             new AntPathRequestMatcher("/publicacoes/canal-com-maior-numero-de-publicacoes"),
+            new AntPathRequestMatcher("/publicacoes//publicacoes-por-canal-paginado"),
             new AntPathRequestMatcher("/comentarios"),
             new AntPathRequestMatcher("/comentarios/{id}"),
             new AntPathRequestMatcher("/comentarios/{idComentario}/reagir"),

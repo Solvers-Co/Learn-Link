@@ -50,7 +50,7 @@ const formatSubjectName = (name) => {
     return subjectNameMap[name] || name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
 };
 
-const App = () => {
+const Canais = () => {
     const [cardsData, setCardsData] = useState([]);
 
     useEffect(() => {
@@ -73,6 +73,7 @@ const App = () => {
             {cardsData.map((item) => (
                 <Card
                     key={item.nomeMateria}
+                    nomeMateria={item.nomeMateria}
                     image={iconMap[item.nomeMateria] || notFoundIcon} // Use um ícone padrão se não encontrar um ícone correspondente
                     buttonText={formatSubjectName(item.nomeMateria)} // Formate o nome da matéria
                     unansweredCount={item.qtdPublicacoesNaoRespondidas}
@@ -83,4 +84,4 @@ const App = () => {
     );
 };
 
-export default App;
+export default Canais;

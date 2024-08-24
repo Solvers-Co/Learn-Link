@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { useLocation } from 'react-router-dom'; // Importar useLocation
 import Styles from '../feedGeral/FeedGeral.module.css';
 import api from "../../../api";
 import Publicacao from '../../components/publicacao/Publicacao';
@@ -10,7 +11,7 @@ import BotaoFazerPublicacao from '../../components/botoes/botaoFazerPublicacao/B
 import Filtro from '../../utils/assets/Filtro.png';
 import Enviar from '../../utils/assets/Enviar.png';
 
-Modal.setAppElement('#root'); // Necessário para acessibilidade
+Modal.setAppElement('#root');
 
 const subjectNameMap = {
     'MATEMATICA': 'Matemática',
@@ -34,30 +35,43 @@ const FeedGeral = () => {
     const [showComentarios, setShowComentarios] = useState(false);
     const [comentariosPublicacao, setComentarios] = useState([]);
     const [searchResults, setSearchResults] = useState(null);
-    const [page, setPage] = useState(0); // Estado para a página atual
-    const [totalPages, setTotalPages] = useState(0); // Estado para o total de páginas
-    const observer = useRef(); // Referência para o observador de scroll
+    const [page, setPage] = useState(0);
+    const [totalPages, setTotalPages] = useState(0);
+    const observer = useRef();
+
+    const location = useLocation(); // Obter o state da navegação
+    const canalId = location.state?.canalId; // Verificar se canalId foi passado
 
     useEffect(() => {
         const fetchPublicacoes = async () => {
             try {
-                const response = await api.get(`/publicacoes/publicacoes-mais-recentes-paginado`, {
-                    params: {
-                        page: page,
-                        size: 10 // Você pode ajustar o tamanho da página se necessário
-                    }
-                });
-                
-                setPublicacoes(prevPublicacoes => [...prevPublicacoes, ...response?.data.content]);
-                setTotalPages(response?.data.totalPages); // Define o total de páginas
+                let url = '/publicacoes/publicacoes-mais-recentes-paginado';
+                const params = {
+                    page: page,
+                    size: 10,
+                };
+        
+                if (canalId) {
+                    url = '/publicacoes/publicacoes-por-canal-paginado';
+                    params.canalId = canalId;
+                }
+        
+                const response = await api.get(url, { params });
+        
+                const publicacoesRecebidas = response?.data?.content || []; // Garante que será um array
+        
+                setPublicacoes(prevPublicacoes => [...prevPublicacoes, ...publicacoesRecebidas]);
+                setTotalPages(response?.data.totalPages || 0); // Garante que totalPages será um número
+        
                 console.log("Dados recebidos:", response?.data);
             } catch (error) {
                 console.error("Ocorreu um erro ao buscar os dados:", error);
             }
         };
+        
 
         fetchPublicacoes();
-    }, [page]);
+    }, [page, canalId]);
 
     useEffect(() => {
         if (observer.current) {
@@ -88,7 +102,7 @@ const FeedGeral = () => {
         api.get(`/comentarios/publicacao/${id}`)
             .then(response => {
                 setComentarios(response.data);
-                setShowComentarios(true); // Abre o modal ao listar os comentários
+                setShowComentarios(true);
             })
             .catch(error => {
                 console.error("Ocorreu um erro ao buscar os comentários:", error);
@@ -96,7 +110,7 @@ const FeedGeral = () => {
     };
 
     const closeComentariosModal = () => {
-        setShowComentarios(false); // Fecha o modal
+        setShowComentarios(false);
     };
 
     const publicacoesParaExibir = searchResults || publicacoes;
@@ -110,20 +124,23 @@ const FeedGeral = () => {
                     <img src={Filtro} alt="Filtro" />
                 </div>
                 <div className={Styles['publicacoes']}>
-                    {publicacoesParaExibir.map((publicacao, index) => (
-                        <Publicacao
-                            key={`${publicacao.id}-${index}`}
-                            id={publicacao.id}
-                            nome={publicacao.usuario.nome}
-                            materia={formatSubjectName(publicacao.canal.nome)}
-                            mensagem={publicacao.conteudo}
-                            horario={publicacao.dataHora}
-                            curtidas={publicacao.reacoes.length}
-                            comentarios={publicacao.comentarios.length}
-                            listarComentarios={listarComentarios}
-                        />
-                    ))}
-                    {/* Elemento sentinel para detectar o final da lista */}
+                    {publicacoesParaExibir.length > 0 ? (
+                        publicacoesParaExibir.map((publicacao, index) => (
+                            <Publicacao
+                                key={`${publicacao.id}-${index}`}
+                                id={publicacao.id}
+                                nome={publicacao.usuario.nome}
+                                materia={formatSubjectName(publicacao.canal.nome)}
+                                mensagem={publicacao.conteudo}
+                                horario={publicacao.dataHora}
+                                curtidas={publicacao.reacoes.length}
+                                comentarios={publicacao.comentarios.length}
+                                listarComentarios={listarComentarios}
+                            />
+                        ))
+                    ) : (
+                        <p className={Styles["textoSemPublicacoes"]}>Nenhuma publicação encontrada</p>
+                    )}
                     <div ref={observer} />
                 </div>
             </div>

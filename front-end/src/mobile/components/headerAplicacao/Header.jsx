@@ -17,6 +17,7 @@ function Header({ onSearchResult }) { // Recebe a função onSearchResult como p
     const navigate = useNavigate();
 
     const handleFeedGeral = () => {
+        window.location.reload();
         navigate('/feedGeral');
     };
 
