@@ -47,6 +47,10 @@
 .card-footer {
     display: flex;
     justify-content: space-between;
-    font-size: 14px;
+    font-size: 16px;
     color: #616161;
+}
+
+.card-footer span{
+    font-family: "Nunito Sans", sans-serif;
 }

@@ -1,14 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import Styles from '../comentario/Comentario.module.css';
-// import api from '../../../api';
+import api from '../../../api';
 
-import Usuario from '../../utils/assets/Usuario.png';
 import Curtir from '../../utils/assets/Curtir.png';
 import MenuVertical from '../../utils/assets/MenuVertical.png';
 import Editar from '../../utils/assets/Editar.png';
 import Deletar from '../../utils/assets/Deletar.png';
 import Denunciar from '../../utils/assets/Denuncia.png';
-import api from '../../../api';
 
 function formatTimeAgo(dateString) {
     const date = new Date(dateString);
@@ -44,7 +42,36 @@ function deletarComentario(id) {
         });
 }
 
+function generateInitials(name) {
+    const nameParts = name.trim().split(' ');
+    const firstInitial = nameParts[0].charAt(0).toUpperCase();
+    const lastInitial = nameParts[nameParts.length - 1].charAt(0).toUpperCase();
 
+    const pastelColors = [
+        '#FFB3BA', '#FFDFBA', '#FFFFBA', '#BAFFC9', '#BAE1FF',
+        '#FFB3B3', '#FFCCB3', '#FFFFCC', '#CCFFCC', '#CCE5FF',
+        '#FFC3A0', '#FFEDCC', '#FFFFE0', '#E0FFCC', '#CCE0FF',
+        '#FFC4C4', '#FFE1C4', '#FFFFD1', '#D1FFD1', '#D1E8FF'
+    ];
+
+    const randomIndex = Math.floor(Math.random() * pastelColors.length);
+    const backgroundColor = pastelColors[randomIndex];
+
+    const avatar = {
+        borderRadius: '50%',
+        border: '1px solid rgba(0, 0, 0, .3)',
+        width: '35px',
+        height: '35px',
+        marginRight: '12px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontFamily: '"NunitoSansExtraBold", sans-serif',
+        backgroundColor
+    };
+
+    return <div style={avatar}>{firstInitial + lastInitial}</div>;
+}
 
 const Comentario = ({ id, nome, mensagem, horario, curtidas, nomePublicacao }) => {
     const [showPopup, setShowPopup] = useState(false);
@@ -62,12 +89,15 @@ const Comentario = ({ id, nome, mensagem, horario, curtidas, nomePublicacao }) =
     // Obtem o nome do usuário armazenado no sessionStorage
     const nomeUsuarioLogado = sessionStorage.getItem('nome');
 
+    // Gere o avatar com base no nome
+    const avatar = useMemo(() => generateInitials(nome), [nome]);
+
     return (
         <>
             <div className={Styles['comentarioContainer']}>
                 <div className={Styles['comentarioUserInfo']}>
                     <div className={Styles["userComentario"]}>
-                        <img src={Usuario} alt="User" className={Styles['avatar']} />
+                        {avatar}
                         <span className={Styles['comentarioNome']}>{nome}</span>
                     </div>
                     <div className={Styles['menuVertical']} onClick={togglePopup}>
@@ -78,12 +108,12 @@ const Comentario = ({ id, nome, mensagem, horario, curtidas, nomePublicacao }) =
                         <div className={Styles['popup']}>
                             {nomeUsuarioLogado === nomePublicacao ? (
                                 <>
-                                    {nomeUsuarioLogado === nome  ? (
+                                    {nomeUsuarioLogado === nome ? (
                                         <div className={Styles['opcao']} onClick={() => { setShowPopup(false); }}>
                                             <img src={Editar} alt="Editar" />
                                             <span>Editar</span>
                                         </div>
-                                    ): null}
+                                    ) : null}
 
                                     <div className={Styles['linhaPopup']}></div>
 
@@ -98,8 +128,6 @@ const Comentario = ({ id, nome, mensagem, horario, curtidas, nomePublicacao }) =
                                     Denunciar
                                 </button>
                             )}
-
-
                         </div>
                     )}
 
@@ -115,9 +143,6 @@ const Comentario = ({ id, nome, mensagem, horario, curtidas, nomePublicacao }) =
                     )}
                 </div>
 
-
-
-
                 <div className={Styles['comentarioMensagem']}>{mensagem}</div>
 
                 <div className={Styles["footerComentario"]}>
@@ -131,4 +156,5 @@ const Comentario = ({ id, nome, mensagem, horario, curtidas, nomePublicacao }) =
         </>
     );
 }
+
 export default Comentario;
