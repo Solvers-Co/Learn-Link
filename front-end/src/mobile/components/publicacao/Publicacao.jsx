@@ -164,12 +164,10 @@ const Publicacao = ({ id, nome, materia, mensagem, horario, curtidas, comentario
                     <div className={Styles['popup']}>
                         {nomeUsuarioLogado === nome ? (
                             <>
-                                <button className={Styles['popupButton']} onClick={abrirEditarModal}>
-                                    <div className={Styles['opcao']}>
-                                        <img src={Editar} alt="Editar" />
-                                        <span>Editar</span>
-                                    </div>
-                                </button>
+                                <div className={Styles['opcao']} onClick={abrirEditarModal}>
+                                    <img src={Editar} alt="Editar" />
+                                    <span>Editar</span>
+                                </div>
 
                                 <div className={Styles['linhaPopup']}></div>
 
@@ -196,7 +194,7 @@ const Publicacao = ({ id, nome, materia, mensagem, horario, curtidas, comentario
                     >
                         <div className={StylesModal["headerPublicar"]}>
                             <img src={Fechar} alt="icone fechar" onClick={closeEditarModal} />
-                            <button className={StylesModal["botaoPostar"]} onClick={() => editarPublicacao(id, novoConteudo, novaMateria)}>Editar</button>
+                            <button className={StylesModal["botaoPostar"]} onClick={confirmarEdicao}>Editar</button>
                         </div>
 
 
