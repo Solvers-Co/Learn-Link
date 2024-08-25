@@ -53,6 +53,21 @@ public class ReacaoService {
         return reacaoRepository.save(reacao);
     }
 
+    public void removerReacaoPublicacao(int idPublicacao, ReacaoCriarDto reacaoDto) {
+        Usuario usuario = usuarioService.buscarPorId(reacaoDto.getIdUsuario());
+        Publicacao publicacao = publicacaoService.listarPorId(idPublicacao);
+        TipoReacao tipoReacao = tipoReacaoService.buscarPorNome(reacaoDto.getTipoReacao());
+
+        Optional<Reacao> reacaoOptional = reacaoRepository.findByUsuarioAndPublicacaoAndTipoReacao(usuario, publicacao, tipoReacao);
+
+        if (reacaoOptional.isPresent()) {
+            reacaoRepository.delete(reacaoOptional.get());
+        } else {
+            throw new NaoEncontradoException("Reação");
+        }
+    }
+
+
     public Reacao buscarPorId (int id){
         Optional<Reacao> optReacao = reacaoRepository.findById(id);
 

@@ -134,6 +134,7 @@ const FeedGeral = () => {
                                 mensagem={publicacao.conteudo}
                                 horario={publicacao.dataHora}
                                 curtidas={publicacao.reacoes.length}
+                                quemCurtiu={publicacao.reacoes.map(reacao => reacao.usuario.nome)}
                                 comentarios={publicacao.comentarios.length}
                                 listarComentarios={listarComentarios}
                             />

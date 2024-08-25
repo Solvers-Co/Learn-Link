@@ -15,6 +15,6 @@ public class ReacaoCriarDto {
     private String tipoReacao;
     @NotNull
     @Positive
-    @Schema(description = "Id do comentário", example = "1")
+    @Schema(description = "Id do usuario", example = "1")
     private Long idUsuario;
 }

@@ -285,6 +285,20 @@ public class PublicacaoController {
         return ResponseEntity.created(null).body(reacaoDto);
     }
 
+    @ApiResponse(responseCode = "200", description = "Reação removida")
+    @ApiResponse(responseCode = "404", description = "Reação não encontrada")
+    @Operation(summary = "Remover reação de uma publicação", description = "Método que remove uma reação de uma publicação", tags = {"Publicações"})
+    @DeleteMapping("/{idPublicacao}/remover-reacao")
+    public ResponseEntity<Void> removerReacaoPublicacao(
+            @PathVariable
+            @Parameter(name = "idPublicacao", description = "Publicação id", example = "1") int idPublicacao,
+            @RequestBody ReacaoCriarDto reacaoCriarDto) {
+
+        reacaoService.removerReacaoPublicacao(idPublicacao, reacaoCriarDto);
+        return ResponseEntity.ok().build();
+    }
+
+
 
 //    @PostMapping("/comentarios")
 //    public ResponseEntity<Publicacao> comentar(@RequestBody Publicacao comentario) {
