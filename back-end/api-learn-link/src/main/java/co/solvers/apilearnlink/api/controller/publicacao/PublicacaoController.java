@@ -1,5 +1,6 @@
 package co.solvers.apilearnlink.api.controller.publicacao;
 
+import co.solvers.apilearnlink.domain.canal.Canal;
 import co.solvers.apilearnlink.domain.comentario.Comentario;
 import co.solvers.apilearnlink.domain.publicacao.Publicacao;
 import co.solvers.apilearnlink.domain.reacao.Reacao;
@@ -151,9 +152,12 @@ public class PublicacaoController {
             @PathVariable
             @Parameter(name = "id", description = "Publicação id", example = "1") int id,
             @RequestParam
-            @Parameter(name = "novoConteudo", description = "Novo conteúdo", example = "Qual o valor de PI?") String novoConteudo) {
+            @Parameter(name = "novoConteudo", description = "Novo conteúdo", example = "Qual o valor de PI?") String novoConteudo,
+            @RequestParam
+            @Parameter(name = "novoCanalId", description = "ID do novo canal", example = "Matemática") String novoCanal
+    ) {
 
-        Publicacao publicacaoAlterada = publicacaoService.editarConteudo(id, novoConteudo);
+        Publicacao publicacaoAlterada = publicacaoService.editarConteudo(id, novoConteudo, novoCanal);
         PublicacaoListagemResponseDto dto = PublicacaoMapper.toDto(publicacaoAlterada);
         return ResponseEntity.ok(dto);
     }
