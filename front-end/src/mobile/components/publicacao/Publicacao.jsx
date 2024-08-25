@@ -99,6 +99,11 @@ const Publicacao = ({ id, nome, materia, mensagem, horario, curtidas, comentario
     };
 
     const abrirEditarModal = () => {
+        console.log("Abrindo modal");
+        console.log("Mensagem atual:", mensagem);
+        console.log("Matéria atual:", materia);
+        setNovoConteudo(mensagem); // Define o novo conteúdo com o valor atual
+        setNovaMateria(materia);  
         setShowPopup(false);
         setShowEditar(true);
     };
@@ -220,7 +225,7 @@ const Publicacao = ({ id, nome, materia, mensagem, horario, curtidas, comentario
                                 id="materias"
                                 className={StylesModal["opcoesMaterias"]}
                                 value={novaMateria}
-                                onChange={(e) => setNovaMateria(e.target.value)}
+                                onChange={(e) => { console.log("Valor selecionado:", e.target.value);setNovaMateria(e.target.value)}}
                             >
                                 <option value="portugues">Português</option>
                                 <option value="matematica">Matemática</option>
