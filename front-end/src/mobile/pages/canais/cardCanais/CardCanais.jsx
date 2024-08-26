@@ -17,7 +17,7 @@ const Card = ({ nomeMateria, image, buttonText, unansweredCount }) => {
         "INGLES": 9,
         "FILOSOFIA": 10
     };
-    
+
     function atribuirId(nomeMateria) {
         return idMap[nomeMateria] || null; // Retorna o ID ou null se a matéria não for encontrada
     }

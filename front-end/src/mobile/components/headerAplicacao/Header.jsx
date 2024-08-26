@@ -13,7 +13,7 @@ function Header({ onSearchResult }) { // Recebe a função onSearchResult como p
     const [menuVisible, setMenuVisible] = useState(false);
     const headerRef = useRef(null);
     const menuIconRef = useRef(null);
-    const menuRef = useRef(null); 
+    const menuRef = useRef(null);
     const navigate = useNavigate();
 
     const handleFeedGeral = () => {
@@ -83,7 +83,7 @@ function Header({ onSearchResult }) { // Recebe a função onSearchResult como p
         <>
             <div className={styles.header} ref={headerRef}>
                 <div className={styles.logo}>
-                    <img src={Logo} alt='Logo Vermelha' onClick={handleFeedGeral}/>
+                    <img src={Logo} alt='Logo Vermelha' onClick={handleFeedGeral} />
                 </div>
                 <div className={styles.pesquisar}>
                     {searchVisible && (

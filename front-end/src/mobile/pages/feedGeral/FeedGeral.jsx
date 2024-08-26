@@ -50,25 +50,25 @@ const FeedGeral = () => {
                     page: page,
                     size: 10,
                 };
-        
+
                 if (canalId) {
                     url = '/publicacoes/publicacoes-por-canal-paginado';
                     params.canalId = canalId;
                 }
-        
+
                 const response = await api.get(url, { params });
-        
+
                 const publicacoesRecebidas = response?.data?.content || []; // Garante que será um array
-        
+
                 setPublicacoes(prevPublicacoes => [...prevPublicacoes, ...publicacoesRecebidas]);
                 setTotalPages(response?.data.totalPages || 0); // Garante que totalPages será um número
-        
+
                 console.log("Dados recebidos:", response?.data);
             } catch (error) {
                 console.error("Ocorreu um erro ao buscar os dados:", error);
             }
         };
-        
+
 
         fetchPublicacoes();
     }, [page, canalId]);

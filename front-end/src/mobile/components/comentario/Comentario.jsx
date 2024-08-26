@@ -28,7 +28,6 @@ function formatTimeAgo(dateString) {
             return `há ${interval} ${interval > 1 ? unit.plural : unit.singular}`;
         }
     }
-
     return 'agora mesmo';
 }
 

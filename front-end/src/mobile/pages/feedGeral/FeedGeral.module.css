@@ -9,7 +9,7 @@
     background-color: #ffffff;
 }
 
-.publicarFiltro{
+.publicarFiltro {
     margin-top: 10px;
     width: 92%;
     display: flex;
@@ -17,7 +17,7 @@
     align-items: center;
 }
 
-.publicarFiltro img{
+.publicarFiltro img {
     width: 24px;
 }
 
@@ -31,7 +31,7 @@
     background-color: #ffffff;
 }
 
-.comentarios{
+.comentarios {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -43,7 +43,7 @@
     border-top-left-radius: 25px;
 }
 
-.listaComentarios{
+.listaComentarios {
     margin-bottom: 3rem;
 }
 
@@ -51,13 +51,13 @@
     margin-bottom: 3rem;
 } */
 
-.fechar{
+.fechar {
     display: flex;
     justify-content: end;
     width: 90%;
 }
 
-.textoSemComentarios{
+.textoSemComentarios {
     text-align: center;
     width: 100%;
     height: 100%;
@@ -72,18 +72,20 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5); /* Fundo escuro */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Fundo escuro */
     display: flex;
-    align-items: flex-end; /* Alinha o modal na parte inferior da tela */
+    align-items: flex-end;
+    /* Alinha o modal na parte inferior da tela */
     justify-content: center;
 }
 
 .comentariosModal {
     width: 100%;
     max-width: 600px;
-    height: 70%; 
+    height: 70%;
     background-color: #fff;
-    border-radius: 25px 25px 0 0; 
+    border-radius: 25px 25px 0 0;
     padding: 15px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     display: flex;
@@ -95,8 +97,10 @@
 
 .listaComentarios {
     width: 100%;
-    max-height: calc(100% - 60px); /* Ajusta a altura máxima da lista */
-    overflow-y: auto; /* Permite a rolagem dentro da lista */
+    max-height: calc(100% - 60px);
+    /* Ajusta a altura máxima da lista */
+    overflow-y: auto;
+    /* Permite a rolagem dentro da lista */
     padding: 10px 0;
     text-align: start;
 }
@@ -112,7 +116,7 @@
     padding: 10px;
 }
 
-.postarComentario{
+.postarComentario {
     position: fixed;
     bottom: 0;
     display: flex;
@@ -127,7 +131,7 @@
     max-height: 300px;
 }
 
-.inputComentario{
+.inputComentario {
     min-height: 32px;
     max-height: 250px;
     min-width: 77%;
@@ -139,12 +143,12 @@
     word-break: normal;
 }
 
-.botaoComentar{
+.botaoComentar {
     height: 24px;
     margin-left: 10px;
 }
 
-.textoSemPublicacoes{
+.textoSemPublicacoes {
     text-align: center;
     margin-top: 25px;
     width: 100%;

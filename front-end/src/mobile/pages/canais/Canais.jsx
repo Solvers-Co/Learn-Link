@@ -17,7 +17,6 @@ import inglesIcon from '../../utils/assets/canais/Ingles.png';
 import filosofiaIcon from '../../utils/assets/canais/Filosofia.png';
 import notFoundIcon from '../../utils/assets/canais/NotFound.png';
 
-
 // Mapeamento de ícones para matérias
 const iconMap = {
     'MATEMATICA': mathIcon,
@@ -42,7 +41,7 @@ const subjectNameMap = {
     'BIOLOGIA': 'Biologia',
     'INGLES': 'Inglês',
     'FILOSOFIA': 'Filosofia',
-    'SOCIOLOGIA': 'Sociologia', 
+    'SOCIOLOGIA': 'Sociologia',
 };
 
 // Função para formatar o nome das matérias com acento
@@ -68,18 +67,18 @@ const Canais = () => {
         //header  errado 
         // <Header />
         <>
-        <div className={Styles['telaCanais']}>
-            <div className={Styles['titulo']}>Canais</div>
-            {cardsData.map((item) => (
-                <Card
-                    key={item.nomeMateria}
-                    nomeMateria={item.nomeMateria}
-                    image={iconMap[item.nomeMateria] || notFoundIcon} // Use um ícone padrão se não encontrar um ícone correspondente
-                    buttonText={formatSubjectName(item.nomeMateria)} // Formate o nome da matéria
-                    unansweredCount={item.qtdPublicacoesNaoRespondidas}
-                />
-            ))}
-        </div>
+            <div className={Styles['telaCanais']}>
+                <div className={Styles['titulo']}>Canais</div>
+                {cardsData.map((item) => (
+                    <Card
+                        key={item.nomeMateria}
+                        nomeMateria={item.nomeMateria}
+                        image={iconMap[item.nomeMateria] || notFoundIcon} // Use um ícone padrão se não encontrar um ícone correspondente
+                        buttonText={formatSubjectName(item.nomeMateria)} // Formate o nome da matéria
+                        unansweredCount={item.qtdPublicacoesNaoRespondidas}
+                    />
+                ))}
+            </div>
         </>
     );
 };
