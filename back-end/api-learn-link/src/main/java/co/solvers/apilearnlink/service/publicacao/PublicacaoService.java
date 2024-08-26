@@ -17,11 +17,12 @@ import co.solvers.apilearnlink.service.publicacao.dto.QuantidadePublicacaoDiaLis
 import co.solvers.apilearnlink.service.publicacao.dto.QuantidadePublicacaoMesCanalListagemDto;
 import co.solvers.apilearnlink.service.publicacao.dto.mapper.PublicacaoMapper;
 import co.solvers.apilearnlink.service.usuario.UsuarioService;
-import co.solvers.apilearnlink.service.usuario.dto.UsuarioAceitacaoListagemDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -52,16 +53,12 @@ public class PublicacaoService {
         publicacao.setCanal(canal);
         publicacao.setUsuario(usuario);
 
-        Publicacao publicacaoSalva = publicacaoRepository.save(publicacao);
-
-        return publicacaoSalva;
+        return publicacaoRepository.save(publicacao);
     }
 
     public List<Publicacao> listarMaisRecentes() {
 
-        List<Publicacao> publicacoes = publicacaoRepository.findAllByOrderByDataHoraDesc();
-
-        return publicacoes;
+        return publicacaoRepository.findAllByOrderByDataHoraDesc();
     }
 
     public List<Publicacao> listarMaisRecentesPilha() {
@@ -88,31 +85,32 @@ public class PublicacaoService {
         return publicacaoRepository.findAllByOrderByDataHoraDesc(pageable);
     }
 
+    public Page<Publicacao> listarPublicacoesPorCanal(Long canalId, int page, int size, String sortDirection) {
+        Sort sort = Sort.by("dataHora");
+        sort = sortDirection.equalsIgnoreCase("ASC") ? sort.ascending() : sort.descending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        return publicacaoRepository.findByCanalId(canalId, pageable);
+    }
 
 
     public List<Publicacao> listarMaisAntigo() {
 
-        List<Publicacao> publicacoes = publicacaoRepository.findAllByOrderByDataHora();
-
-        return publicacoes;
+        return publicacaoRepository.findAllByOrderByDataHora();
     }
 
     public List<Publicacao> listarPorTipo(String tipoPublicacao) {
 
         verificaTipoPublicacaoVazio(tipoPublicacao);
 
-        List<Publicacao> publicacoes = publicacaoRepository.findAllByTipoPublicacaoTipoOrderByDataHoraDesc(tipoPublicacao.toUpperCase());
-
-        return publicacoes;
+        return publicacaoRepository.findAllByTipoPublicacaoTipoOrderByDataHoraDesc(tipoPublicacao.toUpperCase());
     }
 
     public Publicacao listarPorId(int id) {
 
         verificaIdVazio(id);
 
-        Publicacao publicacao = publicacaoRepository.findById(id).get();
-
-        return publicacao;
+        return publicacaoRepository.findById(id).get();
     }
 
     public Publicacao editarConteudo(int id, String novoConteudo, String novoCanal) {
@@ -127,15 +125,13 @@ public class PublicacaoService {
         publicacao.setCanal(novoCanalNome);
 
 
-        Publicacao publicacaoAlterada = publicacaoRepository.save(publicacao);
-        return publicacaoAlterada;
+        return publicacaoRepository.save(publicacao);
     }
 
 
     public void deletar(Integer id) {
 
         verificaIdVazio(id);
-
         publicacaoRepository.deleteById(id);
     }
 
@@ -146,9 +142,7 @@ public class PublicacaoService {
             throw new InvalidoException("Palavra chave");
         }
 
-        List<Publicacao> publicacoes = publicacaoRepository.findByConteudoLikePalavrachaveOrderByDataHoraDesc(palavraChave.toUpperCase());
-
-        return publicacoes;
+        return publicacaoRepository.findByConteudoLikePalavrachaveOrderByDataHoraDesc(palavraChave.toUpperCase());
     }
 
     public String[][] buscaQuantidadeDePublicacoesPorDiaMatriz(int mes, int ano) {
@@ -171,15 +165,13 @@ public class PublicacaoService {
     }
 
     public List<QuantidadePublicacaoDiaListagemDto> buscaQuantidadeDePublicacoesPorDia(int mes, int ano) {
-        List<QuantidadePublicacaoDiaListagemDto> quantidadePublicacoes = publicacaoRepository.buscaQuantidadeDePublicacaoPorDia(mes, ano);
 
-        return quantidadePublicacoes;
+        return publicacaoRepository.buscaQuantidadeDePublicacaoPorDia(mes, ano);
     }
 
     public List<QuantidadePublicacaoMesCanalListagemDto> buscaQuantidadePublicacoesEmCadaCanal(int mes, int ano) {
-        List<QuantidadePublicacaoMesCanalListagemDto> quantidadePublicacoes = publicacaoRepository.buscaQuantidadeDePublicacoesEmCadaCanal(mes, ano);
 
-        return quantidadePublicacoes;
+        return publicacaoRepository.buscaQuantidadeDePublicacoesEmCadaCanal(mes, ano);
     }
 
     public QuantidadePublicacaoMesCanalListagemDto buscaCanalComMaiorNumeroDePublicacoes(int mes, int ano) {
@@ -211,7 +203,6 @@ public class PublicacaoService {
 
         if (IdValidacaoVazio.isEmpty()) {
             throw new NaoEncontradoException("Publicação");
-
         }
     }
 
@@ -231,9 +222,7 @@ public class PublicacaoService {
 
         if (novoConteudo.isBlank()) {
             throw new InvalidoException("Conteúdo");
-
         }
-
     }
 
     public void verificaTipoPublicacaoVazio(String tipoPublicacao) {
@@ -243,6 +232,5 @@ public class PublicacaoService {
 
         }
     }
-
 
 }
