@@ -2,7 +2,9 @@ import React, { useState, useMemo } from 'react';
 import Styles from '../publicacao/Publicacao.module.css';
 import api from '../../../api';
 import { toast, ToastContainer } from 'react-toastify';
+import Modal from 'react-modal';
 import 'react-toastify/dist/ReactToastify.css';
+import StylesModal from '../../components/botoes/botaoFazerPublicacao/BotaoFazerPublicacao.module.css'
 
 import Curtir from '../../utils/assets/Curtir.png';
 import Curtido from '../../utils/assets/Curtido.png';
@@ -10,7 +12,8 @@ import Comentar from '../../utils/assets/Comentario.png';
 import MenuVertical from '../../utils/assets/MenuVertical.png';
 import Editar from '../../utils/assets/Editar.png';
 import Deletar from '../../utils/assets/Deletar.png';
-import Denunciar from '../../utils/assets/Denuncia.png';
+import Denunciar from '../../utils/assets/Deletar.png';
+import Fechar from '../../utils/assets/icone_x.svg'
 
 function formatDateTime(dateString) {
     const date = new Date(dateString);
@@ -64,6 +67,19 @@ function deletarPublicacao(id) {
         });
 }
 
+function editarPublicacao(id, novoConteudo, novoCanal) {
+    api.patch(`/publicacoes/${id}/conteudo?novoConteudo=${encodeURIComponent(novoConteudo)}&novoCanal=${encodeURIComponent(novoCanal)}`)
+        .then(response => {
+            console.log("Publicação editada com sucesso:", response.data);
+            toast.success("Publicação editada com sucesso!");
+            window.location.reload();
+        })
+        .catch(error => {
+            console.error("Erro ao editar a publicação:", error.response?.data || error.message);
+        });
+}
+
+
 function generateInitials(name) {
     const nameParts = name.trim().split(' ');
     const firstInitial = nameParts[0].charAt(0).toUpperCase();
@@ -100,6 +116,11 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [curtida, setCurtida] = useState(quemCurtiu.includes(sessionStorage.getItem('nome')));
     const [numCurtidas, setCurtidas] = useState(curtidas); // Estado para o número de curtidas
+    const [showEditar, setShowEditar] = useState(false);
+    const [novoConteudo, setNovoConteudo] = useState(mensagem);
+    const [novaMateria, setNovaMateria] = useState(materia);
+    const [textoPublicacao, setTextoPublicacao] = useState("");
+    const maxCaracteres = 255;
 
     const togglePopup = () => {
         setShowPopup(!showPopup);
@@ -111,12 +132,38 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
         window.location.reload();
     };
 
-    // Obtem o nome e o ID do usuário armazenado no sessionStorage
+    const abrirEditarModal = () => {
+        console.log("Abrindo modal");
+        console.log("Mensagem atual:", mensagem);
+        console.log("Matéria atual:", materia);
+        setNovoConteudo(mensagem); // Define o novo conteúdo com o valor atual
+        setNovaMateria(materia);  
+        setShowPopup(false);
+        setShowEditar(true);
+    };
+
+    const closeEditarModal = () => {
+        setShowEditar(false);
+    };
+
+    const confirmarEdicao = () => {
+        editarPublicacao(id, novoConteudo, novaMateria);
+        closeEditarModal();
+    };
+
+    // Obtem o nome do usuário armazenado no sessionStorage
     const nomeUsuarioLogado = sessionStorage.getItem('nome');
     const idUsuarioLogado = sessionStorage.getItem('userId');
 
     // Memorize o avatar gerado com base no nome
     const avatar = useMemo(() => generateInitials(nome), [nome]);
+
+    const handleChange = (e) => {
+        const value = e.target.value;
+        if (value.length <= maxCaracteres) {
+            setTextoPublicacao(value);
+        }
+    };
 
     return (
         <>
@@ -136,6 +183,7 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
 
                 <div className={Styles['mensagem']}>{mensagem}</div>
                 <div className={Styles['dataHora']}>{formatDateTime(horario)}</div>
+
 
                 <div className={Styles['linha']}></div>
 
@@ -160,7 +208,7 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
                     <div className={Styles['popup']}>
                         {nomeUsuarioLogado === nome ? (
                             <>
-                                <div className={Styles['opcao']} onClick={() => { setShowPopup(false); }}>
+                                <div className={Styles['opcao']} onClick={abrirEditarModal}>
                                     <img src={Editar} alt="Editar" />
                                     <span>Editar</span>
                                 </div>
@@ -179,6 +227,58 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
                             </div>
                         )}
                     </div>
+                )}
+
+                {showEditar && (
+                    <Modal
+                        isOpen={showEditar}
+                        onRequestClose={closeEditarModal}
+                        className={StylesModal['publicarModal']}
+                        overlayClassName={StylesModal['publicarOverlay']}
+                    >
+                        <div className={StylesModal["headerPublicar"]}>
+                            <img src={Fechar} alt="icone fechar" onClick={closeEditarModal} />
+                            <button className={StylesModal["botaoPostar"]} onClick={confirmarEdicao}>Editar</button>
+                        </div>
+
+
+                        <div className={StylesModal["conteudoPublicacao"]}>
+                            <div className={StylesModal["pessoaConteudo"]} >
+                                {avatar}
+                                <textarea
+                                    className={StylesModal["textoPublicacao"]}
+                                    placeholder="Digite aqui..."
+                                    value={novoConteudo}
+                                    onChange={(e) => setNovoConteudo(e.target.value) && handleChange}
+                                />
+                            </div>
+                            <div className={StylesModal["contadorCaracteres"]}>
+                                {textoPublicacao.length} / {maxCaracteres}
+                            </div>
+                        </div>
+
+                        <div className={StylesModal["footerPublicar"]}>
+                            <span className={StylesModal["hashtag"]}>#</span>
+                            <select
+                                name="materias"
+                                id="materias"
+                                className={StylesModal["opcoesMaterias"]}
+                                value={novaMateria}
+                                onChange={(e) => { console.log("Valor selecionado:", e.target.value);setNovaMateria(e.target.value)}}
+                            >
+                                <option value="portugues">Português</option>
+                                <option value="matematica">Matemática</option>
+                                <option value="biologia">Biologia</option>
+                                <option value="quimica">Química</option>
+                                <option value="fisica">Física</option>
+                                <option value="historia">História</option>
+                                <option value="geografia">Geografia</option>
+                                <option value="filosofia">Filosofia</option>
+                                <option value="sociologia">Sociologia</option>
+                                <option value="ingles">Inglês</option>
+                            </select>
+                        </div>
+                    </Modal>
                 )}
 
                 {showConfirmation && (

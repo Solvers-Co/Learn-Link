@@ -1,6 +1,7 @@
 package co.solvers.apilearnlink.service.publicacao;
 
 import co.solvers.apilearnlink.domain.canal.Canal;
+import co.solvers.apilearnlink.domain.canal.repository.CanalRepository;
 import co.solvers.apilearnlink.domain.publicacao.Publicacao;
 import co.solvers.apilearnlink.domain.publicacao.repository.PublicacaoRepository;
 import co.solvers.apilearnlink.domain.tipopublicacao.TipoPublicacao;
@@ -17,6 +18,7 @@ import co.solvers.apilearnlink.service.publicacao.dto.QuantidadePublicacaoMesCan
 import co.solvers.apilearnlink.service.publicacao.dto.mapper.PublicacaoMapper;
 import co.solvers.apilearnlink.service.usuario.UsuarioService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -33,6 +35,7 @@ import java.util.Optional;
 public class PublicacaoService {
 
     private final PublicacaoRepository publicacaoRepository;
+    private final CanalRepository canalRepository;
     private final TipoPublicacaoRepository tipoPublicacaoRepository;
     private final UsuarioService usuarioService;
     private final CanalService canalService;
@@ -110,16 +113,17 @@ public class PublicacaoService {
         return publicacaoRepository.findById(id).get();
     }
 
-    public Publicacao editarConteudo(int id, String novoConteudo) {
-
+    public Publicacao editarConteudo(int id, String novoConteudo, String novoCanal) {
         verificaConteudoVazio(novoConteudo);
-
         verificaIdVazio(id);
 
         Optional<Publicacao> optPublicacao = publicacaoRepository.findById(id);
 
         Publicacao publicacao = optPublicacao.get();
         publicacao.setConteudo(novoConteudo);
+        Canal novoCanalNome = canalRepository.findByNome(novoCanal);
+        publicacao.setCanal(novoCanalNome);
+
 
         return publicacaoRepository.save(publicacao);
     }
