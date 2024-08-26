@@ -27,10 +27,12 @@ const Login = () => {
             const sessionData = response.data.token;
             const sessionUserId = response.data.userId;
             const sessionUserName = response.data.nome;
+            const sessionUserEmail = response.data.email;
 
             sessionStorage.setItem('token', sessionData)
             sessionStorage.setItem('userId', sessionUserId)
             sessionStorage.setItem('nome', sessionUserName)
+            sessionStorage.setItem('email', sessionUserEmail)
             
             toast.success("Login Efetuado com sucesso!"); // Exibe uma mensagem de sucesso
             navigate("/feedGeral"); // Redireciona para a página de músicas
