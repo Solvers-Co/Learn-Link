@@ -56,6 +56,11 @@ public class ComentarioService {
         return comentarioRepository.save(comentario);
     }
 
+    public void deletar(int id) {
+        Comentario comentario =  buscarPorId(id);
+        comentarioRepository.delete(comentario);
+    }
+
     public String[][] buscaQuantidadeDeComentariosPorDiaMatriz(int mes, int ano) {
         List<QuantidadeComentarioDiaListagemDto> quantidadeComentarios = comentarioRepository.buscaQuantidadeDeComentariosPorDia(mes, ano);
         String[][] m = new String[31][2];
