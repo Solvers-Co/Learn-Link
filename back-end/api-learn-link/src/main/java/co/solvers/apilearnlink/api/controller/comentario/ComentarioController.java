@@ -72,6 +72,18 @@ public class ComentarioController {
 
     @ApiResponse(responseCode = "204", description = "Comentário deletado")
     @ApiResponse(responseCode = "404", description = "Comentário não encontrado")
+    @Operation(summary = "Excluir comentário", description = "Método que exclui o comentário", tags = {"Comentários"})
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> excluirComentario(
+            @PathVariable
+            @Parameter(name = "idComentario", description = "Comentário id", example = "1") int id) {
+
+        comentarioService.deletar(id);
+        return ResponseEntity.status(204).build();
+    }
+
+    @ApiResponse(responseCode = "204", description = "Comentário deletado")
+    @ApiResponse(responseCode = "404", description = "Comentário não encontrado")
     @Operation(summary = "Remover reacão", description = "Método que remove a reacao", tags = {"Comentários"})
     @DeleteMapping("/{idComentario}/reagir/{idReacao}")
     public ResponseEntity<Void> removerReacao(
