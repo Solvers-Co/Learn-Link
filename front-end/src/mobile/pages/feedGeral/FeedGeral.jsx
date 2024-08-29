@@ -101,6 +101,7 @@ const FeedGeral = () => {
     const listarComentarios = (id) => {
         api.get(`/comentarios/publicacao/${id}`)
             .then(response => {
+                console.log("Comentários recebidos com sucesso:", response.data);
                 setComentarios(response.data);
                 setShowComentarios(true);
             })
@@ -112,6 +113,8 @@ const FeedGeral = () => {
     const closeComentariosModal = () => {
         setShowComentarios(false);
     };
+
+    const nomeUsuarioLogado = sessionStorage.getItem('nome');
 
     const publicacoesParaExibir = searchResults || publicacoes;
 
@@ -162,6 +165,8 @@ const FeedGeral = () => {
                                 nome={comentario.usuario.nome}
                                 mensagem={comentario.comentario}
                                 horario={comentario.dataHora}
+                                quemCurtiu={comentario.reacoes.map(reacao => reacao.usuario.nome)}
+                                idReacao={comentario.reacoes.find(reacao => reacao.usuario.nome === nomeUsuarioLogado)?.id}
                                 curtidas={comentario.reacoes.length}
                                 nomePublicacao={comentario.publicacao.usuario.nome}
                             />

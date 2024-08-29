@@ -164,10 +164,6 @@
     margin-right: 8px;
 }
 
-.popupButton:hover {
-    background-color: #f0f0f0;
-}
-
 /* Estilo para o botão de denunciar */
 .popupButtonDenunciar {
     background-color: transparent;
