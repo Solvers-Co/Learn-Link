@@ -25,7 +25,4 @@ public class UsuarioFinalizarCadastroDto {
     private Long idEspecialidade;
     @NotNull
     private EnderecoCriacaoDto endereco;
-
-
-
 }
