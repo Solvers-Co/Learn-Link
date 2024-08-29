@@ -3,6 +3,8 @@ import Styles from "./BotaoFazerPublicacao.module.css";
 import publicarIcone from "../../../utils/assets/Publicar.png";
 import Modal from 'react-modal';
 import fechar from '../../../utils/assets/icone_x.svg';
+import api from "../../../../api";
+import { toast, ToastContainer } from 'react-toastify';
 
 function generateInitials(name) {
     const nameParts = name.trim().split(' ');
@@ -38,6 +40,7 @@ function generateInitials(name) {
 function BotaoFazerPublicacao() {
     const [showComentarios, setShowComentarios] = useState(false);
     const [textoPublicacao, setTextoPublicacao] = useState("");
+    const [materia, setMateria] = useState("");
     const maxCaracteres = 255;
 
     const nomeUsuario = sessionStorage.getItem('nome');
@@ -54,6 +57,25 @@ function BotaoFazerPublicacao() {
         if (value.length <= maxCaracteres) {
             setTextoPublicacao(value);
         }
+    };
+
+    const fazerPublicacao = () => {
+        const publicacao = {
+            conteudo : textoPublicacao,
+            idTipoPublicacao: 1,
+            idUsuario : sessionStorage.userId,
+            idCanal : materia
+        };
+        console.log(publicacao);
+
+        api.post(`/publicacoes`, publicacao)
+            .then(() => {
+                toast.success("Publicação realizada!");
+                window.location.reload();
+            })
+            .catch(() => {
+                toast.error("Ocorreu um erro ao realizar a publicação, por favor, tente novamente.");
+            });
     };
 
     return (
@@ -74,7 +96,7 @@ function BotaoFazerPublicacao() {
             >
                 <div className={Styles["headerPublicar"]}>
                     <img src={fechar} alt="icone fechar" onClick={closeComentariosModal} />
-                    <button className={Styles["botaoPostar"]}>Postar</button>
+                    <button className={Styles["botaoPostar"]} onClick={() => fazerPublicacao()}>Postar</button>
                 </div>
 
                 <div className={Styles["conteudoPublicacao"]}>
@@ -94,17 +116,17 @@ function BotaoFazerPublicacao() {
 
                 <div className={Styles["footerPublicar"]}>
                     <span className={Styles["hashtag"]}>#</span>
-                    <select name="materias" id="materias" className={Styles["opcoesMaterias"]}>
-                        <option value="portugues">Português</option>
-                        <option value="matematica">Matemática</option>
-                        <option value="biologia">Biologia</option>
-                        <option value="quimica">Química</option>
-                        <option value="fisica">Física</option>
-                        <option value="historia">História</option>
-                        <option value="geografia">Geografia</option>
-                        <option value="filosofia">Filosofia</option>
-                        <option value="sociologia">Sociologia</option>
-                        <option value="ingles">Inglês</option>
+                    <select name="materias" id="materias" className={Styles["opcoesMaterias"]} onChange={(e) => setMateria(e.target.value)}>
+                        <option value="1">Matemática</option>
+                        <option value="2">Português</option>
+                        <option value="3">Biologia</option>
+                        <option value="4">História</option>
+                        <option value="5">Física</option>
+                        <option value="6">Química</option>
+                        <option value="7">Sociologia</option>
+                        <option value="8">Geografia</option>
+                        <option value="9">Inglês</option>
+                        <option value="10">Filosofia</option>
                     </select>
                 </div>
 
