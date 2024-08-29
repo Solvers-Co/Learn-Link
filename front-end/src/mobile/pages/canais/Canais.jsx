@@ -16,6 +16,7 @@ import GeografiaIcon from '../../utils/assets/canais/Geografia.png';
 import inglesIcon from '../../utils/assets/canais/Ingles.png';
 import filosofiaIcon from '../../utils/assets/canais/Filosofia.png';
 import notFoundIcon from '../../utils/assets/canais/NotFound.png';
+import Header from '../../components/headerAplicacao/Header';
 
 // Mapeamento de ícones para matérias
 const iconMap = {
@@ -65,8 +66,8 @@ const Canais = () => {
 
     return (
         //header  errado 
-        // <Header />
         <>
+         <Header />
             <div className={Styles['telaCanais']}>
                 <div className={Styles['titulo']}>Canais</div>
                 {cardsData.map((item) => (
