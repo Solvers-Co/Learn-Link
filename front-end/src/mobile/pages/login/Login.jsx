@@ -36,6 +36,7 @@ const Login = () => {
             const sessionData = response.data.token;
             const sessionUserId = response.data.userId;
             const sessionUserName = response.data.nome;
+            const sessionUserEmail = response.data.email;
 
             const situacaoUsuario = await buscarSituacaoUser(sessionUserId);
 
@@ -46,6 +47,7 @@ const Login = () => {
                 sessionStorage.setItem('userId', sessionUserId);
                 sessionStorage.setItem('nome', sessionUserName);
 
+            sessionStorage.setItem('email', sessionUserEmail)
                 if(endereco === null){
                     toast.success("Login Efetuado com sucesso!");
                     navigate("/completarCadastro");

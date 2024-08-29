@@ -1,0 +1,48 @@
+.perfil {
+    padding-top: 10%;
+    width: 100vw;
+    height: 100vh;
+}
+
+.corFundo {
+    width: 100vw;
+    height: 20vh;
+    background-color: #8B0000;
+    border-radius: 0px 0px 25px 25px;
+    position: fixed;
+}
+
+.userInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 105px;
+}
+
+.nome {
+    margin-top: 10px;
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.nome, .email {
+    font-family: "Nunito Sans", sans-serif;
+}
+
+.cards {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    text-align: center;
+    width: 100vw;
+    margin-top: 90%;
+}
+
+.atividade {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 20%;
+}

@@ -1,0 +1,26 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 108px;
+    height: 80px;
+    box-shadow: 2px 2px 18px rgb(0, 0, 0, 0.15);
+    border-radius: 5px;
+    gap: 8px;
+    padding: 2px;
+}
+
+.conteudo, .classificacao {
+    font-family: "Nunito Sans", sans-serif;
+}
+
+.conteudo {
+    font-size: 16px;
+    text-decoration: none;
+    color: black;
+}
+
+.classificacao {
+    color: rgb(0, 0, 0, .7);
+    font-size: 14px;
+}
