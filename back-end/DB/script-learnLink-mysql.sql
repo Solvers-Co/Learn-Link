@@ -1,5 +1,5 @@
 -- Active: 1723763035288@@127.0.0.1@3306@learnLink
-DROP DATABASE learnLink;
+DROP DATABASE IF EXISTS learnLink;
 
 CREATE DATABASE learnLink;
 
@@ -119,37 +119,14 @@ CREATE TABLE reacao (
 	FOREIGN KEY (usuario_id) REFERENCES usuario(id)
 );
 
-CREATE TABLE arquivo (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(45),
-    tipo VARCHAR(45),
-    url VARCHAR(255)
-);
-
-CREATE TABLE sala (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE denuncia (
+	id INT PRIMARY KEY AUTO_INCREMENT,
     publicacao_id INT,
-    FOREIGN KEY (publicacao_id) REFERENCES publicacao(id)
-);
-
-CREATE TABLE sala_usuario (
-    sala_id INT,
+    comentario_id INT,
     usuario_id INT,
-    PRIMARY KEY (sala_id, usuario_id),
-    FOREIGN KEY (sala_id) REFERENCES sala(id),
-    FOREIGN KEY (usuario_id) REFERENCES usuario(id)
-);
-
-CREATE TABLE mensagem (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    conteudo VARCHAR(500),
-    data_hora DATETIME,
-    usuario_id INT,
-    sala_id INT,
-    arquivo_id INT,
-    FOREIGN KEY (usuario_id) REFERENCES usuario(id),
-    FOREIGN KEY (sala_id) REFERENCES sala(id),
-    FOREIGN KEY (arquivo_id) REFERENCES arquivo(id)
+	FOREIGN KEY (publicacao_id) REFERENCES publicacao(id),
+    FOREIGN KEY (comentario_id) REFERENCES comentario(id),
+	FOREIGN KEY (usuario_id) REFERENCES usuario(id)
 );
 
 INSERT INTO tipo_status
@@ -258,6 +235,28 @@ WHERE
     comentario.id IS NULL
 GROUP BY
     canal.id, canal.nome;
+    
+CREATE VIEW vw_publicacoes_denunciadas AS
+SELECT 
+    publicacao_id,
+    COUNT(*) AS quantidade_denuncias
+FROM 
+    denuncia
+WHERE 
+    publicacao_id IS NOT NULL
+GROUP BY 
+    publicacao_id;
+
+CREATE VIEW vw_comentarios_denunciados AS
+SELECT 
+    comentario_id,
+    COUNT(*) AS quantidade_denuncias
+FROM 
+    denuncia
+WHERE 
+    comentario_id IS NOT NULL
+GROUP BY 
+    comentario_id;
 
 
 INSERT INTO publicacao (conteudo, data_hora, tipo_publicacao_id, canal_id, usuario_id) VALUES
@@ -291,6 +290,9 @@ INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) VALUES
 ('A força resultante é a soma vetorial de todas as forças atuantes.', '2024-05-03 10:30:00', 8, 4),
 ('Inércia é a tendência de um objeto de resistir a mudanças em seu estado de movimento.', '2024-05-03 12:30:00', 9, 5);
 
+
+
+
 -- Para 4 de Maio de 2024
 INSERT INTO publicacao (conteudo, data_hora, tipo_publicacao_id, canal_id, usuario_id) VALUES
 ('Como calcular a área de um triângulo?', '2024-05-04 09:00:00', 1, 1, 1),
@@ -320,26 +322,36 @@ INSERT INTO publicacao (conteudo, data_hora, tipo_publicacao_id, canal_id, usuar
 ('O que são organelas celulares?', '2024-05-06 13:00:00', 1, 3, 3);
 
 INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) VALUES
-('Uma célula é a unidade básica da vida.', '2024-05-06 09:30:00', 17, 2),
-('Fotossíntese é o processo pelo qual as plantas produzem energia.', '2024-05-06 11:30:00', 18, 3),
-('Fotossíntese é o processo de ganho energético das plantas.', '2024-05-06 11:30:00', 18, 4),
-('Fotossíntese é o meio de transformação do gás carbônico em gás oxigênio.', '2024-05-06 11:30:00', 18, 10),
-('Fotossíntese é um processo de revelação de fotos.', '2024-05-06 11:30:00', 18, 8),
-('Organelas são estruturas especializadas dentro das células.', '2024-05-06 13:30:00', 19, 1);
+('Uma célula é a unidade básica da vida.', '2024-05-06 09:30:00', 16, 2),
+('Fotossíntese é o processo pelo qual as plantas produzem energia.', '2024-05-06 11:30:00', 17, 3),
+('Organelas são estruturas especializadas dentro das células.', '2024-05-06 13:30:00', 18, 1);
+
+INSERT INTO denuncia (publicacao_id, usuario_id) VALUES 
+(1, 11),
+(1, 12),
+(1, 13),
+(1, 14),
+(2, 15),
+(2, 16),
+(4, 17),
+(5, 18),
+(6, 19);
+
+INSERT INTO denuncia (comentario_id, usuario_id) VALUES 
+(1, 20),
+(1, 21),
+(2, 22),
+(2, 23),
+(3, 24),
+(4, 25),
+(5, 26),
+(5, 27);
 
 
-select * from view_materias_nao_respondidas;
+-- SELECT (INCOMPLETO) para recuperar todos os comentarios de uma publicação especifica para o botão de comentarios (Ausencia de um campo de curtidas na tabela comentarios)
+-- SELECT c.id, c.comentario, u.nome AS autor
+-- FROM comentario c
+-- JOIN usuario u ON c.usuario_id = u.id
+-- WHERE c.publicacao_id =1;
 
--- select * from reacao;
--- select * from publicacao;
 
-insert into reacao (tipo_reacao_id, publicacao_id, usuario_id) values
-(1 , 17, 5),
-(1 , 18, 5),
-(1 , 2, 5),
-(1 , 7, 5),
-(1 , 5, 5),
-(1 , 6, 5),
-(1 , 17, 7),
-(1 , 3, 7),
-(1 , 6, 7);
