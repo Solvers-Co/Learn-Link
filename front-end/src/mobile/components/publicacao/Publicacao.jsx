@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import StylesModal from '../../components/botoes/botaoFazerPublicacao/BotaoFazerPublicacao.module.css'
 
 import Curtir from '../../utils/assets/Curtir.png';
+import Curtido from '../../utils/assets/Curtido.png';
 import Comentar from '../../utils/assets/Comentario.png';
 import MenuVertical from '../../utils/assets/MenuVertical.png';
 import Editar from '../../utils/assets/Editar.png';
@@ -22,6 +23,37 @@ function formatDateTime(dateString) {
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const year = date.getFullYear().toString().slice(-2);
     return `${hours}:${minutes} - ${day}/${month}/${year}`;
+}
+
+function reagirPublicacao(idPublicacao, tipoReacao, idUsuario, curtida, setCurtida, setCurtidas) {
+
+    if (curtida) {
+        // Se o usuário já curtiu, remove a curtida
+        api.delete(`/publicacoes/${idPublicacao}/remover-reacao`, { data: { tipoReacao, idUsuario } })
+            .then(response => {
+                console.log("Reação removida com sucesso:", response.data);
+                // toast.success("Reação removida com sucesso!");
+                setCurtida(false);
+                setCurtidas(prevCurtidas => prevCurtidas - 1); // Decrementa o contador de curtidas
+            })
+            .catch(error => {
+                console.error("Ocorreu um erro ao remover a reação:", error);
+                // toast.error("Erro ao remover a reação.");
+            });
+    } else {
+        // Se o usuário não curtiu, adiciona a curtida
+        api.post(`/publicacoes/${idPublicacao}/reagir`, { tipoReacao, idUsuario })
+            .then(response => {
+                console.log("Reação registrada com sucesso:", response.data);
+                // toast.success("Reação registrada com sucesso!");
+                setCurtida(true);
+                setCurtidas(prevCurtidas => prevCurtidas + 1); // Incrementa o contador de curtidas
+            })
+            .catch(error => {
+                console.error("Ocorreu um erro ao reagir à publicação:", error);
+                // toast.error("Erro ao reagir à publicação.");
+            });
+    }
 }
 
 function deletarPublicacao(id) {
@@ -79,9 +111,11 @@ function generateInitials(name) {
     return <div style={avatar}>{firstInitial + lastInitial}</div>
 }
 
-const Publicacao = ({ id, nome, materia, mensagem, horario, curtidas, comentarios, listarComentarios }) => {
+const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas, comentarios, listarComentarios }) => {
     const [showPopup, setShowPopup] = useState(false);
     const [showConfirmation, setShowConfirmation] = useState(false);
+    const [curtida, setCurtida] = useState(quemCurtiu.includes(sessionStorage.getItem('nome')));
+    const [numCurtidas, setCurtidas] = useState(curtidas); // Estado para o número de curtidas
     const [showEditar, setShowEditar] = useState(false);
     const [novoConteudo, setNovoConteudo] = useState(mensagem);
     const [novaMateria, setNovaMateria] = useState(materia);
@@ -119,6 +153,7 @@ const Publicacao = ({ id, nome, materia, mensagem, horario, curtidas, comentario
 
     // Obtem o nome do usuário armazenado no sessionStorage
     const nomeUsuarioLogado = sessionStorage.getItem('nome');
+    const idUsuarioLogado = sessionStorage.getItem('userId');
 
     // Memorize o avatar gerado com base no nome
     const avatar = useMemo(() => generateInitials(nome), [nome]);
@@ -154,14 +189,18 @@ const Publicacao = ({ id, nome, materia, mensagem, horario, curtidas, comentario
 
                 <div className={Styles['footer']}>
                     <div className={Styles['footerItem']}>
-                        <span className={Styles['numero']}>{curtidas}</span>
-                        <img src={Curtir} alt="Curtir" />
+                        <span className={Styles['numero']}>{numCurtidas}</span>
+                        <img
+                            src={curtida ? Curtido : Curtir}
+                            alt="Curtir"
+                            onClick={() => { reagirPublicacao(id, "CURTIDA", idUsuarioLogado, curtida, setCurtida, setCurtidas) }}
+                        />
                         <span className={Styles['footerText']}>Curtir</span>
                     </div>
                     <div className={Styles['footerItem']}>
                         <span className={Styles['numero']}>{comentarios}</span>
                         <img src={Comentar} alt="Comentar" />
-                        <span className={Styles['footerText']} onClick={() => { listarComentarios(id); }}>Comentários</span>
+                        <span className={Styles['footerText']} onClick={() => listarComentarios(id)}>Comentários</span>
                     </div>
                 </div>
 

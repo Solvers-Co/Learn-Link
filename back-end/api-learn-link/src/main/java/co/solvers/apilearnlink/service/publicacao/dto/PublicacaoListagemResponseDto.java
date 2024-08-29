@@ -38,6 +38,7 @@ public class PublicacaoListagemResponseDto {
         private String email;
         private EspecialidadeListagemDto especialidade;
     }
+
     @Getter
     @Setter
     public static class ComentarioDto {
@@ -48,9 +49,10 @@ public class PublicacaoListagemResponseDto {
         private UsuarioListagemDto usuario;
         private List<ReacaoDto> reacoes;
     }
+
     @Getter
     @Setter
-    public static class ReacaoDto{
+    public static class ReacaoDto {
         private Integer id;
         private TipoReacaoListagemDto tipoReacao;
         private UsuarioPublicacaoListagemDto usuario;

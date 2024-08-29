@@ -12,8 +12,11 @@ import co.solvers.apilearnlink.service.reacao.dto.mapper.ReacaoMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -69,6 +72,18 @@ public class ComentarioController {
 
     @ApiResponse(responseCode = "204", description = "Comentário deletado")
     @ApiResponse(responseCode = "404", description = "Comentário não encontrado")
+    @Operation(summary = "Excluir comentário", description = "Método que exclui o comentário", tags = {"Comentários"})
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> excluirComentario(
+            @PathVariable
+            @Parameter(name = "idComentario", description = "Comentário id", example = "1") int id) {
+
+        comentarioService.deletar(id);
+        return ResponseEntity.status(204).build();
+    }
+
+    @ApiResponse(responseCode = "204", description = "Comentário deletado")
+    @ApiResponse(responseCode = "404", description = "Comentário não encontrado")
     @Operation(summary = "Remover reacão", description = "Método que remove a reacao", tags = {"Comentários"})
     @DeleteMapping("/{idComentario}/reagir/{idReacao}")
     public ResponseEntity<Void> removerReacao(
@@ -107,6 +122,26 @@ public class ComentarioController {
         List<Comentario> comentarios = comentarioService.listarPorPublicacao(idPublicacao);
         List<ComentarioListagemDto> comentarioListagemDto = ComentarioMapper.toDto(comentarios);
         return ResponseEntity.ok(comentarioListagemDto);
+    }
+
+    @ApiResponse(responseCode = "200", description = "Comentários encontrados")
+    @ApiResponse(responseCode = "404", description = "Comentários não encontrados")
+    @Operation(summary = "Listar todos os comentários de uma publicação", description = "Método que lista todos os comentários de uma publicação", tags = {"Comentários"})
+    @GetMapping("/publicacao/{idPublicacao}/paginado")
+    public ResponseEntity<Page<ComentarioListagemDto>> listarComentariosPorPublicacao(
+            @PathVariable @Parameter(name = "idPublicacao", description = "Publicação id", example = "1") int idPublicacao,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by("dataHora").descending());
+        Page<Comentario> comentariosPage = comentarioService.listarPorPublicacaoPaginado(idPublicacao, pageable);
+        Page<ComentarioListagemDto> dtosPage = comentariosPage.map(ComentarioMapper::toDto);
+
+        if (dtosPage.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(dtosPage);
     }
 
 }

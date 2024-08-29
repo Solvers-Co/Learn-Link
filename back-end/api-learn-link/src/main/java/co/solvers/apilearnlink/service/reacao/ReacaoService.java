@@ -27,7 +27,7 @@ public class ReacaoService {
     private final ComentarioService comentarioService;
     private final TipoReacaoService tipoReacaoService;
 
-    public Reacao reagirComentario (int idComentario, ReacaoCriarDto reacaoDto){
+    public Reacao reagirComentario(int idComentario, ReacaoCriarDto reacaoDto) {
         Reacao reacao = new Reacao();
         Usuario usuario = usuarioService.buscarPorId(reacaoDto.getIdUsuario());
         Comentario comentario = comentarioService.buscarPorId(idComentario);
@@ -40,7 +40,7 @@ public class ReacaoService {
         return reacaoRepository.save(reacao);
     }
 
-    public Reacao reagirPublicacao (int idPublicacao, ReacaoCriarDto reacaoDto){
+    public Reacao reagirPublicacao(int idPublicacao, ReacaoCriarDto reacaoDto) {
         Reacao reacao = new Reacao();
         Usuario usuario = usuarioService.buscarPorId(reacaoDto.getIdUsuario());
         Publicacao publicacao = publicacaoService.listarPorId(idPublicacao);
@@ -53,7 +53,22 @@ public class ReacaoService {
         return reacaoRepository.save(reacao);
     }
 
-    public Reacao buscarPorId (int id){
+    public void removerReacaoPublicacao(int idPublicacao, ReacaoCriarDto reacaoDto) {
+        Usuario usuario = usuarioService.buscarPorId(reacaoDto.getIdUsuario());
+        Publicacao publicacao = publicacaoService.listarPorId(idPublicacao);
+        TipoReacao tipoReacao = tipoReacaoService.buscarPorNome(reacaoDto.getTipoReacao());
+
+        Optional<Reacao> reacaoOptional = reacaoRepository.findByUsuarioAndPublicacaoAndTipoReacao(usuario, publicacao, tipoReacao);
+
+        if (reacaoOptional.isPresent()) {
+            reacaoRepository.delete(reacaoOptional.get());
+        } else {
+            throw new NaoEncontradoException("Reação");
+        }
+    }
+
+
+    public Reacao buscarPorId(int id) {
         Optional<Reacao> optReacao = reacaoRepository.findById(id);
 
         if (optReacao.isEmpty()) throw new NaoEncontradoException("Reação");
@@ -61,7 +76,7 @@ public class ReacaoService {
         return optReacao.get();
     }
 
-    public void removerReacao (int idComentario, int idReacao){
+    public void removerReacao(int idComentario, int idReacao) {
         Reacao reacao = buscarPorId(idReacao);
 
         reacaoRepository.deleteById(idReacao);

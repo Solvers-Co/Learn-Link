@@ -14,11 +14,9 @@ import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoListagemResponse
 import co.solvers.apilearnlink.service.publicacao.dto.QuantidadePublicacaoMesCanalListagemDto;
 import co.solvers.apilearnlink.service.publicacao.dto.mapper.PublicacaoMapper;
 import co.solvers.apilearnlink.service.reacao.ReacaoService;
-import co.solvers.apilearnlink.service.reacao.dto.ReacaoComentarioListarDto;
 import co.solvers.apilearnlink.service.reacao.dto.ReacaoCriarDto;
 import co.solvers.apilearnlink.service.reacao.dto.ReacaoPublicacaoListarDto;
 import co.solvers.apilearnlink.service.reacao.dto.mapper.ReacaoMapper;
-import co.solvers.apilearnlink.service.usuario.dto.UsuarioAceitacaoListagemDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -42,7 +40,6 @@ public class PublicacaoController {
     private final PublicacaoService publicacaoService;
     private final ComentarioService comentarioService;
     private final ReacaoService reacaoService;
-
 
     @ApiResponse(responseCode = "201", description = "Publicação criada com sucesso")
     @ApiResponse(responseCode = "400", description = "Tipo de publicação inválido")
@@ -76,7 +73,7 @@ public class PublicacaoController {
 
     @ApiResponse(responseCode = "204", description = "Publicações vazias")
     @ApiResponse(responseCode = "200", description = "Publicações encontradas")
-    @Operation(summary = "Listar todas as publicações", description = "Método que Lista todas as publicações paginadas", tags = {"Publicações"})
+    @Operation(summary = "Listar todas as publicações de maneira páginada", description = "Método que Lista todas as publicações paginadas", tags = {"Publicações"})
     @GetMapping("/publicacoes-mais-recentes-paginado")
     public ResponseEntity<Page<PublicacaoListagemResponseDto>> listarPublicacoes(
             @RequestParam(defaultValue = "0") int page,
@@ -84,6 +81,26 @@ public class PublicacaoController {
 
         Pageable pageable = PageRequest.of(page, size, Sort.by("dataHora").descending());
         Page<Publicacao> publicacoesPage = publicacaoService.listarMaisRecentesPaginado(pageable);
+        Page<PublicacaoListagemResponseDto> dtosPage = publicacoesPage.map(PublicacaoMapper::toDto);
+
+        if (dtosPage.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(dtosPage);
+    }
+
+    @ApiResponse(responseCode = "204", description = "Publicações vazias")
+    @ApiResponse(responseCode = "200", description = "Publicações encontradas")
+    @Operation(summary = "Listar publicações por canal e ordenação de forma páginada", description = "Método que lista publicações filtradas por canal e ordenadas", tags = {"Publicações"})
+    @GetMapping("/publicacoes-por-canal-paginado")
+    public ResponseEntity<Page<PublicacaoListagemResponseDto>> listarPublicacoesPorCanal(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "DESC") String sortDirection,
+            @RequestParam Long canalId) {
+
+        Page<Publicacao> publicacoesPage = publicacaoService.listarPublicacoesPorCanal(canalId, page, size, sortDirection);
         Page<PublicacaoListagemResponseDto> dtosPage = publicacoesPage.map(PublicacaoMapper::toDto);
 
         if (dtosPage.isEmpty()) {
@@ -127,7 +144,6 @@ public class PublicacaoController {
 
         return ResponseEntity.status(200).body(dtos);
     }
-
 
     @ApiResponse(responseCode = "404", description = "Publicação não encontrada")
     @ApiResponse(responseCode = "200", description = "Publicação encontrada")
@@ -187,7 +203,6 @@ public class PublicacaoController {
         Comentario comentario = comentarioService.comentar(idPublicacao, novoComentario);
         return ResponseEntity.ok(ComentarioMapper.toDto(comentario));
     }
-
 
     @ApiResponse(responseCode = "204", description = "Publicações vazias")
     @ApiResponse(responseCode = "200", description = "Publicações encontradas")
@@ -268,6 +283,18 @@ public class PublicacaoController {
         return ResponseEntity.created(null).body(reacaoDto);
     }
 
+    @ApiResponse(responseCode = "200", description = "Reação removida")
+    @ApiResponse(responseCode = "404", description = "Reação não encontrada")
+    @Operation(summary = "Remover reação de uma publicação", description = "Método que remove uma reação de uma publicação", tags = {"Publicações"})
+    @DeleteMapping("/{idPublicacao}/remover-reacao")
+    public ResponseEntity<Void> removerReacaoPublicacao(
+            @PathVariable
+            @Parameter(name = "idPublicacao", description = "Publicação id", example = "1") int idPublicacao,
+            @RequestBody ReacaoCriarDto reacaoCriarDto) {
+
+        reacaoService.removerReacaoPublicacao(idPublicacao, reacaoCriarDto);
+        return ResponseEntity.ok().build();
+    }
 
 //    @PostMapping("/comentarios")
 //    public ResponseEntity<Publicacao> comentar(@RequestBody Publicacao comentario) {

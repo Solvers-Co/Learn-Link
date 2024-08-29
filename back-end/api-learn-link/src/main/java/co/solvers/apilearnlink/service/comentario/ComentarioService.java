@@ -11,10 +11,13 @@ import co.solvers.apilearnlink.service.comentario.dto.mapper.ComentarioMapper;
 import co.solvers.apilearnlink.service.publicacao.PublicacaoService;
 import co.solvers.apilearnlink.service.usuario.UsuarioService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class ComentarioService {
@@ -25,7 +28,6 @@ public class ComentarioService {
 
     public Comentario comentar(int idPublicacao, ComentarioCriacaoDto comentarioCriacaoDto) {
 
-
         Usuario usuario = usuarioService.buscarPorId(comentarioCriacaoDto.getIdUsuario());
         Publicacao publicacao = publicacaoService.listarPorId(idPublicacao);
 
@@ -33,41 +35,42 @@ public class ComentarioService {
         comentario.setUsuario(usuario);
         comentario.setPublicacao(publicacao);
 
-        Comentario comentarioSalvo = comentarioRepository.save(comentario);
-
-        return comentarioSalvo;
+        return comentarioRepository.save(comentario);
     }
 
-    public Comentario buscarPorId (int id){
+    public Comentario buscarPorId(int id) {
         Optional<Comentario> comentario = comentarioRepository.findById(id);
 
-        if (comentario.isEmpty()){
+        if (comentario.isEmpty()) {
             throw new NaoEncontradoException("Comentário");
         }
 
         return comentario.get();
     }
 
-    public Comentario editarComentario (int id, String comentarioAlterar){
+    public Comentario editarComentario(int id, String comentarioAlterar) {
         Comentario comentario = buscarPorId(id);
 
         comentario.setComentario(comentarioAlterar);
 
-        Comentario comentarioEditado = comentarioRepository.save(comentario);
-
-        return comentarioEditado;
+        return comentarioRepository.save(comentario);
     }
 
-    public String[][] buscaQuantidadeDeComentariosPorDiaMatriz (int mes, int ano){
+    public void deletar(int id) {
+        Comentario comentario =  buscarPorId(id);
+        comentarioRepository.delete(comentario);
+    }
+
+    public String[][] buscaQuantidadeDeComentariosPorDiaMatriz(int mes, int ano) {
         List<QuantidadeComentarioDiaListagemDto> quantidadeComentarios = comentarioRepository.buscaQuantidadeDeComentariosPorDia(mes, ano);
         String[][] m = new String[31][2];
 
         if (quantidadeComentarios.isEmpty()) return null;
 
-        for (int coluna = 0; coluna < m[0].length ; coluna++){
+        for (int coluna = 0; coluna < m[0].length; coluna++) {
 
-            for (int linha = 0 ; linha < m.length ; linha++){
-                if (coluna == 0){
+            for (int linha = 0; linha < m.length; linha++) {
+                if (coluna == 0) {
                     m[linha][coluna] = quantidadeComentarios.get(linha).getDataComentario().toString();
                 } else {
                     m[linha][coluna] = quantidadeComentarios.get(linha).getQuantidadeComentarios().toString();
@@ -77,11 +80,15 @@ public class ComentarioService {
         return m;
     }
 
-    public List<Comentario> listarPorPublicacao (int idPublicacao){
+    public List<Comentario> listarPorPublicacao(int idPublicacao) {
         Publicacao publicacao = publicacaoService.listarPorId(idPublicacao);
 
-        List<Comentario> comentarios = comentarioRepository.findByPublicacao(publicacao);
-
-        return comentarios;
+        return comentarioRepository.findByPublicacao(publicacao);
     }
+
+    public Page<Comentario> listarPorPublicacaoPaginado(int idPublicacao, Pageable pageable) {
+        Publicacao publicacao = publicacaoService.listarPorId(idPublicacao);
+        return comentarioRepository.findByPublicacao(publicacao, pageable);
+    }
+
 }
