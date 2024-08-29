@@ -3,6 +3,7 @@ import Styles from '../comentario/Comentario.module.css';
 import api from '../../../api';
 
 import Curtir from '../../utils/assets/Curtir.png';
+import Curtido from '../../utils/assets/Curtido.png';
 import MenuVertical from '../../utils/assets/MenuVertical.png';
 import Editar from '../../utils/assets/Editar.png';
 import Deletar from '../../utils/assets/Deletar.png';
@@ -30,6 +31,36 @@ function formatTimeAgo(dateString) {
     }
     return 'agora mesmo';
 }
+
+
+function reagirComentario(idComentario, idReacao, tipoReacao, idUsuario, curtida, setCurtida, setCurtidas) {
+    if (curtida) {
+        // Se o usuário já curtiu, remove a curtida
+        api.delete(`/comentarios/${idComentario}/reagir/${idReacao}`)
+            .then(response => {
+                console.log("Reação removida com sucesso:", response.data);
+                setCurtida(false);
+                setCurtidas(prevCurtidas => prevCurtidas - 1); // Decrementa o contador de curtidas
+            })
+            .catch(error => {
+                console.log(idReacao);
+                console.error("Ocorreu um erro ao remover a reação:", error);
+            });
+    } else {
+        // Se o usuário não curtiu, adiciona a curtida
+        api.post(`/comentarios/${idComentario}/reagir`, { tipoReacao, idUsuario })
+            .then(response => {
+                console.log("Reação registrada com sucesso:", response.data);
+                setCurtida(true);
+                setCurtidas(prevCurtidas => prevCurtidas + 1); // Incrementa o contador de curtidas
+            })
+            .catch(error => {
+                console.error("Ocorreu um erro ao reagir ao comentário:", error);
+            });
+    }
+}
+
+
 
 function deletarComentario(id) {
     api.delete(`/comentarios/${id}`)
@@ -72,7 +103,9 @@ function generateInitials(name) {
     return <div style={avatar}>{firstInitial + lastInitial}</div>;
 }
 
-const Comentario = ({ id, nome, mensagem, horario, curtidas, nomePublicacao }) => {
+const Comentario = ({ quemCurtiu, id, nome, mensagem, horario, curtidas, idReacao, nomePublicacao }) => {
+    const [curtida, setCurtida] = useState(quemCurtiu.includes(sessionStorage.getItem('nome')));
+    const [numCurtidas, setCurtidas] = useState(curtidas); // Estado para o número de curtidas
     const [showPopup, setShowPopup] = useState(false);
     const [showConfirmation, setShowConfirmation] = useState(false);
 
@@ -87,6 +120,8 @@ const Comentario = ({ id, nome, mensagem, horario, curtidas, nomePublicacao }) =
 
     // Obtem o nome do usuário armazenado no sessionStorage
     const nomeUsuarioLogado = sessionStorage.getItem('nome');
+
+    const idUsuarioLogado = sessionStorage.getItem('userId');
 
     // Gere o avatar com base no nome
     const avatar = useMemo(() => generateInitials(nome), [nome]);
@@ -108,13 +143,14 @@ const Comentario = ({ id, nome, mensagem, horario, curtidas, nomePublicacao }) =
                             {nomeUsuarioLogado === nomePublicacao ? (
                                 <>
                                     {nomeUsuarioLogado === nome ? (
+                                        <>
                                         <div className={Styles['opcao']} onClick={() => { setShowPopup(false); }}>
                                             <img src={Editar} alt="Editar" />
                                             <span>Editar</span>
                                         </div>
+                                        <div className={Styles['linhaPopup']}></div>
+                                        </>
                                     ) : null}
-
-                                    <div className={Styles['linhaPopup']}></div>
 
                                     <div className={Styles['opcao']} onClick={() => { setShowPopup(false); setShowConfirmation(true); }}>
                                         <img src={Deletar} alt="Deletar" />
@@ -122,10 +158,10 @@ const Comentario = ({ id, nome, mensagem, horario, curtidas, nomePublicacao }) =
                                     </div>
                                 </>
                             ) : (
-                                <button className={Styles['popupButton']} onClick={() => { setShowPopup(false); /* Lógica para denunciar */ }}>
+                                <div className={Styles['popupButtonDenunciar']} onClick={() => { setShowPopup(false); /* Lógica para denunciar */ }}>
                                     <img src={Denunciar} alt="Denunciar" />
-                                    Denunciar
-                                </button>
+                                    <span>Denunciar</span>
+                                </div>
                             )}
                         </div>
                     )}
@@ -147,8 +183,13 @@ const Comentario = ({ id, nome, mensagem, horario, curtidas, nomePublicacao }) =
                 <div className={Styles["footerComentario"]}>
                     <div className={Styles["horarioPublicacao"]}>{formatTimeAgo(horario)}</div>
                     <div className={Styles["curtir"]}>
-                        <span className={Styles['numero']}>{curtidas}</span>
-                        <img src={Curtir} alt="Curtir" /></div>
+                        <span className={Styles['numero']}>{numCurtidas}</span>
+                        <img
+                            src={curtida ? Curtido : Curtir}
+                            alt="Curtir"
+                            onClick={() => { reagirComentario(id, idReacao, "CURTIDA", idUsuarioLogado, curtida, setCurtida, setCurtidas) }}
+                        />
+                    </div>
                 </div>
             </div>
             <div className={Styles['linha']}></div>
