@@ -11,12 +11,14 @@
 }
 
 .ranking h1 {
+    font-family: "Nunito Sans", sans-serif;
     margin-top: 30%;
     font-size: 24px;
     margin-bottom: 10%;
 }
 
 .ranking p {
+    font-family: "Nunito Sans", sans-serif;
     font-size: 14px;
     margin: 10px 0px 10px 0px;
 }

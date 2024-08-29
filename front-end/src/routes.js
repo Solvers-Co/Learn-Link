@@ -18,6 +18,7 @@ import VerificacaoSenha from "./mobile/pages/verificacaoSenha/VerificacaoSenha";
 import RedefinicaoSenha from "./mobile/pages/redefinicaoSenha/RedefinicaoSenha";
 import FeedGeral from "./mobile/pages/feedGeral/FeedGeral";
 import Perfil from "./mobile/pages/perfil/Perfil";
+import Denuncias from "./desktop/pages/denuncias/Denuncias";
 
 function Rotas() {
     return (
@@ -31,6 +32,7 @@ function Rotas() {
                     <Route path="/cadastroDesktop" element={<CadastroDesktop />} />
                     <Route path="/loginDesktop" element={<LoginDesktop />} />
                     <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/denuncias" element={<Denuncias />} />
                     <Route path="/aceitarUsuarios" element={<AceitarUsuarios />} />
                     <Route path="/perfil" element={<Perfil />} />
                     <Route path="/canais" element={<Canais />} />
