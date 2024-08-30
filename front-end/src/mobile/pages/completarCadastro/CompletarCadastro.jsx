@@ -92,7 +92,7 @@ const CompletarCadastro = () => {
                     <option value="9">Inglês</option>
                     <option value="10">Filosofia</option>
                 </select>
-                <InputFormulario placeHolder="CEP" value={cep} onChange={(e) => handleInputChange(e, setCep)} />
+                <InputFormulario placeHolder="CEP" maxLength='8' value={cep} onChange={(e) => handleInputChange(e, setCep)} />
                 <InputFormulario id="estado" placeHolder="Estado" readOnly />
                 <InputFormulario id="cidade" placeHolder="Cidade" readOnly />
                 <InputFormulario id="bairro" placeHolder="Bairro" readOnly />

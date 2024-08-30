@@ -47,11 +47,11 @@ const Login = () => {
                 sessionStorage.setItem('userId', sessionUserId);
                 sessionStorage.setItem('nome', sessionUserName);
 
-            sessionStorage.setItem('email', sessionUserEmail)
-                if(endereco === null){
+                sessionStorage.setItem('email', sessionUserEmail)
+                if (endereco === null) {
                     toast.success("Login Efetuado com sucesso!");
                     navigate("/completarCadastro");
-                } else{
+                } else {
                     toast.success("Login Efetuado com sucesso!");
                     navigate("/feedGeral");
                 }
@@ -85,7 +85,7 @@ const Login = () => {
                 <h3>Bem-Vindo de volta</h3>
                 <div className={styles['divInputs']}>
                     <InputFormulario placeHolder="Email" value={email} onChange={(e) => handleInputChange(e, setEmail)} />
-                    <InputFormulario placeHolder="Senha" value={senha} onChange={(e) => handleInputChange(e, setSenha)} />
+                    <InputFormulario placeHolder="Senha" tipo="password" value={senha} onChange={(e) => handleInputChange(e, setSenha)} />
                 </div>
                 <a href=""><h2>Esqueceu sua senha?</h2></a>
                 <div className={styles['divBotao']}>
@@ -99,7 +99,7 @@ const Login = () => {
                     <div className={styles['modalContent']}>
                         <h3>Que pena!</h3>
                         <p>Você ainda não possui acesso a plataforma, entre em contato com o instituto.</p>
-                        <button className={styles['confirmButton']} onClick={() => {setShowConfirmation(false); window.location.reload();}}>Ok</button>
+                        <button className={styles['confirmButton']} onClick={() => { setShowConfirmation(false); window.location.reload(); }}>Ok</button>
                     </div>
                 </div>
             )}
