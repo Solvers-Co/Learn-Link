@@ -1,5 +1,5 @@
 -- Active: 1723763035288@@127.0.0.1@3306@learnLink
-DROP DATABASE learnLink;
+DROP DATABASE IF EXISTS learnLink;
 
 CREATE DATABASE learnLink;
 
@@ -119,37 +119,14 @@ CREATE TABLE reacao (
 	FOREIGN KEY (usuario_id) REFERENCES usuario(id)
 );
 
-CREATE TABLE arquivo (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(45),
-    tipo VARCHAR(45),
-    url VARCHAR(255)
-);
-
-CREATE TABLE sala (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE denuncia (
+	id INT PRIMARY KEY AUTO_INCREMENT,
     publicacao_id INT,
-    FOREIGN KEY (publicacao_id) REFERENCES publicacao(id)
-);
-
-CREATE TABLE sala_usuario (
-    sala_id INT,
+    comentario_id INT,
     usuario_id INT,
-    PRIMARY KEY (sala_id, usuario_id),
-    FOREIGN KEY (sala_id) REFERENCES sala(id),
-    FOREIGN KEY (usuario_id) REFERENCES usuario(id)
-);
-
-CREATE TABLE mensagem (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    conteudo VARCHAR(500),
-    data_hora DATETIME,
-    usuario_id INT,
-    sala_id INT,
-    arquivo_id INT,
-    FOREIGN KEY (usuario_id) REFERENCES usuario(id),
-    FOREIGN KEY (sala_id) REFERENCES sala(id),
-    FOREIGN KEY (arquivo_id) REFERENCES arquivo(id)
+	FOREIGN KEY (publicacao_id) REFERENCES publicacao(id),
+    FOREIGN KEY (comentario_id) REFERENCES comentario(id),
+	FOREIGN KEY (usuario_id) REFERENCES usuario(id)
 );
 
 INSERT INTO tipo_status
@@ -220,6 +197,28 @@ WHERE
     comentario.id IS NULL
 GROUP BY
     canal.id, canal.nome;
+    
+CREATE VIEW vw_publicacoes_denunciadas AS
+SELECT 
+    publicacao_id,
+    COUNT(*) AS quantidade_denuncias
+FROM 
+    denuncia
+WHERE 
+    publicacao_id IS NOT NULL
+GROUP BY 
+    publicacao_id;
+
+CREATE VIEW vw_comentarios_denunciados AS
+SELECT 
+    comentario_id,
+    COUNT(*) AS quantidade_denuncias
+FROM 
+    denuncia
+WHERE 
+    comentario_id IS NOT NULL
+GROUP BY 
+    comentario_id;
 
 
 -- select * from reacao;
