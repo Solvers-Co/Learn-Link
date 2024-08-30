@@ -1,0 +1,16 @@
+.telaDenuncias {
+    width: 72%;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+.cabecalho {
+    width: 95%;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.cardsDenuncias {
+    display: flex;
+    justify-content: space-between;
+}
