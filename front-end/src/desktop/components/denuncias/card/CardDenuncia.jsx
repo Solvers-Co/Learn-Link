@@ -45,7 +45,7 @@ const CardDenuncia = () => {
         <div className={styles.card}>
             <div className={styles.header}>
                 <div className={styles.menuVertical} onClick={togglePopup}>
-                    <img src={MenuVertical} alt="Menu" className={styles.menuVertical} />
+                    <img src={MenuVertical} alt="Menu" />
                 </div>
             </div>
             <div className={styles.userInfo}>
@@ -57,6 +57,7 @@ const CardDenuncia = () => {
                 </span>
             </div>
             <div className={styles.conteudo}>
+            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaa aaaaaaaaaaa aaaaaaaaaa aaaaaaaaaaa aaaaaaaaaaa aaaaaaaaaaa aaaaaaaaaaaaaa aaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaa aaaaaaaaaa aaaaaaaaaa aaaaaaaaa
                 {/* {mensagem} */}
             </div>
             <div className={styles.denuncia}>

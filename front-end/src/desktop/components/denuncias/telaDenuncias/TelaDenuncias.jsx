@@ -1,6 +1,7 @@
 import Titulo from '../../dashboard/tituloDashboard/Titulo';
 import CardDenuncia from '../card/CardDenuncia';
 import styles from './TelaDenuncias.module.css';
+import Publicacao from '../../../../mobile/components/publicacao/Publicacao';
 
 const TelaDenuncias = () => {
     return (
@@ -9,6 +10,10 @@ const TelaDenuncias = () => {
                 <Titulo>Denúncias</Titulo>
             </div>
             <div className={styles.cardsDenuncias}>
+                <CardDenuncia />
+                <CardDenuncia />
+                <CardDenuncia />
+                <CardDenuncia />
                 <CardDenuncia />
                 <CardDenuncia />
                 <CardDenuncia />

@@ -1,21 +1,24 @@
 .card {
     display: flex;
     flex-direction: column;
-    width: 20vw;
-    height: 30vh;
+    width: 18vw;
     box-shadow: 0px 4px 16px rgb(0, 0, 0, 0.1);
     border-radius: 10px;
+    padding: 10px 16px 10px 16px;
+    background-color: #FFFFFF;
+    position: relative;
+    margin-bottom: 4%;
 }
+  
 
 .header {
     display: flex;
     justify-content: flex-end;
-    width: 95%;
-    height: 10%;
-    padding: 10px;
+    padding-top: 10px;
 }
 
-.menuVertical {
+
+.menuVertical img{
     width: 25px;
     height: 25px;
 }
@@ -25,7 +28,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: start;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     width: 90%;
     align-self: center;
 }
@@ -53,25 +56,30 @@
     font-size: 14px;
     font-family: "Nunito Sans", sans-serif;
     width: 90%;
+    /* height: 40%; */
     align-self: center;
+    margin-bottom: 16px;
 }
 
 .denuncia {
     display: flex;
-    width: 50%;
     justify-content: flex-start;
-    padding-left: 16px;
+    padding-left: 12px;
 }
 
 .iconeDenuncia {
     width: 20px;
     height: 20px;
-    margin-right: 5px;
+    margin-right: 8px;
 }
 
 .denuncias {
     display: flex;
     color: #A80301;
+}
+
+.quantidadeDenuncias, .denuncias p {
+    font-family: "Nunito Sans", sans-serif;
 }
 
 .denuncias p {
