@@ -65,9 +65,8 @@ const Canais = () => {
     }, []);
 
     return (
-        //header  errado 
         <>
-         <Header />
+            <Header />
             <div className={Styles['telaCanais']}>
                 <div className={Styles['titulo']}>Canais</div>
                 {cardsData.map((item) => (

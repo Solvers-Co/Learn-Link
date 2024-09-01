@@ -80,6 +80,20 @@ function editarPublicacao(id, novoConteudo, novoCanal) {
 }
 
 
+function denunciarPublicacao(idPublicacao, idUsuario) {
+    console.log("A logica de denunciar publicação ainda não foi implementada.");
+    // api.post(`/publicacoes/${idPublicacao}/denunciar`)
+    //     .then(response => {
+    //         console.log("Publicação denunciada com sucesso:", response.data);
+    //         toast.success("Publicação denunciada com sucesso!");
+    //     })
+    //     .catch(error => {
+    //         console.error("Ocorreu um erro ao denunciar a publicação:", error);
+    //         toast.error("Erro ao denunciar a publicação.");
+    //     });
+}
+
+
 function generateInitials(name) {
     const nameParts = name.trim().split(' ');
     const firstInitial = nameParts[0].charAt(0).toUpperCase();
@@ -121,6 +135,8 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
     const [novaMateria, setNovaMateria] = useState(materia);
     const [textoPublicacao, setTextoPublicacao] = useState("");
     const maxCaracteres = 255;
+    const [showDenunciaModal, setShowDenunciaModal] = useState(false);
+    // const [motivoDenuncia, setMotivoDenuncia] = useState("");
 
     const togglePopup = () => {
         setShowPopup(!showPopup);
@@ -137,7 +153,7 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
         console.log("Mensagem atual:", mensagem);
         console.log("Matéria atual:", materia);
         setNovoConteudo(mensagem); // Define o novo conteúdo com o valor atual
-        setNovaMateria(materia);  
+        setNovaMateria(materia);
         setShowPopup(false);
         setShowEditar(true);
     };
@@ -150,6 +166,29 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
         editarPublicacao(id, novoConteudo, novaMateria);
         closeEditarModal();
     };
+
+
+
+
+
+    const abrirDenunciaModal = () => {
+        setShowPopup(false);
+        setShowDenunciaModal(true);
+    };
+
+    const closeDenunciaModal = () => {
+        setShowDenunciaModal(false);
+    };
+
+    const confirmarDenuncia = () => {
+        denunciarPublicacao(id, idUsuarioLogado);
+        closeDenunciaModal();
+    };
+
+
+
+
+
 
     // Obtem o nome do usuário armazenado no sessionStorage
     const nomeUsuarioLogado = sessionStorage.getItem('nome');
@@ -221,7 +260,7 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
                                 </div>
                             </>
                         ) : (
-                            <div className={Styles['opcao']} onClick={() => { setShowPopup(false); /* Lógica para denunciar */ }}>
+                            <div className={Styles['opcao']} onClick={() => { setShowPopup(false); abrirDenunciaModal(true) }}>
                                 <img src={Denunciar} alt="Denunciar" />
                                 <span>Denunciar</span>
                             </div>
@@ -264,7 +303,7 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
                                 id="materias"
                                 className={StylesModal["opcoesMaterias"]}
                                 value={novaMateria}
-                                onChange={(e) => { console.log("Valor selecionado:", e.target.value);setNovaMateria(e.target.value)}}
+                                onChange={(e) => { console.log("Valor selecionado:", e.target.value); setNovaMateria(e.target.value) }}
                             >
                                 <option value="portugues">Português</option>
                                 <option value="matematica">Matemática</option>
@@ -290,6 +329,20 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
                             <button className={Styles['cancelButton']} onClick={() => setShowConfirmation(false)}>Cancelar</button>
                         </div>
                     </div>
+                )}
+
+                {showDenunciaModal && (
+
+                    <div className={Styles['modalOverlay']}>
+                        <div className={Styles['modalContent']}>
+                            <h3>Denunciar Publicação</h3>
+                            <p>Tem certeza de que deseja denunciar esta publicação?</p>
+                            <button className={Styles['confirmButton']} onClick={confirmarDenuncia}>Sim</button>
+                            <button className={Styles['cancelButton']} onClick={() => closeDenunciaModal(false)}>Cancelar</button>
+                        </div>
+                    </div>
+
+
                 )}
 
                 <ToastContainer
