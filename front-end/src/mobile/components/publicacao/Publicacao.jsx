@@ -12,7 +12,7 @@ import Comentar from '../../utils/assets/Comentario.png';
 import MenuVertical from '../../utils/assets/MenuVertical.png';
 import Editar from '../../utils/assets/Editar.png';
 import Deletar from '../../utils/assets/Deletar.png';
-import Denunciar from '../../utils/assets/Deletar.png';
+import Denunciar from '../../utils/assets/Denuncia.png';
 import Fechar from '../../utils/assets/icone_x.svg'
 
 function formatDateTime(dateString) {

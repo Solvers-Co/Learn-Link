@@ -48,7 +48,7 @@ const FeedGeral = () => {
                 let url = '/publicacoes/publicacoes-mais-recentes-paginado';
                 const params = {
                     page: page,
-                    size: 10,
+                    size: 20,
                 };
 
                 if (canalId) {
