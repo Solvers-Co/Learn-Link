@@ -31,6 +31,10 @@
     background-color: #ffffff;
 }
 
+.publicacoes:last-child {
+    margin-bottom: 10px;
+}
+
 .comentarios {
     display: flex;
     flex-direction: column;
@@ -46,10 +50,6 @@
 .listaComentarios {
     margin-bottom: 3rem;
 }
-
-/* .listaComentarios:nth-last-child(){
-    margin-bottom: 3rem;
-} */
 
 .fechar {
     display: flex;
@@ -98,9 +98,7 @@
 .listaComentarios {
     width: 100%;
     max-height: calc(100% - 60px);
-    /* Ajusta a altura máxima da lista */
     overflow-y: auto;
-    /* Permite a rolagem dentro da lista */
     padding: 10px 0;
     text-align: start;
 }

@@ -18,6 +18,7 @@ import VerificacaoSenha from "./mobile/pages/verificacaoSenha/VerificacaoSenha";
 import RedefinicaoSenha from "./mobile/pages/redefinicaoSenha/RedefinicaoSenha";
 import FeedGeral from "./mobile/pages/feedGeral/FeedGeral";
 import Perfil from "./mobile/pages/perfil/Perfil";
+import Ranking from "./mobile/pages/ranking/Ranking";
 import Denuncias from "./desktop/pages/denuncias/Denuncias";
 
 function Rotas() {
@@ -41,6 +42,7 @@ function Rotas() {
                     <Route path="/verificarSenha" element={<VerificacaoSenha />} />
                     <Route path="/redefinirSenha" element={<RedefinicaoSenha />} />
                     <Route path="/feedGeral" element={<FeedGeral />} />
+                    <Route path="/ranking" element={<Ranking />} />
                  </Routes>
             </BrowserRouter>
         </>
