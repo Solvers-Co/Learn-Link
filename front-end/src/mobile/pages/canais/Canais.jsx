@@ -3,6 +3,7 @@ import Styles from '../canais/Canais.module.css';
 import api from "../../../api";
 // import Header from '../../components/header/Header';
 import Card from './cardCanais/CardCanais';
+import Header from '../../components/headerAplicacao/Header';
 
 // Import dos ícones necessários
 import mathIcon from '../../utils/assets/canais/Matematica.png';
@@ -16,7 +17,7 @@ import GeografiaIcon from '../../utils/assets/canais/Geografia.png';
 import inglesIcon from '../../utils/assets/canais/Ingles.png';
 import filosofiaIcon from '../../utils/assets/canais/Filosofia.png';
 import notFoundIcon from '../../utils/assets/canais/NotFound.png';
-import Header from '../../components/headerAplicacao/Header';
+
 
 // Mapeamento de ícones para matérias
 const iconMap = {

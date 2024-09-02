@@ -167,10 +167,6 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
         closeEditarModal();
     };
 
-
-
-
-
     const abrirDenunciaModal = () => {
         setShowPopup(false);
         setShowDenunciaModal(true);
@@ -184,11 +180,6 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
         denunciarPublicacao(id, idUsuarioLogado);
         closeDenunciaModal();
     };
-
-
-
-
-
 
     // Obtem o nome do usuário armazenado no sessionStorage
     const nomeUsuarioLogado = sessionStorage.getItem('nome');
@@ -279,7 +270,6 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
                             <img src={Fechar} alt="icone fechar" onClick={closeEditarModal} />
                             <button className={StylesModal["botaoPostar"]} onClick={confirmarEdicao}>Editar</button>
                         </div>
-
 
                         <div className={StylesModal["conteudoPublicacao"]}>
                             <div className={StylesModal["pessoaConteudo"]} >

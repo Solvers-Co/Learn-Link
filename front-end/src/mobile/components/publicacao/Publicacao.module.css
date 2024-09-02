@@ -98,8 +98,6 @@
     align-items: center;
     width: 20px;
     height: 20px;
-    /* width: 24px;
-    height: 24px; */
 }
 
 .numero {
@@ -164,7 +162,6 @@
     margin-right: 8px;
 }
 
-/* Estilo para o botão de denunciar */
 .popupButtonDenunciar {
     background-color: transparent;
     border: none;
