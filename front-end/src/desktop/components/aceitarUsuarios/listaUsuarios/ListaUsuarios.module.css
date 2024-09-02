@@ -9,9 +9,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: start;
-    width: 72%;
-    margin-left: 40px;
-    margin-right: 40px;
+    width: 65%;
+    /* margin-left: 40px; */
+    margin-right: 50px;
 }
 
 .cabecalho {
