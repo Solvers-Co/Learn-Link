@@ -10,12 +10,11 @@
     display: flex;
     justify-content: start;
     width: 90%;
-    font-size: 24px;
+    font-size: 32px;
     color: #707070;
-    margin-top: 10px;
+    margin-top: 70px;
     margin-bottom: 10px;
     font-family: "Nunito Sans", sans-serif;
-    margin-top: 55px;
     font-weight: bold;
 }
 
