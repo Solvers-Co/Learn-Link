@@ -145,23 +145,27 @@ public class PublicacaoService {
         return publicacaoRepository.findByConteudoLikePalavrachaveOrderByDataHoraDesc(palavraChave.toUpperCase());
     }
 
-    public String[][] buscaQuantidadeDePublicacoesPorDiaMatriz(int mes, int ano) {
-        List<QuantidadePublicacaoDiaListagemDto> quantidadePublicacoes = publicacaoRepository.buscaQuantidadeDePublicacaoPorDia(mes, ano);
-        String[][] m = new String[31][2];
+//    public String[][] buscaQuantidadeDePublicacoesPorDiaMatriz(int mes, int ano) {
+//        List<QuantidadePublicacaoDiaListagemDto> quantidadePublicacoes = publicacaoRepository.buscaQuantidadeDePublicacaoPorDia(mes, ano);
+//        String[][] m = new String[31][2];
+//
+//        if (quantidadePublicacoes.isEmpty()) return null;
+//
+//        for (int coluna = 0; coluna < m[0].length; coluna++) {
+//
+//            for (int linha = 0; linha < m.length; linha++) {
+//                if (coluna == 0) {
+//                    m[linha][coluna] = quantidadePublicacoes.get(linha).getDataPublicacao().toString();
+//                } else {
+//                    m[linha][coluna] = quantidadePublicacoes.get(linha).getQuantidadePublicacoes().toString();
+//                }
+//            }
+//        }
+//        return m;
+//    }
 
-        if (quantidadePublicacoes.isEmpty()) return null;
-
-        for (int coluna = 0; coluna < m[0].length; coluna++) {
-
-            for (int linha = 0; linha < m.length; linha++) {
-                if (coluna == 0) {
-                    m[linha][coluna] = quantidadePublicacoes.get(linha).getDataPublicacao().toString();
-                } else {
-                    m[linha][coluna] = quantidadePublicacoes.get(linha).getQuantidadePublicacoes().toString();
-                }
-            }
-        }
-        return m;
+    public List<QuantidadePublicacaoDiaListagemDto> listarQuantidadeDePublicacaoPorDia(int mes, int ano) {
+        return publicacaoRepository.buscaQuantidadeDePublicacaoPorDia(mes, ano);
     }
 
     public List<QuantidadePublicacaoDiaListagemDto> buscaQuantidadeDePublicacoesPorDia(int mes, int ano) {
