@@ -20,6 +20,7 @@ import FeedGeral from "./mobile/pages/feedGeral/FeedGeral";
 import Perfil from "./mobile/pages/perfil/Perfil";
 import Ranking from "./mobile/pages/ranking/Ranking";
 import Denuncias from "./desktop/pages/denuncias/Denuncias";
+import Notificacoes from "./mobile/pages/notificacoes/Notificacoes";
 
 function Rotas() {
     return (
@@ -37,6 +38,7 @@ function Rotas() {
                     <Route path="/aceitarUsuarios" element={<AceitarUsuarios />} />
                     <Route path="/perfil" element={<Perfil />} />
                     <Route path="/canais" element={<Canais />} />
+                    <Route path="/notificacoes" element={<Notificacoes />} />
                     <Route path="/completarCadastro" element={<CompletarCadastro />} />
                     <Route path="/recuperarSenha" element={<RecuperacaoSenha />} />
                     <Route path="/verificarSenha" element={<VerificacaoSenha />} />

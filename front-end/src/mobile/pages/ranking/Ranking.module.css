@@ -9,12 +9,11 @@
     justify-content: start;
     align-self: center;
     width: 90%;
-    font-size: 24px;
+    font-size: 32px;
     color: #707070;
-    margin-top: 10px;
+    margin-top: 70px;
     margin-bottom: 10px;
     font-family: "Nunito Sans", sans-serif;
-    margin-top: 55px;
     font-weight: bold;
 }
 
@@ -61,8 +60,8 @@
 }
 
 .posicao img {
-    width: 90%;
-    height: 90%;
+    width: 60%;
+    /* height: 80%; */
     align-self: center;
 }
 
