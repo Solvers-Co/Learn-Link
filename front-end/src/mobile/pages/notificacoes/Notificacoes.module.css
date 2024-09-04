@@ -1,14 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
-
-.telaCanais{
+.notificacoes {
     display: flex;
-    align-items: center;
     flex-direction: column;
+    width: 100%;
 }
 
-.titulo{
+.titulo {
     display: flex;
     justify-content: start;
+    align-self: center;
     width: 90%;
     font-size: 32px;
     color: #707070;
@@ -16,5 +15,12 @@
     margin-bottom: 10px;
     font-family: "Nunito Sans", sans-serif;
     font-weight: bold;
+}
+
+.notificacao {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    align-self: center;
 }
 
