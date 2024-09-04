@@ -646,6 +646,13 @@ INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) VALUES
 ('Estilos incluem gótico, barroco e moderno.', '2024-08-30 11:30:00', 88, 2),
 ('Cada estilo tem características distintas e influências históricas.', '2024-08-30 11:45:00', 88, 4);
 
+INSERT INTO publicacao (conteudo, data_hora, tipo_publicacao_id, canal_id, usuario_id) VALUES
+('Gostaria de doar um caderno de 10 matérias novinho', '2024-08-30 09:05:00', 1, 11, 10),
+('Tenho 5 canetas para doar quem gostaria?', '2024-08-30 10:00:00', 1, 11, 5);
+
+INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) VALUES
+('Eu quero!', '2024-08-30 09:30:00', 90, 4);
+
 
 -- Reações para o dia 1 de Setembro de 2024
 INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES

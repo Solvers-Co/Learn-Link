@@ -156,7 +156,8 @@ INSERT INTO canal (nome) VALUES
 ('SOCIOLOGIA'),
 ('GEOGRAFIA'),
 ('INGLES'),
-('FILOSOFIA');
+('FILOSOFIA'),
+('DOACOES');
 
 INSERT INTO especialidade (materia) VALUES
 ('MATEMATICA'),

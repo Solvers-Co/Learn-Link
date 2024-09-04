@@ -24,6 +24,7 @@ const subjectNameMap = {
     'INGLES': 'Inglês',
     'FILOSOFIA': 'Filosofia',
     'SOCIOLOGIA': 'Sociologia',
+    'DOACOES': 'Doações',
 };
 
 const formatSubjectName = (name) => {
