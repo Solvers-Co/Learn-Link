@@ -4,6 +4,7 @@ import co.solvers.apilearnlink.domain.comentario.Comentario;
 import co.solvers.apilearnlink.domain.reacao.Reacao;
 import co.solvers.apilearnlink.service.comentario.ComentarioService;
 import co.solvers.apilearnlink.service.comentario.dto.ComentarioListagemDto;
+import co.solvers.apilearnlink.service.comentario.dto.QuantidadeComentarioDiaListagemDto;
 import co.solvers.apilearnlink.service.comentario.dto.mapper.ComentarioMapper;
 import co.solvers.apilearnlink.service.reacao.ReacaoService;
 import co.solvers.apilearnlink.service.reacao.dto.ReacaoComentarioListarDto;
@@ -95,18 +96,35 @@ public class ComentarioController {
         return ResponseEntity.noContent().build();
     }
 
-    @ApiResponse(responseCode = "200", description = "Comentários encontrados")
-    @ApiResponse(responseCode = "404", description = "Comentários não encontrado")
-    @Operation(summary = "Listar todos os comentários", description = "Método que lista todos os comentários", tags = {"Comentários"})
-    @GetMapping("/quantidade-comentarios-por-dia-mes")
-    public ResponseEntity<String[][]> quantidadeDePublicacoesPorDia(
-            @RequestParam
-            @Parameter(name = "mes", description = "Mês", example = "5") int mes,
-            @RequestParam
-            @Parameter(name = "ano", description = "Ano", example = "2024") int ano) {
-        String[][] quantidadeComentarios = comentarioService.buscaQuantidadeDeComentariosPorDiaMatriz(mes, ano);
+//    @ApiResponse(responseCode = "200", description = "Comentários encontrados")
+//    @ApiResponse(responseCode = "404", description = "Comentários não encontrado")
+//    @Operation(summary = "Listar todos os comentários", description = "Método que lista todos os comentários", tags = {"Comentários"})
+//    @GetMapping("/quantidade-comentarios-por-dia-mes")
+//    public ResponseEntity<String[][]> quantidadeDeComentariosPorDia(
+//            @RequestParam
+//            @Parameter(name = "mes", description = "Mês", example = "5") int mes,
+//            @RequestParam
+//            @Parameter(name = "ano", description = "Ano", example = "2024") int ano) {
+//        String[][] quantidadeComentarios = comentarioService.buscaQuantidadeDeComentariosPorDiaMatriz(mes, ano);
+//
+//        if (quantidadeComentarios == null) return ResponseEntity.noContent().build();
+//
+//        return ResponseEntity.ok(quantidadeComentarios);
+//    }
 
-        if (quantidadeComentarios == null) return ResponseEntity.noContent().build();
+    @ApiResponse(responseCode = "200", description = "Comentários encontrados")
+    @ApiResponse(responseCode = "404", description = "Comentários não encontrados")
+    @Operation(summary = "Listar quantidade de comentários por dia e mês", description = "Método que lista a quantidade de comentários por dia em um determinado mês e ano", tags = {"Comentários"})
+    @GetMapping("/quantidade-comentarios-por-dia-mes")
+    public ResponseEntity<List<QuantidadeComentarioDiaListagemDto>> quantidadeDeComentariosPorDia(
+            @RequestParam @Parameter(name = "mes", description = "Mês", example = "5") int mes,
+            @RequestParam @Parameter(name = "ano", description = "Ano", example = "2024") int ano) {
+
+        List<QuantidadeComentarioDiaListagemDto> quantidadeComentarios = comentarioService.buscaQuantidadeDeComentariosPorDia(mes, ano);
+
+        if (quantidadeComentarios.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
 
         return ResponseEntity.ok(quantidadeComentarios);
     }

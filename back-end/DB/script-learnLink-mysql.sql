@@ -220,7 +220,6 @@ WHERE
 GROUP BY 
     comentario_id;
 
-
 -- select * from reacao;
 -- select * from publicacao;
 -- select * from endereco;
