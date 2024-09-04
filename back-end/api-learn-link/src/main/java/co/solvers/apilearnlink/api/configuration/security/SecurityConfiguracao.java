@@ -88,7 +88,8 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/comentarios/quantidade-comentarios-por-dia-mes/"),
             new AntPathRequestMatcher("/comentarios/publicacao/{idPublicacao}/paginado"),
             new AntPathRequestMatcher("/registros/gerar-log/{id}"),
-            new AntPathRequestMatcher("/qtd-materias-nao-respondidas")
+            new AntPathRequestMatcher("/qtd-materias-nao-respondidas"),
+            new AntPathRequestMatcher("/usuarios/buscarEmail/{email}")
     };
 
     @Bean

@@ -165,6 +165,17 @@ public class UsuarioService {
         return UsuarioMapper.desconectar(usuario);
     }
 
+    public Usuario buscarPorEmail(String email) {
+
+        Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
+
+        if (usuario.isEmpty()) {
+            throw new NaoEncontradoException("Email");
+        }
+
+        return usuario.get();
+    }
+
     public Usuario atualizar(Long id, String senha) {
 
         verificaIdExistente(id);

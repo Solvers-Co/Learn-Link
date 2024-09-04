@@ -5,9 +5,14 @@ import { useNavigate } from "react-router-dom";
 import styles from "./VerfificacaoSenha.module.css";
 import InputFormulario from "../../components/inputs/inputFormularios/InputFormulario";
 import Botao from "../../components/botoes/botaoLoginCadastro/Botao";
+import { useLocation } from 'react-router-dom';
 
 const VerificacaoSenha = () => {
     const navigate = useNavigate();
+    
+    const location = useLocation();
+    const { codigoGerado } = location.state || {};
+
 
     const [codigo, setCodigo] = useState("");
 
@@ -16,17 +21,14 @@ const VerificacaoSenha = () => {
     }
     
     const handleSave = () => {
-        const usuarioNovo = { // Cria um objeto com os dados do formulário
-            codigo
-        };
-        console.log(usuarioNovo)
-        
-        api.post(`/usuarios`, usuarioNovo).then(() => {
-            toast.success("Usuário cadastrado!"); // Exibe uma mensagem de sucesso
-            navigate("/login"); // Redireciona para a página de músicas
-        }).catch(() => {
-            toast.error("Ocorreu um erro ao salvar os dados, por favor, tente novamente."); // Exibe uma mensagem de erro se a requisição falhar
-        });
+        console.log("Verificando o código:", codigo);
+        console.log("Código gerado:", codigoGerado);
+        if(codigo === codigoGerado){
+            toast.success("Código correto");
+            navigate("/redefinirSenha");
+        }else{
+            toast.error("Código inválido");
+        }
     };
     
     return (
