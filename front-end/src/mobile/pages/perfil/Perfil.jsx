@@ -1,12 +1,12 @@
 import styles from './Perfil.module.css';
 import Header from '../../components/headerAplicacao/Header';
 import CardPerfil from '../../components/cards/cardPerfil/CardPerfil';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import CardAtividade from '../../components/cards/cardAtividade/CardAtividade';
+import api from "../../../api";
 
 function generateInitials(name) {
     if (!name) {
-        // Se o nome não estiver definido, retorne um valor padrão
         return <div style={{ color: 'red' }}>N/A</div>;
     }
 
@@ -42,12 +42,68 @@ function generateInitials(name) {
 }
 
 const Perfil = () => {
+    const [classificacao, setClassificacao] = useState([]);
+    const [especialidade, setEspecialidade] = useState([]);
+
     // Obtem o nome do usuário armazenado no sessionStorage
+    const idUsuarioLogado = sessionStorage.getItem('userId') || 'N/A';
     const nomeUsuarioLogado = sessionStorage.getItem('nome') || 'Usuário Anônimo';
     const emailUsuarioLogado = sessionStorage.getItem('email') || 'E-mail Anônimo';
 
-    // Memorize o avatar gerado com base no nome
     const avatar = useMemo(() => generateInitials(nomeUsuarioLogado), [nomeUsuarioLogado]);
+
+    useEffect(() => {
+        const fetchClassificacao = async () => {
+            try {
+                const response = await api.get(`/usuarios/${idUsuarioLogado}`);
+                if (response.data.classificacao.classificacao == 'JUNIOR') {
+                    setClassificacao('Júnior');
+                } else if (response.data.classificacao.classificacao == 'PLENO') {
+                    setClassificacao('Pleno');
+                } else if (response.data.classificacao.classificacao == 'SENIOR') {
+                    setClassificacao('Sênior');
+                } else if (response.data.classificacao.classificacao == 'ESPECIALISTA') {
+                    setClassificacao('Especialista');
+                }
+            } catch (error) {
+                console.error("Ocorreu um erro ao buscar os dados do usuário:", error);
+                setClassificacao('Erro ao carregar');
+            }
+        };
+        fetchClassificacao();
+    }, [idUsuarioLogado]);
+
+    const subjectNameMap = {
+        'MATEMATICA': 'Matemática',
+        'HISTORIA': 'História',
+        'GEOGRAFIA': 'Geografia',
+        'QUIMICA': 'Química',
+        'PORTUGUES': 'Português',
+        'FISICA': 'Física',
+        'BIOLOGIA': 'Biologia',
+        'INGLES': 'Inglês',
+        'FILOSOFIA': 'Filosofia',
+        'SOCIOLOGIA': 'Sociologia',
+    };
+    
+    const formatSubjectName = (name) => {
+        return subjectNameMap[name] || name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+    };
+
+    useEffect(() => {
+        const fetchEspecialidade = async () => {
+            try {
+                const response = await api.get(`/usuarios/${idUsuarioLogado}`);
+                console.log("Especialidade:", response.data.especialidade.materia);
+                setEspecialidade(formatSubjectName(response.data.especialidade.materia));
+            } catch (error) {
+                console.error("Ocorreu um erro ao buscar os dados do usuário:", error);
+                setEspecialidade('Erro ao carregar');
+            }
+        };
+        fetchEspecialidade();
+    }, [idUsuarioLogado]);
+
 
     return (
         <>
@@ -61,9 +117,9 @@ const Perfil = () => {
                     </div>
                 </div>
                 <div className={styles.cards}>
-                    <CardPerfil conteudo="Especialista" classificacao="Classificação" />
-                    <CardPerfil conteudo="300" classificacao="Contribuições" />
-                    <CardPerfil conteudo="Matemática" classificacao="Especialidade" />
+                    <CardPerfil conteudo={classificacao} classificacao="Classificação" />
+                    <CardPerfil conteudo="3" classificacao="Contribuições" />
+                    <CardPerfil conteudo={especialidade} classificacao="Especialidade" />
                 </div>
                 <div className={styles.atividade}>
                     <CardAtividade />
