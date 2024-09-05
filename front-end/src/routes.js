@@ -21,6 +21,9 @@ import Perfil from "./mobile/pages/perfil/Perfil";
 import Ranking from "./mobile/pages/ranking/Ranking";
 import Denuncias from "./desktop/pages/denuncias/Denuncias";
 import Notificacoes from "./mobile/pages/notificacoes/Notificacoes";
+import RecuperacaoSenhaDesktop from "./desktop/pages/recuperarSenhaDesktop/RecuperarSenhaDesktop";
+import VerificacaoSenhaDesktop from "./desktop/pages/verificacaoSenhaDesktop/VerificacaoSenhaDesktop";
+import RedefinicaoSenhaDesktop from "./desktop/pages/redefinicaoSenhaDesktop/RedefinicaoSenhaDesktop";
 
 function Rotas() {
     return (
@@ -32,6 +35,9 @@ function Rotas() {
                     <Route path="/cadastro" element={<Cadastro />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/cadastroDesktop" element={<CadastroDesktop />} />
+                    <Route path="/recuperarSenhaDesktop" element={<RecuperacaoSenhaDesktop />} />
+                    <Route path="/verificarSenhaDesktop" element={<VerificacaoSenhaDesktop />} />
+                    <Route path="/redefinirSenhaDesktop" element={<RedefinicaoSenhaDesktop />} />
                     <Route path="/loginDesktop" element={<LoginDesktop />} />
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/denuncias" element={<Denuncias />} />
