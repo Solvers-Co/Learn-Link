@@ -56,13 +56,13 @@ const Perfil = () => {
         const fetchClassificacao = async () => {
             try {
                 const response = await api.get(`/usuarios/${idUsuarioLogado}`);
-                if (response.data.classificacao.classificacao == 'JUNIOR') {
+                if (response.data.classificacao.classificacao === 'JUNIOR') {
                     setClassificacao('Júnior');
-                } else if (response.data.classificacao.classificacao == 'PLENO') {
+                } else if (response.data.classificacao.classificacao === 'PLENO') {
                     setClassificacao('Pleno');
-                } else if (response.data.classificacao.classificacao == 'SENIOR') {
+                } else if (response.data.classificacao.classificacao === 'SENIOR') {
                     setClassificacao('Sênior');
-                } else if (response.data.classificacao.classificacao == 'ESPECIALISTA') {
+                } else if (response.data.classificacao.classificacao === 'ESPECIALISTA') {
                     setClassificacao('Especialista');
                 }
             } catch (error) {
