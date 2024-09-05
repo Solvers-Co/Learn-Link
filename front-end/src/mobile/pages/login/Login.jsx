@@ -57,7 +57,7 @@ const Login = () => {
                 }
             }
         } catch (error) {
-            toast.error("Ocorreu um erro ao salvar os dados, por favor, tente novamente.");
+            toast.error("Email ou senha inválidos");
         }
     };
 

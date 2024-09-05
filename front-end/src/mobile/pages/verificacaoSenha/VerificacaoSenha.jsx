@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import api from "../../../api";
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 import styles from "./VerfificacaoSenha.module.css";
@@ -13,6 +12,7 @@ const VerificacaoSenha = () => {
 
     const location = useLocation();
     const { codigoGerado } = location.state || {};
+    const { idUsuario } = location.state || {};
 
 
     const [codigo, setCodigo] = useState("");
@@ -26,7 +26,7 @@ const VerificacaoSenha = () => {
         console.log("Código gerado:", codigoGerado);
         if (codigo === codigoGerado) {
             toast.success("Código correto");
-            navigate("/redefinirSenha");
+            navigate("/redefinirSenha", { state: { idUsuarioParam : idUsuario} });
         } else {
             toast.error("Código inválido");
         }
