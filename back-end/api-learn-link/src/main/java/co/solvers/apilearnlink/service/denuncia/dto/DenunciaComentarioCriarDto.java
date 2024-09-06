@@ -6,9 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class DenunciaComentarioCriar {
-    @NotNull
-    private int idComentario;
+public class DenunciaComentarioCriarDto {
     @NotNull
     private Long idUsuario;
 }

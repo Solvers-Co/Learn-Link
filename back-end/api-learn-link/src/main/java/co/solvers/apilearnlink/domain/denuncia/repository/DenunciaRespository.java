@@ -1,5 +1,6 @@
 package co.solvers.apilearnlink.domain.denuncia.repository;
 
+import co.solvers.apilearnlink.domain.comentario.Comentario;
 import co.solvers.apilearnlink.domain.denuncia.Denuncia;
 import co.solvers.apilearnlink.domain.publicacao.Publicacao;
 import co.solvers.apilearnlink.domain.usuario.Usuario;
@@ -16,5 +17,7 @@ import java.util.Optional;
 public interface DenunciaRespository extends JpaRepository<Denuncia, Long> {
 
     Optional<Denuncia> findByPublicacaoAndUsuario(Publicacao publicacao, Usuario usuario);
+
+    Optional<Denuncia> findByComentarioAndUsuario(Comentario comentario, Usuario usuario);
 
 }
