@@ -21,6 +21,7 @@ import Perfil from "./mobile/pages/perfil/Perfil";
 import Ranking from "./mobile/pages/ranking/Ranking";
 import Denuncias from "./desktop/pages/denuncias/Denuncias";
 import Notificacoes from "./mobile/pages/notificacoes/Notificacoes";
+import CadastroFuncionarios from "./desktop/pages/cadastroFuncionarios/CadastroFuncionarios";
 
 function Rotas() {
     return (
@@ -35,6 +36,7 @@ function Rotas() {
                     <Route path="/loginDesktop" element={<LoginDesktop />} />
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/denuncias" element={<Denuncias />} />
+                    <Route path="/cadastroFuncionarios" element={<CadastroFuncionarios />} />
                     <Route path="/aceitarUsuarios" element={<AceitarUsuarios />} />
                     <Route path="/perfil" element={<Perfil />} />
                     <Route path="/canais" element={<Canais />} />
