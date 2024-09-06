@@ -18,9 +18,11 @@
 
 .infoUsuario{
     width: 100%;
+    height: 10vh;
     display: flex;
+    margin-top: 5px;
     align-items: center;
-    margin-bottom: 40px;
+    /* justify-content: flex-start; */
     font-family: "Nunito Sans", sans-serif;
 }
 
@@ -30,8 +32,6 @@
 }
 
 .paginasDashboard{
-    /* margin-top: 20px; */
-    /* padding: 15px 0px 0px 0px; */
     display: flex;
     flex-direction: column;
 }
