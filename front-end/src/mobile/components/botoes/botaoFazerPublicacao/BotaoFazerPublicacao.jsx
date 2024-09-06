@@ -127,6 +127,7 @@ function BotaoFazerPublicacao() {
                         <option value="8">Geografia</option>
                         <option value="9">Inglês</option>
                         <option value="10">Filosofia</option>
+                        <option value="11">Doações</option>
                     </select>
                 </div>
 

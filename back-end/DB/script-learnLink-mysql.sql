@@ -156,7 +156,8 @@ INSERT INTO canal (nome) VALUES
 ('SOCIOLOGIA'),
 ('GEOGRAFIA'),
 ('INGLES'),
-('FILOSOFIA');
+('FILOSOFIA'),
+('DOACOES');
 
 INSERT INTO especialidade (materia) VALUES
 ('MATEMATICA'),
@@ -223,3 +224,5 @@ GROUP BY
 -- select * from reacao;
 -- select * from publicacao;
 -- select * from endereco;
+-- select * from usuario;
+

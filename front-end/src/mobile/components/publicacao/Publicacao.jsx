@@ -305,6 +305,7 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
                                 <option value="filosofia">Filosofia</option>
                                 <option value="sociologia">Sociologia</option>
                                 <option value="ingles">Inglês</option>
+                                <option value="doacoes">Doações</option>
                             </select>
                         </div>
                     </Modal>

@@ -15,7 +15,8 @@ const Card = ({ nomeMateria, image, buttonText, unansweredCount }) => {
         "SOCIOLOGIA": 7,
         "GEOGRAFIA": 8,
         "INGLES": 9,
-        "FILOSOFIA": 10
+        "FILOSOFIA": 10,
+        "DOACOES": 11
     };
 
     function atribuirId(nomeMateria) {

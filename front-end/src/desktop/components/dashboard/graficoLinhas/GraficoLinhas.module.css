@@ -15,3 +15,24 @@
     margin-top: 20px;
     font-family: "Nunito Sans", sans-serif;
 }
+
+.noData {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.noData p {
+    font-size: 3rem;
+    margin: 200px 20px 200px 20px;
+    color: #A0A0A0;
+    font-family: "Nunito Sans", sans-serif;
+}
+
+.grafico {
+    border-radius: 12px; /* Arredondando as bordas */
+    overflow: hidden; /* Garante que o gráfico não ultrapasse as bordas arredondadas */
+    background-color: #f4f4f4; /* Cor de fundo do frame */
+    border: 1px solid #e7e7e7; /* Cor da borda ao redor */
+}

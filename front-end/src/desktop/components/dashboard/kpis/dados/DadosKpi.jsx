@@ -1,43 +1,43 @@
-
 import React, { useEffect, useState } from "react";
 import api from "../../../../../api";
 import Kpi from "../kpi/Kpi";
 import styles from "../../metricas/Metricas.module.css";
 
-function DadosKpi(props) {
-    const [canalComMaiorQtdPublicacoes, setCanalComMaiorQtdPublicacoes] = useState([], []);
-    // const [quantidadeComentario, setComentario] = useState([], []);
-    let [mes, setMes] = useState(props.mes)
+function DadosKpi({ mes }) {
+    const [canalComMaiorQtdPublicacoes, setCanalComMaiorQtdPublicacoes] = useState(null); // Inicializa como null para indicar ausência de dados
+    const [temDados, setTemDados] = useState(true); // Estado para verificar se há dados
     const ano = new Date().getFullYear();
 
     const fetchData = async () => {
-        console.log("mes dados kpi", mes)
+        try {
+            const response = await api.get(`/publicacoes/canal-com-maior-numero-de-publicacoes`, { params: { mes, ano } });
 
-        api.get(`/publicacoes/canal-com-maior-numero-de-publicacoes`, { params: { mes, ano } }).then((response) => {
-            setCanalComMaiorQtdPublicacoes(response.data);
-
-        }).catch((error) => {
+            if (response.data && response.data.canal) { // Verifica se há dados válidos
+                setCanalComMaiorQtdPublicacoes(response.data);
+                setTemDados(true); // Há dados
+            } else {
+                setCanalComMaiorQtdPublicacoes(null); // Define como null para indicar ausência de dados
+                setTemDados(false); // Não há dados
+            }
+        } catch (error) {
             console.error('Erro ao buscar canal com maior qtd de publicações:', error);
-        });
-
-        // api.get(`/comentarios/quantidade-comentarios-por-dia-mes`, { params: { mes, ano } }).then((response) => {
-        //     setComentario(response.data);
-        //     console.log("olá")
-        //     console.log(response)
-        //     console.log(quantidadeComentario);
-        // }).catch((error) => {
-        //     console.error('Erro ao buscar dados dos comentários:', error);
-        // });
+            setCanalComMaiorQtdPublicacoes(null); // Em caso de erro, define como null
+            setTemDados(false); // Em caso de erro, não há dados
+        }
     };
 
     useEffect(() => {
         fetchData();
-    }, [mes, ano]);
+    }, [mes, ano]); // Atualiza os dados sempre que o mês ou ano mudar
 
     return (
         <div>
             <div className={styles["kpis"]}>
-                <Kpi TituloKpi="Canal com maior quantidade de publicações" ResultadoKpi={canalComMaiorQtdPublicacoes.canal} />
+                {temDados && canalComMaiorQtdPublicacoes ? (
+                    <Kpi TituloKpi="Canal com maior quantidade de publicações" ResultadoKpi={canalComMaiorQtdPublicacoes.canal} />
+                ) : (
+                    <Kpi TituloKpi="Canal com maior quantidade de publicações" ResultadoKpi={"---"} />
+                )}
                 <Kpi TituloKpi="Média de usuários ativos" ResultadoKpi="126" />
             </div>
         </div>
