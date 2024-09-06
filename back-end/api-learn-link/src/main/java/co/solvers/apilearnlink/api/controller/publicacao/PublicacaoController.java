@@ -71,16 +71,19 @@ public class PublicacaoController {
     }
 
     //Listar publicacoes paginado
-
     @ApiResponse(responseCode = "204", description = "Publicações vazias")
     @ApiResponse(responseCode = "200", description = "Publicações encontradas")
     @Operation(summary = "Listar todas as publicações de maneira páginada", description = "Método que Lista todas as publicações paginadas", tags = {"Publicações"})
     @GetMapping("/publicacoes-mais-recentes-paginado")
     public ResponseEntity<Page<PublicacaoListagemResponseDto>> listarPublicacoes(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "desc") String sortDirection) {
 
-        Pageable pageable = PageRequest.of(page, size, Sort.by("dataHora").descending());
+        // Define a direção do sort (descendente ou ascendente)
+        Sort.Direction direction = sortDirection.equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, "dataHora"));
         Page<Publicacao> publicacoesPage = publicacaoService.listarMaisRecentesPaginado(pageable);
         Page<PublicacaoListagemResponseDto> dtosPage = publicacoesPage.map(PublicacaoMapper::toDto);
 
@@ -90,6 +93,7 @@ public class PublicacaoController {
 
         return ResponseEntity.ok(dtosPage);
     }
+
 
     @ApiResponse(responseCode = "204", description = "Publicações vazias")
     @ApiResponse(responseCode = "200", description = "Publicações encontradas")

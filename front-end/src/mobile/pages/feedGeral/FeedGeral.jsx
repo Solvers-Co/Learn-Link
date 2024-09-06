@@ -7,9 +7,9 @@ import Header from '../../components/headerAplicacao/Header';
 import Modal from 'react-modal';
 import Comentario from '../../components/comentario/Comentario';
 import fechar from '../../utils/assets/icone_x.svg';
-import BotaoFazerPublicacao from '../../components/botoes/botaoFazerPublicacao/BotaoFazerPublicacao';
-import Filtro from '../../utils/assets/Filtro.png';
+import Filtro from '../../utils/assets/Filtro direcao.png';
 import Enviar from '../../utils/assets/Enviar.png';
+import BotaoFazerPublicacao from '../../components/botoes/botaoFazerPublicacao/BotaoFazerPublicacao';
 
 Modal.setAppElement('#root');
 
@@ -38,10 +38,23 @@ const FeedGeral = () => {
     const [searchResults, setSearchResults] = useState(null);
     const [page, setPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
+    const [sortDirection, setSortDirection] = useState('desc'); // Estado para controlar a direção do sort
+    const [isSortPopupOpen, setIsSortPopupOpen] = useState(false); // Para controlar a exibição do popup de ordenação
+
     const observerRef = useRef();
-    
     const location = useLocation();
     const canalId = location.state?.canalId;
+
+    const toggleSortPopup = () => {
+        setIsSortPopupOpen(prev => !prev);
+    };
+
+    const handleSortChange = (direction) => {
+        setSortDirection(direction);
+        setPage(0);
+        setPublicacoes([]); // Limpa a lista para evitar duplicações ao trocar a ordenação
+        setIsSortPopupOpen(false); // Fecha o popup ao escolher uma opção
+    };
 
     useEffect(() => {
         const fetchPublicacoes = async () => {
@@ -49,6 +62,7 @@ const FeedGeral = () => {
                 const params = {
                     page,
                     size: 20,
+                    sortDirection,
                     ...(canalId && { canalId }),
                 };
                 const url = canalId ? '/publicacoes/publicacoes-por-canal-paginado' : '/publicacoes/publicacoes-mais-recentes-paginado';
@@ -65,7 +79,7 @@ const FeedGeral = () => {
         };
 
         fetchPublicacoes();
-    }, [page, canalId]);
+    }, [page, canalId, sortDirection]);
 
     useEffect(() => {
         const observer = new IntersectionObserver(([entry]) => {
@@ -116,7 +130,7 @@ const FeedGeral = () => {
             <div className={Styles.feedGeral}>
                 <div className={Styles.publicarFiltro}>
                     <BotaoFazerPublicacao />
-                    <img src={Filtro} alt="Filtro" />
+                    <img src={Filtro} alt="Filtro" onClick={toggleSortPopup} />
                 </div>
                 <div className={Styles.publicacoes}>
                     {publicacoesParaExibir.length > 0 ? (
@@ -140,6 +154,19 @@ const FeedGeral = () => {
                     <div ref={observerRef} />
                 </div>
             </div>
+
+            <Modal
+                isOpen={isSortPopupOpen}
+                onRequestClose={toggleSortPopup}
+                className={Styles.sortPopup}
+                overlayClassName={Styles.overlay}
+            >
+                <div className={Styles.sortOptions}>
+                    <span>Ordenação</span>
+                    <p onClick={() => handleSortChange('asc')}>Mais antigas</p>
+                    <p onClick={() => handleSortChange('desc')}>Mais recentes</p>
+                </div>
+            </Modal>
 
             <Modal
                 isOpen={showComentarios}

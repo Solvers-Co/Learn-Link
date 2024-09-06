@@ -1,8 +1,14 @@
-.btnDropdown{
+.btnDropdown {
     border: none;
     outline: none;
     background-color: transparent;
     opacity: 75%;
+    font-family: "Nunito Sans", sans-serif;
+}
+
+.btnDropdown option {
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 14px;
 }
 
 .dropdown {
@@ -22,8 +28,8 @@
 
 .menu>li {
     margin: 0;
-
     background-color: white;
+    font-family: "Nunito Sans", sans-serif;
 }
 
 .menu>li:hover {
@@ -42,4 +48,5 @@
     margin: 0;
     font: inherit;
     cursor: pointer;
+    font-family: "Nunito Sans", sans-serif;
 }

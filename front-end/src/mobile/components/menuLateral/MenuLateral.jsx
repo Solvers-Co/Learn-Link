@@ -26,10 +26,12 @@ const MenuLateral = ({ nome }) => {
 
     const handleFeedGeral = () => {
         navigate('/feedGeral');
+        window.location.reload();
     };
 
     const handleDoacoes = () => {
-        navigate('/doacoes');
+        navigate('/feedGeral', { state: { canalId: 11 } });
+        window.location.reload();
     };
 
     const handleCanais = () => {
