@@ -8,20 +8,13 @@ function DadosKpi(props) {
     const [canalComMaiorQtdPublicacoes, setCanalComMaiorQtdPublicacoes] = useState([], []);
     // const [quantidadeComentario, setComentario] = useState([], []);
     let [mes, setMes] = useState(props.mes)
-    const ano = 2024;
+    const ano = new Date().getFullYear();
 
     const fetchData = async () => {
-        console.log("mes dados kpi")
-        console.log(mes)
-
-        // let response1
+        console.log("mes dados kpi", mes)
 
         api.get(`/publicacoes/canal-com-maior-numero-de-publicacoes`, { params: { mes, ano } }).then((response) => {
             setCanalComMaiorQtdPublicacoes(response.data);
-            console.log("oie")
-            console.log(mes)
-            console.log(response.data)
-            console.log(canalComMaiorQtdPublicacoes)
 
         }).catch((error) => {
             console.error('Erro ao buscar canal com maior qtd de publicações:', error);
@@ -38,7 +31,6 @@ function DadosKpi(props) {
     };
 
     useEffect(() => {
-        console.log(props)
         fetchData();
     }, [mes, ano]);
 

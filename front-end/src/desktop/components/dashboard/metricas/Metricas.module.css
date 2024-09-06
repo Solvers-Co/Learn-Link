@@ -1,5 +1,9 @@
 .metricas {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     width: 69%;
+    height: 100%;
 }
 
 .cabecalho {
@@ -11,9 +15,7 @@
     align-items: center;
 }
 
-
 .kpis {
-    margin-top: 20px;
     margin-bottom: 20px;
     width: 95%;
     height: 90px;
