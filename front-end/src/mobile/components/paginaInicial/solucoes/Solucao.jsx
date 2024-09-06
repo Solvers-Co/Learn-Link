@@ -9,8 +9,8 @@ const Solucao = () => {
             <div className={styles.conteudo}>
                 <ConteudoSecao
                     tamanhoFonteTitulo="20px"
-                    tamanhoFonteParagrafo="18px"
-                    largura="80vw"
+                    tamanhoFonteParagrafo="16px"
+                    largura="78vw"
                     altura="50vh"
                     corTitulo="#A80301"
                     corLinha="#A80301"
@@ -22,11 +22,11 @@ const Solucao = () => {
             <div className={styles.cards}>
                 <CardSolucao 
                     titulo="Explore matérias variadas"
-                    paragrafo="Utilize o Learn Link para explorar uma ampla gama de assuntos que podem ajudá-lo a superar suas dúvidas e aprofundar seu entendimento em diferentes áreas do conhecimento."
+                    paragrafo="Explore o Learn Link para aprofundar seu conhecimento em diversos assuntos e sanar dúvidas."
                 />
                 <CardSolucao 
                     titulo="Contribuição"
-                    paragrafo="Contribuir com o aprendizado através do Learn Link não só fortalece seu conhecimento, mas também permite compartilhar descobertas e ajudar outros alunos a enfrentar desafios acadêmicos."
+                    paragrafo="Contribuir com o aprendizado fortalece seu conhecimento e permite ajudar outros alunos."
                 />
             </div>
         </div>
