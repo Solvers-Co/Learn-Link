@@ -224,3 +224,5 @@ GROUP BY
 -- select * from reacao;
 -- select * from publicacao;
 -- select * from endereco;
+-- select * from usuario;
+
