@@ -4,6 +4,7 @@ import iconeDashboard from "../../../utils/assets/painel-de-controle.png";
 import iconeAcesso from "../../../utils/assets/controle-de-acesso.png";
 import iconeDenuncia from "../../../utils/assets/icone_denuncia.png";
 import iconeSair from "../../../utils/assets/sair.png";
+import iconeCadastroFuncionarios from "../../../utils/assets/icone_cadastro_func.png";
 import fotoPerfil from "../../../utils/assets/perfil.png";
 import styles from "./MenuLateral.module.css";
 
@@ -60,6 +61,10 @@ const MenuLateral = () => {
         navigate("/denuncias"); // Redireciona para a rota de denuncias
     };
 
+    const paginaCadastroFuncionarios = () => {
+        navigate("/cadastroFuncionarios");
+    };
+
     const avatar = useMemo(() => generateInitials(nome), [nome]);
     
 
@@ -108,6 +113,18 @@ const MenuLateral = () => {
                                 alt="IconePaginaDenuncias"
                             />
                             Denúncias
+                        </div>
+                        <div
+                            className={`${styles['paginaPaginas']} ${styles['cursorPointer']} ${location.pathname === '/cadastroFuncionario' ? styles['paginaAtiva'] : ''
+                                }`}
+                            onClick={paginaCadastroFuncionarios}
+                        >
+                            <img
+                                src={iconeCadastroFuncionarios}
+                                className={styles['iconePaginaPaginas']}
+                                alt="IconePaginaDenuncias"
+                            />
+                            Cadastro
                         </div>
                     </div>
                 </div>

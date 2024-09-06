@@ -1,0 +1,121 @@
+
+.telaCadastroFuncionarios {
+    width: 65%;
+    margin-right: 50px;
+}
+
+.cabecalho {
+    width: 95%;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    height: 80vh;
+    border: 1px solid #0000;
+    box-shadow: -2px 6px 31.2px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    
+}
+
+.left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 45%;
+    border-radius: 10px 0px 0px 10px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.btn {
+    width: 90%;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    background-color: #A80301;
+    color: white;
+    margin-top: 15px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #C40602;
+}
+
+.warning {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 86%;
+    margin-top: 20px;
+    background-color: rgb(112, 112, 112, 0.1);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.warning img {
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+}
+
+.warning .text {
+    font-family: 'Nunito Sans', sans-serif;
+    line-height: 1;
+    font-size: 11px;
+    color: #707070;
+}
+
+.right {
+    display: flex;
+    width: 55%;
+    justify-content: center;
+    align-items: center;
+    background-image: url("../../../utils/assets/fundo_cadastro_func.png");
+    border-radius: 0px 10px 10px 0px;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    height: 30%;
+    background-color: white;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: 10px;
+    padding: 15px 45px 15px 45px;
+    box-shadow: 10px 10px 38px rgba(255, 255, 255, 0.25);
+}
+
+.card p, .card span {
+    font-family: 'Nunito Sans', sans-serif;
+    line-height: 1;
+}
+
+.card span {
+    font-weight: bold;
+}
+
+.saudacao {
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
