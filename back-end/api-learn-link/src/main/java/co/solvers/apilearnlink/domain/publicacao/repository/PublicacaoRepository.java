@@ -1,6 +1,7 @@
 package co.solvers.apilearnlink.domain.publicacao.repository;
 
 import co.solvers.apilearnlink.domain.publicacao.Publicacao;
+import co.solvers.apilearnlink.service.denuncia.dto.PublicacoesDenunciadasDto;
 import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoListagemResponseDto;
 import co.solvers.apilearnlink.service.publicacao.dto.QuantidadePublicacaoDiaListagemDto;
 import co.solvers.apilearnlink.service.publicacao.dto.QuantidadePublicacaoMesCanalListagemDto;

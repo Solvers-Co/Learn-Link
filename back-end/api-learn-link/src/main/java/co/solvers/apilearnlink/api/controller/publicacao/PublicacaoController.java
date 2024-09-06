@@ -8,6 +8,10 @@ import co.solvers.apilearnlink.service.comentario.ComentarioService;
 import co.solvers.apilearnlink.service.comentario.dto.ComentarioCriacaoDto;
 import co.solvers.apilearnlink.service.comentario.dto.ComentarioListagemDto;
 import co.solvers.apilearnlink.service.comentario.dto.mapper.ComentarioMapper;
+import co.solvers.apilearnlink.service.denuncia.DenunciaService;
+import co.solvers.apilearnlink.service.denuncia.dto.DenunciaPublicacaoCriarDto;
+import co.solvers.apilearnlink.service.denuncia.dto.DenunciaPublicacaoListagemDto;
+import co.solvers.apilearnlink.service.denuncia.dto.mapper.DenunciaMapper;
 import co.solvers.apilearnlink.service.publicacao.PublicacaoService;
 import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoCriacaoRequestDto;
 import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoListagemResponseDto;
@@ -40,6 +44,7 @@ public class PublicacaoController {
     private final PublicacaoService publicacaoService;
     private final ComentarioService comentarioService;
     private final ReacaoService reacaoService;
+    private final DenunciaService denunciaService;
 
     @ApiResponse(responseCode = "201", description = "Publicação criada com sucesso")
     @ApiResponse(responseCode = "400", description = "Tipo de publicação inválido")
@@ -295,6 +300,22 @@ public class PublicacaoController {
         reacaoService.removerReacaoPublicacao(idPublicacao, reacaoCriarDto);
         return ResponseEntity.ok().build();
     }
+
+    @ApiResponse(responseCode = "200", description = "Denuncia efetuada")
+    @ApiResponse(responseCode = "404", description = "Usuario/Publicação não encontrada")
+    @Operation(summary = "Denunciar uma publicação", description = "Método que denúncia uma publicação", tags = {"Publicações"})
+    @PostMapping("/{idPublicacao}/denunciar")
+    public ResponseEntity<DenunciaPublicacaoListagemDto> denunciarPublicacao(
+            @PathVariable
+            @Parameter(name = "idPublicacao", description = "Publicação id", example = "1") int idPublicacao,
+            @RequestBody DenunciaPublicacaoCriarDto denunciaPublicacaoCriarDto) {
+
+        DenunciaPublicacaoListagemDto denunciaPublicacao = DenunciaMapper.toDenunciaPublicacaoListagemDto(denunciaService.denunciarPublicacao(idPublicacao, denunciaPublicacaoCriarDto));
+
+        return ResponseEntity.ok().body(denunciaPublicacao);
+    }
+
+
 
 //    @PostMapping("/comentarios")
 //    public ResponseEntity<Publicacao> comentar(@RequestBody Publicacao comentario) {
