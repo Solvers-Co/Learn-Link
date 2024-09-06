@@ -28,10 +28,6 @@ const MenuLateral = ({ nome }) => {
         navigate('/feedGeral');
     };
 
-    const handleDoacoes = () => {
-        navigate('/doacoes');
-    };
-
     const handleCanais = () => {
         navigate('/canais');
     };
@@ -80,12 +76,6 @@ const MenuLateral = ({ nome }) => {
                         nomeSecao="Feed Geral"
                         fonte='"Nunito Sans", sans-serif'
                         onClick={handleFeedGeral}
-                    />
-                    <OpcaoNavegacao
-                        icone={IconeDoacoes}
-                        nomeSecao="Doações"
-                        fonte='"Nunito Sans", sans-serif'
-                        onClick={handleDoacoes}
                     />
                     <OpcaoNavegacao
                         icone={IconeCanais}
