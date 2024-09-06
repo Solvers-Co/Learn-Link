@@ -6,10 +6,10 @@ import Dropdown from "../dropdown/Dropdown";
 import styles from "./Metricas.module.css";
 
 function Metricas() {
-    const [mes, setMes] = useState(8);
+    const [mes, setMes] = useState(new Date().getMonth() + 1); // Mês inicial
 
-    const handleDropdownChange = (e) => {
-        setMes(Number(e.target.value)); // Garante que o valor seja um número
+    const handleDropdownChange = (mesSelecionado) => {
+        setMes(Number(mesSelecionado.target.value)); // Atualiza o mês com o valor selecionado
     };
 
     return (
@@ -17,8 +17,8 @@ function Metricas() {
             <header className={styles.cabecalho}>
                 <Titulo>Visão Geral</Titulo>
                 <Dropdown
-                    value={mes}
-                    onChange={handleDropdownChange}
+                    value={mes} // Passa o valor atual do mês
+                    onChange={handleDropdownChange} // Atualiza o mês no estado
                 />
             </header>
             <DadosKpi mes={mes} />
