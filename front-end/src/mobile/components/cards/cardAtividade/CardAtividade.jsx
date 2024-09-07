@@ -21,17 +21,21 @@ const CardAtividade = () => {
 
     // Função para renderizar os quadrados com as datas
     const renderQuadrados = (quantidade, startIndex) => (
-        Array.from({ length: quantidade }, (_, index) => (
-            <div
-                key={index}
-                className={styles.quadrado}
-                onClick={() => setSelectedIndex(startIndex + index)} // Atualiza o índice ao clicar
-            >
-                {selectedIndex === startIndex + index && (
-                    <div className={styles.title}>{datas[startIndex + index]}</div>
-                )}
-            </div>
-        ))
+        Array.from({ length: quantidade }, (_, index) => {
+            const currentIndex = startIndex + index;
+            const isGray = currentIndex >= datas.length - 3; // Verifica se é um dos últimos 3 quadrados
+            return (
+                <div
+                    key={index}
+                    className={`${styles.quadrado} ${isGray ? styles.cinza : ''}`}
+                    onClick={() => setSelectedIndex(currentIndex)} // Atualiza o índice ao clicar
+                >
+                    {selectedIndex === currentIndex && (
+                        <div className={styles.title}>{datas[currentIndex]}</div>
+                    )}
+                </div>
+            );
+        })
     );
 
     // Função para lidar com cliques fora do card
