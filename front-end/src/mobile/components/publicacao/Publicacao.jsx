@@ -185,9 +185,25 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
     const nomeUsuarioLogado = sessionStorage.getItem('nome');
     const idUsuarioLogado = sessionStorage.getItem('userId');
 
-    // Memorize o avatar gerado com base no nome
-    const avatar = useMemo(() => generateInitials(nome), [nome]);
+    let nomeFormatado = 'Usuário Desconhecido'; // Valor padrão caso o nome não seja encontrado
 
+    if (nomeUsuarioLogado) {
+        const nomes = nomeUsuarioLogado.trim().split(' '); 
+        const primeiroNome = nomes[0];
+        const ultimoNome = nomes[nomes.length - 1];
+        if (nomes.length === 1) {
+            nomeFormatado = primeiroNome;
+        } else {
+            nomeFormatado = `${primeiroNome} ${ultimoNome}`;
+        }
+    } else {
+        console.log('Nome de usuário não encontrado');
+    }
+
+    // Use useMemo com nomeFormatado
+    const avatar = useMemo(() => generateInitials(nomeFormatado), [nomeFormatado]);
+
+    // Memorize o avatar gerado com base no nome
     const handleChange = (e) => {
         const value = e.target.value;
         if (value.length <= maxCaracteres) {

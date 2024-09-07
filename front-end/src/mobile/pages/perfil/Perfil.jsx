@@ -50,7 +50,23 @@ const Perfil = () => {
     const nomeUsuarioLogado = sessionStorage.getItem('nome') || 'Usuário Anônimo';
     const emailUsuarioLogado = sessionStorage.getItem('email') || 'E-mail Anônimo';
 
-    const avatar = useMemo(() => generateInitials(nomeUsuarioLogado), [nomeUsuarioLogado]);
+    let nomeFormatado = 'Usuário Desconhecido'; // Valor padrão caso o nome não seja encontrado
+
+    if (nomeUsuarioLogado) {
+        const nomes = nomeUsuarioLogado.trim().split(' '); // Remove espaços em branco e divide a string em palavras
+        const primeiroNome = nomes[0];
+        const ultimoNome = nomes[nomes.length - 1];
+        if (nomes.length === 1) {
+            nomeFormatado = primeiroNome;
+        } else {
+            nomeFormatado = `${primeiroNome} ${ultimoNome}`;
+        }
+    } else {
+        console.log('Nome de usuário não encontrado');
+    }
+
+    // Use useMemo com nomeFormatado
+    const avatar = useMemo(() => generateInitials(nomeFormatado), [nomeFormatado]);
 
     useEffect(() => {
         const fetchClassificacao = async () => {
@@ -94,7 +110,6 @@ const Perfil = () => {
         const fetchEspecialidade = async () => {
             try {
                 const response = await api.get(`/usuarios/${idUsuarioLogado}`);
-                console.log("Especialidade:", response.data.especialidade.materia);
                 setEspecialidade(formatSubjectName(response.data.especialidade.materia));
             } catch (error) {
                 console.error("Ocorreu um erro ao buscar os dados do usuário:", error);

@@ -63,8 +63,11 @@ const MenuLateral = ({ nome }) => {
         const nomes = nomeUsuarioLogado.trim().split(' '); // Remove espaços em branco e divide a string em palavras
         const primeiroNome = nomes[0];
         const ultimoNome = nomes[nomes.length - 1];
-        nomeFormatado = `${primeiroNome} ${ultimoNome}`;
-        console.log(nomeFormatado);
+        if (nomes.length === 1) {
+            nomeFormatado = primeiroNome;
+        } else {
+            nomeFormatado = `${primeiroNome} ${ultimoNome}`;
+        }
     } else {
         console.log('Nome de usuário não encontrado');
     }
