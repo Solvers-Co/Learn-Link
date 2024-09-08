@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useLocation } from 'react-router-dom'; 
+import { useLocation } from 'react-router-dom';
 import Styles from '../feedGeral/FeedGeral.module.css';
 import api from "../../../api";
 import Publicacao from '../../components/publicacao/Publicacao';
@@ -51,11 +51,16 @@ const FeedGeral = () => {
     };
 
     const handleSortChange = (direction) => {
-        setSortDirection(direction);
-        setPage(0);
-        setPublicacoes([]); // Limpa a lista para evitar duplicações ao trocar a ordenação
-        setIsSortPopupOpen(false); // Fecha o popup ao escolher uma opção
+        if (direction !== sortDirection) { // Verifica se a nova direção é diferente da atual
+            setSortDirection(direction);
+            setPage(0);
+            setPublicacoes([]); // Limpa a lista para evitar duplicações ao trocar a ordenação
+            setIsSortPopupOpen(false); // Fecha o popup ao escolher uma opção
+        } else {
+            setIsSortPopupOpen(false); // Apenas fecha o popup se a direção for a mesma
+        }
     };
+
 
     useEffect(() => {
         const fetchPublicacoes = async () => {
@@ -69,10 +74,10 @@ const FeedGeral = () => {
                 const url = canalId ? '/publicacoes/publicacoes-por-canal-paginado' : '/publicacoes/publicacoes-mais-recentes-paginado';
                 const response = await api.get(url, { params });
                 const publicacoesRecebidas = response?.data?.content || [];
-                
+
                 setPublicacoes(prev => [...prev, ...publicacoesRecebidas]);
                 setTotalPages(response?.data.totalPages || 0);
-                
+
                 console.log("Publicacoes recebidas:", response.data.content);
             } catch (error) {
                 console.error("Erro ao buscar publicações:", error);
@@ -174,8 +179,18 @@ const FeedGeral = () => {
             >
                 <div className={Styles.sortOptions}>
                     <span>Ordenação</span>
-                    <p onClick={() => handleSortChange('asc')}>Mais antigas</p>
-                    <p onClick={() => handleSortChange('desc')}>Mais recentes</p>
+                    <p
+                        onClick={() => handleSortChange('asc')}
+                        className={sortDirection === 'asc' ? Styles.sortSelected : ''}
+                    >
+                        Mais antigas
+                    </p>
+                    <p
+                        onClick={() => handleSortChange('desc')}
+                        className={sortDirection === 'desc' ? Styles.sortSelected : ''}
+                    >
+                        Mais recentes
+                    </p>
                 </div>
             </Modal>
 
