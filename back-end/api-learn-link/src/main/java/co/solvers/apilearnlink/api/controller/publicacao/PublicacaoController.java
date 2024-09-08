@@ -1,19 +1,25 @@
 package co.solvers.apilearnlink.api.controller.publicacao;
 
-import co.solvers.apilearnlink.domain.canal.Canal;
 import co.solvers.apilearnlink.domain.comentario.Comentario;
 import co.solvers.apilearnlink.domain.publicacao.Publicacao;
 import co.solvers.apilearnlink.domain.reacao.Reacao;
+import co.solvers.apilearnlink.domain.views.publicacoesDenunciadas.PublicacoesDenunciadas;
 import co.solvers.apilearnlink.service.comentario.ComentarioService;
 import co.solvers.apilearnlink.service.comentario.dto.ComentarioCriacaoDto;
 import co.solvers.apilearnlink.service.comentario.dto.ComentarioListagemDto;
 import co.solvers.apilearnlink.service.comentario.dto.mapper.ComentarioMapper;
+import co.solvers.apilearnlink.service.denuncia.DenunciaService;
+import co.solvers.apilearnlink.service.denuncia.dto.DenunciaPublicacaoCriarDto;
+import co.solvers.apilearnlink.service.denuncia.dto.DenunciaPublicacaoListagemDto;
+import co.solvers.apilearnlink.service.publicacoesDenunciadas.dto.PublicacoesDenunciadasDto;
+import co.solvers.apilearnlink.service.denuncia.dto.mapper.DenunciaMapper;
 import co.solvers.apilearnlink.service.publicacao.PublicacaoService;
 import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoCriacaoRequestDto;
 import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoListagemResponseDto;
 import co.solvers.apilearnlink.service.publicacao.dto.QuantidadePublicacaoDiaListagemDto;
 import co.solvers.apilearnlink.service.publicacao.dto.QuantidadePublicacaoMesCanalListagemDto;
 import co.solvers.apilearnlink.service.publicacao.dto.mapper.PublicacaoMapper;
+import co.solvers.apilearnlink.service.publicacoesDenunciadas.dto.mapper.PublicacoesDenunciadasMapper;
 import co.solvers.apilearnlink.service.reacao.ReacaoService;
 import co.solvers.apilearnlink.service.reacao.dto.ReacaoCriarDto;
 import co.solvers.apilearnlink.service.reacao.dto.ReacaoPublicacaoListarDto;
@@ -41,6 +47,7 @@ public class PublicacaoController {
     private final PublicacaoService publicacaoService;
     private final ComentarioService comentarioService;
     private final ReacaoService reacaoService;
+    private final DenunciaService denunciaService;
 
     @ApiResponse(responseCode = "201", description = "Publicação criada com sucesso")
     @ApiResponse(responseCode = "400", description = "Tipo de publicação inválido")
@@ -317,6 +324,40 @@ public class PublicacaoController {
         reacaoService.removerReacaoPublicacao(idPublicacao, reacaoCriarDto);
         return ResponseEntity.ok().build();
     }
+
+    @ApiResponse(responseCode = "200", description = "Denuncia efetuada")
+    @ApiResponse(responseCode = "404", description = "Usuario/Publicação não encontrada")
+    @Operation(summary = "Denunciar uma publicação", description = "Método que denúncia uma publicação", tags = {"Publicações"})
+    @PostMapping("/{idPublicacao}/denunciar")
+    public ResponseEntity<DenunciaPublicacaoListagemDto> denunciarPublicacao(
+            @PathVariable
+            @Parameter(name = "idPublicacao", description = "Publicação id", example = "1") int idPublicacao,
+            @RequestBody DenunciaPublicacaoCriarDto denunciaPublicacaoCriarDto) {
+
+        DenunciaPublicacaoListagemDto denunciaPublicacao = DenunciaMapper.toDenunciaPublicacaoListagemDto(denunciaService.denunciarPublicacao(idPublicacao, denunciaPublicacaoCriarDto));
+
+        return ResponseEntity.ok().body(denunciaPublicacao);
+    }
+
+    @ApiResponse(responseCode = "200", description = "Publicacoes Denunciadas")
+    @ApiResponse(responseCode = "404", description = "Não existem publicações denunciadas")
+    @Operation(summary = "Listar publicações denunciadas", description = "Método que lista publicações denunciadas", tags = {"Publicações"})
+    @GetMapping("/denuncias")
+    public ResponseEntity<List<PublicacoesDenunciadasDto>> listarPublicacoesDenunciadas() {
+
+        List<PublicacoesDenunciadas> publicacoesDenunciadas = denunciaService.buscaPublicacoesDenunciadas();
+        List<PublicacoesDenunciadasDto> publicacoesDenunciadasDto = PublicacoesDenunciadasMapper.toPublicacoesDenunciadasDto(publicacoesDenunciadas);
+
+        if (publicacoesDenunciadasDto.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.ok(publicacoesDenunciadasDto);
+        }
+    }
+
+
+
+
 
 //    @PostMapping("/comentarios")
 //    public ResponseEntity<Publicacao> comentar(@RequestBody Publicacao comentario) {

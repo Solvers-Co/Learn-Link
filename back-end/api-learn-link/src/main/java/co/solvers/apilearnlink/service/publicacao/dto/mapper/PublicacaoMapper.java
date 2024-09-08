@@ -9,6 +9,7 @@ import co.solvers.apilearnlink.service.especialidade.dto.mapper.EspecialidadeMap
 import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoCriacaoRequestDto;
 import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoListagemResponseDto;
 import co.solvers.apilearnlink.domain.publicacao.Publicacao;
+import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoListagemSimplesDto;
 import co.solvers.apilearnlink.service.reacao.dto.ReacaoComentarioListarDto;
 import co.solvers.apilearnlink.service.tiporeacao.dto.TipoReacaoMapper;
 import co.solvers.apilearnlink.service.usuario.dto.mapper.UsuarioMapper;
@@ -40,6 +41,20 @@ public class PublicacaoMapper {
         dto.setUsuario(toUsuarioDto(entity.getUsuario()));
         dto.setReacoes(toReacaoDto(entity.getReacoes()));
         dto.setComentarios(toComentariosDto(entity.getComentarios()));
+
+        return dto;
+    }
+
+    public static PublicacaoListagemSimplesDto toPublicacaoListagemSimples(Publicacao entity) {
+        if (entity == null) return null;
+
+        PublicacaoListagemSimplesDto dto = new PublicacaoListagemSimplesDto();
+        dto.setId(entity.getId());
+        dto.setConteudo(entity.getConteudo());
+        dto.setDataHora(entity.getDataHora());
+        dto.setTipoPublicacao(toTipoPublicacaoDto(entity.getTipoPublicacao()));
+        dto.setCanal(CanalMapper.toDto(entity.getCanal()));
+        dto.setUsuario(toUsuarioDto(entity.getUsuario()));
 
         return dto;
     }

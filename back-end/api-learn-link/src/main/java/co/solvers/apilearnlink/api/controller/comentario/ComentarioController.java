@@ -2,9 +2,21 @@ package co.solvers.apilearnlink.api.controller.comentario;
 
 import co.solvers.apilearnlink.domain.comentario.Comentario;
 import co.solvers.apilearnlink.domain.reacao.Reacao;
+import co.solvers.apilearnlink.domain.views.comentariosDenunciados.ComentariosDenunciados;
+import co.solvers.apilearnlink.domain.views.publicacoesDenunciadas.PublicacoesDenunciadas;
 import co.solvers.apilearnlink.service.comentario.ComentarioService;
 import co.solvers.apilearnlink.service.comentario.dto.ComentarioListagemDto;
 import co.solvers.apilearnlink.service.comentario.dto.mapper.ComentarioMapper;
+import co.solvers.apilearnlink.service.comentariosDenunciados.dto.ComentariosDenunciadosDto;
+import co.solvers.apilearnlink.service.comentariosDenunciados.dto.mapper.ComentariosDenunciadosMapper;
+import co.solvers.apilearnlink.service.denuncia.DenunciaService;
+import co.solvers.apilearnlink.service.denuncia.dto.DenunciaComentarioCriarDto;
+import co.solvers.apilearnlink.service.denuncia.dto.DenunciaComentarioListagemDto;
+import co.solvers.apilearnlink.service.denuncia.dto.DenunciaPublicacaoCriarDto;
+import co.solvers.apilearnlink.service.denuncia.dto.DenunciaPublicacaoListagemDto;
+import co.solvers.apilearnlink.service.denuncia.dto.mapper.DenunciaMapper;
+import co.solvers.apilearnlink.service.publicacoesDenunciadas.dto.PublicacoesDenunciadasDto;
+import co.solvers.apilearnlink.service.publicacoesDenunciadas.dto.mapper.PublicacoesDenunciadasMapper;
 import co.solvers.apilearnlink.service.reacao.ReacaoService;
 import co.solvers.apilearnlink.service.reacao.dto.ReacaoComentarioListarDto;
 import co.solvers.apilearnlink.service.reacao.dto.ReacaoCriarDto;
@@ -29,6 +41,7 @@ public class ComentarioController {
 
     private final ComentarioService comentarioService;
     private final ReacaoService reacaoService;
+    private final DenunciaService denunciaService;
 
     @ApiResponse(responseCode = "200", description = "Comentário encontrado")
     @ApiResponse(responseCode = "404", description = "Comentário não encontrado")
@@ -142,6 +155,36 @@ public class ComentarioController {
         }
 
         return ResponseEntity.ok(dtosPage);
+    }
+
+    @ApiResponse(responseCode = "200", description = "Denuncia efetuada")
+    @ApiResponse(responseCode = "404", description = "Usuario/Publicação não encontrada")
+    @Operation(summary = "Denunciar um comentário", description = "Método que denúncia um comentário", tags = {"Comentários"})
+    @PostMapping("/{idComentario}/denunciar")
+    public ResponseEntity<DenunciaComentarioListagemDto> denunciarComentario(
+            @PathVariable
+            @Parameter(name = "idComentario", description = "Comentario id", example = "1") int idComentario,
+            @RequestBody DenunciaComentarioCriarDto denunciaComentarioCriarDto) {
+
+        DenunciaComentarioListagemDto denunciaComentario = DenunciaMapper.toDenunciaComentarioListagemDto(denunciaService.denunciarComentario(idComentario, denunciaComentarioCriarDto));
+
+        return ResponseEntity.ok().body(denunciaComentario);
+    }
+
+    @ApiResponse(responseCode = "200", description = "Comentarios Denunciados")
+    @ApiResponse(responseCode = "404", description = "Não existem comentarios denunciados")
+    @Operation(summary = "Listar comentarios denunciados", description = "Método que lista comentarios denunciados", tags = {"Publicações"})
+    @GetMapping("/denuncias")
+    public ResponseEntity<List<ComentariosDenunciadosDto>> listarPublicacoesDenunciadas() {
+
+        List<ComentariosDenunciados> comentariosDenunciados = denunciaService.buscaComentariosDenunciados();
+        List<ComentariosDenunciadosDto> comentariosDenunciadosDto = ComentariosDenunciadosMapper.toComentariosDenunciadosDto(comentariosDenunciados);
+
+        if (comentariosDenunciadosDto.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.ok(comentariosDenunciadosDto);
+        }
     }
 
 }

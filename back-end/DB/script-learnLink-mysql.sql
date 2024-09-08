@@ -199,30 +199,11 @@ WHERE
 GROUP BY
     canal.id, canal.nome;
     
-CREATE VIEW vw_publicacoes_denunciadas AS
-SELECT 
-    publicacao_id,
-    COUNT(*) AS quantidade_denuncias
-FROM 
-    denuncia
-WHERE 
-    publicacao_id IS NOT NULL
-GROUP BY 
-    publicacao_id;
 
-CREATE VIEW vw_comentarios_denunciados AS
-SELECT 
-    comentario_id,
-    COUNT(*) AS quantidade_denuncias
-FROM 
-    denuncia
-WHERE 
-    comentario_id IS NOT NULL
-GROUP BY 
-    comentario_id;
+-- SELECT (INCOMPLETO) para recuperar todos os comentarios de uma publicação especifica para o botão de comentarios (Ausencia de um campo de curtidas na tabela comentarios)
+-- SELECT c.id, c.comentario, u.nome AS autor
+-- FROM comentario c
+-- JOIN usuario u ON c.usuario_id = u.id
+-- WHERE c.publicacao_id =1;
 
--- select * from reacao;
--- select * from publicacao;
--- select * from endereco;
--- select * from usuario;
 

@@ -1,10 +1,8 @@
 package co.solvers.apilearnlink.service.publicacoesNaoRespondidas;
 
-import co.solvers.apilearnlink.domain.publicacoesNaoRespondidas.QtdPublicacoesNaoRespondidasView;
-import co.solvers.apilearnlink.domain.publicacoesNaoRespondidas.repository.QtdPublicacoesNaoRespondidasViewRepository;
+import co.solvers.apilearnlink.domain.views.publicacoesNaoRespondidas.repository.QtdPublicacoesNaoRespondidasViewRepository;
 import co.solvers.apilearnlink.service.publicacoesNaoRespondidas.dto.QtdPublicacoesNaoRespondidasDto;
 import co.solvers.apilearnlink.service.publicacoesNaoRespondidas.dto.mapper.QtdPublicacoesNaoRespondidasMapper;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
