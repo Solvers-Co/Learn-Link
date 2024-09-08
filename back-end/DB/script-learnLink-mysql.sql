@@ -236,28 +236,6 @@ WHERE
 GROUP BY
     canal.id, canal.nome;
     
-CREATE VIEW vw_publicacoes_denunciadas AS
-SELECT 
-    publicacao_id,
-    COUNT(*) AS quantidade_denuncias
-FROM 
-    denuncia
-WHERE 
-    publicacao_id IS NOT NULL
-GROUP BY 
-    publicacao_id;
-
-CREATE VIEW vw_comentarios_denunciados AS
-SELECT 
-    comentario_id,
-    COUNT(*) AS quantidade_denuncias
-FROM 
-    denuncia
-WHERE 
-    comentario_id IS NOT NULL
-GROUP BY 
-    comentario_id;
-
 
 INSERT INTO publicacao (conteudo, data_hora, tipo_publicacao_id, canal_id, usuario_id) VALUES
 ('Qual a fórmula de Bhaskara?', '2024-05-01 10:00:00', 1, 1, 1),
@@ -325,27 +303,6 @@ INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) VALUES
 ('Uma célula é a unidade básica da vida.', '2024-05-06 09:30:00', 16, 2),
 ('Fotossíntese é o processo pelo qual as plantas produzem energia.', '2024-05-06 11:30:00', 17, 3),
 ('Organelas são estruturas especializadas dentro das células.', '2024-05-06 13:30:00', 18, 1);
-
-INSERT INTO denuncia (publicacao_id, usuario_id) VALUES 
-(1, 11),
-(1, 12),
-(1, 13),
-(1, 14),
-(2, 15),
-(2, 16),
-(4, 17),
-(5, 18),
-(6, 19);
-
-INSERT INTO denuncia (comentario_id, usuario_id) VALUES 
-(1, 20),
-(1, 21),
-(2, 22),
-(2, 23),
-(3, 24),
-(4, 25),
-(5, 26),
-(5, 27);
 
 
 -- SELECT (INCOMPLETO) para recuperar todos os comentarios de uma publicação especifica para o botão de comentarios (Ausencia de um campo de curtidas na tabela comentarios)

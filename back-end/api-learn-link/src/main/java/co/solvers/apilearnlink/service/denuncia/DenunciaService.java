@@ -5,6 +5,7 @@ import co.solvers.apilearnlink.domain.denuncia.Denuncia;
 import co.solvers.apilearnlink.domain.denuncia.repository.DenunciaRespository;
 import co.solvers.apilearnlink.domain.publicacao.Publicacao;
 import co.solvers.apilearnlink.domain.usuario.Usuario;
+import co.solvers.apilearnlink.domain.views.comentariosDenunciados.ComentariosDenunciados;
 import co.solvers.apilearnlink.domain.views.publicacoesDenunciadas.PublicacoesDenunciadas;
 import co.solvers.apilearnlink.service.comentario.ComentarioService;
 import co.solvers.apilearnlink.service.denuncia.dto.DenunciaComentarioCriarDto;
@@ -93,6 +94,11 @@ public class DenunciaService {
     public List<PublicacoesDenunciadas> buscaPublicacoesDenunciadas() {
         List<PublicacoesDenunciadas> publicacoesDenunciadas = denunciaRespository.buscaPublicacoesDenunciadas();
         return publicacoesDenunciadas;
+    }
+
+    public List<ComentariosDenunciados> buscaComentariosDenunciados() {
+        List<ComentariosDenunciados> comentariosDenunciados = denunciaRespository.buscaComentariosDenunciados();
+        return comentariosDenunciados;
     }
 
 }
