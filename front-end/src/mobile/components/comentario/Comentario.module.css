@@ -9,6 +9,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 5px;
 }
 
 .avatar {
@@ -38,7 +39,7 @@
     font-size: 10px;
 }
 
-.horarioPublicacao{
+.horarioPublicacao {
     display: flex;
     align-items: end;
     color: #707070;
@@ -76,7 +77,7 @@
     margin-bottom: 5px;
 }
 
-.userComentario{
+.userComentario {
     display: flex;
     align-items: center;
 }
@@ -122,11 +123,11 @@
     align-items: center;
 }
 
-.popupButtonDenunciar span{
+.popupButtonDenunciar span {
     font-family: "Nunito Sans", sans-serif;
 }
 
-.opcao{
+.opcao {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -136,7 +137,7 @@
     transition: background-color 0.3s;
 }
 
-.opcao span{
+.opcao span {
     font-size: 12px;
     font-family: "Nunito Sans", sans-serif;
 }
@@ -144,7 +145,7 @@
 .linhaPopup {
     width: 100%;
     height: 1px;
-margin: 3px 0px 3px 0px;
+    margin: 3px 0px 3px 0px;
     background-color: #D3D3D3;
 }
 
@@ -170,7 +171,8 @@ margin: 3px 0px 3px 0px;
     font-family: "Nunito Sans", sans-serif;
 }
 
-.modalContent h3, .modalContent p{
+.modalContent h3,
+.modalContent p {
     font-family: "Nunito Sans", sans-serif;
     margin-bottom: 10px;
     padding: 0;
@@ -201,6 +203,7 @@ margin: 3px 0px 3px 0px;
     width: 7rem;
 }
 
-.confirmButton:hover, .cancelButton:hover {
+.confirmButton:hover,
+.cancelButton:hover {
     opacity: 0.8;
 }

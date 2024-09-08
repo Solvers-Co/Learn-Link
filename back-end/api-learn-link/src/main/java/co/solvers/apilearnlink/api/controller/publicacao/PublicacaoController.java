@@ -16,6 +16,7 @@ import co.solvers.apilearnlink.service.denuncia.dto.mapper.DenunciaMapper;
 import co.solvers.apilearnlink.service.publicacao.PublicacaoService;
 import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoCriacaoRequestDto;
 import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoListagemResponseDto;
+import co.solvers.apilearnlink.service.publicacao.dto.QuantidadePublicacaoDiaListagemDto;
 import co.solvers.apilearnlink.service.publicacao.dto.QuantidadePublicacaoMesCanalListagemDto;
 import co.solvers.apilearnlink.service.publicacao.dto.mapper.PublicacaoMapper;
 import co.solvers.apilearnlink.service.publicacoesDenunciadas.dto.mapper.PublicacoesDenunciadasMapper;
@@ -77,16 +78,19 @@ public class PublicacaoController {
     }
 
     //Listar publicacoes paginado
-
     @ApiResponse(responseCode = "204", description = "Publicações vazias")
     @ApiResponse(responseCode = "200", description = "Publicações encontradas")
     @Operation(summary = "Listar todas as publicações de maneira páginada", description = "Método que Lista todas as publicações paginadas", tags = {"Publicações"})
     @GetMapping("/publicacoes-mais-recentes-paginado")
     public ResponseEntity<Page<PublicacaoListagemResponseDto>> listarPublicacoes(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "desc") String sortDirection) {
 
-        Pageable pageable = PageRequest.of(page, size, Sort.by("dataHora").descending());
+        // Define a direção do sort (descendente ou ascendente)
+        Sort.Direction direction = sortDirection.equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, "dataHora"));
         Page<Publicacao> publicacoesPage = publicacaoService.listarMaisRecentesPaginado(pageable);
         Page<PublicacaoListagemResponseDto> dtosPage = publicacoesPage.map(PublicacaoMapper::toDto);
 
@@ -96,6 +100,7 @@ public class PublicacaoController {
 
         return ResponseEntity.ok(dtosPage);
     }
+
 
     @ApiResponse(responseCode = "204", description = "Publicações vazias")
     @ApiResponse(responseCode = "200", description = "Publicações encontradas")
@@ -230,21 +235,38 @@ public class PublicacaoController {
         return ResponseEntity.status(200).body(dtos);
     }
 
+//    @ApiResponse(responseCode = "200", description = "Publicações encontradas")
+//    @ApiResponse(responseCode = "204", description = "Publicações vazias")
+//    @Operation(summary = "Quantidade de publicações por dia", description = "Método que retorna a quantidade de publicações por dia", tags = {"Publicações"})
+//    @GetMapping("/quantidade-publicacoes-por-dia-mes")
+//    public ResponseEntity<String[][]> quantidadeDePublicacoesPorDia(
+//            @RequestParam
+//            @Parameter(name = "mes", description = "Mês do ano", example = "5") int mes,
+//            @RequestParam
+//            @Parameter(name = "ano", description = "Ano Publicação", example = "2024") int ano) {
+//        String[][] quantidadePublicacoes = publicacaoService.buscaQuantidadeDePublicacoesPorDiaMatriz(mes, ano);
+//
+//        if (quantidadePublicacoes == null) return ResponseEntity.noContent().build();
+//
+//        return ResponseEntity.ok(quantidadePublicacoes);
+//    }
+
+    @ApiResponse(responseCode = "204", description = "Nenhuma publicação encontrada")
     @ApiResponse(responseCode = "200", description = "Publicações encontradas")
-    @ApiResponse(responseCode = "204", description = "Publicações vazias")
-    @Operation(summary = "Quantidade de publicações por dia", description = "Método que retorna a quantidade de publicações por dia", tags = {"Publicações"})
-    @GetMapping("/quantidade-publicacoes-por-dia-mes")
-    public ResponseEntity<String[][]> quantidadeDePublicacoesPorDia(
-            @RequestParam
-            @Parameter(name = "mes", description = "Mês do ano", example = "5") int mes,
-            @RequestParam
-            @Parameter(name = "ano", description = "Ano Publicação", example = "2024") int ano) {
-        String[][] quantidadePublicacoes = publicacaoService.buscaQuantidadeDePublicacoesPorDiaMatriz(mes, ano);
+    @Operation(summary = "Listar quantidade de publicações por dia", description = "Método que lista a quantidade de publicações por dia em um determinado mês e ano", tags = {"Publicações"})
+    @GetMapping("/quantidade-por-dia")
+    public ResponseEntity<List<QuantidadePublicacaoDiaListagemDto>> listarQuantidadeDePublicacaoPorDia(
+            @RequestParam int mes, @RequestParam int ano) {
 
-        if (quantidadePublicacoes == null) return ResponseEntity.noContent().build();
+        List<QuantidadePublicacaoDiaListagemDto> publicacoes = publicacaoService.listarQuantidadeDePublicacaoPorDia(mes, ano);
 
-        return ResponseEntity.ok(quantidadePublicacoes);
+        if (publicacoes.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.status(200).body(publicacoes);
     }
+
 
     @ApiResponse(responseCode = "200", description = "Publicações encontradas")
     @ApiResponse(responseCode = "204", description = "Publicações vazias")
@@ -268,7 +290,7 @@ public class PublicacaoController {
     @GetMapping("/canal-com-maior-numero-de-publicacoes")
     public ResponseEntity<QuantidadePublicacaoMesCanalListagemDto> buscarCanalComMaiorNumeroDePublicacoes(
             @RequestParam
-            @Parameter(name = "mes", description = "Mês do ano", example = "5") int mes,
+            @Parameter(name = "mes", description = "Mês do ano", example = "8") int mes,
             @RequestParam
             @Parameter(name = "ano", description = "Ano Publicação", example = "2024") int ano) {
         QuantidadePublicacaoMesCanalListagemDto canalMaisPublicacoes = publicacaoService.buscaCanalComMaiorNumeroDePublicacoes(mes, ano);

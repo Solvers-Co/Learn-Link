@@ -80,6 +80,10 @@
     margin-bottom: 5px;
 }
 
+textarea {
+    outline: none;
+}
+
 .footer {
     display: flex;
     justify-content: space-between;
@@ -98,8 +102,6 @@
     align-items: center;
     width: 20px;
     height: 20px;
-    /* width: 24px;
-    height: 24px; */
 }
 
 .numero {
@@ -123,7 +125,7 @@
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
+    /* z-index: 1; */
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -164,7 +166,6 @@
     margin-right: 8px;
 }
 
-/* Estilo para o botão de denunciar */
 .popupButtonDenunciar {
     background-color: transparent;
     border: none;

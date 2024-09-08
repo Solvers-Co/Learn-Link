@@ -20,7 +20,7 @@
 }
 
 .primeiraLinha, .segundaLinha {
-    margin-top: 8%;
+    margin-top: 6%;
     display: flex;
     justify-content: space-around;
     padding-right: 5px;
@@ -31,5 +31,27 @@
     width: 10px;
     height: 10px;
     border: 1px solid #9C9292;
-    /* background: #9C9292; */
+    margin: 5px;
+    position: relative;
+    display: inline-block;
+    cursor: pointer; /* Indica que é clicável */
+}
+
+.cinza {
+    background: #9C9292;
+}
+
+.title {
+    position: absolute;
+    background-color: rgb(238, 238, 238);
+    color: black;
+    padding: 2px 5px 2px 5px;
+    border-radius: 4px;
+    top: 100%; /* Exibe abaixo do quadrado */
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font-size: 10px;
+    z-index: 10;
+    font-family: 'Nunito Sans', sans-serif;
 }

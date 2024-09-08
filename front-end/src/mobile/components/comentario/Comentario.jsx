@@ -60,8 +60,6 @@ function reagirComentario(idComentario, idReacao, tipoReacao, idUsuario, curtida
     }
 }
 
-
-
 function deletarComentario(id) {
     api.delete(`/comentarios/${id}`)
         .then(response => {
@@ -71,6 +69,20 @@ function deletarComentario(id) {
             console.error("Ocorreu um erro ao deletar o comentário:", error);
         });
 }
+
+function denunciarComentario() {
+    console.log("A logica de denunciar comentarios ainda não foi implementada.")
+
+    // Enviar a denúncia para o backend
+    // api.post(`/comentarios/${id}/denunciar`, { motivo: motivoDenuncia, idUsuario: sessionStorage.getItem('userId') })
+    //     .then(response => {
+    //         console.log("Denúncia enviada com sucesso:", response.data);
+    //         setShowDenunciaModal(false);
+    //     })
+    //     .catch(error => {
+    //         console.error("Erro ao enviar a denúncia:", error);
+    //     });
+};
 
 function generateInitials(name) {
     const nameParts = name.trim().split(' ');
@@ -105,9 +117,11 @@ function generateInitials(name) {
 
 const Comentario = ({ quemCurtiu, id, nome, mensagem, horario, curtidas, idReacao, nomePublicacao }) => {
     const [curtida, setCurtida] = useState(quemCurtiu.includes(sessionStorage.getItem('nome')));
-    const [numCurtidas, setCurtidas] = useState(curtidas); // Estado para o número de curtidas
+    const [numCurtidas, setCurtidas] = useState(curtidas);
     const [showPopup, setShowPopup] = useState(false);
     const [showConfirmation, setShowConfirmation] = useState(false);
+    const [showDenunciaModal, setShowDenunciaModal] = useState(false);
+    const [motivoDenuncia, setMotivoDenuncia] = useState('');
 
     const togglePopup = () => {
         setShowPopup(!showPopup);
@@ -118,10 +132,13 @@ const Comentario = ({ quemCurtiu, id, nome, mensagem, horario, curtidas, idReaca
         setShowConfirmation(false);
     };
 
+    const confirmarDenuncia = () => {
+        denunciarComentario();
+        setShowDenunciaModal(false);
+    };
+
     // Obtem o nome do usuário armazenado no sessionStorage
     const nomeUsuarioLogado = sessionStorage.getItem('nome');
-
-    const idUsuarioLogado = sessionStorage.getItem('userId');
 
     // Gere o avatar com base no nome
     const avatar = useMemo(() => generateInitials(nome), [nome]);
@@ -144,11 +161,11 @@ const Comentario = ({ quemCurtiu, id, nome, mensagem, horario, curtidas, idReaca
                                 <>
                                     {nomeUsuarioLogado === nome ? (
                                         <>
-                                        <div className={Styles['opcao']} onClick={() => { setShowPopup(false); }}>
-                                            <img src={Editar} alt="Editar" />
-                                            <span>Editar</span>
-                                        </div>
-                                        <div className={Styles['linhaPopup']}></div>
+                                            <div className={Styles['opcao']} onClick={() => { setShowPopup(false); }}>
+                                                <img src={Editar} alt="Editar" />
+                                                <span>Editar</span>
+                                            </div>
+                                            <div className={Styles['linhaPopup']}></div>
                                         </>
                                     ) : null}
 
@@ -158,7 +175,7 @@ const Comentario = ({ quemCurtiu, id, nome, mensagem, horario, curtidas, idReaca
                                     </div>
                                 </>
                             ) : (
-                                <div className={Styles['popupButtonDenunciar']} onClick={() => { setShowPopup(false); /* Lógica para denunciar */ }}>
+                                <div className={Styles['popupButtonDenunciar']} onClick={() => { setShowPopup(false); setShowDenunciaModal(true); }}>
                                     <img src={Denunciar} alt="Denunciar" />
                                     <span>Denunciar</span>
                                 </div>
@@ -170,9 +187,20 @@ const Comentario = ({ quemCurtiu, id, nome, mensagem, horario, curtidas, idReaca
                         <div className={Styles['modalOverlay']}>
                             <div className={Styles['modalContent']}>
                                 <h3>Confirmar Exclusão</h3>
-                                <p>Tem certeza de que deseja excluir este comentario?</p>
+                                <p>Tem certeza de que deseja excluir este comentário?</p>
                                 <button className={Styles['confirmButton']} onClick={confirmarDelecao}>Sim</button>
                                 <button className={Styles['cancelButton']} onClick={() => setShowConfirmation(false)}>Cancelar</button>
+                            </div>
+                        </div>
+                    )}
+
+                    {showDenunciaModal && (
+                        <div className={Styles['modalOverlay']}>
+                            <div className={Styles['modalContent']}>
+                                <h3>Denunciar Comentário</h3>
+                                <p>Tem certeza de que deseja denunciar este comentário?</p>
+                                <button className={Styles['confirmButton']} onClick={confirmarDenuncia}>Sim</button>
+                                <button className={Styles['cancelButton']} onClick={() => setShowDenunciaModal(false)}>Cancelar</button>
                             </div>
                         </div>
                     )}
@@ -187,7 +215,7 @@ const Comentario = ({ quemCurtiu, id, nome, mensagem, horario, curtidas, idReaca
                         <img
                             src={curtida ? Curtido : Curtir}
                             alt="Curtir"
-                            onClick={() => { reagirComentario(id, idReacao, "CURTIDA", idUsuarioLogado, curtida, setCurtida, setCurtidas) }}
+                            onClick={() => { reagirComentario(id, idReacao, "CURTIDA", sessionStorage.getItem('userId'), curtida, setCurtida, setCurtidas) }}
                         />
                     </div>
                 </div>
@@ -195,6 +223,6 @@ const Comentario = ({ quemCurtiu, id, nome, mensagem, horario, curtidas, idReaca
             <div className={Styles['linha']}></div>
         </>
     );
-}
+};
 
 export default Comentario;

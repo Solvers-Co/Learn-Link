@@ -57,27 +57,31 @@ public class ComentarioService {
     }
 
     public void deletar(int id) {
-        Comentario comentario =  buscarPorId(id);
+        Comentario comentario = buscarPorId(id);
         comentarioRepository.delete(comentario);
     }
 
-    public String[][] buscaQuantidadeDeComentariosPorDiaMatriz(int mes, int ano) {
-        List<QuantidadeComentarioDiaListagemDto> quantidadeComentarios = comentarioRepository.buscaQuantidadeDeComentariosPorDia(mes, ano);
-        String[][] m = new String[31][2];
+//    public String[][] buscaQuantidadeDeComentariosPorDiaMatriz(int mes, int ano) {
+//        List<QuantidadeComentarioDiaListagemDto> quantidadeComentarios = comentarioRepository.buscaQuantidadeDeComentariosPorDia(mes, ano);
+//        String[][] m = new String[31][2];
+//
+//        if (quantidadeComentarios.isEmpty()) return null;
+//
+//        for (int coluna = 0; coluna < m[0].length; coluna++) {
+//
+//            for (int linha = 0; linha < m.length; linha++) {
+//                if (coluna == 0) {
+//                    m[linha][coluna] = quantidadeComentarios.get(linha).getDataComentario().toString();
+//                } else {
+//                    m[linha][coluna] = quantidadeComentarios.get(linha).getQuantidadeComentarios().toString();
+//                }
+//            }
+//        }
+//        return m;
+//    }
 
-        if (quantidadeComentarios.isEmpty()) return null;
-
-        for (int coluna = 0; coluna < m[0].length; coluna++) {
-
-            for (int linha = 0; linha < m.length; linha++) {
-                if (coluna == 0) {
-                    m[linha][coluna] = quantidadeComentarios.get(linha).getDataComentario().toString();
-                } else {
-                    m[linha][coluna] = quantidadeComentarios.get(linha).getQuantidadeComentarios().toString();
-                }
-            }
-        }
-        return m;
+    public List<QuantidadeComentarioDiaListagemDto> buscaQuantidadeDeComentariosPorDia(int mes, int ano) {
+        return comentarioRepository.buscaQuantidadeDeComentariosPorDia(mes, ano);
     }
 
     public List<Comentario> listarPorPublicacao(int idPublicacao) {

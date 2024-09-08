@@ -1,0 +1,32 @@
+.notificacaoItem {
+    width: 298px;
+    background-color: --var(corDeFundo);
+    border-radius: 8px;
+    padding: 15px 20px 15px 20px;
+    margin-bottom: 1px;
+}
+
+.infos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.texto {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+}
+
+.nome {
+    font-weight: bold;
+    font-size: 18px;
+    font-family: "Nunito Sans", sans-serif;
+}
+
+.acao {
+    font-size: 15px;
+    font-family: "Nunito Sans", sans-serif;
+
+}

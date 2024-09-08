@@ -31,6 +31,10 @@
     background-color: #ffffff;
 }
 
+.publicacoes:last-child {
+    margin-bottom: 10px;
+}
+
 .comentarios {
     display: flex;
     flex-direction: column;
@@ -47,14 +51,49 @@
     margin-bottom: 3rem;
 }
 
-/* .listaComentarios:nth-last-child(){
-    margin-bottom: 3rem;
-} */
-
 .fechar {
     display: flex;
     justify-content: end;
     width: 90%;
+}
+
+.sortOptions {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 5px;
+}
+
+.sortOptions span {
+    font-size: 18px;
+    font-family: "Nunito Sans", sans-serif;
+    display: flex;
+    justify-self: center;
+}
+
+.sortOptions p {
+    display: flex;
+    border: 1px solid #707070;
+    border-radius: 15px;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 18px;
+    font-family: "Nunito Sans", sans-serif;
+    justify-self: center;
+}
+
+.sortPopup {
+    background-color: white;
+    width: 130px;
+    height: 120px;
+    margin: 100px 0px 0px 220px;
+    padding: 5px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #707070;
 }
 
 .textoSemComentarios {
@@ -98,9 +137,7 @@
 .listaComentarios {
     width: 100%;
     max-height: calc(100% - 60px);
-    /* Ajusta a altura máxima da lista */
     overflow-y: auto;
-    /* Permite a rolagem dentro da lista */
     padding: 10px 0;
     text-align: start;
 }

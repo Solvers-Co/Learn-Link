@@ -3,6 +3,7 @@ import Styles from '../canais/Canais.module.css';
 import api from "../../../api";
 // import Header from '../../components/header/Header';
 import Card from './cardCanais/CardCanais';
+import Header from '../../components/headerAplicacao/Header';
 
 // Import dos ícones necessários
 import mathIcon from '../../utils/assets/canais/Matematica.png';
@@ -15,8 +16,9 @@ import sociologiaIcon from '../../utils/assets/canais/Sociologia.png';
 import GeografiaIcon from '../../utils/assets/canais/Geografia.png';
 import inglesIcon from '../../utils/assets/canais/Ingles.png';
 import filosofiaIcon from '../../utils/assets/canais/Filosofia.png';
+import doacoesicon from '../../utils/assets/canais/Doacoes.png';
 import notFoundIcon from '../../utils/assets/canais/NotFound.png';
-import Header from '../../components/headerAplicacao/Header';
+
 
 // Mapeamento de ícones para matérias
 const iconMap = {
@@ -30,6 +32,7 @@ const iconMap = {
     'INGLES': inglesIcon,
     'FILOSOFIA': filosofiaIcon,
     'SOCIOLOGIA': sociologiaIcon,
+    'DOACOES': doacoesicon,
 };
 
 const subjectNameMap = {
@@ -43,6 +46,7 @@ const subjectNameMap = {
     'INGLES': 'Inglês',
     'FILOSOFIA': 'Filosofia',
     'SOCIOLOGIA': 'Sociologia',
+    'DOACOES': 'Doações',
 };
 
 // Função para formatar o nome das matérias com acento
@@ -65,9 +69,8 @@ const Canais = () => {
     }, []);
 
     return (
-        //header  errado 
         <>
-         <Header />
+            <Header />
             <div className={Styles['telaCanais']}>
                 <div className={Styles['titulo']}>Canais</div>
                 {cardsData.map((item) => (

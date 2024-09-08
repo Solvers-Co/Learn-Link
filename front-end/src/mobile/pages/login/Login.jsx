@@ -85,7 +85,7 @@ const Login = () => {
                 <h3>Bem-Vindo de volta</h3>
                 <div className={styles['divInputs']}>
                     <InputFormulario placeHolder="Email" value={email} onChange={(e) => handleInputChange(e, setEmail)} />
-                    <InputFormulario placeHolder="Senha" value={senha} onChange={(e) => handleInputChange(e, setSenha)} />
+                    <InputFormulario placeHolder="Senha" value={senha} tipo="password" onChange={(e) => handleInputChange(e, setSenha)} />
                 </div>
                 <a href=""><h2>Esqueceu sua senha?</h2></a>
                 <div className={styles['divBotao']}>

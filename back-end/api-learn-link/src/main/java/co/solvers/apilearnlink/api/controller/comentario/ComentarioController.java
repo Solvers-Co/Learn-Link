@@ -108,21 +108,21 @@ public class ComentarioController {
         return ResponseEntity.noContent().build();
     }
 
-    @ApiResponse(responseCode = "200", description = "Comentários encontrados")
-    @ApiResponse(responseCode = "404", description = "Comentários não encontrado")
-    @Operation(summary = "Listar todos os comentários", description = "Método que lista todos os comentários", tags = {"Comentários"})
-    @GetMapping("/quantidade-comentarios-por-dia-mes")
-    public ResponseEntity<String[][]> quantidadeDePublicacoesPorDia(
-            @RequestParam
-            @Parameter(name = "mes", description = "Mês", example = "5") int mes,
-            @RequestParam
-            @Parameter(name = "ano", description = "Ano", example = "2024") int ano) {
-        String[][] quantidadeComentarios = comentarioService.buscaQuantidadeDeComentariosPorDiaMatriz(mes, ano);
-
-        if (quantidadeComentarios == null) return ResponseEntity.noContent().build();
-
-        return ResponseEntity.ok(quantidadeComentarios);
-    }
+//    @ApiResponse(responseCode = "200", description = "Comentários encontrados")
+//    @ApiResponse(responseCode = "404", description = "Comentários não encontrado")
+//    @Operation(summary = "Listar todos os comentários", description = "Método que lista todos os comentários", tags = {"Comentários"})
+//    @GetMapping("/quantidade-comentarios-por-dia-mes")
+//    public ResponseEntity<String[][]> quantidadeDePublicacoesPorDia(
+//            @RequestParam
+//            @Parameter(name = "mes", description = "Mês", example = "5") int mes,
+//            @RequestParam
+//            @Parameter(name = "ano", description = "Ano", example = "2024") int ano) {
+//        String[][] quantidadeComentarios = comentarioService.buscaQuantidadeDeComentariosPorDiaMatriz(mes, ano);
+//
+//        if (quantidadeComentarios == null) return ResponseEntity.noContent().build();
+//
+//        return ResponseEntity.ok(quantidadeComentarios);
+//    }
 
     //endpoint que lista todos os comentarios de uma publicacao pelo id da publicação
     @ApiResponse(responseCode = "200", description = "Comentários encontrados")
