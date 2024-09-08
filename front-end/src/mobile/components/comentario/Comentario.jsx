@@ -115,7 +115,7 @@ function generateInitials(name) {
     return <div style={avatar}>{firstInitial + lastInitial}</div>;
 }
 
-const Comentario = ({ quemCurtiu, id, nome, mensagem, horario, curtidas, idReacao, nomePublicacao }) => {
+const Comentario = ({ quemCurtiu, id, nome, mensagem, horario, curtidas, idReacao, nomePublicacao, idPublicacao }) => {
     const [curtida, setCurtida] = useState(quemCurtiu.includes(sessionStorage.getItem('nome')));
     const [numCurtidas, setCurtidas] = useState(curtidas);
     const [showPopup, setShowPopup] = useState(false);

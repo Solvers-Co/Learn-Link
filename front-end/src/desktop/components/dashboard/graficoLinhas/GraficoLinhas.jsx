@@ -7,17 +7,30 @@ const getDaysInMonth = (year, month) => {
     const date = new Date(year, month, 1);
     const days = [];
     while (date.getMonth() === month) {
-        days.push(new Date(date).getDate());
+        days.push(date.getDate());
         date.setDate(date.getDate() + 1);
     }
     return days;
 };
 
-const GraficoLinhas = ({ data, data1 }) => {
-    const isDataEmpty = data.length === 0 || data1.length === 0;
+// Função para preencher dados com zero para dias ausentes
+const fillMissingDays = (data, daysInMonth, dateKey, quantityKey) => {
+    const dataMap = data.reduce((acc, item) => {
+        const date = new Date(item[dateKey]);
+        const day = date.getDate() + 1; // Ajusta para adicionar um dia
+        acc[day] = item[quantityKey];
+        return acc;
+    }, {});
+
+    // Adiciona zero para dias ausentes
+    return daysInMonth.map(day => dataMap[day] || 0);
+};
+
+const GraficoLinhas = ({ data: dadosPublicacoes, data1: dadosComentarios }) => {
+    const isDataEmpty = dadosPublicacoes.length === 0 && dadosComentarios.length === 0;
 
     // Pega o mês e o ano do primeiro item, ou usa o mês atual como fallback
-    const firstDate = data.length > 0 ? new Date(data[0].dataPublicacao) : new Date();
+    const firstDate = dadosPublicacoes.length > 0 ? new Date(dadosPublicacoes[0].dataPublicacao) : new Date();
     const year = firstDate.getFullYear();
     const month = firstDate.getMonth();
 
@@ -27,21 +40,15 @@ const GraficoLinhas = ({ data, data1 }) => {
     const options = {
         chart: {
             id: "basic-line",
-            toolbar: {
-                show: true,
-            },
-            zoom: {
-                enabled: true,
-            },
+            toolbar: { show: true },
+            zoom: { enabled: true },
             animations: {
                 enabled: true,
                 easing: 'easeinout',
                 speed: 800,
             },
             background: '#f4f4f4',
-            dropShadow: {
-                enabled: false,
-            },
+            dropShadow: { enabled: false },
         },
         xaxis: {
             categories: isDataEmpty ? [""] : daysInMonth,
@@ -109,44 +116,32 @@ const GraficoLinhas = ({ data, data1 }) => {
             size: 5,
             strokeColors: '#fff',
             strokeWidth: 2,
-            hover: {
-                size: 7,
-            },
+            hover: { size: 7 },
         },
-        dataLabels: {
-            enabled: false,
-        },
+        dataLabels: { enabled: false },
         grid: {
             borderColor: '#e7e7e7',
             strokeDashArray: 5,
         },
         tooltip: {
             theme: 'dark',
-            x: {
-                show: true,
-            },
+            x: { show: true },
         },
     };
 
     const series = isDataEmpty
         ? [
-              {
-                  name: "Quantidade de Publicações",
-                  data: [0],
-              },
-              {
-                  name: "Quantidade de Comentários",
-                  data: [0],
-              },
+              { name: "Quantidade de Publicações", data: daysInMonth.map(() => 0) },
+              { name: "Quantidade de Comentários", data: daysInMonth.map(() => 0) },
           ]
         : [
               {
                   name: "Quantidade de Publicações",
-                  data: data.map(item => item.quantidadePublicacoes || 0),
+                  data: fillMissingDays(dadosPublicacoes, daysInMonth, 'dataPublicacao', 'quantidadePublicacoes'),
               },
               {
                   name: "Quantidade de Comentários",
-                  data: data1.map(item => item.quantidadeComentarios || 0),
+                  data: fillMissingDays(dadosComentarios, daysInMonth, 'dataComentario', 'quantidadeComentarios'),
               },
           ];
 
