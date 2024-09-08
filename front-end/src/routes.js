@@ -9,8 +9,6 @@ import Dashboard from "./desktop/pages/dashboard/Dashboard";
 import AceitarUsuarios from "./desktop/pages/aceitarUsuarios/AceitarUsuarios";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PaginaInicialDesktop from "./desktop/pages/paginaInicial/PaginaInicial";
-import MenuInicial from "./mobile/components/menuInicial/MenuInicial";
-import Header from "./mobile/components/header/Header";
 import PaginaInicial from "./mobile/pages/paginaInicial/PaginaInicial";
 import CompletarCadastro from "./mobile/pages/completarCadastro/CompletarCadastro";
 import RecuperacaoSenha from "./mobile/pages/recuperacaoSenha/RecuperacaoSenha";

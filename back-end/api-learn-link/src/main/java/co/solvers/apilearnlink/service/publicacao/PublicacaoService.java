@@ -82,7 +82,7 @@ public class PublicacaoService {
 
 
     public Page<Publicacao> listarMaisRecentesPaginado(Pageable pageable) {
-        return publicacaoRepository.findAllByOrderByDataHoraDesc(pageable);
+        return publicacaoRepository.findAll(pageable);
     }
 
     public Page<Publicacao> listarPublicacoesPorCanal(Long canalId, int page, int size, String sortDirection) {

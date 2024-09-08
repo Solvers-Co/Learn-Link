@@ -20,7 +20,7 @@ public interface PublicacaoRepository extends JpaRepository<Publicacao, Integer>
 
     List<Publicacao> findAllByOrderByDataHora();
 
-    Page<Publicacao> findAllByOrderByDataHoraDesc(Pageable pageable);
+    Page<Publicacao> findAll(Pageable pageable);
 
     @Query("SELECT p FROM Publicacao p WHERE p.canal.id = :canalId")
     Page<Publicacao> findByCanalId(@Param("canalId") Long canalId, Pageable pageable);

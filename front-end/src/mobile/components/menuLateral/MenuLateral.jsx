@@ -81,6 +81,7 @@ const MenuLateral = ({ nome }) => {
 
     const handleFeedGeral = () => {
         navigate('/feedGeral');
+        window.location.reload();
     };
 
     const handleCanais = () => {
