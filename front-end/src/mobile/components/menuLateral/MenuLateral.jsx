@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';  // Adicione esta linha
-import { useState } from 'react'; // Adicione esta linha
+import { useMemo, useState } from 'react'; // Adicione esta linha
 import styles from './MenuLateral.module.css';
 import stylesBotao from '../botoes/botaoLoginCadastro/Botao.module.css';
 import IconePerfil from '../../utils/assets/perfil-menu-lateral.png';
@@ -14,11 +14,66 @@ import IconeX from '../../utils/assets/icone_x.svg';
 import Linha from '../linha/Linha';
 import Usuario from '../../utils/assets/Usuario.png'
 
+function generateInitials(name) {
+    if (!name) {
+        return <div style={{ color: 'red' }}>N/A</div>;
+    }
+
+    const nameParts = name.trim().split(' ');
+    const firstInitial = nameParts[0].charAt(0).toUpperCase();
+    const lastInitial = nameParts[nameParts.length - 1].charAt(0).toUpperCase();
+
+    const pastelColors = [
+        '#FFB3BA', '#FFDFBA', '#FFFFBA', '#BAFFC9', '#BAE1FF',
+        '#FFB3B3', '#FFCCB3', '#FFFFCC', '#CCFFCC', '#CCE5FF',
+        '#FFC3A0', '#FFEDCC', '#FFFFE0', '#E0FFCC', '#CCE0FF',
+        '#FFC4C4', '#FFE1C4', '#FFFFD1', '#D1FFD1', '#D1E8FF'
+    ];
+
+    const randomIndex = Math.floor(Math.random() * pastelColors.length);
+    const backgroundColor = pastelColors[randomIndex];
+
+    const avatar = {
+        borderRadius: '50%',
+        border: '1px solid rgba(0, 0, 0, .3)',
+        fontSize: '15px',
+        width: '30px',
+        height: '30px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontFamily: '"NunitoSans", sans-serif',
+        backgroundColor
+    };
+
+    return <div style={avatar}>{firstInitial + lastInitial}</div>;
+}
+
+
 const MenuLateral = ({ nome }) => {
     const [isVisible, setIsVisible] = useState(true); // Adiciona estado para visibilidade
     const navigate = useNavigate();
+    
+    const nomeUsuarioLogado = sessionStorage.getItem('nome');
 
-    nome = sessionStorage.getItem('nome');
+    // Mova a declaração de nomeFormatado para fora do bloco if
+    let nomeFormatado = 'Usuário Desconhecido'; // Valor padrão caso o nome não seja encontrado
+
+    if (nomeUsuarioLogado) {
+        const nomes = nomeUsuarioLogado.trim().split(' '); // Remove espaços em branco e divide a string em palavras
+        const primeiroNome = nomes[0];
+        const ultimoNome = nomes[nomes.length - 1];
+        if (nomes.length === 1) {
+            nomeFormatado = primeiroNome;
+        } else {
+            nomeFormatado = `${primeiroNome} ${ultimoNome}`;
+        }
+    } else {
+        console.log('Nome de usuário não encontrado');
+    }
+
+    // Use useMemo com nomeFormatado
+    const avatar = useMemo(() => generateInitials(nomeFormatado), [nomeFormatado]);
 
     const handlePerfil = () => {
         navigate('/perfil');
@@ -26,11 +81,6 @@ const MenuLateral = ({ nome }) => {
 
     const handleFeedGeral = () => {
         navigate('/feedGeral');
-        window.location.reload();
-    };
-
-    const handleDoacoes = () => {
-        navigate('/feedGeral', { state: { canalId: 11 } });
         window.location.reload();
     };
 
@@ -63,11 +113,8 @@ const MenuLateral = ({ nome }) => {
             <div className={styles.menuInicial}>
                 <img src={IconeX} className={styles.cancelar} onClick={handleClose} alt="Fechar Menu" />
                 <div className={styles.userInfo}>
-                    <img
-                        src={Usuario} alt="User"
-                        className={styles.avatar}
-                    />
-                    <span className={styles.nome}>{nome}</span>
+                    {avatar}
+                    <span className={styles.nome}>{nomeFormatado}</span>
                 </div>
                 <Linha />
                 <div className={styles.navegacaoSite}>
@@ -82,12 +129,6 @@ const MenuLateral = ({ nome }) => {
                         nomeSecao="Feed Geral"
                         fonte='"Nunito Sans", sans-serif'
                         onClick={handleFeedGeral}
-                    />
-                    <OpcaoNavegacao
-                        icone={IconeDoacoes}
-                        nomeSecao="Doações"
-                        fonte='"Nunito Sans", sans-serif'
-                        onClick={handleDoacoes}
                     />
                     <OpcaoNavegacao
                         icone={IconeCanais}
@@ -124,3 +165,4 @@ const MenuLateral = ({ nome }) => {
 }
 
 export default MenuLateral;
+

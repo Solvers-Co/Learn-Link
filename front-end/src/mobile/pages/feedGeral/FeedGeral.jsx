@@ -41,6 +41,7 @@ const FeedGeral = () => {
     const [sortDirection, setSortDirection] = useState('desc'); // Estado para controlar a direção do sort
     const [isSortPopupOpen, setIsSortPopupOpen] = useState(false); // Para controlar a exibição do popup de ordenação
 
+    const [popupAbertoId, setPopupAbertoId] = useState(null);
     const observerRef = useRef();
     const location = useLocation();
     const canalId = location.state?.canalId;
@@ -121,6 +122,14 @@ const FeedGeral = () => {
         setShowComentarios(false);
     };
 
+    const togglePopup = (id) => {
+        if (popupAbertoId === id) {
+            setPopupAbertoId(null); // Fecha o popup se já estiver aberto
+        } else {
+            setPopupAbertoId(id); // Abre o popup para o ID correspondente
+        }
+    };
+
     const nomeUsuarioLogado = sessionStorage.getItem('nome');
     const publicacoesParaExibir = searchResults || publicacoes;
 
@@ -146,6 +155,8 @@ const FeedGeral = () => {
                                 quemCurtiu={publicacao.reacoes.map(reacao => reacao.usuario.nome)}
                                 comentarios={publicacao.comentarios.length}
                                 listarComentarios={listarComentarios}
+                                togglePopup={togglePopup}
+                                popupAbertoId={popupAbertoId}
                             />
                         ))
                     ) : (

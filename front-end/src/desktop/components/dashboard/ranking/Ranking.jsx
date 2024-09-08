@@ -1,6 +1,9 @@
-import React from "react";
+import React, { PureComponent } from "react";
 import fotoPerfilHomem from "../../../utils/assets/perfilHomem.png";
 import Styles from "./Ranking.module.css";
+import Primeiro from '../../../../mobile/utils/assets/ranking/Primeiro lugar.png';
+import Segundo from '../../../../mobile/utils/assets/ranking/Segundo lugar.png';
+import Terceiro from '../../../../mobile/utils/assets/ranking/Terceiro lugar.png';
 
 
 
@@ -68,13 +71,13 @@ const Ranking = () => {
                             </div>
                             <div className={Styles.posicao}>
                                 {index === 0 && (
-                                    <img src={fotoPerfilHomem} alt="Gold Medal" className={Styles.medalIcon} />
+                                    <img src={Primeiro} alt="Gold Medal" className={Styles.medalIcon} />
                                 )}
                                 {index === 1 && (
-                                    <img src={fotoPerfilHomem} alt="Silver Medal" className={Styles.medalIcon} />
+                                    <img src={Segundo} alt="Silver Medal" className={Styles.medalIcon} />
                                 )}
                                 {index === 2 && (
-                                    <img src={fotoPerfilHomem} alt="Bronze Medal" className={Styles.medalIcon} />
+                                    <img src={Terceiro} alt="Bronze Medal" className={Styles.medalIcon} />
                                 )}
                                 {index > 2 && (
                                     <span>{index + 1}</span>
