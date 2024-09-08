@@ -5,7 +5,6 @@ import iconeAcesso from "../../../utils/assets/controle-de-acesso.png";
 import iconeDenuncia from "../../../utils/assets/icone_denuncia.png";
 import iconeSair from "../../../utils/assets/sair.png";
 import iconeCadastroFuncionarios from "../../../utils/assets/icone_cadastro_func.png";
-import fotoPerfil from "../../../utils/assets/perfil.png";
 import styles from "./MenuLateral.module.css";
 
 function generateInitials(name) {

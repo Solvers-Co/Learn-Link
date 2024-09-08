@@ -16,7 +16,7 @@ const Beneficios = () => {
                     corLinha="#FFFFFF"
                     titulo="O benefício de ajudar"
                     corParagrafo="#FFFFFF"
-                    paragrafo="Além de esclarecer suas dúvidas com outros usuários do Learn Link, você também pode compartilhar seu conhecimento, ajudando os outros e colaborando para o seu aprendizado!"
+                    paragrafo="Você pode compartilhar seu conhecimento, ajudando os outros e colaborando para o seu aprendizado!"
                 />
             </div>
             <div className={styles.cards}>
@@ -24,13 +24,13 @@ const Beneficios = () => {
                     largura="65vw"
                     altura="20vh" 
                     titulo="Reforço do conhecimento"
-                    paragrafo="Ao ensinar, você revisa e aprofunda o seu próprio conhecimento sobre o assunto, solidificando e ampliando o seu entendimento."
+                    paragrafo="Ao ensinar, você revisa e aprofunda o seu próprio conhecimento sobre o assunto."
                 />
                 <CardSolucao 
                     largura="65vw"
                     altura="20vh" 
                     titulo="Conhece a pirâmide de aprendizagem?"
-                    paragrafo="Você pode aprender mais ainda quando ensina outras pessoas."
+                    paragrafo="Aprenda enquanto ensina outras pessoas."
                     showButton={true}
                     imagem={Imagem}
                 />
@@ -38,7 +38,7 @@ const Beneficios = () => {
                     largura="65vw"
                     altura="20vh" 
                     titulo="Identificação das lacunas"
-                    paragrafo="Ensinar ajuda a identificar áreas onde seu conhecimento pode estar incompleto ou onde você precisa de uma compreensão mais profunda."
+                    paragrafo="Ensinar ajuda a identificar áreas onde seu conhecimento pode estar incompleto."
                 />
             </div>
 
