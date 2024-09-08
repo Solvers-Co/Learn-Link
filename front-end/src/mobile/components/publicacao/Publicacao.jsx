@@ -187,8 +187,8 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
 
     let nomeFormatado = 'Usuário Desconhecido'; // Valor padrão caso o nome não seja encontrado
 
-    if (nomeUsuarioLogado) {
-        const nomes = nomeUsuarioLogado.trim().split(' '); 
+    if (nome) {
+        const nomes = nome.trim().split(' '); 
         const primeiroNome = nomes[0];
         const ultimoNome = nomes[nomes.length - 1];
         if (nomes.length === 1) {

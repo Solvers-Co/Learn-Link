@@ -36,8 +36,6 @@ const Cadastro = () => {
             errorMessages.push("Nome deve ter pelo menos 3 caracteres");
         } else if (nome.length > 45) {
             errorMessages.push("Nome deve ter no máximo 45 caracteres");
-        } else if (/[^a-zA-Z\s]/.test(nome)) {
-            errorMessages.push("Nome não pode conter caracteres especiais");
         } else if (nome.trim() !== nome) {
             errorMessages.push("Nome não deve conter espaços em branco no final");
         }
