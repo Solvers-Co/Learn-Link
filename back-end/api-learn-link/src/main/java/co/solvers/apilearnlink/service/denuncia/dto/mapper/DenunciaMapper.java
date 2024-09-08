@@ -1,10 +1,11 @@
 package co.solvers.apilearnlink.service.denuncia.dto.mapper;
 
 import co.solvers.apilearnlink.domain.denuncia.Denuncia;
-import co.solvers.apilearnlink.service.comentario.dto.ComentarioListagemDto;
 import co.solvers.apilearnlink.service.comentario.dto.mapper.ComentarioMapper;
 import co.solvers.apilearnlink.service.denuncia.dto.DenunciaComentarioListagemDto;
 import co.solvers.apilearnlink.service.denuncia.dto.DenunciaPublicacaoListagemDto;
+import co.solvers.apilearnlink.service.publicacoesDenunciadas.dto.PublicacoesDenunciadasDto;
+import co.solvers.apilearnlink.domain.views.publicacoesDenunciadas.PublicacoesDenunciadas;
 import co.solvers.apilearnlink.service.publicacao.dto.mapper.PublicacaoMapper;
 import co.solvers.apilearnlink.service.usuario.dto.mapper.UsuarioMapper;
 
@@ -33,4 +34,6 @@ public class DenunciaMapper {
 
         return dto;
     }
+
+
 }

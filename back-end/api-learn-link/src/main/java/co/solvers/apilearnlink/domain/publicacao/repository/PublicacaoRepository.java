@@ -1,14 +1,10 @@
 package co.solvers.apilearnlink.domain.publicacao.repository;
 
 import co.solvers.apilearnlink.domain.publicacao.Publicacao;
-import co.solvers.apilearnlink.service.denuncia.dto.PublicacoesDenunciadasDto;
-import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoListagemResponseDto;
 import co.solvers.apilearnlink.service.publicacao.dto.QuantidadePublicacaoDiaListagemDto;
 import co.solvers.apilearnlink.service.publicacao.dto.QuantidadePublicacaoMesCanalListagemDto;
-import co.solvers.apilearnlink.service.usuario.dto.UsuarioAceitacaoListagemDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

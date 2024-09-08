@@ -1,9 +1,9 @@
 package co.solvers.apilearnlink.api.controller.publicacao;
 
-import co.solvers.apilearnlink.domain.canal.Canal;
 import co.solvers.apilearnlink.domain.comentario.Comentario;
 import co.solvers.apilearnlink.domain.publicacao.Publicacao;
 import co.solvers.apilearnlink.domain.reacao.Reacao;
+import co.solvers.apilearnlink.domain.views.publicacoesDenunciadas.PublicacoesDenunciadas;
 import co.solvers.apilearnlink.service.comentario.ComentarioService;
 import co.solvers.apilearnlink.service.comentario.dto.ComentarioCriacaoDto;
 import co.solvers.apilearnlink.service.comentario.dto.ComentarioListagemDto;
@@ -11,12 +11,14 @@ import co.solvers.apilearnlink.service.comentario.dto.mapper.ComentarioMapper;
 import co.solvers.apilearnlink.service.denuncia.DenunciaService;
 import co.solvers.apilearnlink.service.denuncia.dto.DenunciaPublicacaoCriarDto;
 import co.solvers.apilearnlink.service.denuncia.dto.DenunciaPublicacaoListagemDto;
+import co.solvers.apilearnlink.service.publicacoesDenunciadas.dto.PublicacoesDenunciadasDto;
 import co.solvers.apilearnlink.service.denuncia.dto.mapper.DenunciaMapper;
 import co.solvers.apilearnlink.service.publicacao.PublicacaoService;
 import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoCriacaoRequestDto;
 import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoListagemResponseDto;
 import co.solvers.apilearnlink.service.publicacao.dto.QuantidadePublicacaoMesCanalListagemDto;
 import co.solvers.apilearnlink.service.publicacao.dto.mapper.PublicacaoMapper;
+import co.solvers.apilearnlink.service.publicacoesDenunciadas.dto.mapper.PublicacoesDenunciadasMapper;
 import co.solvers.apilearnlink.service.reacao.ReacaoService;
 import co.solvers.apilearnlink.service.reacao.dto.ReacaoCriarDto;
 import co.solvers.apilearnlink.service.reacao.dto.ReacaoPublicacaoListarDto;
@@ -314,6 +316,24 @@ public class PublicacaoController {
 
         return ResponseEntity.ok().body(denunciaPublicacao);
     }
+
+    @ApiResponse(responseCode = "200", description = "Publicacoes Denunciadas")
+    @ApiResponse(responseCode = "404", description = "Não existem publicações denunciadas")
+    @Operation(summary = "Listar publicações denunciadas", description = "Método que lista publicações denunciadas", tags = {"Publicações"})
+    @GetMapping("/denuncias")
+    public ResponseEntity<List<PublicacoesDenunciadasDto>> listarPublicacoesDenunciadas() {
+
+        List<PublicacoesDenunciadas> publicacoesDenunciadas = denunciaService.buscaPublicacoesDenunciadas();
+        List<PublicacoesDenunciadasDto> publicacoesDenunciadasDto = PublicacoesDenunciadasMapper.toPublicacoesDenunciadasDto(publicacoesDenunciadas);
+
+        if (publicacoesDenunciadasDto.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.ok(publicacoesDenunciadasDto);
+        }
+    }
+
+
 
 
 

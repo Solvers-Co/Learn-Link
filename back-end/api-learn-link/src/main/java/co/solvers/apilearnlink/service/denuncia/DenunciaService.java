@@ -1,26 +1,23 @@
 package co.solvers.apilearnlink.service.denuncia;
 
-import co.solvers.apilearnlink.domain.canal.repository.CanalRepository;
 import co.solvers.apilearnlink.domain.comentario.Comentario;
 import co.solvers.apilearnlink.domain.denuncia.Denuncia;
 import co.solvers.apilearnlink.domain.denuncia.repository.DenunciaRespository;
 import co.solvers.apilearnlink.domain.publicacao.Publicacao;
-import co.solvers.apilearnlink.domain.publicacao.repository.PublicacaoRepository;
-import co.solvers.apilearnlink.domain.tipopublicacao.repository.TipoPublicacaoRepository;
 import co.solvers.apilearnlink.domain.usuario.Usuario;
-import co.solvers.apilearnlink.service.canal.CanalService;
+import co.solvers.apilearnlink.domain.views.publicacoesDenunciadas.PublicacoesDenunciadas;
 import co.solvers.apilearnlink.service.comentario.ComentarioService;
 import co.solvers.apilearnlink.service.denuncia.dto.DenunciaComentarioCriarDto;
 import co.solvers.apilearnlink.service.denuncia.dto.DenunciaPublicacaoCriarDto;
-import co.solvers.apilearnlink.service.denuncia.dto.PublicacoesDenunciadasDto;
+import co.solvers.apilearnlink.service.publicacoesDenunciadas.dto.PublicacoesDenunciadasDto;
 import co.solvers.apilearnlink.service.publicacao.PublicacaoService;
+import co.solvers.apilearnlink.service.publicacoesDenunciadas.dto.mapper.PublicacoesDenunciadasMapper;
 import co.solvers.apilearnlink.service.usuario.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -91,6 +88,11 @@ public class DenunciaService {
         } else {
             return false;
         }
+    }
+
+    public List<PublicacoesDenunciadas> buscaPublicacoesDenunciadas() {
+        List<PublicacoesDenunciadas> publicacoesDenunciadas = denunciaRespository.buscaPublicacoesDenunciadas();
+        return publicacoesDenunciadas;
     }
 
 }
