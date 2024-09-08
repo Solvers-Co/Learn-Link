@@ -79,6 +79,8 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/publicacoes/canal-com-maior-numero-de-publicacoes"),
             new AntPathRequestMatcher("/publicacoes//publicacoes-por-canal-paginado"),
             new AntPathRequestMatcher("/publicacoes/{idPublicacao}/remover-reacao"),
+            new AntPathRequestMatcher("/publicacoes/{idPublicacao}/denunciar"),
+            new AntPathRequestMatcher("/publicacoes/denuncias"),
             new AntPathRequestMatcher("/comentarios"),
             new AntPathRequestMatcher("/comentarios/{id}"),
             new AntPathRequestMatcher("/comentarios/{idComentario}/reagir"),
@@ -87,6 +89,8 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/publicacoes/quantidade-publicacoes-por-dia-mes/"),
             new AntPathRequestMatcher("/comentarios/quantidade-comentarios-por-dia-mes/"),
             new AntPathRequestMatcher("/comentarios/publicacao/{idPublicacao}/paginado"),
+            new AntPathRequestMatcher("/comentarios/{idComentario}/denunciar"),
+            new AntPathRequestMatcher("/comentarios/denuncias"),
             new AntPathRequestMatcher("/registros/gerar-log/{id}"),
             new AntPathRequestMatcher("/qtd-materias-nao-respondidas")
     };

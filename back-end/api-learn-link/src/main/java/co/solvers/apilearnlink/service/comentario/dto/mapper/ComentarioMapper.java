@@ -7,6 +7,7 @@ import co.solvers.apilearnlink.domain.tipopublicacao.TipoPublicacao;
 import co.solvers.apilearnlink.domain.usuario.Usuario;
 import co.solvers.apilearnlink.service.comentario.dto.ComentarioCriacaoDto;
 import co.solvers.apilearnlink.service.comentario.dto.ComentarioListagemDto;
+import co.solvers.apilearnlink.service.comentario.dto.ComentarioListagemSimplesDto;
 import co.solvers.apilearnlink.service.especialidade.dto.mapper.EspecialidadeMapper;
 import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoCriacaoRequestDto;
 import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoListagemResponseDto;
@@ -37,6 +38,18 @@ public class ComentarioMapper {
         dto.setDataHora(entity.getDataHora());
         dto.setReacoes(toReacaoDto(entity.getReacoes()));
         dto.setPublicacao(toPublicacaoDto(entity.getPublicacao()));
+        dto.setUsuario(toUsuarioDto(entity.getUsuario()));
+
+        return dto;
+    }
+
+    public static ComentarioListagemSimplesDto toComentarioListagemSimples(Comentario entity) {
+        if (entity == null) return null;
+
+        ComentarioListagemSimplesDto dto = new ComentarioListagemSimplesDto();
+        dto.setId(entity.getId());
+        dto.setComentario(entity.getComentario());
+        dto.setDataHora(entity.getDataHora());
         dto.setUsuario(toUsuarioDto(entity.getUsuario()));
 
         return dto;
