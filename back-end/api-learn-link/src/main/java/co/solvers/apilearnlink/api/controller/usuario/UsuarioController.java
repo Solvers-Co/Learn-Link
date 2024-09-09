@@ -100,6 +100,19 @@ public class UsuarioController {
         return ResponseEntity.status(204).build();
     }
 
+    @ApiResponse(responseCode = "200", description = "Usuário localizado com sucesso")
+    @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
+    @Operation(summary = "Buscar usuário pelo email", description = "Método que busca um usuário pelo email", tags = {"Usuários"})
+    @GetMapping("/buscarEmail/{email}")
+    public ResponseEntity<UsuarioListagemRecuperarSenhaDto> buscarPorEmail(
+            @PathVariable
+            @Parameter(name = "email", description = "Email usuario", example = "aluninho@gmail.com") String email) {
+
+        Usuario usuarioEncontrado = usuarioService.buscarPorEmail(email);
+        UsuarioListagemRecuperarSenhaDto dto = UsuarioMapper.toUsuarioListagemRecuperarSenhaDto(usuarioEncontrado);
+        return ResponseEntity.status(200).body(dto);
+    }
+
     @ApiResponse(responseCode = "200", description = "Senha do usuário atualizada com sucesso")
     @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
     @Operation(summary = "Atualizar senha", description = "Método que atualiza senha do usuário", tags = {"Usuários"})
