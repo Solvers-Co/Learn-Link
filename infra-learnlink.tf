@@ -98,7 +98,7 @@ resource "aws_instance" "ec2-learnlink-frontend" {
 
   ebs_block_device {
     device_name = "/dev/sda1"
-    volume_size = 2
+    volume_size = 30
     volume_type = "gp3"
   }
 
