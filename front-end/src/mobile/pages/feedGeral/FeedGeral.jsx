@@ -7,7 +7,7 @@ import Header from '../../components/headerAplicacao/Header';
 import Modal from 'react-modal';
 import Comentario from '../../components/comentario/Comentario';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+// import 'react-toastify/dist/ReactToastify.css';
 
 
 import fechar from '../../utils/assets/icone_x.svg';
@@ -283,7 +283,7 @@ const FeedGeral = () => {
                     />
                 </div>
             </Modal>
-            <ToastContainer />
+            {/* <ToastContainer /> */}
         </>
     );
 }

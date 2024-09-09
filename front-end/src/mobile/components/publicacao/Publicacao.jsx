@@ -3,7 +3,7 @@ import Styles from '../publicacao/Publicacao.module.css';
 import api from '../../../api';
 import { toast, ToastContainer } from 'react-toastify';
 import Modal from 'react-modal';
-import 'react-toastify/dist/ReactToastify.css';
+// import 'react-toastify/dist/ReactToastify.css';
 import StylesModal from '../../components/botoes/botaoFazerPublicacao/BotaoFazerPublicacao.module.css'
 
 import Curtir from '../../utils/assets/Curtir.png';
