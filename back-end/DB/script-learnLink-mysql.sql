@@ -199,6 +199,15 @@ WHERE
 GROUP BY
     canal.id, canal.nome;
     
+CREATE VIEW view_quantidade_reacoes_comentarios_do_usuario AS
+SELECT COUNT(Reacao.id) AS reacoes, Comentario.usuario_id FROM Reacao 
+RIGHT JOIN 
+	Comentario ON comentario_id = Comentario.id
+WHERE 
+	tipo_reacao_id = 1
+GROUP BY 
+	Comentario.usuario_id;
+    
 
 -- SELECT (INCOMPLETO) para recuperar todos os comentarios de uma publicação especifica para o botão de comentarios (Ausencia de um campo de curtidas na tabela comentarios)
 -- SELECT c.id, c.comentario, u.nome AS autor
