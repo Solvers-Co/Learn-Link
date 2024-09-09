@@ -16,6 +16,7 @@ import sociologiaIcon from '../../utils/assets/canais/Sociologia.png';
 import GeografiaIcon from '../../utils/assets/canais/Geografia.png';
 import inglesIcon from '../../utils/assets/canais/Ingles.png';
 import filosofiaIcon from '../../utils/assets/canais/Filosofia.png';
+import doacoesicon from '../../utils/assets/canais/Doacoes.png';
 import notFoundIcon from '../../utils/assets/canais/NotFound.png';
 
 
@@ -31,6 +32,7 @@ const iconMap = {
     'INGLES': inglesIcon,
     'FILOSOFIA': filosofiaIcon,
     'SOCIOLOGIA': sociologiaIcon,
+    'DOACOES': doacoesicon,
 };
 
 const subjectNameMap = {
@@ -44,6 +46,7 @@ const subjectNameMap = {
     'INGLES': 'Inglês',
     'FILOSOFIA': 'Filosofia',
     'SOCIOLOGIA': 'Sociologia',
+    'DOACOES': 'Doações',
 };
 
 // Função para formatar o nome das matérias com acento

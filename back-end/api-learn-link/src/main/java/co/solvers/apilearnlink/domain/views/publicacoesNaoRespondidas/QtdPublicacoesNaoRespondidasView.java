@@ -1,4 +1,4 @@
-package co.solvers.apilearnlink.domain.publicacoesNaoRespondidas;
+package co.solvers.apilearnlink.domain.views.publicacoesNaoRespondidas;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

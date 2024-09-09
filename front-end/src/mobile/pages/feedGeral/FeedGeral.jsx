@@ -1,15 +1,19 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useLocation } from 'react-router-dom'; 
+import { useLocation } from 'react-router-dom';
 import Styles from '../feedGeral/FeedGeral.module.css';
 import api from "../../../api";
 import Publicacao from '../../components/publicacao/Publicacao';
 import Header from '../../components/headerAplicacao/Header';
 import Modal from 'react-modal';
 import Comentario from '../../components/comentario/Comentario';
+import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
+
+
 import fechar from '../../utils/assets/icone_x.svg';
-import BotaoFazerPublicacao from '../../components/botoes/botaoFazerPublicacao/BotaoFazerPublicacao';
-import Filtro from '../../utils/assets/Filtro.png';
+import Filtro from '../../utils/assets/Filtro direcao.png';
 import Enviar from '../../utils/assets/Enviar.png';
+import BotaoFazerPublicacao from '../../components/botoes/botaoFazerPublicacao/BotaoFazerPublicacao';
 
 Modal.setAppElement('#root');
 
@@ -24,6 +28,7 @@ const subjectNameMap = {
     'INGLES': 'Inglês',
     'FILOSOFIA': 'Filosofia',
     'SOCIOLOGIA': 'Sociologia',
+    'DOACOES': 'Doações',
 };
 
 const formatSubjectName = (name) => {
@@ -37,10 +42,31 @@ const FeedGeral = () => {
     const [searchResults, setSearchResults] = useState(null);
     const [page, setPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
+    const [sortDirection, setSortDirection] = useState('desc'); // Estado para controlar a direção do sort
+    const [isSortPopupOpen, setIsSortPopupOpen] = useState(false); // Para controlar a exibição do popup de ordenação
+    const [textoComentario, setTextoComentario] = useState(''); // Estado para armazenar o comentário
+    const [idPublicacaoAtual, setIdPublicacaoAtual] = useState(null); // Estado para armazenar o ID da publicação atual
+
+    const [popupAbertoId, setPopupAbertoId] = useState(null);
     const observerRef = useRef();
-    
     const location = useLocation();
     const canalId = location.state?.canalId;
+
+    const toggleSortPopup = () => {
+        setIsSortPopupOpen(prev => !prev);
+    };
+
+    const handleSortChange = (direction) => {
+        if (direction !== sortDirection) { // Verifica se a nova direção é diferente da atual
+            setSortDirection(direction);
+            setPage(0);
+            setPublicacoes([]); // Limpa a lista para evitar duplicações ao trocar a ordenação
+            setIsSortPopupOpen(false); // Fecha o popup ao escolher uma opção
+        } else {
+            setIsSortPopupOpen(false); // Apenas fecha o popup se a direção for a mesma
+        }
+    };
+
 
     useEffect(() => {
         const fetchPublicacoes = async () => {
@@ -48,15 +74,16 @@ const FeedGeral = () => {
                 const params = {
                     page,
                     size: 20,
+                    sortDirection,
                     ...(canalId && { canalId }),
                 };
                 const url = canalId ? '/publicacoes/publicacoes-por-canal-paginado' : '/publicacoes/publicacoes-mais-recentes-paginado';
                 const response = await api.get(url, { params });
                 const publicacoesRecebidas = response?.data?.content || [];
-                
+
                 setPublicacoes(prev => [...prev, ...publicacoesRecebidas]);
                 setTotalPages(response?.data.totalPages || 0);
-                
+
                 console.log("Publicacoes recebidas:", response.data.content);
             } catch (error) {
                 console.error("Erro ao buscar publicações:", error);
@@ -64,7 +91,7 @@ const FeedGeral = () => {
         };
 
         fetchPublicacoes();
-    }, [page, canalId]);
+    }, [page, canalId, sortDirection]);
 
     useEffect(() => {
         const observer = new IntersectionObserver(([entry]) => {
@@ -92,11 +119,51 @@ const FeedGeral = () => {
         setSearchResults(results);
     };
 
+    // Função para capturar o texto do comentário
+    const handleInputComentario = (event) => {
+        setTextoComentario(event.target.value);
+    };
+
+    // Função para enviar o comentário
+    const enviarComentario = async () => {
+        // Verificação do tamanho do texto
+        if (!textoComentario.trim()) {
+            toast.error("Digite um comentário antes de enviar!");
+            return;
+        }
+
+        if (textoComentario.length < 3 || textoComentario.length > 500) {
+            toast.error("O comentário deve ter entre 3 e 500 caracteres.");
+            return;
+        }
+
+        try {
+            const idUsuario = sessionStorage.getItem('userId');
+            const response = await api.post(`publicacoes/${idPublicacaoAtual}/comentar`, {
+                comentario: textoComentario,
+                idUsuario,
+            });
+
+            console.log("Comentário enviado com sucesso:", response.data);
+
+            // Limpa o campo de texto após enviar o comentário
+            setTextoComentario('');
+
+            // Atualiza os comentários após o envio
+            listarComentarios(idPublicacaoAtual);
+
+        } catch (error) {
+            console.error("Erro ao enviar comentário:", error);
+        }
+    };
+
+
     const listarComentarios = async (id) => {
         try {
             const response = await api.get(`/comentarios/publicacao/${id}`);
             setComentarios(response.data);
             setShowComentarios(true);
+            setIdPublicacaoAtual(id); // Define a publicação atual para usar no envio do comentário
         } catch (error) {
             console.error("Erro ao buscar comentários:", error);
         }
@@ -104,6 +171,15 @@ const FeedGeral = () => {
 
     const closeComentariosModal = () => {
         setShowComentarios(false);
+        setIdPublicacaoAtual(null); // Limpa a publicação atual quando fechar o modal
+    };
+
+    const togglePopup = (id) => {
+        if (popupAbertoId === id) {
+            setPopupAbertoId(null); // Fecha o popup se já estiver aberto
+        } else {
+            setPopupAbertoId(id); // Abre o popup para o ID correspondente
+        }
     };
 
     const nomeUsuarioLogado = sessionStorage.getItem('nome');
@@ -115,7 +191,7 @@ const FeedGeral = () => {
             <div className={Styles.feedGeral}>
                 <div className={Styles.publicarFiltro}>
                     <BotaoFazerPublicacao />
-                    <img src={Filtro} alt="Filtro" />
+                    <img src={Filtro} alt="Filtro" onClick={toggleSortPopup} />
                 </div>
                 <div className={Styles.publicacoes}>
                     {publicacoesParaExibir.length > 0 ? (
@@ -131,6 +207,8 @@ const FeedGeral = () => {
                                 quemCurtiu={publicacao.reacoes.map(reacao => reacao.usuario.nome)}
                                 comentarios={publicacao.comentarios.length}
                                 listarComentarios={listarComentarios}
+                                togglePopup={togglePopup}
+                                popupAbertoId={popupAbertoId}
                             />
                         ))
                     ) : (
@@ -139,6 +217,29 @@ const FeedGeral = () => {
                     <div ref={observerRef} />
                 </div>
             </div>
+
+            <Modal
+                isOpen={isSortPopupOpen}
+                onRequestClose={toggleSortPopup}
+                className={Styles.sortPopup}
+                overlayClassName={Styles.overlay}
+            >
+                <div className={Styles.sortOptions}>
+                    <span>Ordenação</span>
+                    <p
+                        onClick={() => handleSortChange('asc')}
+                        className={sortDirection === 'asc' ? Styles.sortSelected : ''}
+                    >
+                        Mais antigas
+                    </p>
+                    <p
+                        onClick={() => handleSortChange('desc')}
+                        className={sortDirection === 'desc' ? Styles.sortSelected : ''}
+                    >
+                        Mais recentes
+                    </p>
+                </div>
+            </Modal>
 
             <Modal
                 isOpen={showComentarios}
@@ -160,6 +261,7 @@ const FeedGeral = () => {
                                 idReacao={comentario.reacoes.find(reacao => reacao.usuario.nome === nomeUsuarioLogado)?.id}
                                 curtidas={comentario.reacoes.length}
                                 nomePublicacao={comentario.publicacao.usuario.nome}
+                                idPublicacao={comentario.publicacao.id}
                             />
                         ))
                     ) : (
@@ -167,10 +269,21 @@ const FeedGeral = () => {
                     )}
                 </div>
                 <div className={Styles.postarComentario}>
-                    <textarea className={Styles.inputComentario} placeholder='Digite aqui...' />
-                    <img className={Styles.botaoComentar} src={Enviar} alt="Enviar" />
+                    <textarea
+                        className={Styles.inputComentario}
+                        placeholder='Digite aqui...'
+                        value={textoComentario} // Conecta o valor ao estado
+                        onChange={handleInputComentario} // Atualiza o estado quando o valor muda
+                    />
+                    <img
+                        className={Styles.botaoComentar}
+                        src={Enviar}
+                        alt="Enviar"
+                        onClick={enviarComentario} // Função que envia o comentário
+                    />
                 </div>
             </Modal>
+            {/* <ToastContainer /> */}
         </>
     );
 }

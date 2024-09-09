@@ -1,13 +1,10 @@
 package co.solvers.apilearnlink.domain.publicacao.repository;
 
 import co.solvers.apilearnlink.domain.publicacao.Publicacao;
-import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoListagemResponseDto;
 import co.solvers.apilearnlink.service.publicacao.dto.QuantidadePublicacaoDiaListagemDto;
 import co.solvers.apilearnlink.service.publicacao.dto.QuantidadePublicacaoMesCanalListagemDto;
-import co.solvers.apilearnlink.service.usuario.dto.UsuarioAceitacaoListagemDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -23,7 +20,7 @@ public interface PublicacaoRepository extends JpaRepository<Publicacao, Integer>
 
     List<Publicacao> findAllByOrderByDataHora();
 
-    Page<Publicacao> findAllByOrderByDataHoraDesc(Pageable pageable);
+    Page<Publicacao> findAll(Pageable pageable);
 
     @Query("SELECT p FROM Publicacao p WHERE p.canal.id = :canalId")
     Page<Publicacao> findByCanalId(@Param("canalId") Long canalId, Pageable pageable);
@@ -33,13 +30,21 @@ public interface PublicacaoRepository extends JpaRepository<Publicacao, Integer>
     @Query("SELECT p FROM Publicacao p WHERE p.conteudo LIKE %:palavrachave% ORDER BY p.dataHora DESC")
     List<Publicacao> findByConteudoLikePalavrachaveOrderByDataHoraDesc(@Param("palavrachave") String palavrachave);
 
+//    @Query("SELECT new co.solvers.apilearnlink.service.publicacao.dto.QuantidadePublicacaoDiaListagemDto(" +
+//            "DATE(p.dataHora) as data_publicacao" +
+//            ", COUNT(p))" +
+//            " FROM Publicacao p WHERE YEAR(p.dataHora) = :ano AND MONTH(p.dataHora) = :mes " +
+//            "GROUP BY DATE(p.dataHora) " +
+//            "ORDER BY data_publicacao")
+//    List<QuantidadePublicacaoDiaListagemDto> buscaQuantidadeDePublicacaoPorDia(@Param("mes") int mes, @Param("ano") int ano);
+
     @Query("SELECT new co.solvers.apilearnlink.service.publicacao.dto.QuantidadePublicacaoDiaListagemDto(" +
-            "DATE(p.dataHora) as data_publicacao" +
-            ", COUNT(p))" +
-            " FROM Publicacao p WHERE YEAR(p.dataHora) = :ano AND MONTH(p.dataHora) = :mes " +
+            "DATE(p.dataHora) as dataPublicacao, COUNT(p)) " +
+            "FROM Publicacao p WHERE YEAR(p.dataHora) = :ano AND MONTH(p.dataHora) = :mes " +
             "GROUP BY DATE(p.dataHora) " +
-            "ORDER BY data_publicacao")
+            "ORDER BY dataPublicacao")
     List<QuantidadePublicacaoDiaListagemDto> buscaQuantidadeDePublicacaoPorDia(@Param("mes") int mes, @Param("ano") int ano);
+
 
 /*    @Query("SELECT co.solvers.apilearnlink.service.publicacao.dto.QuantidadePublicacaoMesCanalListagemDto(" +
             "c.nome" +

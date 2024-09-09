@@ -3,7 +3,7 @@ import Styles from '../publicacao/Publicacao.module.css';
 import api from '../../../api';
 import { toast, ToastContainer } from 'react-toastify';
 import Modal from 'react-modal';
-import 'react-toastify/dist/ReactToastify.css';
+// import 'react-toastify/dist/ReactToastify.css';
 import StylesModal from '../../components/botoes/botaoFazerPublicacao/BotaoFazerPublicacao.module.css'
 
 import Curtir from '../../utils/assets/Curtir.png';
@@ -81,16 +81,23 @@ function editarPublicacao(id, novoConteudo, novoCanal) {
 
 
 function denunciarPublicacao(idPublicacao, idUsuario) {
-    console.log("A logica de denunciar publicação ainda não foi implementada.");
-    // api.post(`/publicacoes/${idPublicacao}/denunciar`)
-    //     .then(response => {
-    //         console.log("Publicação denunciada com sucesso:", response.data);
-    //         toast.success("Publicação denunciada com sucesso!");
-    //     })
-    //     .catch(error => {
-    //         console.error("Ocorreu um erro ao denunciar a publicação:", error);
-    //         toast.error("Erro ao denunciar a publicação.");
-    //     });
+    const denunciaData = {
+        idUsuario: idUsuario,
+    };
+
+    api.post(`/publicacoes/${idPublicacao}/denunciar`, denunciaData)
+        .then(response => {
+            console.log("Publicação denunciada com sucesso:", response.data);
+            toast.success("Publicação denunciada com sucesso!");
+        })
+        .catch(error => {
+            if (error.response && error.response.data && error.response.data.message) {
+                toast.error(`Erro ao denunciar: ${error.response.data.message}`);
+            } else {
+                toast.error("Erro ao denunciar a publicação.");
+            }
+            // console.error("Ocorreu um erro ao denunciar a publicação:", error);
+        });
 }
 
 
@@ -125,8 +132,8 @@ function generateInitials(name) {
     return <div style={avatar}>{firstInitial + lastInitial}</div>
 }
 
-const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas, comentarios, listarComentarios }) => {
-    const [showPopup, setShowPopup] = useState(false);
+const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas, comentarios, listarComentarios, togglePopup, popupAbertoId }) => {
+    const [showPopup, setShowPopup] = useState(null);
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [curtida, setCurtida] = useState(quemCurtiu.includes(sessionStorage.getItem('nome')));
     const [numCurtidas, setCurtidas] = useState(curtidas); // Estado para o número de curtidas
@@ -138,8 +145,8 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
     const [showDenunciaModal, setShowDenunciaModal] = useState(false);
     // const [motivoDenuncia, setMotivoDenuncia] = useState("");
 
-    const togglePopup = () => {
-        setShowPopup(!showPopup);
+    const handleTogglePopup = () => {
+        togglePopup(id);
     };
 
     const confirmarDelecao = () => {
@@ -185,23 +192,38 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
     const nomeUsuarioLogado = sessionStorage.getItem('nome');
     const idUsuarioLogado = sessionStorage.getItem('userId');
 
-    // Memorize o avatar gerado com base no nome
-    const avatar = useMemo(() => generateInitials(nome), [nome]);
+    let nomeFormatado = 'Usuário Desconhecido'; // Valor padrão caso o nome não seja encontrado
 
+    if (nome) {
+        const nomes = nome.trim().split(' ');
+        const primeiroNome = nomes[0];
+        const ultimoNome = nomes[nomes.length - 1];
+        if (nomes.length === 1) {
+            nomeFormatado = primeiroNome;
+        } else {
+            nomeFormatado = `${primeiroNome} ${ultimoNome}`;
+        }
+    } else {
+        console.log('Nome de usuário não encontrado');
+    }
+
+    // Use useMemo com nomeFormatado
+    const avatar = useMemo(() => generateInitials(nomeFormatado), [nomeFormatado]);
+
+    // Memorize o avatar gerado com base no nome
     const handleChange = (e) => {
         const value = e.target.value;
         if (value.length <= maxCaracteres) {
             setTextoPublicacao(value);
         }
     };
-
     return (
         <>
             <div className={Styles['container']}>
 
                 <div className={Styles['header']}>
                     <div className={Styles['materiaBadge']}>{materia}</div>
-                    <div className={Styles['menuVertical']} onClick={togglePopup}>
+                    <div className={Styles['menuVertical']} onClick={handleTogglePopup}>
                         <img src={MenuVertical} alt="Menu" />
                     </div>
                 </div>
@@ -234,7 +256,7 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
                     </div>
                 </div>
 
-                {showPopup && (
+                {popupAbertoId === id && (
                     <div className={Styles['popup']}>
                         {nomeUsuarioLogado === nome ? (
                             <>
@@ -305,6 +327,7 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
                                 <option value="filosofia">Filosofia</option>
                                 <option value="sociologia">Sociologia</option>
                                 <option value="ingles">Inglês</option>
+                                <option value="doacoes">Doações</option>
                             </select>
                         </div>
                     </Modal>

@@ -1,6 +1,6 @@
 package co.solvers.apilearnlink.service.publicacoesNaoRespondidas.dto.mapper;
 
-import co.solvers.apilearnlink.domain.publicacoesNaoRespondidas.QtdPublicacoesNaoRespondidasView;
+import co.solvers.apilearnlink.domain.views.publicacoesNaoRespondidas.QtdPublicacoesNaoRespondidasView;
 import co.solvers.apilearnlink.service.publicacoesNaoRespondidas.dto.QtdPublicacoesNaoRespondidasDto;
 import org.springframework.stereotype.Component;
 

@@ -9,8 +9,6 @@ import Dashboard from "./desktop/pages/dashboard/Dashboard";
 import AceitarUsuarios from "./desktop/pages/aceitarUsuarios/AceitarUsuarios";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PaginaInicialDesktop from "./desktop/pages/paginaInicial/PaginaInicial";
-import MenuInicial from "./mobile/components/menuInicial/MenuInicial";
-import Header from "./mobile/components/header/Header";
 import PaginaInicial from "./mobile/pages/paginaInicial/PaginaInicial";
 import CompletarCadastro from "./mobile/pages/completarCadastro/CompletarCadastro";
 import RecuperacaoSenha from "./mobile/pages/recuperacaoSenha/RecuperacaoSenha";
@@ -24,6 +22,7 @@ import Notificacoes from "./mobile/pages/notificacoes/Notificacoes";
 import RecuperacaoSenhaDesktop from "./desktop/pages/recuperarSenhaDesktop/RecuperarSenhaDesktop";
 import VerificacaoSenhaDesktop from "./desktop/pages/verificacaoSenhaDesktop/VerificacaoSenhaDesktop";
 import RedefinicaoSenhaDesktop from "./desktop/pages/redefinicaoSenhaDesktop/RedefinicaoSenhaDesktop";
+import CadastroFuncionarios from "./desktop/pages/cadastroFuncionarios/CadastroFuncionarios";
 
 function Rotas() {
     return (
@@ -41,6 +40,7 @@ function Rotas() {
                     <Route path="/loginDesktop" element={<LoginDesktop />} />
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/denuncias" element={<Denuncias />} />
+                    <Route path="/cadastroFuncionarios" element={<CadastroFuncionarios />} />
                     <Route path="/aceitarUsuarios" element={<AceitarUsuarios />} />
                     <Route path="/perfil" element={<Perfil />} />
                     <Route path="/canais" element={<Canais />} />
