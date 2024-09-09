@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import Styles from '../comentario/Comentario.module.css';
 import api from '../../../api';
+import { toast } from 'react-toastify';
 
 import Curtir from '../../utils/assets/Curtir.png';
 import Curtido from '../../utils/assets/Curtido.png';
@@ -31,7 +32,6 @@ function formatTimeAgo(dateString) {
     }
     return 'agora mesmo';
 }
-
 
 function reagirComentario(idComentario, idReacao, tipoReacao, idUsuario, curtida, setCurtida, setCurtidas) {
     if (curtida) {
@@ -70,19 +70,25 @@ function deletarComentario(id) {
         });
 }
 
-function denunciarComentario() {
-    console.log("A logica de denunciar comentarios ainda não foi implementada.")
+function denunciarComentario(idComentario, idUsuario) {
+    const denunciaData = {
+        idUsuario: idUsuario,
+    };
 
-    // Enviar a denúncia para o backend
-    // api.post(`/comentarios/${id}/denunciar`, { motivo: motivoDenuncia, idUsuario: sessionStorage.getItem('userId') })
-    //     .then(response => {
-    //         console.log("Denúncia enviada com sucesso:", response.data);
-    //         setShowDenunciaModal(false);
-    //     })
-    //     .catch(error => {
-    //         console.error("Erro ao enviar a denúncia:", error);
-    //     });
-};
+    api.post(`/comentarios/${idComentario}/denunciar`, denunciaData)
+        .then(response => {
+            console.log("Comentário denunciado com sucesso:", response.data);
+            toast.success("Comentário denunciado com sucesso!");
+        })
+        .catch(error => {
+            if (error.response && error.response.data && error.response.data.message) {
+                toast.error(`Erro ao denunciar: ${error.response.data.message}`);
+            } else {
+                toast.error("Erro ao denunciar o comentário.");
+            }
+            // console.error("Ocorreu um erro ao denunciar o comentário:", error);
+        });
+}
 
 function generateInitials(name) {
     const nameParts = name.trim().split(' ');
@@ -121,7 +127,8 @@ const Comentario = ({ quemCurtiu, id, nome, mensagem, horario, curtidas, idReaca
     const [showPopup, setShowPopup] = useState(false);
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [showDenunciaModal, setShowDenunciaModal] = useState(false);
-    const [motivoDenuncia, setMotivoDenuncia] = useState('');
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [novoComentario, setNovoComentario] = useState(mensagem);
 
     const togglePopup = () => {
         setShowPopup(!showPopup);
@@ -133,12 +140,42 @@ const Comentario = ({ quemCurtiu, id, nome, mensagem, horario, curtidas, idReaca
     };
 
     const confirmarDenuncia = () => {
-        denunciarComentario();
+        denunciarComentario(id, idUsuario);
         setShowDenunciaModal(false);
     };
 
+    const confirmarEdicao = () => {
+        if (novoComentario.trim() === '') {
+            toast.error("O comentário não pode estar em branco.");
+            return;
+        }
+        if (novoComentario.length <= 3) {
+            toast.error("O comentário deve ter mais de 3 caracteres.");
+            return;
+        }
+        if (novoComentario.length >= 500) {
+            toast.error("O comentário deve ter menos de 500 caracteres.");
+            return;
+        }
+
+        api.patch(`/comentarios/${id}?comentarioAlterar=${encodeURIComponent(novoComentario)}`)
+            .then(response => {
+                console.log("Comentário editado com sucesso:", response.data);
+                toast.success("Comentário editado com sucesso!");
+                setShowEditModal(false);
+            })
+            .catch(error => {
+                console.error("Ocorreu um erro ao editar o comentário:", error.response ? error.response.data : error.message);
+                toast.error("Erro ao editar o comentário.");
+            });
+    };
+
+
     // Obtem o nome do usuário armazenado no sessionStorage
     const nomeUsuarioLogado = sessionStorage.getItem('nome');
+
+    // Obtem o id do usuário armazenado no sessionStorage
+    const idUsuario = sessionStorage.getItem('userId');
 
     // Gere o avatar com base no nome
     const avatar = useMemo(() => generateInitials(nome), [nome]);
@@ -161,7 +198,7 @@ const Comentario = ({ quemCurtiu, id, nome, mensagem, horario, curtidas, idReaca
                                 <>
                                     {nomeUsuarioLogado === nome ? (
                                         <>
-                                            <div className={Styles['opcao']} onClick={() => { setShowPopup(false); }}>
+                                            <div className={Styles['opcao']} onClick={() => { setShowPopup(false); setShowEditModal(true); }}>
                                                 <img src={Editar} alt="Editar" />
                                                 <span>Editar</span>
                                             </div>
@@ -180,6 +217,21 @@ const Comentario = ({ quemCurtiu, id, nome, mensagem, horario, curtidas, idReaca
                                     <span>Denunciar</span>
                                 </div>
                             )}
+                        </div>
+                    )}
+
+                    {showEditModal && (
+                        <div className={Styles['modalOverlay']}>
+                            <div className={Styles['modalContent']}>
+                                <h3>Editar Comentário</h3>
+                                <textarea
+                                    value={novoComentario}
+                                    onChange={(e) => setNovoComentario(e.target.value)}
+                                />
+                                <br />
+                                <button className={Styles['confirmButton']} onClick={confirmarEdicao}>Confirmar</button>
+                                <button className={Styles['cancelButton']} onClick={() => setShowEditModal(false)}>Cancelar</button>
+                            </div>
                         </div>
                     )}
 
