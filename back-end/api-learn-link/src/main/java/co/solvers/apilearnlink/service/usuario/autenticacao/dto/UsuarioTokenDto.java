@@ -1,5 +1,6 @@
 package co.solvers.apilearnlink.service.usuario.autenticacao.dto;
 
+import co.solvers.apilearnlink.service.tipousuario.dto.TipoUsuarioListagemDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,16 @@ public class UsuarioTokenDto {
     private String token;
     private boolean conectado;
     private RegistroLoginDto dataHoraLogin;
+    private TipoUsuarioListagemDto tipoUsuario;
+
+    public TipoUsuarioListagemDto getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public void setTipoUsuario(TipoUsuarioListagemDto tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
+    }
+
 
     @Data
     @AllArgsConstructor

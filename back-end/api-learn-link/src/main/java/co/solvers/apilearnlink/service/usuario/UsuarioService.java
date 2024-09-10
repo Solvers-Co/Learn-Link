@@ -84,6 +84,29 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
+    public Usuario criarAdm(Usuario usuario) {
+
+        verificaEmailExistente(usuario.getEmail());
+
+        TipoStatus tipoStatus = tipoStatusService.buscarPorId(1);
+        Classificacao classificacao = classificacaoService.buscarPorClassificacao("JUNIOR");
+        TipoUsuario tipoUsuario = tipoUsuarioService.buscarPorTipoUsuario("ADMIN");
+
+        String senhaCriptografada = passwordEncoder.encode(usuario.getSenha());
+
+        usuario.setSenha(senhaCriptografada);
+        usuario.setTipoStatus(tipoStatus);
+        usuario.setTipoUsuario(tipoUsuario);
+        usuario.setClassificacao(classificacao);
+
+        if (usuario.getEndereco() != null) {
+            Endereco endereco = enderecoService.salvar(usuario.getEndereco());
+            usuario.setEndereco(endereco);
+        }
+
+        return usuarioRepository.save(usuario);
+    }
+
     public Usuario finalizarCadastro(Long idUsuario, Long idEspecialidade, @Valid EnderecoCriacaoDto enderecoCadastrar) {
         Usuario usuarioBd = buscarPorId(idUsuario);
 

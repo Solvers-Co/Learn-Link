@@ -5,6 +5,7 @@ import co.solvers.apilearnlink.domain.registroLogin.RegistroLogin;
 import co.solvers.apilearnlink.service.classificacao.dto.mapper.ClassificacaoMapper;
 import co.solvers.apilearnlink.service.endereco.dto.mapper.EnderecoMapper;
 import co.solvers.apilearnlink.service.especialidade.dto.mapper.EspecialidadeMapper;
+import co.solvers.apilearnlink.service.tipousuario.dto.TipoUsuarioListagemDto;
 import co.solvers.apilearnlink.service.tipousuario.dto.mapper.TipoUsuarioMapper;
 import co.solvers.apilearnlink.service.usuario.autenticacao.dto.UsuarioTokenDto;
 import co.solvers.apilearnlink.service.usuario.dto.*;
@@ -121,14 +122,17 @@ public class UsuarioMapper {
         return usuario;
     }
 
-    public static UsuarioTokenDto of(Usuario usuario, String token, RegistroLogin registroLogin){
+    public static UsuarioTokenDto of(Usuario usuario, String token, RegistroLogin registroLogin) {
         UsuarioTokenDto usuarioTokenDto = new UsuarioTokenDto();
+
+        ;
 
         usuarioTokenDto.setUserId(usuario.getId());
         usuarioTokenDto.setEmail(usuario.getEmail());
         usuarioTokenDto.setNome(usuario.getNome());
         usuarioTokenDto.setToken(token);
         usuarioTokenDto.setConectado(true);
+        usuarioTokenDto.setTipoUsuario(TipoUsuarioMapper.toDto(usuario.getTipoUsuario()));
 
         UsuarioTokenDto.RegistroLoginDto registroLoginDto = new UsuarioTokenDto.RegistroLoginDto();
         registroLoginDto.setRegistroLogin(registroLogin.getRegistroLogin());

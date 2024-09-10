@@ -21,11 +21,15 @@ const Cadastro = () => {
     }
 
     const handleSave = () => {
+
+        const tipoUsuario = "COMUM";
+
         const usuarioNovo = { 
             nome,
             email,
             cpf,
-            senha
+            senha,
+            tipoUsuario
         };
 
         const errorMessages = [];
