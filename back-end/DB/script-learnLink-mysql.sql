@@ -218,3 +218,7 @@ GROUP BY
 -- WHERE c.publicacao_id =1;
 
 
+-- select * from usuario;
+-- select * from publicacao;
+-- select * from comentario;
+    

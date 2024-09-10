@@ -1,32 +1,53 @@
+import React, { useEffect, useState } from 'react';
 import Titulo from '../../dashboard/tituloDashboard/Titulo';
 import CardDenuncia from '../card/CardDenuncia';
 import styles from './TelaDenuncias.module.css';
-
-const users = [
-    { nome: 'Pedro José', conteudo: 'Essa merd# desse profº passando essa atividade', qtdDenuncias: 7, imageUrl: 'url-da-imagem' },
-    { nome: 'Antônio João', conteudo: 'Odiei a nova profª, vocês gostaram dela?', qtdDenuncias: 5, imageUrl: 'url-da-imagem' },
-    { nome: 'Virgínia Souza', conteudo: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', qtdDenuncias: 5, imageUrl: 'url-da-imagem' },
-    { nome: 'Felipe Albuquerque', conteudo: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', qtdDenuncias: 12, imageUrl: 'url-da-imagem' },
-    { nome: 'Paula Rosa Santos', conteudo: 'Lorem ipsum', qtdDenuncias: 1, imageUrl: 'url-da-imagem' },
-    { nome: 'Rosa Magalhães', conteudo: 'Lorem ipsum dolor sit amet', qtdDenuncias: 20, imageUrl: 'url-da-imagem' },
-    { nome: 'Christian Ferreira', conteudo: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', qtdDenuncias: 11, imageUrl: 'url-da-imagem' },
-    { nome: 'Marcela de Castro', conteudo: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', qtdDenuncias: 16, imageUrl: 'url-da-imagem' },
-    { nome: 'Filipa Rodrigues', conteudo: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', qtdDenuncias: 5, imageUrl: 'url-da-imagem' },
-];
+import api from '../../../../api'; // Certifique-se de que este caminho está correto
 
 const TelaDenuncias = () => {
+    const [denuncias, setDenuncias] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchDenuncias = async () => {
+            try {
+                const response = await api.get('/publicacoes/denuncias'); // Fazer a requisição à API
+                setDenuncias(response.data);
+            } catch (err) {
+                setError('Não foi possível carregar as denúncias');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchDenuncias();
+    }, []);
+
+    if (loading) return <div>Carregando...</div>;
+    if (error) return <div>{error}</div>;
+
     return (
         <div className={styles.telaDenuncias}>
             <div className={styles.cabecalho}>
                 <Titulo>Denúncias</Titulo>
             </div>
             <div className={styles.cardsDenuncias}>
-            {users.map((user, index) => (
-                    <CardDenuncia key={index} user={user} />
-            ))}
+                {denuncias.length === 0 ? (
+                    <div>Não há denúncias para exibir.</div>
+                ) : (
+                    denuncias.map((denuncia, index) => (
+                        <CardDenuncia
+                            key={index}
+                            idPublicacao={denuncia.publicacao.id}
+                            publicacao={denuncia.publicacao}
+                            quantidadeDenuncias={denuncia.quantidadeDenuncias}
+                        />
+                    ))
+                )}
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default TelaDenuncias;
