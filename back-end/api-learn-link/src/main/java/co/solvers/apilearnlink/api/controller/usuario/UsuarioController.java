@@ -2,6 +2,7 @@ package co.solvers.apilearnlink.api.controller.usuario;
 
 import co.solvers.apilearnlink.domain.usuario.Usuario;
 import co.solvers.apilearnlink.service.reacao.ReacaoService;
+import co.solvers.apilearnlink.service.reacoesEmComentariosDoUsuario.dto.QtdReacoesComentariosUsuarioDto;
 import co.solvers.apilearnlink.service.usuario.UsuarioService;
 import co.solvers.apilearnlink.service.usuario.autenticacao.dto.UsuarioLoginDto;
 import co.solvers.apilearnlink.service.usuario.autenticacao.dto.UsuarioTokenDto;
@@ -19,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -98,6 +100,19 @@ public class UsuarioController {
 
         usuarioService.deletar(id);
         return ResponseEntity.status(204).build();
+    }
+
+    @ApiResponse(responseCode = "200", description = "Usuário localizado com sucesso")
+    @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
+    @Operation(summary = "Buscar usuário pelo email", description = "Método que busca um usuário pelo email", tags = {"Usuários"})
+    @GetMapping("/buscarEmail/{email}")
+    public ResponseEntity<UsuarioListagemRecuperarSenhaDto> buscarPorEmail(
+            @PathVariable
+            @Parameter(name = "email", description = "Email usuario", example = "aluninho@gmail.com") String email) {
+
+        Usuario usuarioEncontrado = usuarioService.buscarPorEmail(email);
+        UsuarioListagemRecuperarSenhaDto dto = UsuarioMapper.toUsuarioListagemRecuperarSenhaDto(usuarioEncontrado);
+        return ResponseEntity.status(200).body(dto);
     }
 
     @ApiResponse(responseCode = "200", description = "Senha do usuário atualizada com sucesso")
@@ -226,6 +241,26 @@ public class UsuarioController {
         }
 
         return ResponseEntity.ok(usuarios);
+    }
+
+    @PatchMapping("/classificar-usuario/{id}")
+    public ResponseEntity<UsuarioListagemDto> classificarUsuario(@PathVariable Long id){
+        Usuario usuario = usuarioService.classificarUsuario(id);
+
+        UsuarioListagemDto dto = UsuarioMapper.toUsuarioListagemResponseDto(usuario);
+
+        return ResponseEntity.ok(dto);
+    @ApiResponse(responseCode = "200", description = "Usuário encontrado")
+    @ApiResponse(responseCode = "404", description = "Nenhum usuário encontrado")
+    @Operation(summary = "Buscar usuário por nome - HashTable", description = "Método que busca usuário pelo seu nome", tags = {"Usuários"})
+    @GetMapping("/buscar-usuario-por-nome-hashtable")
+    public ResponseEntity<UsuarioListagemDto> buscarUsuarioPorNomeHashTable(
+            @RequestParam(defaultValue = "João") String nome) {
+
+        Usuario usuario = usuarioService.buscarPorNomeHashTable(nome);
+        UsuarioListagemDto usuarioDto = UsuarioMapper.toUsuarioListagemResponseDto(usuario);
+
+        return ResponseEntity.ok(usuarioDto);
     }
 
     //    @GetMapping("/buscar-todos-os-usuarios")

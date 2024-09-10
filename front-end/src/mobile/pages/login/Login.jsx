@@ -57,7 +57,7 @@ const Login = () => {
                 }
             }
         } catch (error) {
-            toast.error("Ocorreu um erro ao salvar os dados, por favor, tente novamente.");
+            toast.error("Email ou senha inválidos");
         }
     };
 
@@ -77,6 +77,10 @@ const Login = () => {
         }
     }
 
+    function irParaEsqueciSenha() {
+        navigate("/recuperarSenha")
+    }
+
     return (
         <>
             <Header />
@@ -87,7 +91,7 @@ const Login = () => {
                     <InputFormulario placeHolder="Email" value={email} onChange={(e) => handleInputChange(e, setEmail)} />
                     <InputFormulario placeHolder="Senha" value={senha} tipo="password" onChange={(e) => handleInputChange(e, setSenha)} />
                 </div>
-                <a href=""><h2>Esqueceu sua senha?</h2></a>
+                <a href='' onClick={() => irParaEsqueciSenha()}><h2>Esqueceu sua senha?</h2></a>
                 <div className={styles['divBotao']}>
                     <Botao funcao={handleClick} textoBotao="Login" />
                 </div>
@@ -97,8 +101,8 @@ const Login = () => {
             {showConfirmation && (
                 <div className={styles['modalOverlay']}>
                     <div className={styles['modalContent']}>
-                        <h3>Que pena!</h3>
-                        <p>Você ainda não possui acesso a plataforma, entre em contato com o instituto.</p>
+                        <h3>Falta pouco!</h3>
+                        <p>Para acessar a plataforma, é necessário que um administrador aprove seu cadastro. Em breve, você receberá um e-mail confirmando a aprovação.</p>
                         <button className={styles['confirmButton']} onClick={() => {setShowConfirmation(false); window.location.reload();}}>Ok</button>
                     </div>
                 </div>

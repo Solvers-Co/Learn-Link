@@ -21,6 +21,12 @@
     width: 24px;
 }
 
+.sortSelected {
+    background-color: #e0e0e0; /* Cor de fundo para destacar a opção selecionada */
+    font-weight: bold;
+}
+
+
 .publicacoes {
     display: flex;
     flex-direction: column;

@@ -1,10 +1,8 @@
 import { useNavigate } from 'react-router-dom';  // Adicione esta linha
 import { useMemo, useState } from 'react'; // Adicione esta linha
 import styles from './MenuLateral.module.css';
-import stylesBotao from '../botoes/botaoLoginCadastro/Botao.module.css';
 import IconePerfil from '../../utils/assets/perfil-menu-lateral.png';
 import IconeFeedGeral from '../../utils/assets/feed-geral-menu-lateral.png';
-import IconeDoacoes from '../../utils/assets/doacoes-menu-lateral.png';
 import IconeCanais from '../../utils/assets/canais-menu-lateral.png';
 import IconeNotificacoes from '../../utils/assets/notificacoes-menu-lateral.png';
 import IconeRanking from '../../utils/assets/ranking-menu-lateral.png';
@@ -12,7 +10,6 @@ import IconeSair from '../../utils/assets/sair-menu-lateral.png';
 import OpcaoNavegacao from '../opcaoNavegacaoMenuInicial/OpcaoNavegacao';
 import IconeX from '../../utils/assets/icone_x.svg';
 import Linha from '../linha/Linha';
-import Usuario from '../../utils/assets/Usuario.png'
 
 function generateInitials(name) {
     if (!name) {

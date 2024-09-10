@@ -3,7 +3,7 @@ import Styles from '../publicacao/Publicacao.module.css';
 import api from '../../../api';
 import { toast, ToastContainer } from 'react-toastify';
 import Modal from 'react-modal';
-import 'react-toastify/dist/ReactToastify.css';
+// import 'react-toastify/dist/ReactToastify.css';
 import StylesModal from '../../components/botoes/botaoFazerPublicacao/BotaoFazerPublicacao.module.css'
 
 import Curtir from '../../utils/assets/Curtir.png';
@@ -81,16 +81,23 @@ function editarPublicacao(id, novoConteudo, novoCanal) {
 
 
 function denunciarPublicacao(idPublicacao, idUsuario) {
-    console.log("A logica de denunciar publicação ainda não foi implementada.");
-    // api.post(`/publicacoes/${idPublicacao}/denunciar`)
-    //     .then(response => {
-    //         console.log("Publicação denunciada com sucesso:", response.data);
-    //         toast.success("Publicação denunciada com sucesso!");
-    //     })
-    //     .catch(error => {
-    //         console.error("Ocorreu um erro ao denunciar a publicação:", error);
-    //         toast.error("Erro ao denunciar a publicação.");
-    //     });
+    const denunciaData = {
+        idUsuario: idUsuario,
+    };
+
+    api.post(`/publicacoes/${idPublicacao}/denunciar`, denunciaData)
+        .then(response => {
+            console.log("Publicação denunciada com sucesso:", response.data);
+            toast.success("Publicação denunciada com sucesso!");
+        })
+        .catch(error => {
+            if (error.response && error.response.data && error.response.data.message) {
+                toast.error(`Erro ao denunciar: ${error.response.data.message}`);
+            } else {
+                toast.error("Erro ao denunciar a publicação.");
+            }
+            // console.error("Ocorreu um erro ao denunciar a publicação:", error);
+        });
 }
 
 
@@ -188,7 +195,7 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
     let nomeFormatado = 'Usuário Desconhecido'; // Valor padrão caso o nome não seja encontrado
 
     if (nome) {
-        const nomes = nome.trim().split(' '); 
+        const nomes = nome.trim().split(' ');
         const primeiroNome = nomes[0];
         const ultimoNome = nomes[nomes.length - 1];
         if (nomes.length === 1) {

@@ -6,6 +6,7 @@ import co.solvers.apilearnlink.domain.views.comentariosDenunciados.ComentariosDe
 import co.solvers.apilearnlink.domain.views.publicacoesDenunciadas.PublicacoesDenunciadas;
 import co.solvers.apilearnlink.service.comentario.ComentarioService;
 import co.solvers.apilearnlink.service.comentario.dto.ComentarioListagemDto;
+import co.solvers.apilearnlink.service.comentario.dto.QuantidadeComentarioDiaListagemDto;
 import co.solvers.apilearnlink.service.comentario.dto.mapper.ComentarioMapper;
 import co.solvers.apilearnlink.service.comentariosDenunciados.dto.ComentariosDenunciadosDto;
 import co.solvers.apilearnlink.service.comentariosDenunciados.dto.mapper.ComentariosDenunciadosMapper;
@@ -124,6 +125,23 @@ public class ComentarioController {
 //        return ResponseEntity.ok(quantidadeComentarios);
 //    }
 
+    @ApiResponse(responseCode = "200", description = "Comentários encontrados")
+    @ApiResponse(responseCode = "404", description = "Comentários não encontrados")
+    @Operation(summary = "Listar quantidade de comentários por dia e mês", description = "Método que lista a quantidade de comentários por dia em um determinado mês e ano", tags = {"Comentários"})
+    @GetMapping("/quantidade-comentarios-por-dia-mes")
+    public ResponseEntity<List<QuantidadeComentarioDiaListagemDto>> quantidadeDeComentariosPorDia(
+            @RequestParam @Parameter(name = "mes", description = "Mês", example = "5") int mes,
+            @RequestParam @Parameter(name = "ano", description = "Ano", example = "2024") int ano) {
+
+        List<QuantidadeComentarioDiaListagemDto> quantidadeComentarios = comentarioService.buscaQuantidadeDeComentariosPorDia(mes, ano);
+
+        if (quantidadeComentarios.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(quantidadeComentarios);
+    }
+
     //endpoint que lista todos os comentarios de uma publicacao pelo id da publicação
     @ApiResponse(responseCode = "200", description = "Comentários encontrados")
     @ApiResponse(responseCode = "404", description = "Comentários não encontrado")
@@ -173,7 +191,7 @@ public class ComentarioController {
 
     @ApiResponse(responseCode = "200", description = "Comentarios Denunciados")
     @ApiResponse(responseCode = "404", description = "Não existem comentarios denunciados")
-    @Operation(summary = "Listar comentarios denunciados", description = "Método que lista comentarios denunciados", tags = {"Publicações"})
+    @Operation(summary = "Listar comentarios denunciados", description = "Método que lista comentarios denunciados", tags = {"Comentários"})
     @GetMapping("/denuncias")
     public ResponseEntity<List<ComentariosDenunciadosDto>> listarPublicacoesDenunciadas() {
 
