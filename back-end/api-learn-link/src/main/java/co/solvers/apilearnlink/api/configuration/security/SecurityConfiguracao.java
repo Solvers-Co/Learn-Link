@@ -94,6 +94,8 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/comentarios/denuncias"),
             new AntPathRequestMatcher("/registros/gerar-log/{id}"),
             new AntPathRequestMatcher("/qtd-materias-nao-respondidas"),
+            new AntPathRequestMatcher("/qtd-reacoes-comentario-usuarios/buscar-nivel-de-classificacao-do-usuario/{id}"),
+            new AntPathRequestMatcher("/usuarios/classificar-usuario/{id}"),
             new AntPathRequestMatcher("/usuarios/buscarEmail/{email}")
     };
 

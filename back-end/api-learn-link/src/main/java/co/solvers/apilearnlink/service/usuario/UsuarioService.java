@@ -11,6 +11,7 @@ import co.solvers.apilearnlink.domain.tipousuario.TipoUsuario;
 import co.solvers.apilearnlink.domain.usuario.HashTableUsuario;
 import co.solvers.apilearnlink.domain.usuario.Usuario;
 import co.solvers.apilearnlink.domain.usuario.repository.UsuarioRepository;
+import co.solvers.apilearnlink.domain.views.ReacoesEmComentariosDoUsuario.QtdReacoesComentariosUsuarioView;
 import co.solvers.apilearnlink.exception.ConflitoException;
 import co.solvers.apilearnlink.exception.NaoEncontradoException;
 import co.solvers.apilearnlink.fila.FilaObj;
@@ -20,14 +21,13 @@ import co.solvers.apilearnlink.service.endereco.EnderecoService;
 import co.solvers.apilearnlink.service.endereco.dto.EnderecoCriacaoDto;
 import co.solvers.apilearnlink.service.endereco.dto.mapper.EnderecoMapper;
 import co.solvers.apilearnlink.service.especialidade.EspecialidadeService;
-import co.solvers.apilearnlink.service.especialidade.dto.mapper.EspecialidadeMapper;
+import co.solvers.apilearnlink.service.reacoesEmComentariosDoUsuario.QtdReacoesComentariosUsuarioService;
 import co.solvers.apilearnlink.service.registrologin.RegistroLoginService;
 import co.solvers.apilearnlink.service.tipoStatus.TipoStatusService;
 import co.solvers.apilearnlink.service.tipousuario.TipoUsuarioService;
 import co.solvers.apilearnlink.service.usuario.autenticacao.dto.UsuarioLoginDto;
 import co.solvers.apilearnlink.service.usuario.autenticacao.dto.UsuarioTokenDto;
 import co.solvers.apilearnlink.service.usuario.dto.UsuarioAceitacaoListagemDto;
-import co.solvers.apilearnlink.service.usuario.dto.UsuarioFinalizarCadastroDto;
 import co.solvers.apilearnlink.service.usuario.dto.UsuarioListagemRankingDto;
 import co.solvers.apilearnlink.service.usuario.dto.mapper.UsuarioMapper;
 import jakarta.validation.Valid;
@@ -60,6 +60,7 @@ public class UsuarioService {
     private final TipoUsuarioService tipoUsuarioService;
     private final TipoStatusService tipoStatusService;
     private final EspecialidadeService especialidadeService;
+    private final QtdReacoesComentariosUsuarioService qtdReacoesComentariosUsuarioService;
 
     public Usuario criar(Usuario usuario) {
 
@@ -300,6 +301,27 @@ public class UsuarioService {
 
     public Page<UsuarioAceitacaoListagemDto> listagemDeUsuariosNegadosPaginado(Pageable pageable) {
         return usuarioRepository.findAllUsuariosNegadosPaginado(pageable);
+    }
+    public Usuario classificarUsuario(Long id) {
+        Optional<QtdReacoesComentariosUsuarioView> reacoes = qtdReacoesComentariosUsuarioService.listagemQtdReacoesComentarios(id);
+        Optional<Usuario> usuarioEncontrado = usuarioRepository.findById(id);
+
+        int qtdPontosUsuario = reacoes.get().getReacoes() * reacoes.get().getPontuacao();
+        if (qtdPontosUsuario >= 100){
+            Classificacao classificacao = classificacaoService.buscarPorClassificacao("ESPECIALISTA");
+            usuarioEncontrado.get().setClassificacao(classificacao);
+        }else if (qtdPontosUsuario >= 60){
+            Classificacao classificacao = classificacaoService.buscarPorClassificacao("SENIOR");
+            usuarioEncontrado.get().setClassificacao(classificacao);
+        }else if (qtdPontosUsuario >= 30){
+            Classificacao classificacao = classificacaoService.buscarPorClassificacao("PLENO");
+            usuarioEncontrado.get().setClassificacao(classificacao);
+        }else {
+            Classificacao classificacao = classificacaoService.buscarPorClassificacao("JUNIOR");
+            usuarioEncontrado.get().setClassificacao(classificacao);
+        }
+
+        return usuarioRepository.save(usuarioEncontrado.get());
     }
 
 //    public List<UsuarioAceitacaoListagemDto> listagemDeUsuariosAtivos(){
