@@ -25,23 +25,23 @@ const Login = () => {
         };
 
         api.post(`/usuarios/login`, usuario).then(response => {
-            const sessionData = response.data.token;
-            const sessionUserId = response.data.userId;
-            const sessionUserName = response.data.nome;
-            const sessionUserTipo = response.data.tipo_usuario_id;
-            const sessionUserEmail = response.data.email;
+            if (response.data.tipoUsuario.tipoUsuario === "ADMIN") {
+                const sessionData = response.data.token;
+                const sessionUserId = response.data.userId;
+                const sessionUserName = response.data.nome;
+                const sessionUserTipo = response.data.tipoUsuario.tipoUsuario;
+                const sessionUserEmail = response.data.email;
 
-            sessionStorage.setItem('token', sessionData)
-            sessionStorage.setItem('userId', sessionUserId)
-            sessionStorage.setItem('nome', sessionUserName)
-            sessionStorage.setItem('tipo', sessionUserTipo)
-            sessionStorage.setItem('email', sessionUserEmail)
-
-            if (sessionUserTipo === 2) {
-                toast.success("Login Efetuado com sucesso!"); 
-                navigate("/dashboard"); 
+                sessionStorage.setItem('token', sessionData)
+                sessionStorage.setItem('userId', sessionUserId)
+                sessionStorage.setItem('nome', sessionUserName)
+                sessionStorage.setItem('tipo', sessionUserTipo)
+                sessionStorage.setItem('email', sessionUserEmail)
+                toast.success("Login Efetuado com sucesso!");
+                navigate("/dashboard");
             } else {
-                toast.warning("Você não é um administrador."); 
+                console.log(response.data);
+                toast.warning("Você não é um administrador.");
             }
         }).catch(() => {
             const errorMessages = [];
@@ -50,7 +50,7 @@ const Login = () => {
                 errorMessages.push("Email não preenchido");
             } else if (!email.includes("@")) {
                 errorMessages.push("E-mail ou senha incorretos");
-            } 
+            }
 
             // Verificações da senha
             if (!senha) {

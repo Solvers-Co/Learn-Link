@@ -152,6 +152,7 @@ public class UsuarioService {
         RegistroLogin registroLogin = registroLoginService.gerarLog(usuarioAutenticado.getId());
 
         final String token = gerenciadorTokenJwt.generateToken(authentication);
+
         return UsuarioMapper.of(usuarioAutenticado, token, registroLogin);
     }
 
