@@ -36,6 +36,7 @@ INSERT INTO endereco (bairro, cidade, estado, cep) VALUES
 
 
 INSERT INTO usuario (nome, cpf, email, senha, tipo_status_id, especialidade_id, classificacao_id, tipo_usuario_id) VALUES
+('Instituto Mafalda', '81761405896', 'adm@adm.com', '$2a$10$7VqM6PjHCNI9oMTygeB16OyIgiTLeJGmwu9ihTwp02/Ex91VSkJfi', 2, null, null, 2),
 ('Lucas Pereira', '78945612309', 'lucas.pereira@example.com', 'lucas2024', 2, 1, 3, 1),
 ('Mariana Silva', '85296374102', 'mariana.silva@example.com', 'mari2024', 1, 2, 2, 2),
 ('João Fernandes', '95175385246', 'joao.fernandes@example.com', 'joao2024', 2, 3, 1, 1),
