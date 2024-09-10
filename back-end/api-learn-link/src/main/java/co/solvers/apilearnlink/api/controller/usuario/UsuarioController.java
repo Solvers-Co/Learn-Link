@@ -228,6 +228,19 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarios);
     }
 
+    @ApiResponse(responseCode = "200", description = "Usuário encontrado")
+    @ApiResponse(responseCode = "404", description = "Nenhum usuário encontrado")
+    @Operation(summary = "Buscar usuário por nome - HashTable", description = "Método que busca usuário pelo seu nome", tags = {"Usuários"})
+    @GetMapping("/buscar-usuario-por-nome-hashtable")
+    public ResponseEntity<UsuarioListagemDto> buscarUsuarioPorNomeHashTable(
+            @RequestParam(defaultValue = "João") String nome) {
+
+        Usuario usuario = usuarioService.buscarPorNomeHashTable(nome);
+        UsuarioListagemDto usuarioDto = UsuarioMapper.toUsuarioListagemResponseDto(usuario);
+
+        return ResponseEntity.ok(usuarioDto);
+    }
+
     //    @GetMapping("/buscar-todos-os-usuarios")
 //    public ResponseEntity<List<UsuarioAceitacaoListagemDto>> listagemDeUsuarios() {
 //
