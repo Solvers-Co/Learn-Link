@@ -5,6 +5,7 @@ import co.solvers.apilearnlink.domain.views.ReacoesEmComentariosDoUsuario.reposi
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -14,5 +15,9 @@ public class QtdReacoesComentariosUsuarioService {
 
     public Optional<QtdReacoesComentariosUsuarioView> listagemQtdReacoesComentarios(Long id){
         return qtdReacoesComentariosUsuarioViewRepository.findByUsuarioId(id);
+    }
+
+    public List<QtdReacoesComentariosUsuarioView> qtdContribuicoesRanking(){
+        return qtdReacoesComentariosUsuarioViewRepository.findAll();
     }
 }

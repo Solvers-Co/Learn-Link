@@ -15,7 +15,6 @@ import co.solvers.apilearnlink.domain.views.ReacoesEmComentariosDoUsuario.QtdRea
 import co.solvers.apilearnlink.exception.ConflitoException;
 import co.solvers.apilearnlink.exception.NaoEncontradoException;
 import co.solvers.apilearnlink.fila.FilaObj;
-import co.solvers.apilearnlink.hashTable.HashTable;
 import co.solvers.apilearnlink.service.classificacao.ClassificacaoService;
 import co.solvers.apilearnlink.service.endereco.EnderecoService;
 import co.solvers.apilearnlink.service.endereco.dto.EnderecoCriacaoDto;
