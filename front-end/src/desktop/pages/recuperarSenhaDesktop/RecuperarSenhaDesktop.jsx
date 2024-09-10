@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import api from "../../../api";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
-import styles from "./RecuperacaoSenha.module.css";
-import InputFormulario from "../../components/inputs/inputFormularios/InputFormulario";
-import Botao from "../../components/botoes/botaoLoginCadastro/Botao";
+import styles from "./RecuperarSenhaDesktop.module.css";
+import Card from "../../components/cards/cardFormularios/CardFormulario";
+import Input from "../../components/inputs/inputFormularios/InputFormulario";
+import Botao from "../../components/botoes/Botao";
 import emailjs from '@emailjs/browser';
-import Header from "../../components/header/Header";
 
-const RecuperacaoSenha = () => {
+const RecuperarSenhaDesktop = () => {
     const navigate = useNavigate();
 
     const [email, setEmail] = useState("");
@@ -27,7 +28,6 @@ const RecuperacaoSenha = () => {
         return codigo;
     }
 
-
     const handleSave = () => {
         api.get(`/usuarios/buscarEmail/${email}`)
             .then(response => {
@@ -43,7 +43,7 @@ const RecuperacaoSenha = () => {
                         .then((emailResponse) => {
                             console.log("Email enviado:", emailResponse.status, emailResponse.text);
                             toast.success("Email enviado!");
-                            navigate("/verificarSenha", { state: { codigoGerado: codigo, idUsuario : response.data.id} });
+                            navigate("/verificarSenhaDesktop", { state: { codigoGerado: codigo, idUsuario : response.data.id} });
                         })
                         .catch((emailError) => {
                             console.log("Erro ao enviar o email:", emailError.text);
@@ -65,20 +65,20 @@ const RecuperacaoSenha = () => {
             });
     };
 
-
     return (
-        <>
-            <Header />
-            <div className={styles['container']}>
-                <h1 className={styles['cadastroMobileTitulo']}>Recuperação de Senha</h1>
-                <h3>Informe seu e-mail</h3>
-                <div className={styles['divInputs']}>
-                    <InputFormulario placeHolder="Email" value={email} onChange={(e) => handleInputChange(e, setEmail)} />
-                    <Botao funcao={handleSave} tipo="button" textoBotao="Enviar" />
+        <div className={styles['container']}>
+            <Card altura="45vh">
+                <a href="/homeDesktop" className={styles['imagemClicavel']}><div className={styles['imageContainer']}></div></a>
+                <h1 className={styles['loginDesktopTitulo']}>Recuperação de Senha</h1>
+                <h3 className={styles['tituloInput']}>E-mail</h3>
+                <Input value={email} onChange={(e) => handleInputChange(e, setEmail)} />
+                <div className={styles['divBotao']}>
+                    <Botao funcao={handleSave} textoBotao="Enviar" />
                 </div>
-            </div>
-        </>
+            </Card>
+            <ToastContainer />
+        </div >
     )
-};
+}
 
-export default RecuperacaoSenha;
+export default RecuperarSenhaDesktop;

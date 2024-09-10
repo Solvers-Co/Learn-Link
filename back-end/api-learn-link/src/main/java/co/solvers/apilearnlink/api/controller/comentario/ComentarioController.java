@@ -191,7 +191,7 @@ public class ComentarioController {
 
     @ApiResponse(responseCode = "200", description = "Comentarios Denunciados")
     @ApiResponse(responseCode = "404", description = "Não existem comentarios denunciados")
-    @Operation(summary = "Listar comentarios denunciados", description = "Método que lista comentarios denunciados", tags = {"Publicações"})
+    @Operation(summary = "Listar comentarios denunciados", description = "Método que lista comentarios denunciados", tags = {"Comentários"})
     @GetMapping("/denuncias")
     public ResponseEntity<List<ComentariosDenunciadosDto>> listarPublicacoesDenunciadas() {
 
