@@ -64,6 +64,18 @@ public class UsuarioController {
     }
 
     @ApiResponse(responseCode = "201", description = "Usuário criado com sucesso")
+    @ApiResponse(responseCode = "409", description = "E-mail do usuario já foi cadastrado")
+    @Operation(summary = "Criar um usuário ADM", description = "Método que cria um usuário", tags = {"Usuários"})
+    @PostMapping("/adm")
+    public ResponseEntity<UsuarioListagemDto> criarUsuarioAdm(
+            @RequestBody @Valid UsuarioCriacaoRequestDto dto) {
+
+        Usuario usuarioCadastrado = usuarioService.criarAdm(UsuarioMapper.toEntity(dto));
+        UsuarioListagemDto listagemDto = UsuarioMapper.toUsuarioListagemResponseDto(usuarioCadastrado);
+        return ResponseEntity.status(201).body(listagemDto);
+    }
+
+    @ApiResponse(responseCode = "201", description = "Usuário criado com sucesso")
     @Operation(summary = "Finalizar cadastro usuário", description = "Método que finaliza cadastro do usuário após aprovação", tags = {"Usuários"})
     @PatchMapping("/finalizar-cadastro")
     public ResponseEntity<UsuarioListagemDto> finalizarCadastro(
