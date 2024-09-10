@@ -57,7 +57,7 @@ const Login = () => {
                 }
             }
         } catch (error) {
-            toast.error("Ocorreu um erro ao salvar os dados, por favor, tente novamente.");
+            toast.error("Email ou senha inválidos");
         }
     };
 
@@ -77,6 +77,10 @@ const Login = () => {
         }
     }
 
+    function irParaEsqueciSenha() {
+        navigate("/recuperarSenha")
+    }
+
     return (
         <>
             <Header />
@@ -87,7 +91,7 @@ const Login = () => {
                     <InputFormulario placeHolder="Email" value={email} onChange={(e) => handleInputChange(e, setEmail)} />
                     <InputFormulario placeHolder="Senha" value={senha} tipo="password" onChange={(e) => handleInputChange(e, setSenha)} />
                 </div>
-                <a href=""><h2>Esqueceu sua senha?</h2></a>
+                <a href='' onClick={() => irParaEsqueciSenha()}><h2>Esqueceu sua senha?</h2></a>
                 <div className={styles['divBotao']}>
                     <Botao funcao={handleClick} textoBotao="Login" />
                 </div>

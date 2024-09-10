@@ -95,7 +95,10 @@ const Login = () => {
                 <div className={styles['divBotao']}>
                     <Botao funcao={handleClick} textoBotao="Login" />
                 </div>
-                <h3 className={styles['rodape']}>Não possui uma conta? <a href="cadastroDesktop" className={styles['direcionaCadastro']}>Cadastre-se</a></h3>
+                <div className={styles['rodapeContainer']}>
+                    <h3 className={styles['rodape']}>Não possui uma conta? <a href="cadastroDesktop" className={styles['direcionaCadastro']}>Cadastre-se</a></h3>
+                    <h3 className={styles['rodape']}><a href="recuperarSenhaDesktop" className={styles['direcionaRecuperarSenha']}>Esqueceu a senha?</a></h3>
+                </div>
             </Card>
             {/* <ToastContainer /> */}
         </div >

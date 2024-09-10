@@ -7,11 +7,8 @@ import co.solvers.apilearnlink.service.endereco.dto.mapper.EnderecoMapper;
 import co.solvers.apilearnlink.service.especialidade.dto.mapper.EspecialidadeMapper;
 import co.solvers.apilearnlink.service.tipousuario.dto.mapper.TipoUsuarioMapper;
 import co.solvers.apilearnlink.service.usuario.autenticacao.dto.UsuarioTokenDto;
-import co.solvers.apilearnlink.service.usuario.dto.UsuarioCriacaoRequestDto;
-import co.solvers.apilearnlink.service.usuario.dto.UsuarioFinalizarCadastroDto;
-import co.solvers.apilearnlink.service.usuario.dto.UsuarioListagemDto;
+import co.solvers.apilearnlink.service.usuario.dto.*;
 import co.solvers.apilearnlink.domain.usuario.Usuario;
-import co.solvers.apilearnlink.service.usuario.dto.UsuarioListagemSimplesDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +53,18 @@ public class UsuarioMapper {
 
         return dto;
     }
+
+    public static UsuarioListagemRecuperarSenhaDto toUsuarioListagemRecuperarSenhaDto(Usuario entity){
+        if (entity == null) return null;
+
+        UsuarioListagemRecuperarSenhaDto dto = new UsuarioListagemRecuperarSenhaDto();
+        dto.setId(entity.getId());
+        dto.setEmail(entity.getEmail());
+        dto.setNome(entity.getNome());
+
+        return dto;
+    }
+
     public static List<UsuarioListagemSimplesDto> toUsuarioListagemSimplesDto(List<Usuario> entities){
         if (entities == null) return null;
 
