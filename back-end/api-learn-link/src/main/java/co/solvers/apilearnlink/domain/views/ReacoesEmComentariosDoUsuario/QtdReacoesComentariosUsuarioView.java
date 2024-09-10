@@ -15,4 +15,5 @@ public class QtdReacoesComentariosUsuarioView {
     @Id
     private Integer reacoes;
     private Integer usuarioId;
+    private Integer pontuacao;
 }

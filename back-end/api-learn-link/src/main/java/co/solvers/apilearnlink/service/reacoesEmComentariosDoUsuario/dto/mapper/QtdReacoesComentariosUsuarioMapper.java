@@ -12,6 +12,7 @@ public class QtdReacoesComentariosUsuarioMapper {
     public static Optional<QtdReacoesComentariosUsuarioDto> toDto(Optional<QtdReacoesComentariosUsuarioView> qtdReacoesComentariosUsuarioView){
         QtdReacoesComentariosUsuarioDto dto = new QtdReacoesComentariosUsuarioDto();
         dto.setQtdReacoes(qtdReacoesComentariosUsuarioView.get().getReacoes());
+        dto.setPontuacao(qtdReacoesComentariosUsuarioView.get().getPontuacao());
 
         return Optional.of(dto);
     }

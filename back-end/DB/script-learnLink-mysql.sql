@@ -200,9 +200,11 @@ GROUP BY
     canal.id, canal.nome;
     
 CREATE VIEW view_quantidade_reacoes_comentarios_do_usuario AS
-SELECT COUNT(Reacao.id) AS reacoes, Comentario.usuario_id FROM Reacao 
+SELECT COUNT(Reacao.id) AS reacoes, Comentario.usuario_id, tipo_reacao.pontuacao FROM Reacao 
 RIGHT JOIN 
 	Comentario ON comentario_id = Comentario.id
+LEFT JOIN 
+	tipo_reacao ON tipo_reacao.id = tipo_reacao_id
 WHERE 
 	tipo_reacao_id = 1
 GROUP BY 

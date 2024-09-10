@@ -12,7 +12,7 @@ import java.util.Optional;
 public class QtdReacoesComentariosUsuarioService {
     private final QtdReacoesComentariosUsuarioViewRepository qtdReacoesComentariosUsuarioViewRepository;
 
-    public Optional<QtdReacoesComentariosUsuarioView> listagemDeNivelDeClassificacaoDoUsuario(int id){
+    public Optional<QtdReacoesComentariosUsuarioView> listagemQtdReacoesComentarios(Long id){
         return qtdReacoesComentariosUsuarioViewRepository.findByUsuarioId(id);
     }
 }

@@ -2,6 +2,7 @@ package co.solvers.apilearnlink.api.controller.usuario;
 
 import co.solvers.apilearnlink.domain.usuario.Usuario;
 import co.solvers.apilearnlink.service.reacao.ReacaoService;
+import co.solvers.apilearnlink.service.reacoesEmComentariosDoUsuario.dto.QtdReacoesComentariosUsuarioDto;
 import co.solvers.apilearnlink.service.usuario.UsuarioService;
 import co.solvers.apilearnlink.service.usuario.autenticacao.dto.UsuarioLoginDto;
 import co.solvers.apilearnlink.service.usuario.autenticacao.dto.UsuarioTokenDto;
@@ -19,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -226,6 +228,15 @@ public class UsuarioController {
         }
 
         return ResponseEntity.ok(usuarios);
+    }
+
+    @PatchMapping("/classificar-usuario/{id}")
+    public ResponseEntity<UsuarioListagemDto> classificarUsuario(@PathVariable Long id){
+        Usuario usuario = usuarioService.classificarUsuario(id);
+
+        UsuarioListagemDto dto = UsuarioMapper.toUsuarioListagemResponseDto(usuario);
+
+        return ResponseEntity.ok(dto);
     }
 
     //    @GetMapping("/buscar-todos-os-usuarios")

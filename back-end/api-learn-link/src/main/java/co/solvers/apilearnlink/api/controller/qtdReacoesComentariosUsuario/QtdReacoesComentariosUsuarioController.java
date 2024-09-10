@@ -21,10 +21,10 @@ public class QtdReacoesComentariosUsuarioController {
     private final QtdReacoesComentariosUsuarioService qtdReacoesComentariosUsuarioService;
 
     @GetMapping("buscar-nivel-de-classificacao-do-usuario/{id}")
-    public ResponseEntity<Optional<QtdReacoesComentariosUsuarioDto>> listagemDeNivelDeClassificacaoDoUsuario(
-            @PathVariable int id){
+    public ResponseEntity<Optional<QtdReacoesComentariosUsuarioDto>> listagemQtdReacoesComentarios(
+            @PathVariable Long id){
 
-        Optional<QtdReacoesComentariosUsuarioView> qtdReacoes = qtdReacoesComentariosUsuarioService.listagemDeNivelDeClassificacaoDoUsuario(id);
+        Optional<QtdReacoesComentariosUsuarioView> qtdReacoes = qtdReacoesComentariosUsuarioService.listagemQtdReacoesComentarios(id);
 
         Optional<QtdReacoesComentariosUsuarioDto> qtdReacoesDto = QtdReacoesComentariosUsuarioMapper.toDto(qtdReacoes);
         return ResponseEntity.ok(qtdReacoesDto);
