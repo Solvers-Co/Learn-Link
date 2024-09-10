@@ -1,25 +1,9 @@
-import React, { PureComponent } from "react";
-import fotoPerfilHomem from "../../../utils/assets/perfilHomem.png";
+import React, { useEffect, useState } from "react";
+import api from '../../../../api'; // Certifique-se de que o caminho está correto
 import Styles from "./Ranking.module.css";
 import Primeiro from '../../../../mobile/utils/assets/ranking/Primeiro lugar.png';
 import Segundo from '../../../../mobile/utils/assets/ranking/Segundo lugar.png';
 import Terceiro from '../../../../mobile/utils/assets/ranking/Terceiro lugar.png';
-
-
-
-
-const users = [
-    { nome: 'Sofhia Utaka', imageUrl: 'url-da-imagem' },
-    { nome: 'Otávio Walkovics', imageUrl: 'url-da-imagem' },
-    { nome: 'Ana Júlia', imageUrl: 'url-da-imagem' },
-    { nome: 'Kauan Cruz', imageUrl: 'url-da-imagem' },
-    { nome: 'Simone Mendes', imageUrl: 'url-da-imagem' },
-    { nome: 'Stacy Melody', imageUrl: 'url-da-imagem' },
-    { nome: 'André Souza', imageUrl: 'url-da-imagem' },
-    { nome: 'Melody Santos', imageUrl: 'url-da-imagem' },
-    { nome: 'Daniel Carvalho', imageUrl: 'url-da-imagem' },
-    { nome: 'Ariana Borges', imageUrl: 'url-da-imagem' },
-];
 
 function generateInitials(name) {
     const nameParts = name.trim().split(' ');
@@ -53,6 +37,26 @@ function generateInitials(name) {
 }
 
 const Ranking = () => {
+    const [users, setUsers] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        // Fazendo a requisição para buscar os usuários
+        api.get('/qtd-reacoes-comentario-usuarios/buscar-nivel-de-classificacao-de-todos-usuarios')
+            .then(response => {
+                setUsers(response.data); // Atualiza o estado com os dados da API
+                setLoading(false);
+            })
+            .catch(error => {
+                console.error('Erro ao buscar o ranking:', error);
+                setLoading(false); // Mesmo em caso de erro, setamos o loading para falso
+            });
+    }, []);
+
+    if (loading) {
+        return <p>Carregando...</p>; // Exibe uma mensagem de carregamento enquanto a requisição é processada
+    }
+
     return (
         <>
             <div className={Styles.ranking}>
@@ -67,7 +71,7 @@ const Ranking = () => {
                                     <span className={Styles.nome}>{user.nome}</span>
                                 </div>
 
-                                <span className={Styles.contribuicoes}>Contribuições: 10</span>
+                                <span className={Styles.contribuicoes}>Contribuições: {user.qtdReacoes}</span> {/* Usando o valor da API */}
                             </div>
                             <div className={Styles.posicao}>
                                 {index === 0 && (
@@ -87,7 +91,6 @@ const Ranking = () => {
                     );
                 })}
             </div>
-
         </>
     );
 };

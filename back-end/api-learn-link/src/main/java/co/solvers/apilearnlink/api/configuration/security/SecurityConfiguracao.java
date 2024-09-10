@@ -68,6 +68,7 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/usuarios/buscar-todos-os-usuarios-ativos-paginado"),
             new AntPathRequestMatcher("/usuarios/buscar-todos-os-usuarios-pendentes-paginado"),
             new AntPathRequestMatcher("/usuarios/buscar-todos-os-usuarios-negados-paginado"),
+            new AntPathRequestMatcher("/usuarios/buscar-usuario-por-nome-hashtable"),
             new AntPathRequestMatcher("/publicacoes"),
             new AntPathRequestMatcher("/publicacoes/publicar"),
             new AntPathRequestMatcher("/publicacoes/{id}/conteudo"),
@@ -81,6 +82,7 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/publicacoes/{idPublicacao}/remover-reacao"),
             new AntPathRequestMatcher("/publicacoes/{idPublicacao}/denunciar"),
             new AntPathRequestMatcher("/publicacoes/denuncias"),
+            new AntPathRequestMatcher("/publicacoes/{idPublicacao}/remover-denuncias"),
             new AntPathRequestMatcher("/comentarios"),
             new AntPathRequestMatcher("/comentarios/{id}"),
             new AntPathRequestMatcher("/comentarios/{idComentario}/reagir"),
@@ -91,8 +93,12 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/comentarios/publicacao/{idPublicacao}/paginado"),
             new AntPathRequestMatcher("/comentarios/{idComentario}/denunciar"),
             new AntPathRequestMatcher("/comentarios/denuncias"),
+            new AntPathRequestMatcher("/comentarios/{idPublicacao}/remover-denuncias"),
             new AntPathRequestMatcher("/registros/gerar-log/{id}"),
             new AntPathRequestMatcher("/qtd-materias-nao-respondidas"),
+            new AntPathRequestMatcher("/qtd-reacoes-comentario-usuarios/buscar-nivel-de-classificacao-do-usuario/{id}"),
+            new AntPathRequestMatcher("/qtd-reacoes-comentario-usuarios/buscar-nivel-de-classificacao-de-todos-usuarios"),
+            new AntPathRequestMatcher("/usuarios/classificar-usuario/{id}"),
             new AntPathRequestMatcher("/usuarios/buscarEmail/{email}")
     };
 

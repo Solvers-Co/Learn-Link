@@ -32,4 +32,8 @@ public interface DenunciaRespository extends JpaRepository<Denuncia, Long> {
             "GROUP BY c.id")
     List<ComentariosDenunciados> buscaComentariosDenunciados();
 
+    void deleteAllByPublicacao(Publicacao publicacao);
+
+    void deleteAllByComentario(Comentario comentario);
+
 }
