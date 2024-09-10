@@ -97,8 +97,8 @@ const Login = () => {
             {showConfirmation && (
                 <div className={styles['modalOverlay']}>
                     <div className={styles['modalContent']}>
-                        <h3>Que pena!</h3>
-                        <p>Você ainda não possui acesso a plataforma, entre em contato com o instituto.</p>
+                        <h3>Falta pouco!</h3>
+                        <p>Para acessar a plataforma, é necessário que um administrador aprove seu cadastro. Em breve, você receberá um e-mail confirmando a aprovação.</p>
                         <button className={styles['confirmButton']} onClick={() => {setShowConfirmation(false); window.location.reload();}}>Ok</button>
                     </div>
                 </div>

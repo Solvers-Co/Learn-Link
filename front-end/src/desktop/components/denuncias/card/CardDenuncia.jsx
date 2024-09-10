@@ -1,5 +1,7 @@
-import { useState, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import styles from './CardDenuncia.module.css';
+import api from '../../../../api';
+import { toast } from 'react-toastify';
 
 import IconeDenuncia from '../../../utils/assets/icone_denuncia_vermelho.png';
 import MenuVertical from '../../../../mobile/utils/assets/MenuVertical.png';
@@ -16,11 +18,24 @@ function generateInitials(name) {
     return `${firstInitial}${lastInitial}`;
 }
 
-const CardDenuncia = ({ user }) => {
+function deletarPublicacao(id) {
+    api.delete(`/publicacoes/${id}`)
+        .then(response => {
+            console.log("Publicação deletada com sucesso:", response.data);
+            toast.success("Publicação deletada com sucesso!");
+            window.location.reload();
+        })
+        .catch(error => {
+            console.log(id)
+            console.error("Ocorreu um erro ao deletar a publicação:", error);
+        });
+}
+
+const CardDenuncia = ({ idPublicacao, publicacao, quantidadeDenuncias }) => {
     const [showPopup, setShowPopup] = useState(false);
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [showConfirmationIgnore, setShowConfirmationIgnore] = useState(false);
-    
+
     const togglePopup = () => {
         setShowPopup(!showPopup);
     };
@@ -36,7 +51,7 @@ const CardDenuncia = ({ user }) => {
         return pastelColors[randomIndex];
     }, []); // Dependência vazia para garantir que seja executado apenas uma vez
 
-    const avatarInitials = useMemo(() => generateInitials(user.nome));
+    const avatarInitials = useMemo(() => generateInitials(publicacao.usuario.nome), [publicacao.usuario.nome]);
 
     return (
         <div className={styles.card}>
@@ -62,13 +77,13 @@ const CardDenuncia = ({ user }) => {
                 >
                     {avatarInitials}
                 </div>
-                <span className={styles.nome}>{user.nome}</span>
+                <span className={styles.nome}>{publicacao.usuario.nome}</span>
             </div>
-            <div className={styles.conteudo}>{user.conteudo}</div>
+            <div className={styles.conteudo}>{publicacao.conteudo}</div>
             <div className={styles.denuncia}>
                 <img src={IconeDenuncia} className={styles.iconeDenuncia} alt='Ícone de denúncia' />
                 <div className={styles.denuncias}>
-                    <span className={styles.quantidadeDenuncias}>{user.qtdDenuncias}</span>
+                    <span className={styles.quantidadeDenuncias}>{quantidadeDenuncias}</span>
                     <p>denúncias</p>
                 </div>
             </div>
@@ -105,8 +120,8 @@ const CardDenuncia = ({ user }) => {
                     <div className={styles.modalContent}>
                         <h3>Confirmar Exclusão</h3>
                         <p>Tem certeza de que deseja excluir esta denúncia?</p>
-                        <button className={styles.confirmButton}>Sim</button>
-                        <button className={styles.cancelButton} onClick={() => setShowConfirmation(false)}>Cancelar</button>
+                        <button className={styles.confirmButton} onClick={() => {deletarPublicacao(idPublicacao); setShowConfirmation(false)}}>Sim</button>
+                        <button className={styles.cancelButton} onClick={() => setShowConfirmation(false) }>Cancelar</button>
                     </div>
                 </div>
             )}
