@@ -68,6 +68,7 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/usuarios/buscar-todos-os-usuarios-ativos-paginado"),
             new AntPathRequestMatcher("/usuarios/buscar-todos-os-usuarios-pendentes-paginado"),
             new AntPathRequestMatcher("/usuarios/buscar-todos-os-usuarios-negados-paginado"),
+            new AntPathRequestMatcher("/usuarios/buscar-usuario-por-nome-hashtable"),
             new AntPathRequestMatcher("/publicacoes"),
             new AntPathRequestMatcher("/publicacoes/publicar"),
             new AntPathRequestMatcher("/publicacoes/{id}/conteudo"),
