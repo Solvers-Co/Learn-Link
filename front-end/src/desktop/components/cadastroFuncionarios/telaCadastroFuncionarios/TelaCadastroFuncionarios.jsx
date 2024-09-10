@@ -76,7 +76,7 @@ const TelaCadastroFuncionarios = () => {
     
                     emailjs.send("service_juy8w7g", "template_lr7u1k4", {
                         to_name: nome,
-                        message: "Você foi cadastrado(a) no sistema LearLink. A sua senha de acesso é: " + senha + "\nRecomendamos que altere esta senha no primeiro acesso. Obrigado!",
+                        message: "Você foi cadastrado(a) no sistema LearnLink. A sua senha de acesso é: " + senha + "\nRecomendamos que altere esta senha no primeiro acesso. Obrigado!",
                         to_email: email,
                     }, "tZxktBF31MEVsj2aL")
                         .then((emailResponse) => {
