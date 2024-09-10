@@ -198,12 +198,8 @@ WHERE
     comentario.id IS NULL
 GROUP BY
     canal.id, canal.nome;
+
+-- select * from usuario;
+-- select * from publicacao;
+-- select * from comentario;
     
-
--- SELECT (INCOMPLETO) para recuperar todos os comentarios de uma publicação especifica para o botão de comentarios (Ausencia de um campo de curtidas na tabela comentarios)
--- SELECT c.id, c.comentario, u.nome AS autor
--- FROM comentario c
--- JOIN usuario u ON c.usuario_id = u.id
--- WHERE c.publicacao_id =1;
-
-
