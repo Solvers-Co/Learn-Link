@@ -244,12 +244,14 @@ public class UsuarioController {
     }
 
     @PatchMapping("/classificar-usuario/{id}")
-    public ResponseEntity<UsuarioListagemDto> classificarUsuario(@PathVariable Long id){
+    public ResponseEntity<UsuarioListagemDto> classificarUsuario(@PathVariable Long id) {
         Usuario usuario = usuarioService.classificarUsuario(id);
 
         UsuarioListagemDto dto = UsuarioMapper.toUsuarioListagemResponseDto(usuario);
 
         return ResponseEntity.ok(dto);
+    }
+
     @ApiResponse(responseCode = "200", description = "Usuário encontrado")
     @ApiResponse(responseCode = "404", description = "Nenhum usuário encontrado")
     @Operation(summary = "Buscar usuário por nome - HashTable", description = "Método que busca usuário pelo seu nome", tags = {"Usuários"})

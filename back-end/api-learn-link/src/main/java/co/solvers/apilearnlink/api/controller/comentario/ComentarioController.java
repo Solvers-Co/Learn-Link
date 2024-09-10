@@ -205,4 +205,15 @@ public class ComentarioController {
         }
     }
 
+    @ApiResponse(responseCode = "200", description = "Denuncias removidas")
+    @ApiResponse(responseCode = "404", description = "Comentario não encontrado")
+    @Operation(summary = "Remover denúncias", description = "Método que remover todas as denuncias de um comentário", tags = {"Publicações"})
+    @DeleteMapping("/{idComentario}/remover-denuncias")
+    public ResponseEntity<Void> removerDenuncias(@PathVariable int idComentario) {
+
+        denunciaService.removerDenunciasComentario(idComentario);
+
+        return ResponseEntity.ok().build();
+    }
+
 }
