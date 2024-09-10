@@ -97,7 +97,7 @@ const Login = () => {
                 </div>
                 <h3 className={styles['rodape']}>Não possui uma conta? <a href="cadastroDesktop" className={styles['direcionaCadastro']}>Cadastre-se</a></h3>
             </Card>
-            <ToastContainer />
+            {/* <ToastContainer /> */}
         </div >
     )
 }
