@@ -2,50 +2,69 @@ import React, { useEffect, useState } from 'react';
 import Titulo from '../../dashboard/tituloDashboard/Titulo';
 import CardDenuncia from '../card/CardDenuncia';
 import styles from './TelaDenuncias.module.css';
-import api from '../../../../api'; // Certifique-se de que este caminho está correto
+import api from '../../../../api';
 
 const TelaDenuncias = () => {
     const [denuncias, setDenuncias] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [tipoDenuncia, setTipoDenuncia] = useState('publicacoes');
+
+    const fetchDenuncias = async () => {
+        setLoading(true);
+        try {
+            const endpoint = tipoDenuncia === 'publicacoes'
+                ? '/publicacoes/denuncias'
+                : '/comentarios/denuncias';
+            const response = await api.get(endpoint);
+            setDenuncias(response.data);
+        } catch (err) {
+            setError('Não foi possível carregar as denúncias');
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
-        const fetchDenuncias = async () => {
-            try {
-                const response = await api.get('/publicacoes/denuncias'); // Fazer a requisição à API
-                setDenuncias(response.data);
-            } catch (err) {
-                setError('Não foi possível carregar as denúncias');
-            } finally {
-                setLoading(false);
-            }
-        };
-
         fetchDenuncias();
-    }, []);
+    }, [tipoDenuncia]);
 
-    if (loading) return <div>Carregando...</div>;
-    if (error) return <div>{error}</div>;
+    const handleTipoDenunciaChange = (e) => setTipoDenuncia(e.target.value);
 
     return (
         <div className={styles.telaDenuncias}>
             <div className={styles.cabecalho}>
                 <Titulo>Denúncias</Titulo>
+                <select
+                    value={tipoDenuncia}
+                    onChange={handleTipoDenunciaChange}
+                    className={styles.dropdown}
+                >
+                    <option value="publicacoes">Publicações</option>
+                    <option value="comentarios">Comentários</option>
+                </select>
             </div>
-            <div className={styles.cardsDenuncias}>
-                {denuncias.length === 0 ? (
-                    <div>Não há denúncias para exibir.</div>
-                ) : (
-                    denuncias.map((denuncia, index) => (
-                        <CardDenuncia
-                            key={index}
-                            idPublicacao={denuncia.publicacao.id}
-                            publicacao={denuncia.publicacao}
-                            quantidadeDenuncias={denuncia.quantidadeDenuncias}
-                        />
-                    ))
-                )}
-            </div>
+            {loading ? (
+                <div>Carregando...</div>
+            ) : error ? (
+                <div>{error}</div>
+            ) : (
+                <div className={styles.cardsDenuncias}>
+                    {denuncias.length === 0 ? (
+                        <div className={styles.semDenuncias}>Não há denúncias para exibir</div>
+                    ) : (
+                        denuncias.map((denuncia, index) => (
+                            <CardDenuncia
+                                key={index}
+                                idItem={denuncia.publicacao?.id || denuncia.comentario?.id}
+                                item={denuncia.publicacao || denuncia.comentario}
+                                quantidadeDenuncias={denuncia.quantidadeDenuncias}
+                                tipo={tipoDenuncia} // Passa o tipo de denúncia
+                            />
+                        ))
+                    )}
+                </div>
+            )}
         </div>
     );
 };

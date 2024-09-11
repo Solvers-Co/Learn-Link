@@ -116,7 +116,7 @@ const ListaUsuarios = () => {
 
                 )}
             </div>
-            <ToastContainer
+            {/* <ToastContainer
                 position="top-right"
                 autoClose={1500}
                 hideProgressBar={false}
@@ -127,7 +127,7 @@ const ListaUsuarios = () => {
                 draggable
                 pauseOnHover
                 theme="light"
-            />
+            /> */}
         </>
     );
 };

@@ -358,7 +358,7 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
 
                 )}
 
-                <ToastContainer
+                {/* <ToastContainer
                     position="top-right"
                     autoClose={1000}
                     hideProgressBar={false}
@@ -369,7 +369,7 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
                     draggable
                     pauseOnHover
                     theme="colored"
-                />
+                /> */}
             </div>
         </>
     );
