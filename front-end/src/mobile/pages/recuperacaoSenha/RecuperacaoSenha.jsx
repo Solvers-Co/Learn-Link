@@ -37,7 +37,7 @@ const RecuperacaoSenha = () => {
     
                     emailjs.send("service_juy8w7g", "template_lr7u1k4", {
                         to_name: response.data.nome,
-                        message: "Segue o código para recuperação: " + codigo,
+                        message: "\nSegue o código para recuperação de senha: " + codigo + "\n\nCaso não tenha solicitado, ignore este e-mail.",
                         to_email: email,
                     }, "tZxktBF31MEVsj2aL")
                         .then((emailResponse) => {

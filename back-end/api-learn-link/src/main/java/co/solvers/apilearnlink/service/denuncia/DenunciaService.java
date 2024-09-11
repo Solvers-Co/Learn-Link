@@ -17,6 +17,7 @@ import co.solvers.apilearnlink.service.usuario.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -99,6 +100,20 @@ public class DenunciaService {
     public List<ComentariosDenunciados> buscaComentariosDenunciados() {
         List<ComentariosDenunciados> comentariosDenunciados = denunciaRespository.buscaComentariosDenunciados();
         return comentariosDenunciados;
+    }
+
+    @Transactional
+    public void removerDenunciasPublicacao(Integer idPublicacao) {
+        Publicacao publicacao = publicacaoService.listarPorId(idPublicacao);
+
+        denunciaRespository.deleteAllByPublicacao(publicacao);
+    }
+
+    @Transactional
+    public void removerDenunciasComentario(Integer idComentario) {
+        Comentario comentario = comentarioService.buscarPorId(idComentario);
+
+        denunciaRespository.deleteAllByComentario(comentario);
     }
 
 }

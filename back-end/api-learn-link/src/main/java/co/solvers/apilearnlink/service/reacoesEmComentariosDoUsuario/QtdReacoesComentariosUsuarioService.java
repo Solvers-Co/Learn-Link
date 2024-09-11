@@ -18,6 +18,6 @@ public class QtdReacoesComentariosUsuarioService {
     }
 
     public List<QtdReacoesComentariosUsuarioView> qtdContribuicoesRanking(){
-        return qtdReacoesComentariosUsuarioViewRepository.findAll();
+        return qtdReacoesComentariosUsuarioViewRepository.findTop10ByOrderByReacoesDesc();
     }
 }

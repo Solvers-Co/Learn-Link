@@ -7,6 +7,7 @@ import styles from "./Cadastro.module.css";
 import Card from "../../components/cards/cardFormularios/CardFormulario";
 import Input from "../../components/inputs/inputFormularios/InputFormulario";
 import Botao from "../../components/botoes/Botao";
+import emailjs from '@emailjs/browser';
 
 const Cadastro = () => {
     const navigate = useNavigate();
@@ -107,6 +108,19 @@ const Cadastro = () => {
             errorMessages.forEach(msg => toast.error(msg));
         } else {
             api.post(`/usuarios`, usuarioNovo).then(() => {
+                emailjs.send("service_juy8w7g", "template_lr7u1k4", {
+                    to_name: nome,
+                    message: "\nSeja bem vindo ao sistema LearnLink! \nEstamos felizes em ter você conosco 😊 \nEm breve você receberá um e-mail informando seu status de acesso!",
+                    to_email: email,
+                }, "tZxktBF31MEVsj2aL")
+                    .then((emailResponse) => {
+                        console.log("Email enviado:", emailResponse.status, emailResponse.text);
+                        toast.success("Email enviado!");
+                    })
+                    .catch((emailError) => {
+                        console.log("Erro ao enviar o email:", emailError.text);
+                        toast.error("Erro ao enviar o e-mail. Tente novamente.");
+                    });
                 toast.success("Usuário cadastrado!");
                 navigate("/loginDesktop");
             }).catch(() => {
