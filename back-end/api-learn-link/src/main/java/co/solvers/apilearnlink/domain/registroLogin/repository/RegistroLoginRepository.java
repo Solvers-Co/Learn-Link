@@ -10,4 +10,10 @@ public interface RegistroLoginRepository extends JpaRepository<RegistroLogin, Lo
 
     /*@Query("SELECT DATE(registro_login) AS data_login, MIN(registro_login) AS primeiro_login, usuario_id FROM registro_login WHERE usuario_id = 1 AND YEAR(registro_login) = 2024 AND MONTH(registro_login) = 5 GROUP BY DATE(registro_login), usuario_id ORDER BY data_login")
     List<RegistroLogin> findAtividadeMes();*/
+
+    @Query("SELECT r " +
+            "FROM RegistroLogin r " +
+            "WHERE r.usuario.id = :idUsuario " +
+            "ORDER BY r.registroLogin ASC")
+    List<RegistroLogin> findByIdUsuario(Long idUsuario);
 }
