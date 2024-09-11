@@ -4,7 +4,7 @@ const Input = ({ label, placeholder, onChange }) => {
     return (
         <div className={styles.container}>
             <label className={styles.label}>{label}</label>
-            <input className={styles.input} placeholder={placeholder} onChange={onChange}/>
+            <input className={styles.input} placeholder={placeholder} />
         </div>
     )
 }
