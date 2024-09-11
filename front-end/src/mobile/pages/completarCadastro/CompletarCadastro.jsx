@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./CompletarCadastro.module.css";
 import InputFormulario from "../../components/inputs/inputFormularios/InputFormulario";
 import Botao from "../../components/botoes/botaoLoginCadastro/Botao";
-
+import InputMask from "react-input-mask";
 
 const CompletarCadastro = () => {
     const navigate = useNavigate();
@@ -17,10 +17,16 @@ const CompletarCadastro = () => {
     const [bairro, setBairro] = useState("");
 
     const handleInputChange = (event, setStateFunction) => {
-        const value = event.target.value;
+        let value = event.target.value;
+
+        // Remove o hífen do CEP
+        if (setStateFunction === setCep) {
+            value = value.replace("-", "");
+        }
+
         setStateFunction(value);
 
-        // Só busca o endereço se for o campo de CEP
+        // Só busca o endereço se for o campo de CEP e tiver 8 dígitos
         if (setStateFunction === setCep && value.length === 8) {
             buscarEnderecoPorCep(value);
         }
@@ -92,7 +98,7 @@ const CompletarCadastro = () => {
                     <option value="9">Inglês</option>
                     <option value="10">Filosofia</option>
                 </select>
-                <InputFormulario placeHolder="CEP" maxLength='8' value={cep} onChange={(e) => handleInputChange(e, setCep)} />
+                <InputMask className={styles.inputMask} mask={"99999-999"} maskChar={null} placeholder="CEP" value={cep} onChange={e => handleInputChange(e, setCep)}></InputMask>
                 <InputFormulario id="estado" placeHolder="Estado" readOnly />
                 <InputFormulario id="cidade" placeHolder="Cidade" readOnly />
                 <InputFormulario id="bairro" placeHolder="Bairro" readOnly />

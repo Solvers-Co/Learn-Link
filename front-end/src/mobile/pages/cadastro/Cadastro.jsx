@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 import styles from "./Cadastro.module.css";
 import InputFormulario from "../../components/inputs/inputFormularios/InputFormulario";
 import Botao from "../../components/botoes/botaoLoginCadastro/Botao";
-import Header from "../../components/header/Header"
+import Header from "../../components/header/Header";
+import InputMask from "react-input-mask";
 
 const Cadastro = () => {
     const navigate = useNavigate();
@@ -16,12 +17,18 @@ const Cadastro = () => {
     const [senha, setSenha] = useState("");
     const [confirmaSenha, setConfirmaSenha] = useState("");
 
-    const handleInputChange = (event, setStateFunction) => { // Função para manipular as mudanças nos inputs
-        setStateFunction(event.target.value); // Atualiza o estado correspondente
-    }
+    const handleInputChange = (event, setStateFunction) => {
+        let value = event.target.value;
+
+        // Remove os pontos e hífen do CPF
+        if (setStateFunction === setCpf) {
+            value = value.replace(/[\.\-]/g, "");
+        }
+
+        setStateFunction(value); // Atualiza o estado correspondente
+    };
 
     const handleSave = () => {
-
         const tipoUsuario = "COMUM";
 
         const usuarioNovo = { 
@@ -124,14 +131,14 @@ const Cadastro = () => {
                 <div className={styles['divInputs']}>
                     <InputFormulario placeHolder="Nome" value={nome} onChange={(e) => handleInputChange(e, setNome)} />
                     <InputFormulario placeHolder="Email" value={email} onChange={(e) => handleInputChange(e, setEmail)} />
-                    <InputFormulario placeHolder="CPF" value={cpf} onChange={(e) => handleInputChange(e, setCpf)} />
+                    <InputMask className={styles.inputMask} mask={"999.999.999-99"} maskChar={null} placeholder="CPF" value={cpf} onChange={e => handleInputChange(e, setCpf)}></InputMask>
                     <InputFormulario placeHolder="Senha" tipo="password" value={senha} onChange={(e) => handleInputChange(e, setSenha)} />
-                    <InputFormulario placeHolder="Confirmar senha" tipo="password"  onChange={(e) => handleInputChange(e, setConfirmaSenha)} />
+                    <InputFormulario placeHolder="Confirmar senha" tipo="password" onChange={(e) => handleInputChange(e, setConfirmaSenha)} />
                     <Botao funcao={handleSave} tipo="button" textoBotao="Cadastrar" />
                 </div>
             </div>
         </>
-    )
+    );
 };
 
 export default Cadastro;
