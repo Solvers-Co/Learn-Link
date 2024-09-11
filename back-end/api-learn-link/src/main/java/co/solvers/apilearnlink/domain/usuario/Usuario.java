@@ -36,6 +36,11 @@ public class Usuario {
     @OneToOne
     private TipoUsuario tipoUsuario;
 
+    @Override
+    public int hashCode() {
+        return nome.hashCode();
+    }
+
 
 
 

@@ -1,23 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import api from '../../../api';
 import Styles from '../ranking/Ranking.module.css';
 import Header from '../../components/headerAplicacao/Header';
 
 import Primeiro from '../../utils/assets/ranking/Primeiro lugar.png';
 import Segundo from '../../utils/assets/ranking/Segundo lugar.png';
 import Terceiro from '../../utils/assets/ranking/Terceiro lugar.png';
-
-const users = [
-    { nome: 'Sofhia Utaka', imageUrl: 'url-da-imagem' },
-    { nome: 'Otávio Walkovics', imageUrl: 'url-da-imagem' },
-    { nome: 'Ana Júlia', imageUrl: 'url-da-imagem' },
-    { nome: 'Kauan Cruz', imageUrl: 'url-da-imagem' },
-    { nome: 'Simone Mendes', imageUrl: 'url-da-imagem' },
-    { nome: 'Stacy Melody', imageUrl: 'url-da-imagem' },
-    { nome: 'André Souza', imageUrl: 'url-da-imagem' },
-    { nome: 'Melody Santos', imageUrl: 'url-da-imagem' },
-    { nome: 'Daniel Carvalho', imageUrl: 'url-da-imagem' },
-    { nome: 'Ariana Borges', imageUrl: 'url-da-imagem' },
-];
 
 function generateInitials(name) {
     const nameParts = name.trim().split(' ');
@@ -51,6 +39,19 @@ function generateInitials(name) {
 }
 
 const Ranking = () => {
+    const [users, setUsers] = useState([]);
+
+    useEffect(() => {
+        api.get('/qtd-reacoes-comentario-usuarios/buscar-nivel-de-classificacao-de-todos-usuarios')
+            .then((response) => {
+                setUsers(response.data);
+                console.log('Dados do ranking:', response.data);
+            })
+            .catch((error) => {
+                console.error('Erro ao buscar dados do ranking:', error);
+            });
+    }, []);
+
     return (
         <>
             <Header />
@@ -68,7 +69,7 @@ const Ranking = () => {
                                         <span className={Styles.nome}>{user.nome}</span>
                                     </div>
 
-                                    <span className={Styles.contribuicoes}>Contribuições: 10</span>
+                                    <span className={Styles.contribuicoes}>Contribuições: {user.qtdReacoes}</span>
                                 </div>
                                 <div className={Styles.posicao}>
                                     {index === 0 && (

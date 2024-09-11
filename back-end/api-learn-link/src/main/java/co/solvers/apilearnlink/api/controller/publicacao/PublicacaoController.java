@@ -356,6 +356,18 @@ public class PublicacaoController {
     }
 
 
+    @ApiResponse(responseCode = "200", description = "Denuncias removidas")
+    @ApiResponse(responseCode = "404", description = "Publicação não encontrada")
+    @Operation(summary = "Remover denúncias", description = "Método que remover todas as denuncias de uma publicação", tags = {"Publicações"})
+    @DeleteMapping("/{idPublicacao}/remover-denuncias")
+    public ResponseEntity<Void> removerDenuncias(@PathVariable int idPublicacao) {
+
+        denunciaService.removerDenunciasPublicacao(idPublicacao);
+
+        return ResponseEntity.ok().build();
+    }
+
+
 
 
 
