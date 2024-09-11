@@ -44,6 +44,7 @@ function generateInitials(name) {
 const Perfil = () => {
     const [classificacao, setClassificacao] = useState([]);
     const [especialidade, setEspecialidade] = useState([]);
+    const [contribuicoes, setContribuicoes] = useState([]);
 
     // Obtem o nome do usuário armazenado no sessionStorage
     const idUsuarioLogado = sessionStorage.getItem('userId') || 'N/A';
@@ -71,7 +72,7 @@ const Perfil = () => {
     useEffect(() => {
         const fetchClassificacao = async () => {
             try {
-                const response = await api.get(`/usuarios/${idUsuarioLogado}`);
+                const response = await api.patch(`/usuarios/classificar-usuario/${idUsuarioLogado}`);
                 if (response.data.classificacao.classificacao === 'JUNIOR') {
                     setClassificacao('Júnior');
                 } else if (response.data.classificacao.classificacao === 'PLENO') {
@@ -119,6 +120,21 @@ const Perfil = () => {
         fetchEspecialidade();
     }, [idUsuarioLogado]);
 
+    useEffect(() =>{
+        const fetchContribuicoes = async () =>{
+            try{
+                const response = await api.get(`/qtd-reacoes-comentario-usuarios/buscar-nivel-de-classificacao-do-usuario/${idUsuarioLogado}`)
+                setContribuicoes(response.data.qtdReacoes);
+                console.log(response)
+                console.log(contribuicoes)
+            }catch(error){
+                console.error("Ocorreu um erro ao buscar os dados do usuário:", error)
+                setContribuicoes('Erro ao carregar')
+            }
+        };
+        fetchContribuicoes();
+    },[idUsuarioLogado])
+
 
     return (
         <>
@@ -133,7 +149,7 @@ const Perfil = () => {
                 </div>
                 <div className={styles.cards}>
                     <CardPerfil conteudo={classificacao} classificacao="Classificação" />
-                    <CardPerfil conteudo="3" classificacao="Contribuições" />
+                    <CardPerfil conteudo={contribuicoes} classificacao="Contribuições" />
                     <CardPerfil conteudo={especialidade} classificacao="Especialidade" />
                 </div>
                 <div className={styles.atividade}>
