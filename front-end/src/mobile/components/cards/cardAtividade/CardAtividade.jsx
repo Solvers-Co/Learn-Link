@@ -1,11 +1,30 @@
 import { useState, useEffect, useRef } from 'react';
 import styles from './CardAtividade.module.css';
+import api from "../../../../api";
 
 const CardAtividade = () => {
     const [selectedIndex, setSelectedIndex] = useState(null); // Estado para armazenar o índice do quadrado clicado
     const cardRef = useRef(null); // Referência para o container dos quadrados
+    const [datasRetornadas, setDatasRetornadas] = useState([]);
 
     // Função para calcular as últimas 30 datas
+    useEffect(() => {
+        const fetchAtividade = async () => {
+            try {
+                const response = await api.get(`registro-logins/${sessionStorage.getItem("userId")}`);
+                const registros = response.data.map(item => {
+                    // Converte LocalDateTime para o formato "DD/MM/YYYY"
+                    const data = new Date(item.registroLogin); // Converte a string da API em um objeto Date
+                    return data.toLocaleDateString(); // Converte para o formato DD/MM/YYYY
+                });
+                setDatasRetornadas(registros); // Armazena as datas no estado
+            } catch (error) {
+                console.error("Erro ao buscar dados da API", error);
+            }
+        };
+        fetchAtividade();
+    }, [sessionStorage.getItem("userId")]);
+
     const gerarUltimasDatas = (quantidade) => {
         const datas = [];
         const hoje = new Date();
@@ -23,7 +42,7 @@ const CardAtividade = () => {
     const renderQuadrados = (quantidade, startIndex) => (
         Array.from({ length: quantidade }, (_, index) => {
             const currentIndex = startIndex + index;
-            const isGray = currentIndex >= datas.length - 3; // Verifica se é um dos últimos 3 quadrados
+            const isGray = datasRetornadas.includes(datas[currentIndex]); // Verifica se é um dos últimos 3 quadrados
             return (
                 <div
                     key={index}

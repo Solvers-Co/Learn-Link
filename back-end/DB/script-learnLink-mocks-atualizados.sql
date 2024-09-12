@@ -36,6 +36,7 @@ INSERT INTO endereco (bairro, cidade, estado, cep) VALUES
 
 
 INSERT INTO usuario (nome, cpf, email, senha, tipo_status_id, especialidade_id, classificacao_id, tipo_usuario_id) VALUES
+('Instituto Mafalda', '81761405896', 'adm@adm.com', '$2a$10$7VqM6PjHCNI9oMTygeB16OyIgiTLeJGmwu9ihTwp02/Ex91VSkJfi', 2, null, null, 2),
 ('Lucas Pereira', '78945612309', 'lucas.pereira@example.com', '@Aa12345', 2, 1, 3, 1),
 ('Mariana Silva', '85296374102', 'mariana.silva@example.com', '@Aa98765', 1, 2, 2, 1),
 ('João Fernandes', '95175385246', 'joao.fernandes@example.com', '@Aa24689', 2, 3, 1, 1),
@@ -67,11 +68,9 @@ INSERT INTO usuario (nome, cpf, email, senha, tipo_status_id, especialidade_id, 
 ('Marcelo Pereira', '32178965401', 'marcelo.pereira@example.com', '@Aa65412', 3, 1, 4, 1),
 ('Daniele Cunha', '65498712302', 'daniele.cunha@example.com', '@Aa75396', 1, 2, 1, 1),
 
--- Novos usuários com tipo_usuario_id = 2
 ('Renato Oliveira', '12345678910', 'renato.oliveira@example.com', '@Aa11223', 2, 3, 1, 2),
 ('Claudia Lima', '98765432101', 'claudia.lima@example.com', '@Aa33445', 1, 4, 2, 2),
 ('Marcio Souza', '45612378902', 'marcio.souza@example.com', '@Aa55667', 3, 5, 3, 2);
-
 
 
 UPDATE usuario SET endereco_id = 1 WHERE id = 1;

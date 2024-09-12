@@ -36,14 +36,13 @@ function formatTimeAgo(dateString) {
 function reagirComentario(idComentario, idReacao, tipoReacao, idUsuario, curtida, setCurtida, setCurtidas) {
     if (curtida) {
         // Se o usuário já curtiu, remove a curtida
-        api.delete(`/comentarios/${idComentario}/reagir/${idReacao}`)
+        api.delete(`/comentarios/${idComentario}/reagir`,{data: {tipoReacao, idUsuario}})
             .then(response => {
                 console.log("Reação removida com sucesso:", response.data);
                 setCurtida(false);
                 setCurtidas(prevCurtidas => prevCurtidas - 1); // Decrementa o contador de curtidas
             })
             .catch(error => {
-                console.log(idReacao);
                 console.error("Ocorreu um erro ao remover a reação:", error);
             });
     } else {

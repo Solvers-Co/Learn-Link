@@ -68,3 +68,18 @@
 .placeholder{
     color: hsla(0, 0%, 0%, 0.5);
 }
+
+.inputMask{
+    width: 90%;
+    align-items: center;
+    border-radius: 20px;
+    height: 52px;
+    background-color: hsla(0, 2%, 51%, 0.1);
+    border: none; 
+    text-align: left;
+    padding-left: 20px;
+    font-family: "NunitoSansRegular", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    outline: none;
+}

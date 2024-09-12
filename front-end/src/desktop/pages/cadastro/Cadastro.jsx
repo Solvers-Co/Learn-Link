@@ -7,6 +7,8 @@ import styles from "./Cadastro.module.css";
 import Card from "../../components/cards/cardFormularios/CardFormulario";
 import Input from "../../components/inputs/inputFormularios/InputFormulario";
 import Botao from "../../components/botoes/Botao";
+import emailjs from '@emailjs/browser';
+import InputMask from "react-input-mask";
 
 const Cadastro = () => {
     const navigate = useNavigate();
@@ -107,6 +109,19 @@ const Cadastro = () => {
             errorMessages.forEach(msg => toast.error(msg));
         } else {
             api.post(`/usuarios`, usuarioNovo).then(() => {
+                emailjs.send("service_juy8w7g", "template_lr7u1k4", {
+                    to_name: nome,
+                    message: "\nSeja bem vindo ao sistema LearnLink! \nEstamos felizes em ter você conosco 😊 \nEm breve você receberá um e-mail informando seu status de acesso!",
+                    to_email: email,
+                }, "tZxktBF31MEVsj2aL")
+                    .then((emailResponse) => {
+                        console.log("Email enviado:", emailResponse.status, emailResponse.text);
+                        toast.success("Email enviado!");
+                    })
+                    .catch((emailError) => {
+                        console.log("Erro ao enviar o email:", emailError.text);
+                        toast.error("Erro ao enviar o e-mail. Tente novamente.");
+                    });
                 toast.success("Usuário cadastrado!");
                 navigate("/loginDesktop");
             }).catch(() => {
@@ -118,18 +133,18 @@ const Cadastro = () => {
     return (
         <div className={styles['container']}>
             <Card altura="72vh">
-                <a href="/homeDesktop" className={styles['imagemClicavel']}><div className={styles['imageContainer']}></div></a>
+                <a href="/homeDesktop" className={styles['imagemClicavel']}><div className={styles['imageContainer']} placeholder="Email"></div></a>
                 <h1 className={styles['cadastroDesktopTitulo']}>CADASTRO</h1>
                 <h3 className={styles['tituloInput']}>Nome</h3>
-                <Input value={nome} onChange={(e) => handleInputChange(e, setNome)} />
+                <Input value={nome} onChange={(e) => handleInputChange(e, setNome)} placeholder="Nome" />
                 <h3 className={styles['tituloInput']}>E-mail</h3>
-                <Input value={email} onChange={(e) => handleInputChange(e, setEmail)} />
+                <Input value={email} onChange={(e) => handleInputChange(e, setEmail)} placeholder="E-mail"/>
                 <h3 className={styles['tituloInput']}>CPF</h3>
-                <Input value={cpf} onChange={(e) => handleInputChange(e, setCpf)} />
+                <InputMask className={styles.inputMask} mask={"999.999.999-99"} maskChar={null} placeholder="CPF" value={cpf} onChange={e => handleInputChange(e, setCpf)}></InputMask>
                 <h3 className={styles['tituloInput']}>Senha</h3>
-                <Input value={senha} type="password" onChange={(e) => handleInputChange(e, setSenha)} />
+                <Input value={senha} type="password" onChange={(e) => handleInputChange(e, setSenha)} placeholder="Senha"/>
                 <h3 className={styles['tituloInput']}>Confirmar Senha</h3>
-                <Input value={confirmaSenha} type="password" onChange={(e) => handleInputChange(e, setConfirmaSenha)} />
+                <Input value={confirmaSenha} type="password" onChange={(e) => handleInputChange(e, setConfirmaSenha)} placeholder="Confirmação de Senha"/>
                 <div className={styles['divBotao']}>
                     <Botao funcao={handleSave} tipo="button" textoBotao="Cadastrar" />
                 </div>

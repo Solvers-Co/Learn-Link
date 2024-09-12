@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
 import iconeDashboard from "../../../utils/assets/painel-de-controle.png";
 import iconeAcesso from "../../../utils/assets/controle-de-acesso.png";
@@ -39,39 +39,48 @@ function generateInitials(name) {
 }
 
 const MenuLateral = () => {
-    const navigate = useNavigate(); // Crie uma instância do hook useNavigate
-    const location = useLocation(); // Crie uma instância do hook useLocation
-    // const nome1 = sessionStorage.getItem("nome"); // Recupera o nome do usuário logado
+    const navigate = useNavigate();
+    const location = useLocation();
     const nome = "Taina Maiara";
 
     const sair = () => {
-        navigate("/homeDesktop"); // Redireciona para a rota de logout
+        navigate("/homeDesktop");
     };
 
     const paginaAcesso = () => {
-        navigate("/AceitarUsuarios"); // Redireciona para a rota de acesso
+        navigate("/AceitarUsuarios");
     };
 
     const paginaDashboard = () => {
-        navigate("/Dashboard"); // Redireciona para a rota de dashboard
+        navigate("/Dashboard");
     };
 
     const paginaDenuncias = () => {
-        navigate("/denuncias"); // Redireciona para a rota de denuncias
+        navigate("/denuncias");
     };
 
     const paginaCadastroFuncionarios = () => {
         navigate("/cadastroFuncionarios");
     };
 
-    const avatar = useMemo(() => generateInitials(nome), [nome]);
+    const avatar = useMemo(() => generateInitials(sessionStorage.getItem("nome")), [sessionStorage.getItem("nome")]);
 
+    const validarContaAdm = () => {
+        const elementoCadastro = document.getElementById("cadastroFuncionarios");
+        if (sessionStorage.getItem("email") !== "adm@adm.com" && elementoCadastro) {
+            elementoCadastro.style.display = "none";
+        }
+    };
+
+    useEffect(() => {
+        validarContaAdm();
+    }, []); // useEffect para garantir que a função seja executada após o componente ser montado
 
     return (
         <div className={styles['menuLateralDashboard']}>
             <div className={styles['infoUsuario']}>
                 {avatar}
-                <span className={styles['texto']}>Taina Maiara</span>
+                <span className={styles['texto']}>{sessionStorage.getItem("nome")}</span>
             </div>
             <div className={`${styles['paginasDashboard']}`} >
                 <p className={styles['infoPaginasDashboard']}>Dashboards</p>
@@ -114,7 +123,7 @@ const MenuLateral = () => {
                             Denúncias
                         </div>
                         <div
-                            className={`${styles['paginaPaginas']} ${styles['cursorPointer']} ${location.pathname === '/cadastroFuncionario' ? styles['paginaAtiva'] : ''
+                            id="cadastroFuncionarios" className={`${styles['paginaPaginas']} ${styles['cursorPointer']} ${location.pathname === '/cadastroFuncionario' ? styles['paginaAtiva'] : ''
                                 }`}
                             onClick={paginaCadastroFuncionarios}
                         >
@@ -127,8 +136,6 @@ const MenuLateral = () => {
                         </div>
                     </div>
                 </div>
-
-
 
                 <hr className={styles['divisaoSair']} />
 
