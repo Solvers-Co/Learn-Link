@@ -212,16 +212,10 @@ WHERE
 GROUP BY 
 	Comentario.usuario_id;
     
-    select * from view_quantidade_reacoes_comentarios_do_usuario;
-
--- SELECT (INCOMPLETO) para recuperar todos os comentarios de uma publicação especifica para o botão de comentarios (Ausencia de um campo de curtidas na tabela comentarios)
--- SELECT c.id, c.comentario, u.nome AS autor
--- FROM comentario c
--- JOIN usuario u ON c.usuario_id = u.id
--- WHERE c.publicacao_id =1;
-
+-- select * from view_quantidade_reacoes_comentarios_do_usuario;
 
 -- select * from usuario;
 -- select * from publicacao;
 -- select * from comentario;
+    
     

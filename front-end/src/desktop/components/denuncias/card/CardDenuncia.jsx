@@ -18,40 +18,46 @@ function generateInitials(name) {
     return `${firstInitial}${lastInitial}`;
 }
 
-function deletarPublicacao(id) {
-    api.delete(`/publicacoes/${id}`)
+function ignorarDenuncia(id, tipo) {
+    const endpoint = tipo === 'publicacoes' ? `/publicacoes/${id}/remover-denuncias` : `/comentarios/${id}/remover-denuncias`;
+    api.delete(endpoint)
         .then(response => {
-            console.log("Publicação deletada com sucesso:", response.data);
-            toast.success("Publicação deletada com sucesso!");
+            toast.success("Denúncia ignorada com sucesso!");
             window.location.reload();
         })
         .catch(error => {
-            console.log(id)
-            console.error("Ocorreu um erro ao deletar a publicação:", error);
+            console.error("Erro ao ignorar denúncia:", error);
         });
 }
 
-const CardDenuncia = ({ idPublicacao, publicacao, quantidadeDenuncias }) => {
+function deletarItem(id, tipo) {
+    const endpoint = tipo === 'publicacoes' ? `/publicacoes/${id}` : `/comentarios/${id}`;
+    api.delete(endpoint)
+        .then(response => {
+            toast.success(`${tipo === 'publicacoes' ? 'Publicação' : 'Comentário'} deletado(a) com sucesso!`);
+            window.location.reload();
+        })
+        .catch(error => {
+            console.error(`Erro ao deletar ${tipo === 'publicacoes' ? 'publicação' : 'comentário'}:`, error);
+        });
+}
+
+const CardDenuncia = ({ idItem, item, quantidadeDenuncias, tipo }) => {
     const [showPopup, setShowPopup] = useState(false);
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [showConfirmationIgnore, setShowConfirmationIgnore] = useState(false);
 
-    const togglePopup = () => {
-        setShowPopup(!showPopup);
-    };
+    const togglePopup = () => setShowPopup(!showPopup);
 
     const avatarColor = useMemo(() => {
         const pastelColors = [
             '#FFB3BA', '#FFDFBA', '#FFFFBA', '#BAFFC9', '#BAE1FF',
-            '#FFB3B3', '#FFCCB3', '#FFFFCC', '#CCFFCC', '#CCE5FF',
-            '#FFC3A0', '#FFEDCC', '#FFFFE0', '#E0FFCC', '#CCE0FF',
-            '#FFC4C4', '#FFE1C4', '#FFFFD1', '#D1FFD1', '#D1E8FF'
         ];
         const randomIndex = Math.floor(Math.random() * pastelColors.length);
         return pastelColors[randomIndex];
-    }, []); // Dependência vazia para garantir que seja executado apenas uma vez
+    }, []);
 
-    const avatarInitials = useMemo(() => generateInitials(publicacao.usuario.nome), [publicacao.usuario.nome]);
+    const avatarInitials = useMemo(() => generateInitials(item.usuario.nome), [item.usuario.nome]);
 
     return (
         <div className={styles.card}>
@@ -77,9 +83,11 @@ const CardDenuncia = ({ idPublicacao, publicacao, quantidadeDenuncias }) => {
                 >
                     {avatarInitials}
                 </div>
-                <span className={styles.nome}>{publicacao.usuario.nome}</span>
+                <span className={styles.nome}>{item.usuario.nome}</span>
             </div>
-            <div className={styles.conteudo}>{publicacao.conteudo}</div>
+            <div className={styles.conteudo}>
+                {item.conteudo || item.comentario}
+            </div>
             <div className={styles.denuncia}>
                 <img src={IconeDenuncia} className={styles.iconeDenuncia} alt='Ícone de denúncia' />
                 <div className={styles.denuncias}>
@@ -94,9 +102,6 @@ const CardDenuncia = ({ idPublicacao, publicacao, quantidadeDenuncias }) => {
                         <img src={Ignorar} alt="Ignorar" />
                         <span>Ignorar</span>
                     </div>
-
-                    <div className={styles.linhaPopup}></div>
-
                     <div className={styles.opcao} onClick={() => { setShowPopup(false); setShowConfirmation(true); }}>
                         <img src={Excluir} alt="Excluir" />
                         <span>Excluir</span>
@@ -107,9 +112,8 @@ const CardDenuncia = ({ idPublicacao, publicacao, quantidadeDenuncias }) => {
             {showConfirmationIgnore && (
                 <div className={styles.modalOverlay}>
                     <div className={styles.modalContent}>
-                        <h3>Deseja mesmo ignorar esta denúncia?</h3>
-                        <p>Ela sairá da lista de publicações e comentários denunciados</p>
-                        <button className={styles.confirmButton}>Sim</button>
+                        <h3>Deseja ignorar esta denúncia?</h3>
+                        <button className={styles.confirmButton} onClick={() => { ignorarDenuncia(idItem, tipo); setShowConfirmationIgnore(false); }}>Sim</button>
                         <button className={styles.cancelButton} onClick={() => setShowConfirmationIgnore(false)}>Cancelar</button>
                     </div>
                 </div>
@@ -119,9 +123,9 @@ const CardDenuncia = ({ idPublicacao, publicacao, quantidadeDenuncias }) => {
                 <div className={styles.modalOverlay}>
                     <div className={styles.modalContent}>
                         <h3>Confirmar Exclusão</h3>
-                        <p>Tem certeza de que deseja excluir esta denúncia?</p>
-                        <button className={styles.confirmButton} onClick={() => {deletarPublicacao(idPublicacao); setShowConfirmation(false)}}>Sim</button>
-                        <button className={styles.cancelButton} onClick={() => setShowConfirmation(false) }>Cancelar</button>
+                        <p>Tem certeza de que deseja excluir esta {tipo === 'publicacoes' ? 'publicação' : 'comentário'}?</p>
+                        <button className={styles.confirmButton} onClick={() => { deletarItem(idItem, tipo); setShowConfirmation(false); }}>Sim</button>
+                        <button className={styles.cancelButton} onClick={() => setShowConfirmation(false)}>Cancelar</button>
                     </div>
                 </div>
             )}

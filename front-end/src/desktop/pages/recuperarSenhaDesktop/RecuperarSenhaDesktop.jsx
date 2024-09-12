@@ -76,7 +76,7 @@ const RecuperarSenhaDesktop = () => {
                     <Botao funcao={handleSave} textoBotao="Enviar" />
                 </div>
             </Card>
-            <ToastContainer />
+            {/* <ToastContainer /> */}
         </div >
     )
 }

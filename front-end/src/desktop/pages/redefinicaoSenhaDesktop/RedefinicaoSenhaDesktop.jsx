@@ -54,7 +54,7 @@ const RedefinicaoSenhaDesktop = () => {
                     <Botao funcao={handleSave} textoBotao="Redefinir" />
                 </div>
             </Card>
-            <ToastContainer />
+            {/* <ToastContainer /> */}
         </div >
     )
 }

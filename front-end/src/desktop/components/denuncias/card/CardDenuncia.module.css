@@ -1,6 +1,7 @@
 .card {
     display: flex;
     flex-direction: column;
+    flex-shrink: 1;
     width: 18vw;
     box-shadow: 0px 4px 16px rgb(0, 0, 0, 0.1);
     border-radius: 10px;
