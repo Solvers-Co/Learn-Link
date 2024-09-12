@@ -99,13 +99,12 @@ public class ComentarioController {
     @ApiResponse(responseCode = "204", description = "Comentário deletado")
     @ApiResponse(responseCode = "404", description = "Comentário não encontrado")
     @Operation(summary = "Remover reacão", description = "Método que remove a reacao", tags = {"Comentários"})
-    @DeleteMapping("/{idComentario}/reagir/{idReacao}")
+    @DeleteMapping("/{idComentario}/reagir")
     public ResponseEntity<Void> removerReacao(
             @PathVariable
             @Parameter(name = "idComentario", description = "Comentário id", example = "1") int idComentario,
-            @PathVariable
-            @Parameter(name = "idReacao", description = "Reação id", example = "1") int idReacao) {
-        reacaoService.removerReacao(idComentario, idReacao);
+            @RequestBody ReacaoCriarDto reacaoCriarDto) {
+        reacaoService.removerReacaoComentario(idComentario, reacaoCriarDto);
         return ResponseEntity.noContent().build();
     }
 

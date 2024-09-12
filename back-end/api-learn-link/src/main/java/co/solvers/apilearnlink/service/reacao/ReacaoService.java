@@ -67,6 +67,20 @@ public class ReacaoService {
         }
     }
 
+    public void removerReacaoComentario(int idComentario, ReacaoCriarDto reacaoDto) {
+        Usuario usuario = usuarioService.buscarPorId(reacaoDto.getIdUsuario());
+        Comentario comentario = comentarioService.buscarPorId(idComentario);
+        TipoReacao tipoReacao = tipoReacaoService.buscarPorNome(reacaoDto.getTipoReacao());
+
+        Optional<Reacao> reacaoOptional = reacaoRepository.findByUsuarioAndComentarioAndTipoReacao(usuario, comentario, tipoReacao);
+
+        if (reacaoOptional.isPresent()) {
+            reacaoRepository.delete(reacaoOptional.get());
+        } else {
+            throw new NaoEncontradoException("Reação");
+        }
+    }
+
 
     public Reacao buscarPorId(int id) {
         Optional<Reacao> optReacao = reacaoRepository.findById(id);
