@@ -6,9 +6,7 @@ import co.solvers.apilearnlink.service.mediaUsuariosAtivosNoMes.dto.UsuariosAtiv
 import co.solvers.apilearnlink.service.mediaUsuariosAtivosNoMes.dto.mapper.UsuariosAtivosNoMesMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,9 +17,9 @@ public class UsuariosAtivosNoMesController {
 
     private final UsuariosAtivosNoMesService usuariosAtivosNoMesService;
 
-    @GetMapping("/mes")
-    private ResponseEntity<List<UsuariosAtivosNoMesListagemDto>> listagemMediaUsuariosAtivosNoMes(){
-        List<MediaUsuariosAtivosNoMes> mediaUsuariosAtivosNoMes = usuariosAtivosNoMesService.listagemUsuariosAtivosNoMes();
+    @GetMapping("/media-mes")
+    private ResponseEntity<List<UsuariosAtivosNoMesListagemDto>> listagemMediaUsuariosAtivosNoMes(@RequestParam int mes){
+        List<MediaUsuariosAtivosNoMes> mediaUsuariosAtivosNoMes = usuariosAtivosNoMesService.listagemUsuariosAtivosNoMes(mes);
 
         List<UsuariosAtivosNoMesListagemDto> dtos = UsuariosAtivosNoMesMapper.toDto(mediaUsuariosAtivosNoMes);
         return ResponseEntity.ok(dtos);

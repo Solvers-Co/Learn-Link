@@ -1,7 +1,6 @@
 package co.solvers.apilearnlink.service.mediaUsuariosAtivosNoMes.dto.mapper;
 
 import co.solvers.apilearnlink.domain.views.mediaUsuariosAtivosNoMes.MediaUsuariosAtivosNoMes;
-import co.solvers.apilearnlink.service.mediaUsuariosAtivosNoMes.UsuariosAtivosNoMesService;
 import co.solvers.apilearnlink.service.mediaUsuariosAtivosNoMes.dto.UsuariosAtivosNoMesListagemDto;
 
 import java.util.ArrayList;
