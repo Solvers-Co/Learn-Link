@@ -57,15 +57,16 @@ const FeedGeral = () => {
     };
 
     const handleSortChange = (direction) => {
-        if (direction !== sortDirection) { // Verifica se a nova direção é diferente da atual
+        if (direction !== sortDirection) {
             setSortDirection(direction);
-            setPage(0);
-            setPublicacoes([]); // Limpa a lista para evitar duplicações ao trocar a ordenação
+            setPage(0); // Reseta para a primeira página ao mudar a ordenação
+            setPublicacoes([]); // Limpa a lista de publicações
             setIsSortPopupOpen(false); // Fecha o popup ao escolher uma opção
         } else {
             setIsSortPopupOpen(false); // Apenas fecha o popup se a direção for a mesma
         }
     };
+    
 
 
     useEffect(() => {
@@ -80,18 +81,25 @@ const FeedGeral = () => {
                 const url = canalId ? '/publicacoes/publicacoes-por-canal-paginado' : '/publicacoes/publicacoes-mais-recentes-paginado';
                 const response = await api.get(url, { params });
                 const publicacoesRecebidas = response?.data?.content || [];
-
-                setPublicacoes(prev => [...prev, ...publicacoesRecebidas]);
+    
+                // Se estiver na primeira página, substitui as publicações, caso contrário, concatena
+                if (page === 0) {
+                    setPublicacoes(publicacoesRecebidas); // Substitui as publicações quando está na primeira página
+                } else {
+                    setPublicacoes(prev => [...prev, ...publicacoesRecebidas]); // Concatena as próximas páginas
+                }
+                
                 setTotalPages(response?.data.totalPages || 0);
-
+    
                 console.log("Publicacoes recebidas:", response.data.content);
             } catch (error) {
                 console.error("Erro ao buscar publicações:", error);
             }
         };
-
+    
         fetchPublicacoes();
     }, [page, canalId, sortDirection]);
+    
 
     useEffect(() => {
         const observer = new IntersectionObserver(([entry]) => {
