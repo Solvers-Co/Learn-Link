@@ -23,10 +23,11 @@ function DadosKpi({ mes }) {
                 setTemDadosCanal(false);
             }
 
-            // Requisição para a média de usuários ativos
-            const usuariosResponse = await api.get(`/media-usuarios-ativos/mes`);
+            // Requisição para a nova API de média de usuários ativos
+            const usuariosResponse = await api.get(`/media-usuarios-ativos/media-mes`, { params: { mes } });
+
             if (usuariosResponse.data && usuariosResponse.data.length > 0) {
-                setMediaUsuariosAtivos(usuariosResponse.data[0].usuariosAtivos); // Acessa o valor da média
+                setMediaUsuariosAtivos(usuariosResponse.data[0].usuariosAtivos); // Acessa o valor da média de usuários ativos
                 setTemDadosUsuarios(true);
             } else {
                 setMediaUsuariosAtivos(null);
