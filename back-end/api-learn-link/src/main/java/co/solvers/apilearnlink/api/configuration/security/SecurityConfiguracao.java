@@ -100,7 +100,8 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/qtd-reacoes-comentario-usuarios/buscar-nivel-de-classificacao-do-usuario/{id}"),
             new AntPathRequestMatcher("/qtd-reacoes-comentario-usuarios/buscar-nivel-de-classificacao-de-todos-usuarios"),
             new AntPathRequestMatcher("/usuarios/classificar-usuario/{id}"),
-            new AntPathRequestMatcher("/usuarios/buscarEmail/{email}")
+            new AntPathRequestMatcher("/usuarios/buscarEmail/{email}"),
+            new AntPathRequestMatcher("/media-usuarios-ativos/mes")
     };
 
     @Bean
