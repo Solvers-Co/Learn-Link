@@ -1,10 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+
 .telaDenuncias {
     width: 65%;
     margin-right: 50px;
 }
 
 .cabecalho {
-    width: 95%;
+    width: 100%;
     height: 100px;
     display: flex;
     flex-direction: row;
@@ -12,10 +14,17 @@
     align-items: center;
 }
 
+.cardContainer{
+    width: 100%;
+    flex: 1;
+    margin: 0px auto ;
+}
+
 .cardsDenuncias {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: stretch;
+    column-gap: 2vw;
 }
 
 .semDenuncias {
@@ -28,4 +37,20 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+* {
+    font-family: "Nunito Sans", sans-serif;
+}
+
+.btnDropdown {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    opacity: 75%;
+    font-family: "Nunito Sans", sans-serif;
+}
+
+.dropdown {
+    border: none;
 }

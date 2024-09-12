@@ -49,20 +49,23 @@ const TelaDenuncias = () => {
             ) : error ? (
                 <div>{error}</div>
             ) : (
+                    <div className={styles.cardContainer}>
                 <div className={styles.cardsDenuncias}>
+                        
                     {denuncias.length === 0 ? (
                         <div className={styles.semDenuncias}>Não há denúncias para exibir</div>
                     ) : (
                         denuncias.map((denuncia, index) => (
                             <CardDenuncia
-                                key={index}
-                                idItem={denuncia.publicacao?.id || denuncia.comentario?.id}
-                                item={denuncia.publicacao || denuncia.comentario}
-                                quantidadeDenuncias={denuncia.quantidadeDenuncias}
-                                tipo={tipoDenuncia} // Passa o tipo de denúncia
+                            key={index}
+                            idItem={denuncia.publicacao?.id || denuncia.comentario?.id}
+                            item={denuncia.publicacao || denuncia.comentario}
+                            quantidadeDenuncias={denuncia.quantidadeDenuncias}
+                            tipo={tipoDenuncia} // Passa o tipo de denúncia
                             />
                         ))
                     )}
+                    </div>
                 </div>
             )}
         </div>

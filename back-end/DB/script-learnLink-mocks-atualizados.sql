@@ -109,19 +109,19 @@ UPDATE usuario SET endereco_id = 30 WHERE id = 30;
 
 -- Para 1 de Setembro de 2024
 INSERT INTO publicacao (conteudo, data_hora, tipo_publicacao_id, canal_id, usuario_id) VALUES
-('Como resolver uma equação linear?', '2024-08-01 09:00:00', 1, 1, 1),
-('Qual é a importância dos conectivos na escrita?', '2024-08-01 11:00:00', 1, 2, 2),
-('Qual o papel das enzimas na digestão?', '2024-08-01 13:00:00', 1, 3, 3),
-('Quais são os principais eventos da Revolução Francesa?', '2024-08-01 15:00:00', 1, 4, 4);
+('Como resolver uma equação linear?', '2024-08-01 09:00:00', 1, 1, 9),
+('Qual é a importância dos conectivos na escrita?', '2024-08-01 11:00:00', 1, 2, 12),
+('Qual o papel das enzimas na digestão?', '2024-08-01 13:00:00', 1, 3, 20),
+('Quais são os principais eventos da Revolução Francesa?', '2024-08-01 15:00:00', 1, 4, 5);
 
 INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) VALUES
-('Equações lineares podem ser resolvidas isolando a variável.', '2024-08-01 09:30:00', 1, 2),
-('A fórmula geral é ax + b = 0.', '2024-08-01 09:45:00', 1, 3),
-('Sempre verifique as soluções substituindo-as na equação original.', '2024-08-01 10:00:00', 1, 4),
+('Equações lineares podem ser resolvidas isolando a variável.', '2024-08-01 09:30:00', 1, 4),
+('A fórmula geral é ax + b = 0.', '2024-08-01 09:45:00', 1, 21),
+('Sempre verifique as soluções substituindo-as na equação original.', '2024-08-01 10:00:00', 1, 20),
 
-('Conectivos como "mas", "porque", "portanto" ajudam a conectar ideias.', '2024-08-01 11:30:00', 2, 3),
-('Eles são essenciais para a coesão textual.', '2024-08-01 11:45:00', 2, 4),
-('Cada conectivo tem uma função específica na argumentação.', '2024-08-01 12:00:00', 2, 1),
+('Conectivos como "mas", "porque", "portanto" ajudam a conectar ideias.', '2024-08-01 11:30:00', 2, 20),
+('Eles são essenciais para a coesão textual.', '2024-08-01 11:45:00', 2, 5),
+('Cada conectivo tem uma função específica na argumentação.', '2024-08-01 12:00:00', 2, 8),
 
 ('Enzimas aceleram reações químicas no sistema digestivo.', '2024-08-01 13:30:00', 3, 4),
 ('Elas ajudam na quebra de macromoléculas em moléculas menores.', '2024-08-01 13:45:00', 3, 1),
@@ -133,21 +133,21 @@ INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) VALUES
 
 -- Para 2 de Setembro de 2024
 INSERT INTO publicacao (conteudo, data_hora, tipo_publicacao_id, canal_id, usuario_id) VALUES
-('Como fatorar um polinômio quadrático?', '2024-08-02 09:00:00', 1, 1, 2),
-('Qual a função dos verbos em uma oração?', '2024-08-02 11:00:00', 1, 2, 3),
-('Qual é a importância dos ecossistemas?', '2024-08-02 13:00:00', 1, 3, 4),
-('O que foi a Segunda Guerra Mundial?', '2024-08-02 15:00:00', 1, 4, 1);
+('Como fatorar um polinômio quadrático?', '2024-08-02 09:00:00', 1, 1, 8),
+('Qual a função dos verbos em uma oração?', '2024-08-02 11:00:00', 1, 2, 10),
+('Qual é a importância dos ecossistemas?', '2024-08-02 13:00:00', 1, 3, 11),
+('O que foi a Segunda Guerra Mundial?', '2024-08-02 15:00:00', 1, 4, 13);
 
 INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) VALUES
-('Polinômios quadráticos podem ser fatorados em dois binômios.', '2024-08-02 09:30:00', 5, 3),
-('Use a fórmula de Bhaskara para encontrar as raízes.', '2024-08-02 09:45:00', 5, 4),
-('A fatoração ajuda a simplificar a resolução de equações.', '2024-08-02 10:00:00', 5, 1),
+('Polinômios quadráticos podem ser fatorados em dois binômios.', '2024-08-02 09:30:00', 5, 12),
+('Use a fórmula de Bhaskara para encontrar as raízes.', '2024-08-02 09:45:00', 5, 11),
+('A fatoração ajuda a simplificar a resolução de equações.', '2024-08-02 10:00:00', 5, 15),
 
-('Os verbos são essenciais para expressar ações ou estados.', '2024-08-02 11:30:00', 6, 4),
-('Eles podem ser transitivos ou intransitivos.', '2024-08-02 11:45:00', 6, 1),
-('Os verbos são o núcleo do predicado.', '2024-08-02 12:00:00', 6, 2),
+('Os verbos são essenciais para expressar ações ou estados.', '2024-08-02 11:30:00', 6, 5),
+('Eles podem ser transitivos ou intransitivos.', '2024-08-02 11:45:00', 6, 9),
+('Os verbos são o núcleo do predicado.', '2024-08-02 12:00:00', 6, 22),
 
-('Ecossistemas são importantes para a biodiversidade.', '2024-08-02 13:30:00', 7, 1),
+('Ecossistemas são importantes para a biodiversidade.', '2024-08-02 13:30:00', 7, 19),
 ('Eles ajudam na regulação do clima.', '2024-08-02 13:45:00', 7, 2),
 ('A preservação dos ecossistemas é crucial para a saúde ambiental.', '2024-08-02 14:00:00', 7, 3),
 
@@ -231,16 +231,16 @@ INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) VALUES
 INSERT INTO publicacao (conteudo, data_hora, tipo_publicacao_id, canal_id, usuario_id) VALUES
 ('Como resolver uma equação exponencial?', '2024-08-06 09:00:00', 1, 1, 2),
 ('Qual a diferença entre adjetivo e advérbio?', '2024-08-06 11:00:00', 1, 2, 3),
-('Quais são os tipos de interações entre organismos?', '2024-08-06 13:00:00', 1, 3, 4),
+('Quais são os tipos de interações entre organismos?', '2024-08-06 13:00:00', 1, 3, 5),
 ('Quais foram as consequências da Reforma Protestante?', '2024-08-06 15:00:00', 1, 4, 1);
 
 INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) VALUES
 ('Use logaritmos para resolver equações exponenciais.', '2024-08-06 09:30:00', 21, 3),
-('Equações do tipo a^x = b podem ser resolvidas usando log(a^x) = log(b).', '2024-08-06 09:45:00', 21, 4),
+('Equações do tipo a^x = b podem ser resolvidas usando log(a^x) = log(b).', '2024-08-06 09:45:00', 21, 9),
 ('Verifique as condições de existência dos logaritmos.', '2024-08-06 10:00:00', 21, 1),
 
-('Adjetivos qualificam substantivos, enquanto advérbios qualificam verbos.', '2024-08-06 11:30:00', 22, 4),
-('Advérbios podem indicar como, quando e onde algo acontece.', '2024-08-06 11:45:00', 22, 1),
+('Adjetivos qualificam substantivos, enquanto advérbios qualificam verbos.', '2024-08-06 11:30:00', 22, 17),
+('Advérbios podem indicar como, quando e onde algo acontece.', '2024-08-06 11:45:00', 22, 21),
 ('Adjetivos descrevem características dos substantivos.', '2024-08-06 12:00:00', 22, 2),
 
 ('Interações entre organismos incluem predatismo e simbiose.', '2024-08-06 13:30:00', 23, 1),
@@ -255,7 +255,7 @@ INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) VALUES
 INSERT INTO publicacao (conteudo, data_hora, tipo_publicacao_id, canal_id, usuario_id) VALUES
 ('Como aplicar a fórmula de Bhaskara?', '2024-08-07 09:00:00', 1, 1, 3),
 ('O que é um advérbio de intensidade?', '2024-08-07 11:00:00', 1, 2, 4),
-('Qual o papel das cadeias alimentares no ecossistema?', '2024-08-07 13:00:00', 1, 3, 1),
+('Qual o papel das cadeias alimentares no ecossistema?', '2024-08-07 13:00:00', 1, 3, 7),
 ('Como o Renascimento influenciou a História?', '2024-08-07 15:00:00', 1, 4, 2);
 
 -- INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) VALUES
@@ -283,14 +283,14 @@ INSERT INTO publicacao (conteudo, data_hora, tipo_publicacao_id, canal_id, usuar
 
 INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) VALUES
 ('A fórmula é F = G * (m1 * m2) / r^2.', '2024-08-08 09:30:00', 29, 2),
-('G é a constante gravitacional, m1 e m2 são as massas dos corpos.', '2024-08-08 09:45:00', 29, 3),
-('r é a distância entre os centros dos corpos.', '2024-08-08 10:00:00', 29, 4),
+('G é a constante gravitacional, m1 e m2 são as massas dos corpos.', '2024-08-08 09:45:00', 29, 8),
+('r é a distância entre os centros dos corpos.', '2024-08-08 10:00:00', 29, 7),
 
-('Reação de neutralização ocorre quando um ácido e uma base reagem.', '2024-08-08 11:30:00', 30, 3),
+('Reação de neutralização ocorre quando um ácido e uma base reagem.', '2024-08-08 11:30:00', 30, 10),
 ('O produto é uma sal e água.', '2024-08-08 11:45:00', 30, 4),
 ('Pode ser utilizado para ajustar o pH de soluções.', '2024-08-08 12:00:00', 30, 1),
 
-('Estratificação social refere-se à divisão da sociedade em camadas.', '2024-08-08 13:30:00', 31, 1),
+('Estratificação social refere-se à divisão da sociedade em camadas.', '2024-08-08 13:30:00', 31, 10),
 ('Ela é baseada em fatores como renda, educação e ocupação.', '2024-08-08 13:45:00', 31, 2),
 ('Essas camadas influenciam as oportunidades e a qualidade de vida.', '2024-08-08 14:00:00', 31, 3);
 
@@ -305,11 +305,11 @@ INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) VALUES
 ('Esta lei é uma das bases da física clássica.', '2024-08-09 09:45:00', 32, 4),
 ('Ela explica a interação entre dois corpos.', '2024-08-09 10:00:00', 32, 1),
 
-('O pH é calculado como o logaritmo negativo da concentração de íons H+.', '2024-08-09 11:30:00', 33, 4),
+('O pH é calculado como o logaritmo negativo da concentração de íons H+.', '2024-08-09 11:30:00', 33, 10),
 ('Para pH = 7, a solução é neutra.', '2024-08-09 11:45:00', 33, 1),
-('Valores abaixo de 7 indicam uma solução ácida.', '2024-08-09 12:00:00', 33, 2),
+('Valores abaixo de 7 indicam uma solução ácida.', '2024-08-09 12:00:00', 33, 23),
 
-('Cultura é o conjunto de valores, normas e práticas de um grupo social.', '2024-08-09 13:30:00', 34, 2),
+('Cultura é o conjunto de valores, normas e práticas de um grupo social.', '2024-08-09 13:30:00', 34, 24),
 ('Ela influencia o comportamento e a identidade dos indivíduos.', '2024-08-09 13:45:00', 34, 3),
 ('A cultura é transmitida através da socialização.', '2024-08-09 14:00:00', 34, 4);
 
@@ -317,14 +317,14 @@ INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) VALUES
 INSERT INTO publicacao (conteudo, data_hora, tipo_publicacao_id, canal_id, usuario_id) VALUES
 ('Qual é a fórmula para a lei dos gases ideais?', '2024-08-10 09:00:00', 1, 5, 3),
 ('O que é um ácido de Lewis?', '2024-08-10 11:00:00', 1, 6, 4),
-('Como a globalização afeta a sociedade?', '2024-08-10 13:00:00', 1, 7, 1);
+('Como a globalização afeta a sociedade?', '2024-08-10 13:00:00', 1, 7, 10);
 
 INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) VALUES
 ('A fórmula é PV = nRT.', '2024-08-10 09:30:00', 35, 4),
 ('P é a pressão, V é o volume, n é a quantidade de substância, R é a constante dos gases e T é a temperatura.', '2024-08-10 09:45:00', 35, 1),
 ('A fórmula assume que os gases são ideais.', '2024-08-10 10:00:00', 35, 2),
 
-('Ácidos de Lewis são aceitadores de pares de elétrons.', '2024-08-10 11:30:00', 36, 1),
+('Ácidos de Lewis são aceitadores de pares de elétrons.', '2024-08-10 11:30:00', 36, 10),
 ('Eles podem formar complexos com bases de Lewis.', '2024-08-10 11:45:00', 36, 2),
 ('Essa definição é mais geral que a de ácidos de Brønsted.', '2024-08-10 12:00:00', 36, 3),
 
@@ -341,7 +341,7 @@ INSERT INTO publicacao (conteudo, data_hora, tipo_publicacao_id, canal_id, usuar
 INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) VALUES
 ('A fórmula é 1/2 * m * v^2.', '2024-08-11 09:30:00', 38, 1),
 ('m é a massa e v é a velocidade do objeto.', '2024-08-11 09:45:00', 38, 2),
-('A energia cinética aumenta com o quadrado da velocidade.', '2024-08-11 10:00:00', 38, 3),
+('A energia cinética aumenta com o quadrado da velocidade.', '2024-08-11 10:00:00', 38, 26),
 
 ('Reações de oxirredução envolvem a transferência de elétrons.', '2024-08-11 11:30:00', 39, 2),
 ('O agente redutor doa elétrons e o agente oxidante os recebe.', '2024-08-11 11:45:00', 39, 3),
@@ -349,7 +349,7 @@ INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) VALUES
 
 ('O capitalismo é um sistema econômico baseado na propriedade privada e no lucro.', '2024-08-11 13:30:00', 40, 3),
 ('Ele pode levar a desigualdades econômicas e sociais.', '2024-08-11 13:45:00', 40, 4),
-('O capitalismo também promove inovação e crescimento econômico.', '2024-08-11 14:00:00', 40, 1);
+('O capitalismo também promove inovação e crescimento econômico.', '2024-08-11 14:00:00', 40, 22);
 
 -- Para 12 de Setembro de 2024
 INSERT INTO publicacao (conteudo, data_hora, tipo_publicacao_id, canal_id, usuario_id) VALUES
@@ -672,6 +672,17 @@ INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 
 (1, 3, 5);
 
+INSERT INTO reacao (tipo_reacao_id, comentario_id, usuario_id) VALUES
+(1, 1, 2),
+(1, 1, 3),
+(1, 1, 4),
+
+(1, 2, 1),
+(1, 2, 3),
+(1, 2, 4),
+
+(1, 3, 5);
+
 -- Reações para o dia 2 de Setembro de 2024
 INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 (1, 4, 1),
@@ -686,6 +697,17 @@ INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 (1, 6, 4),
 (1, 6, 5);
 
+
+INSERT INTO reacao (tipo_reacao_id, comentario_id, usuario_id) VALUES
+(1, 4, 1),
+(1, 4, 2),
+
+(1, 5, 2),
+(1, 5, 5),
+
+(1, 6, 3),
+(1, 6, 5);
+
 -- Reações para o dia 3 de Setembro de 2024
 INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 (1, 7, 1),
@@ -698,8 +720,23 @@ INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 (1, 9, 4),
 (1, 9, 5);
 
+INSERT INTO reacao (tipo_reacao_id, comentario_id, usuario_id) VALUES
+(1, 7, 1);
+
 -- Reações para o dia 4 de Setembro de 2024
 INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
+(1, 10, 1),
+(1, 10, 2),
+(1, 10, 4),
+
+(1, 11, 2),
+(1, 11, 5),
+
+(1, 12, 1),
+(1, 12, 3),
+(1, 12, 5);
+
+INSERT INTO reacao (tipo_reacao_id, comentario_id, usuario_id) VALUES
 (1, 10, 1),
 (1, 10, 2),
 (1, 10, 4),
@@ -725,6 +762,19 @@ INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 (1, 15, 3),
 (1, 15, 5);
 
+INSERT INTO reacao (tipo_reacao_id, comentario_id, usuario_id) VALUES
+(1, 13, 10),
+(1, 13, 12),
+(1, 13, 8),
+(1, 13, 9),
+
+(1, 14, 6),
+(1, 14, 10),
+
+(1, 15, 20),
+(1, 15, 14),
+(1, 15, 22);
+
 -- Reações para o dia 6 de Setembro de 2024
 INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 (1, 16, 1),
@@ -739,7 +789,29 @@ INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 (1, 18, 4),
 (1, 18, 5);
 
--- Reações para o dia 7 de Setembro de 2024
+INSERT INTO reacao (tipo_reacao_id, comentario_id, usuario_id) VALUES
+(1, 16, 5),
+(1, 16, 9),
+
+(1, 17, 20),
+(1, 17, 7),
+
+(1, 18, 15),
+(1, 18, 16),
+(1, 18, 17);
+
+INSERT INTO reacao (tipo_reacao_id, comentario_id, usuario_id) VALUES
+(1, 19, 9),
+(1, 19, 2),
+(1, 19, 4),
+
+(1, 20, 7),
+(1, 20, 5),
+
+(1, 21, 25),
+(1, 21, 2),
+(1, 21, 3);
+
 INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 (1, 19, 1),
 (1, 19, 2),
@@ -780,6 +852,19 @@ INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 (1, 27, 3),
 (1, 27, 5);
 
+INSERT INTO reacao (tipo_reacao_id, comentario_id, usuario_id) VALUES
+(1, 25, 1),
+(1, 25, 2),
+(1, 25, 4),
+
+(1, 26, 2),
+(1, 26, 4),
+(1, 26, 5),
+
+(1, 27, 1),
+(1, 27, 3),
+(1, 27, 5);
+
 -- Reações para o dia 10 de Setembro de 2024
 INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 (1, 28, 2),
@@ -794,6 +879,17 @@ INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 (1, 30, 1),
 (1, 30, 5);
 
+INSERT INTO reacao (tipo_reacao_id, comentario_id, usuario_id) VALUES
+(1, 28, 2),
+(1, 28, 7),
+(1, 28, 5),
+
+(1, 29, 15),
+(1, 29, 20),
+
+(1, 30, 10),
+(1, 30, 9);
+
 -- Reações para o dia 11 de Setembro de 2024
 INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 (1, 31, 2),
@@ -805,6 +901,17 @@ INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 
 (1, 33, 1),
 (1, 33, 5);
+
+INSERT INTO reacao (tipo_reacao_id, comentario_id, usuario_id) VALUES
+(1, 31, 18),
+(1, 31, 24),
+
+(1, 32, 14),
+(1, 32, 7),
+(1, 32, 12),
+
+(1, 33, 25),
+(1, 33, 6);
 
 -- Reações para o dia 12 de Setembro de 2024
 INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
@@ -819,6 +926,18 @@ INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 (1, 36, 3),
 (1, 36, 5);
 
+INSERT INTO reacao (tipo_reacao_id, comentario_id, usuario_id) VALUES
+(1, 34, 20),
+(1, 34, 11),
+
+(1, 35, 9),
+(1, 35, 23),
+(1, 35, 16),
+
+(1, 36, 3),
+(1, 36, 10),
+(1, 36, 22);
+
 -- Reações para o dia 13 de Setembro de 2024
 INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 (1, 37, 1),
@@ -831,6 +950,14 @@ INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 (1, 39, 2),
 (1, 39, 5);
 
+INSERT INTO reacao (tipo_reacao_id, comentario_id, usuario_id) VALUES
+(1, 37, 8),
+(1, 37, 21),
+(1, 37, 15),
+
+(1, 39, 5),
+(1, 39, 17);
+
 -- Reações para o dia 14 de Setembro de 2024
 INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 (1, 40, 1),
@@ -842,6 +969,14 @@ INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 
 (1, 42, 1),
 (1, 42, 3);
+
+INSERT INTO reacao (tipo_reacao_id, comentario_id, usuario_id) VALUES
+(1, 40, 2),
+(1, 40, 4),
+
+(1, 41, 1),
+(1, 41, 22),
+(1, 41, 16);
 
 -- Reações para o dia 15 de Setembro de 2024
 INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
@@ -856,6 +991,18 @@ INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 (1, 45, 1),
 (1, 45, 3);
 
+INSERT INTO reacao (tipo_reacao_id, comentario_id, usuario_id) VALUES
+(1, 43, 9),
+(1, 43, 12),
+(1, 43, 25),
+
+(1, 44, 18),
+(1, 44, 23),
+(1, 44, 15),
+
+(1, 45, 5),
+(1, 45, 17);
+
 -- Reações para o dia 16 de Setembro de 2024
 INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 (1, 46, 2),
@@ -869,6 +1016,18 @@ INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 (1, 48, 2),
 (1, 48, 5);
 
+INSERT INTO reacao (tipo_reacao_id, comentario_id, usuario_id) VALUES
+(1, 46, 21),
+(1, 46, 4),
+
+(1, 47, 7),
+(1, 47, 24),
+(1, 47, 13),
+
+(1, 48, 19),
+(1, 48, 3),
+(1, 48, 10);
+
 -- Reações para o dia 17 de Setembro de 2024
 INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 (1, 49, 2),
@@ -880,6 +1039,16 @@ INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 
 (1, 51, 1),
 (1, 51, 4);
+
+INSERT INTO reacao (tipo_reacao_id, comentario_id, usuario_id) VALUES
+(1, 49, 11),
+(1, 49, 6),
+(1, 49, 2),
+
+(1, 50, 20),
+(1, 50, 9),
+
+(1, 51, 25);
 
 -- Reações para o dia 18 de Setembro de 2024
 INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
@@ -893,6 +1062,20 @@ INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 (1, 54, 2),
 (1, 54, 3);
 
+INSERT INTO reacao (tipo_reacao_id, comentario_id, usuario_id) VALUES
+(1, 52, 15),
+(1, 52, 5),
+
+(1, 53, 8),
+(1, 53, 24),
+(1, 53, 18),
+(1, 53, 19),
+(1, 53, 5),
+(1, 53, 4),
+
+(1, 54, 6),
+(1, 54, 11);
+
 -- Reações para o dia 19 de Setembro de 2024
 INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 (1, 55, 1),
@@ -904,6 +1087,17 @@ INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 
 (1, 57, 1),
 (1, 57, 3);
+
+INSERT INTO reacao (tipo_reacao_id, comentario_id, usuario_id) VALUES
+(1, 55, 22),
+(1, 55, 7),
+
+(1, 56, 1),
+(1, 56, 13),
+(1, 56, 3),
+
+(1, 57, 17),
+(1, 57, 25);
 
 -- Reações para o dia 20 de Setembro de 2024
 INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
@@ -917,6 +1111,17 @@ INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 (1, 60, 1),
 (1, 60, 3);
 
+INSERT INTO reacao (tipo_reacao_id, comentario_id, usuario_id) VALUES
+(1, 58, 11),
+(1, 58, 19),
+
+(1, 59, 6),
+(1, 59, 23),
+(1, 59, 15),
+
+(1, 60, 10),
+(1, 60, 14);
+
 -- Reações para o dia 21 de Setembro de 2024
 INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 (1, 61, 1),
@@ -929,6 +1134,16 @@ INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 (1, 63, 2),
 (1, 63, 4);
 
+INSERT INTO reacao (tipo_reacao_id, comentario_id, usuario_id) VALUES
+(1, 61, 3),
+(1, 61, 17),
+
+(1, 62, 7),
+(1, 62, 4),
+
+(1, 63, 2),
+(1, 63, 18);
+
 -- Reações para o dia 22 de Setembro de 2024
 INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 (1, 64, 1),
@@ -939,6 +1154,13 @@ INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 
 (1, 66, 1),
 (1, 66, 5);
+
+INSERT INTO reacao (tipo_reacao_id, comentario_id, usuario_id) VALUES
+(1, 64, 9),
+(1, 64, 25),
+
+(1, 66, 8),
+(1, 66, 16);
 
 -- Reações para o dia 23 de Setembro de 2024
 INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
@@ -952,6 +1174,15 @@ INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 (1, 69, 1),
 (1, 69, 5);
 
+INSERT INTO reacao (tipo_reacao_id, comentario_id, usuario_id) VALUES
+(1, 67, 22),
+(1, 67, 14),
+
+(1, 68, 24),
+
+(1, 69, 11),
+(1, 69, 12);
+
 -- Reações para o dia 24 de Setembro de 2024
 INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 (1, 70, 2),
@@ -964,6 +1195,17 @@ INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 (1, 72, 1),
 (1, 72, 4);
 
+INSERT INTO reacao (tipo_reacao_id, comentario_id, usuario_id) VALUES
+(1, 70, 10),
+(1, 70, 18),
+
+(1, 71, 4),
+(1, 71, 25),
+(1, 71, 1),
+
+(1, 72, 7),
+(1, 72, 20);
+
 -- Reações para o dia 25 de Setembro de 2024
 INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 (1, 73, 1),
@@ -974,6 +1216,13 @@ INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 
 (1, 75, 1),
 (1, 75, 3);
+
+INSERT INTO reacao (tipo_reacao_id, comentario_id, usuario_id) VALUES
+(1, 74, 16),
+(1, 74, 19),
+
+(1, 75, 8),
+(1, 75, 13);
 
 -- Reações para o dia 26 de Setembro de 2024
 INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
@@ -987,6 +1236,17 @@ INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 (1, 78, 2),
 (1, 78, 4);
 
+INSERT INTO reacao (tipo_reacao_id, comentario_id, usuario_id) VALUES
+(1, 76, 14),
+(1, 76, 2),
+
+(1, 77, 23),
+(1, 77, 15),
+(1, 77, 17),
+
+(1, 78, 24),
+(1, 78, 12);
+
 -- Reações para o dia 27 de Setembro de 2024
 INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 (1, 79, 1),
@@ -997,6 +1257,15 @@ INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 
 (1, 81, 1),
 (1, 81, 5);
+
+INSERT INTO reacao (tipo_reacao_id, comentario_id, usuario_id) VALUES
+(1, 79, 5),
+
+(1, 80, 8),
+(1, 80, 1),
+
+(1, 81, 6),
+(1, 81, 22);
 
 -- Reações para o dia 28 de Setembro de 2024
 INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
@@ -1010,6 +1279,17 @@ INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 (1, 84, 2),
 (1, 84, 4);
 
+INSERT INTO reacao (tipo_reacao_id, comentario_id, usuario_id) VALUES
+(1, 82, 9),
+(1, 82, 4),
+
+(1, 83, 2),
+(1, 83, 12),
+(1, 83, 11),
+
+(1, 84, 20),
+(1, 84, 7);
+
 -- Reações para o dia 29 de Setembro de 2024
 INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 (1, 85, 1),
@@ -1022,7 +1302,56 @@ INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 (1, 87, 2),
 (1, 87, 5);
 
+INSERT INTO reacao (tipo_reacao_id, comentario_id, usuario_id) VALUES
+(1, 85, 15),
+(1, 85, 19),
+
+(1, 86, 10),
+(1, 86, 24),
+(1, 86, 18),
+
+(1, 87, 5),
+(1, 87, 17);
+
 -- Reações para o dia 30 de Setembro de 2024
 INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 (1, 88, 1),
 (1, 88, 2);
+
+INSERT INTO reacao (tipo_reacao_id, comentario_id, usuario_id) VALUES
+(1, 88, 3),
+(1, 88, 9);
+
+
+-- Denuncias
+-- Publicacoes
+INSERT INTO denuncia (publicacao_id, usuario_id)
+VALUES (1, 2);
+
+INSERT INTO denuncia (publicacao_id, usuario_id)
+VALUES (50, 10);
+
+INSERT INTO denuncia (publicacao_id, usuario_id)
+VALUES (20, 5);
+
+INSERT INTO denuncia (publicacao_id, usuario_id)
+VALUES (10, 9);
+
+INSERT INTO denuncia (publicacao_id, usuario_id)
+VALUES (15, 4);
+
+-- Comentarios
+INSERT INTO denuncia (comentario_id, usuario_id)
+VALUES (1, 1);
+
+INSERT INTO denuncia (comentario_id, usuario_id)
+VALUES (2, 2);
+
+INSERT INTO denuncia (comentario_id, usuario_id)
+VALUES (3, 3);
+
+INSERT INTO denuncia (comentario_id, usuario_id)
+VALUES (4, 4);
+
+INSERT INTO denuncia (comentario_id, usuario_id)
+VALUES (5, 5);

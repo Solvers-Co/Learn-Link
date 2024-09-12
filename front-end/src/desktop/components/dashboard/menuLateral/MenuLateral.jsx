@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { useNavigate, useLocation } from "react-router-dom"; // Importe o useLocation
+import { useNavigate, useLocation } from "react-router-dom";
 import iconeDashboard from "../../../utils/assets/painel-de-controle.png";
 import iconeAcesso from "../../../utils/assets/controle-de-acesso.png";
 import iconeDenuncia from "../../../utils/assets/icone_denuncia.png";
@@ -65,7 +65,7 @@ const MenuLateral = () => {
     };
 
     const avatar = useMemo(() => generateInitials(nome), [nome]);
-    
+
 
     return (
         <div className={styles['menuLateralDashboard']}>
