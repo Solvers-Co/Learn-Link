@@ -221,7 +221,7 @@ FROM
     registro_login
 GROUP BY 
     YEAR(registro_login), MONTH(registro_login);
-    
+        
 -- select * from view_quantidade_reacoes_comentarios_do_usuario;
 
 -- select * from usuario;
