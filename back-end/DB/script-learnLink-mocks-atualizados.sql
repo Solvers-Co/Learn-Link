@@ -1354,3 +1354,12 @@ VALUES (4, 4);
 
 INSERT INTO denuncia (comentario_id, usuario_id)
 VALUES (5, 5);
+
+insert into registro_login(registro_login, usuario_id)
+values(now(),1);
+    
+insert into registro_login(registro_login, usuario_id)
+values(now(),2);
+    
+insert into registro_login(registro_login, usuario_id)
+values(now(),3);
