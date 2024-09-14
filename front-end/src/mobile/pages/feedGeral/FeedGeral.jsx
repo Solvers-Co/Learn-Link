@@ -66,7 +66,7 @@ const FeedGeral = () => {
             setIsSortPopupOpen(false); // Apenas fecha o popup se a direção for a mesma
         }
     };
-    
+
 
 
     useEffect(() => {
@@ -81,25 +81,25 @@ const FeedGeral = () => {
                 const url = canalId ? '/publicacoes/publicacoes-por-canal-paginado' : '/publicacoes/publicacoes-mais-recentes-paginado';
                 const response = await api.get(url, { params });
                 const publicacoesRecebidas = response?.data?.content || [];
-    
+
                 // Se estiver na primeira página, substitui as publicações, caso contrário, concatena
                 if (page === 0) {
                     setPublicacoes(publicacoesRecebidas); // Substitui as publicações quando está na primeira página
                 } else {
                     setPublicacoes(prev => [...prev, ...publicacoesRecebidas]); // Concatena as próximas páginas
                 }
-                
+
                 setTotalPages(response?.data.totalPages || 0);
-    
+
                 console.log("Publicacoes recebidas:", response.data.content);
             } catch (error) {
                 console.error("Erro ao buscar publicações:", error);
             }
         };
-    
+
         fetchPublicacoes();
     }, [page, canalId, sortDirection]);
-    
+
 
     useEffect(() => {
         const observer = new IntersectionObserver(([entry]) => {
@@ -291,7 +291,6 @@ const FeedGeral = () => {
                     />
                 </div>
             </Modal>
-            {/* <ToastContainer /> */}
         </>
     );
 }

@@ -27,7 +27,7 @@ const VerificacaoSenhaDesktop = () => {
         console.log("Código gerado:", codigoGerado);
         if (codigo === codigoGerado) {
             toast.success("Código correto");
-            navigate("/redefinirSenhaDesktop", { state: { idUsuarioParam : idUsuario} });
+            navigate("/redefinirSenhaDesktop", { state: { idUsuarioParam: idUsuario } });
         } else {
             toast.error("Código inválido");
         }
@@ -44,7 +44,6 @@ const VerificacaoSenhaDesktop = () => {
                     <Botao funcao={handleSave} textoBotao="Verificar" />
                 </div>
             </Card>
-            {/* <ToastContainer /> */}
         </div >
     )
 }

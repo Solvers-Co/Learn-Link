@@ -63,9 +63,10 @@
 .paginacao {
     display: flex;
     width: 20%;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
-    margin-top: 15px;
+    margin-top: 690px; /* Gambiarra :( */
+    position: fixed;
 }
 
 .btnPaginacao {

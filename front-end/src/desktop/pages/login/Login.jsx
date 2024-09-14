@@ -83,7 +83,6 @@ const Login = () => {
                     <h3 className={styles['rodape']}><a href="recuperarSenhaDesktop" className={styles['direcionaRecuperarSenha']}>Esqueceu a senha?</a></h3>
                 </div>
             </Card>
-            {/* <ToastContainer /> */}
         </div >
     )
 }

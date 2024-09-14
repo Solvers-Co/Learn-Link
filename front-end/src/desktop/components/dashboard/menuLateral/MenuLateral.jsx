@@ -123,7 +123,7 @@ const MenuLateral = () => {
                             Denúncias
                         </div>
                         <div
-                            id="cadastroFuncionarios" className={`${styles['paginaPaginas']} ${styles['cursorPointer']} ${location.pathname === '/cadastroFuncionario' ? styles['paginaAtiva'] : ''
+                            id="cadastroFuncionarios" className={`${styles['paginaPaginas']} ${styles['cursorPointer']} ${location.pathname === '/cadastroFuncionarios' ? styles['paginaAtiva'] : ''
                                 }`}
                             onClick={paginaCadastroFuncionarios}
                         >
