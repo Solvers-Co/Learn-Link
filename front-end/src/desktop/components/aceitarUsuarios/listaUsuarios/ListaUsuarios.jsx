@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './ListaUsuarios.module.css';
 import Usuario from '../Usuario';
 import api from "../../../../../src/api";
-import { ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Titulo from '../listaUsuarios/tituloAceitarUsuarios/Titulo';
 import Dropdown from '../listaUsuarios/dropdown/Dropdown';
@@ -41,7 +41,6 @@ const ListaUsuarios = () => {
 
         api.get(`${endpoint}?pagina=${paginaAtual}&itens=${itens}`)
             .then((response) => {
-                console.log(response);
                 const novaPagina = Math.min(paginaAtual, response.data.totalPages - 1);
                 setPagina(novaPagina);
                 setUsuarios(response.data.content || []);
@@ -50,6 +49,49 @@ const ListaUsuarios = () => {
             .catch((error) => {
                 console.error('erro', error);
             });
+    };
+
+    // Função para alterar o status de cada usuário
+    const alterarStatus = (id, novoStatus) => {
+        return api.patch(`/usuarios/${id}/status/${novoStatus}`)
+            .then(response => {
+                console.log(`Usuário ${id} alterado com sucesso!`);
+                return response.data;
+            })
+            .catch(error => {
+                console.error(`Erro ao alterar status do usuário ${id}:`, error);
+            });
+    };
+
+    // Função para aceitar todos os usuários pendentes
+    const aceitarTodosPendentes = async () => {
+        try {
+            // 1. Buscar a primeira página para obter o total de páginas
+            const response = await api.get('/usuarios/buscar-usuarios-pendentes-paginado?pagina=0&itens=7');
+            const totalPaginas = response.data.totalPages;
+            let idsPendentes = [];
+
+            // 2. Percorrer todas as páginas e coletar os IDs dos usuários pendentes
+            for (let pagina = 0; pagina < totalPaginas; pagina++) {
+                const res = await api.get(`/usuarios/buscar-usuarios-pendentes-paginado?pagina=${pagina}&itens=7`);
+                const usuariosPendentes = res.data.content || [];
+                idsPendentes = [...idsPendentes, ...usuariosPendentes.map(usuario => usuario.id)];
+            }
+
+            // 3. Atualizar status de cada usuário pendente
+            const promises = idsPendentes.map(id => alterarStatus(id, 2));
+
+            // 4. Esperar que todas as requisições sejam concluídas
+            await Promise.all(promises);
+
+            toast.success('Todos os ' + idsPendentes.length + ' usuários pendentes foram aprovados!');
+            // Atualiza a lista de usuários após aceitar todos
+            fetchUsuarios('1');
+            console.log('Todos os ' + idsPendentes.length + ' usuários pendentes foram aprovados!');
+        } catch (error) {
+            console.error('Erro ao aceitar todos os usuários pendentes:', error);
+            toast.error('Ocorreu um erro ao aceitar os usuários.');
+        }
     };
 
     useEffect(() => {
@@ -61,6 +103,9 @@ const ListaUsuarios = () => {
             <div className={styles.listaUsuarios}>
                 <div className={styles.cabecalho}>
                     <Titulo>Aceitar Usuários</Titulo>
+                    <button onClick={aceitarTodosPendentes}>
+                        Ativar todos os usuários pendentes
+                    </button>
                     <Dropdown
                         value={opcoes}
                         onChange={(value) => {
@@ -113,21 +158,8 @@ const ListaUsuarios = () => {
                     </>
                 ) : (
                     <p className={styles['notFound']}>Nenhum usuário encontrado.</p>
-
                 )}
             </div>
-            {/* <ToastContainer
-                position="top-right"
-                autoClose={1500}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-            /> */}
         </>
     );
 };

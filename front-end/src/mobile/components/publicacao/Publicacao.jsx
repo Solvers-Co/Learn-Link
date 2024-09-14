@@ -357,19 +357,6 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
 
 
                 )}
-
-                {/* <ToastContainer
-                    position="top-right"
-                    autoClose={1000}
-                    hideProgressBar={false}
-                    newestOnTop={false}
-                    closeOnClick
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
-                    theme="colored"
-                /> */}
             </div>
         </>
     );

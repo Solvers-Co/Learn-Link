@@ -47,11 +47,11 @@ const Login = () => {
                 sessionStorage.setItem('userId', sessionUserId);
                 sessionStorage.setItem('nome', sessionUserName);
 
-            sessionStorage.setItem('email', sessionUserEmail)
-                if(endereco === null){
+                sessionStorage.setItem('email', sessionUserEmail)
+                if (endereco === null) {
                     toast.success("Login Efetuado com sucesso!");
                     navigate("/completarCadastro");
-                } else{
+                } else {
                     toast.success("Login Efetuado com sucesso!");
                     navigate("/feedGeral");
                 }
@@ -103,23 +103,10 @@ const Login = () => {
                     <div className={styles['modalContent']}>
                         <h3>Falta pouco!</h3>
                         <p>Para acessar a plataforma, é necessário que um administrador aprove seu cadastro. Em breve, você receberá um e-mail confirmando a aprovação.</p>
-                        <button className={styles['confirmButton']} onClick={() => {setShowConfirmation(false); window.location.reload();}}>Ok</button>
+                        <button className={styles['confirmButton']} onClick={() => { setShowConfirmation(false); window.location.reload(); }}>Ok</button>
                     </div>
                 </div>
             )}
-
-            {/* <ToastContainer
-                position="top-right"
-                autoClose={1000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="colored"
-            /> */}
         </>
     )
 };

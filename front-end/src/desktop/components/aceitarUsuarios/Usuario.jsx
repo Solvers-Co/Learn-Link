@@ -49,29 +49,30 @@ const Usuario = ({ usuario, fetchUsuarios, paginaAtual, statusAtual }) => {
                 toast.success('Status alterado com sucesso!');
                 console.log('Resposta da API:', response.data);
 
-                var mensagem = "";
+                //Descomentar para enviar email ao alterar status
+                // var mensagem = "";
 
-                if(response.data.tipoStatus.status === "APROVADO"){
-                    mensagem = "Parabéns! Seu acesso foi aprovado. Acesse o link abaixo para iniciar o seu acesso: http://localhost:3000/login";
-                } else if(response.data.tipoStatus.status === "PENDENTE"){
-                    mensagem = "Seu acesso foi redefinido como pendente. Entre em contato com o instituto se achar que isto é um erro.";
-                } else{
-                    mensagem = "Seu acesso foi negado. Entre em contato com o instituto se achar que isto é um erro.";
-                }
+                // if (response.data.tipoStatus.status === "APROVADO") {
+                //     mensagem = "Parabéns! Seu acesso foi aprovado. Acesse o link abaixo para iniciar o seu acesso: http://localhost:3000/login";
+                // } else if (response.data.tipoStatus.status === "PENDENTE") {
+                //     mensagem = "Seu acesso foi redefinido como pendente. Entre em contato com o instituto se achar que isto é um erro.";
+                // } else {
+                //     mensagem = "Seu acesso foi negado. Entre em contato com o instituto se achar que isto é um erro.";
+                // }
 
-                emailjs.send("service_juy8w7g", "template_lr7u1k4", {
-                    to_name: response.data.nome,
-                    message: mensagem,
-                    to_email: response.data.email,
-                }, "tZxktBF31MEVsj2aL")
-                    .then((emailResponse) => {
-                        console.log("Email enviado:", emailResponse.status, emailResponse.text);
-                        toast.success("Email enviado!");
-                    })
-                    .catch((emailError) => {
-                        console.log("Erro ao enviar o email:", emailError.text);
-                        toast.error("Erro ao enviar o e-mail. Tente novamente.");
-                    });
+                // emailjs.send("service_juy8w7g", "template_lr7u1k4", {
+                //     to_name: response.data.nome,
+                //     message: mensagem,
+                //     to_email: response.data.email,
+                // }, "tZxktBF31MEVsj2aL")
+                //     .then((emailResponse) => {
+                //         console.log("Email enviado:", emailResponse.status, emailResponse.text);
+                //         toast.success("Email enviado!");
+                //     })
+                //     .catch((emailError) => {
+                //         console.log("Erro ao enviar o email:", emailError.text);
+                //         toast.error("Erro ao enviar o e-mail. Tente novamente.");
+                //     });
 
                 fetchUsuarios(statusAtual, paginaAtual);
             })
@@ -102,7 +103,7 @@ const Usuario = ({ usuario, fetchUsuarios, paginaAtual, statusAtual }) => {
     if (usuario.email.length > 23) {
         emailFormatado = `${usuario.email.slice(0, 20)}...`; // Corrigido para usar usuario.email
     }
-    
+
 
     return (
         <div className={styles.userRow}>

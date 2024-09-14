@@ -34,7 +34,7 @@ const RecuperarSenhaDesktop = () => {
                 // Verifica se encontrou o usuário
                 if (response.status === 200) {
                     const codigo = gerarCodigoAleatorio();
-    
+
                     emailjs.send("service_juy8w7g", "template_lr7u1k4", {
                         to_name: response.data.nome,
                         message: "\nSegue o código para recuperação de senha: " + codigo + "\n\nCaso não tenha solicitado, ignore este e-mail.",
@@ -43,7 +43,7 @@ const RecuperarSenhaDesktop = () => {
                         .then((emailResponse) => {
                             console.log("Email enviado:", emailResponse.status, emailResponse.text);
                             toast.success("Email enviado!");
-                            navigate("/verificarSenhaDesktop", { state: { codigoGerado: codigo, idUsuario : response.data.id} });
+                            navigate("/verificarSenhaDesktop", { state: { codigoGerado: codigo, idUsuario: response.data.id } });
                         })
                         .catch((emailError) => {
                             console.log("Erro ao enviar o email:", emailError.text);
@@ -76,7 +76,6 @@ const RecuperarSenhaDesktop = () => {
                     <Botao funcao={handleSave} textoBotao="Enviar" />
                 </div>
             </Card>
-            {/* <ToastContainer /> */}
         </div >
     )
 }

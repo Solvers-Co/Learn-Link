@@ -26,16 +26,16 @@ const RedefinicaoSenhaDesktop = () => {
     const handleSave = () => {
         if (senha === confirmarSenha) {
             api.patch(`/usuarios/atualizar-senha/${idUsuarioParam}?senha=${senha}`)
-            .then(response => {
-                console.log("Senha redefinida com sucesso");
-                toast.success("Senha redefinida com sucesso");
-                navigate("/loginDesktop");
-            })
-            .catch(error => {
-                console.log("Erro ao redefinir a senha:", error);
-                toast.error("Erro ao redefinir a senha. Tente novamente");
-            })
-        } else{
+                .then(response => {
+                    console.log("Senha redefinida com sucesso");
+                    toast.success("Senha redefinida com sucesso");
+                    navigate("/loginDesktop");
+                })
+                .catch(error => {
+                    console.log("Erro ao redefinir a senha:", error);
+                    toast.error("Erro ao redefinir a senha. Tente novamente");
+                })
+        } else {
             console.log("As senhas devem ser iguais");
             toast.error("As senhas devem ser iguais");
         }
@@ -47,14 +47,13 @@ const RedefinicaoSenhaDesktop = () => {
                 <a href="/homeDesktop" className={styles['imagemClicavel']}><div className={styles['imageContainer']}></div></a>
                 <h1 className={styles['loginDesktopTitulo']}>Redefinição de Senha</h1>
                 <h3 className={styles['tituloInput']}>Informe a sua nova senha</h3>
-                <Input value={senha} onChange={(e) => handleInputChange(e, setSenha)} type="password"/>
+                <Input value={senha} onChange={(e) => handleInputChange(e, setSenha)} type="password" />
                 <h3 className={styles['tituloInput']}>Confirmar nova senha</h3>
-                <Input value={confirmarSenha} onChange={(e) => handleInputChange(e, setConfirmarSenha)} type="password"/>
+                <Input value={confirmarSenha} onChange={(e) => handleInputChange(e, setConfirmarSenha)} type="password" />
                 <div className={styles['divBotao']}>
                     <Botao funcao={handleSave} textoBotao="Redefinir" />
                 </div>
             </Card>
-            {/* <ToastContainer /> */}
         </div >
     )
 }
