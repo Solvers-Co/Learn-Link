@@ -5,6 +5,7 @@ import React, { useMemo, useState, useEffect } from 'react';
 import CardAtividade from '../../components/cards/cardAtividade/CardAtividade';
 import api from "../../../api";
 
+// generateInitials diferente do padrão
 function generateInitials(name) {
     if (!name) {
         return <div style={{ color: 'red' }}>N/A</div>;

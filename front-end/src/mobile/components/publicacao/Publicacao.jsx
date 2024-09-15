@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import Styles from '../publicacao/Publicacao.module.css';
 import api from '../../../api';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import Modal from 'react-modal';
 import StylesModal from '../../components/botoes/botaoFazerPublicacao/BotaoFazerPublicacao.module.css'
 import { generateInitials } from '../../utils/functions/GerarIniciais';

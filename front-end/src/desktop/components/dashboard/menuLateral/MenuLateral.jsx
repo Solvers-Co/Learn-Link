@@ -1,11 +1,13 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
+import styles from "./MenuLateral.module.css";
+
+
 import iconeDashboard from "../../../utils/assets/painel-de-controle.png";
 import iconeAcesso from "../../../utils/assets/controle-de-acesso.png";
 import iconeDenuncia from "../../../utils/assets/icone_denuncia.png";
 import iconeSair from "../../../utils/assets/sair.png";
 import iconeCadastroFuncionarios from "../../../utils/assets/icone_cadastro_func.png";
-import styles from "./MenuLateral.module.css";
 
 function generateInitials(name) {
     const nameParts = name.trim().split(' ');

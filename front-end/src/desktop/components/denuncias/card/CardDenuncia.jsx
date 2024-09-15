@@ -2,6 +2,8 @@ import React, { useState, useMemo } from 'react';
 import styles from './CardDenuncia.module.css';
 import api from '../../../../api';
 import { toast } from 'react-toastify';
+// import { generateInitials } from '../../../utils/functions/GerarIniciais';
+
 
 import IconeDenuncia from '../../../utils/assets/icone_denuncia_vermelho.png';
 import MenuVertical from '../../../../mobile/utils/assets/MenuVertical.png';

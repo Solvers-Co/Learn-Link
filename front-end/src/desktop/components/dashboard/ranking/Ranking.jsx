@@ -4,7 +4,6 @@ import Styles from "./Ranking.module.css";
 import Primeiro from '../../../../mobile/utils/assets/ranking/Primeiro lugar.png';
 import Segundo from '../../../../mobile/utils/assets/ranking/Segundo lugar.png';
 import Terceiro from '../../../../mobile/utils/assets/ranking/Terceiro lugar.png';
-// import { generateInitials } from '../../../utils/';
 
 function generateInitials(name) {
     const nameParts = name.trim().split(' ');

@@ -10,7 +10,7 @@ import IconeSair from '../../utils/assets/sair-menu-lateral.png';
 import OpcaoNavegacao from '../opcaoNavegacaoMenuInicial/OpcaoNavegacao';
 import IconeX from '../../utils/assets/icone_x.svg';
 import Linha from '../linha/Linha';
-import { generateInitials } from '../../utils/functions/GerarIniciais'; // Importa a função de iniciais
+import { generateInitials } from '../../utils/functions/GerarIniciais';
 
 const MenuLateral = ({ nome }) => {
     const [isVisible, setIsVisible] = useState(true); // Adiciona estado para visibilidade
