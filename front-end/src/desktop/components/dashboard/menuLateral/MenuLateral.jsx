@@ -41,9 +41,9 @@ function generateInitials(name) {
 const MenuLateral = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const nome = "Taina Maiara";
 
     const sair = () => {
+        sessionStorage.clear();
         navigate("/homeDesktop");
     };
 
