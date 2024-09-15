@@ -5,6 +5,7 @@ import React, { useMemo, useState, useEffect } from 'react';
 import CardAtividade from '../../components/cards/cardAtividade/CardAtividade';
 import api from "../../../api";
 
+// generateInitials diferente do padrão
 function generateInitials(name) {
     if (!name) {
         return <div style={{ color: 'red' }}>N/A</div>;
@@ -12,7 +13,7 @@ function generateInitials(name) {
 
     const nameParts = name.trim().split(' ');
     const firstInitial = nameParts[0].charAt(0).toUpperCase();
-    const lastInitial = nameParts[nameParts.length - 1].charAt(0).toUpperCase();
+    const lastInitial = nameParts.length > 1 ? nameParts[nameParts.length - 1].charAt(0).toUpperCase() : '';
 
     const pastelColors = [
         '#FFB3BA', '#FFDFBA', '#FFFFBA', '#BAFFC9', '#BAE1FF',
@@ -42,49 +43,37 @@ function generateInitials(name) {
 }
 
 const Perfil = () => {
-    const [classificacao, setClassificacao] = useState([]);
-    const [especialidade, setEspecialidade] = useState([]);
-    const [contribuicoes, setContribuicoes] = useState([]);
+    const [classificacao, setClassificacao] = useState('Iniciante');
+    const [especialidade, setEspecialidade] = useState('Desconhecido');
+    const [contribuicoes, setContribuicoes] = useState(0);
 
-    // Obtem o nome do usuário armazenado no sessionStorage
     const idUsuarioLogado = sessionStorage.getItem('userId') || 'N/A';
     const nomeUsuarioLogado = sessionStorage.getItem('nome') || 'Usuário Anônimo';
     const emailUsuarioLogado = sessionStorage.getItem('email') || 'E-mail Anônimo';
 
-    let nomeFormatado = 'Usuário Desconhecido'; // Valor padrão caso o nome não seja encontrado
+    const nomeFormatado = useMemo(() => {
+        if (!nomeUsuarioLogado) return 'Usuário Desconhecido';
+        const nomes = nomeUsuarioLogado.trim().split(' ');
+        return nomes.length === 1 ? nomes[0] : `${nomes[0]} ${nomes[nomes.length - 1]}`;
+    }, [nomeUsuarioLogado]);
 
-    if (nomeUsuarioLogado) {
-        const nomes = nomeUsuarioLogado.trim().split(' '); // Remove espaços em branco e divide a string em palavras
-        const primeiroNome = nomes[0];
-        const ultimoNome = nomes[nomes.length - 1];
-        if (nomes.length === 1) {
-            nomeFormatado = primeiroNome;
-        } else {
-            nomeFormatado = `${primeiroNome} ${ultimoNome}`;
-        }
-    } else {
-        console.log('Nome de usuário não encontrado');
-    }
-
-    // Use useMemo com nomeFormatado
     const avatar = useMemo(() => generateInitials(nomeFormatado), [nomeFormatado]);
 
     useEffect(() => {
         const fetchClassificacao = async () => {
             try {
                 const response = await api.patch(`/usuarios/classificar-usuario/${idUsuarioLogado}`);
-                if (response.data.classificacao.classificacao === 'JUNIOR') {
-                    setClassificacao('Júnior');
-                } else if (response.data.classificacao.classificacao === 'PLENO') {
-                    setClassificacao('Pleno');
-                } else if (response.data.classificacao.classificacao === 'SENIOR') {
-                    setClassificacao('Sênior');
-                } else if (response.data.classificacao.classificacao === 'ESPECIALISTA') {
-                    setClassificacao('Especialista');
-                }
+                const nivel = response.data.classificacao.classificacao;
+                const classificacoes = {
+                    'JUNIOR': 'Júnior',
+                    'PLENO': 'Pleno',
+                    'SENIOR': 'Sênior',
+                    'ESPECIALISTA': 'Especialista'
+                };
+                setClassificacao(classificacoes[nivel] || 'Iniciante');
             } catch (error) {
-                console.error("Ocorreu um erro ao buscar os dados do usuário:", error);
-                setClassificacao('Erro ao carregar');
+                console.error("Erro ao carregar classificação:", error);
+                setClassificacao('Iniciante');
             }
         };
         fetchClassificacao();
@@ -102,10 +91,8 @@ const Perfil = () => {
         'FILOSOFIA': 'Filosofia',
         'SOCIOLOGIA': 'Sociologia',
     };
-    
-    const formatSubjectName = (name) => {
-        return subjectNameMap[name] || name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
-    };
+
+    const formatSubjectName = (name) => subjectNameMap[name] || name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
 
     useEffect(() => {
         const fetchEspecialidade = async () => {
@@ -113,28 +100,28 @@ const Perfil = () => {
                 const response = await api.get(`/usuarios/${idUsuarioLogado}`);
                 setEspecialidade(formatSubjectName(response.data.especialidade.materia));
             } catch (error) {
-                console.error("Ocorreu um erro ao buscar os dados do usuário:", error);
+                console.error("Erro ao carregar especialidade:", error);
                 setEspecialidade('Erro ao carregar');
             }
         };
         fetchEspecialidade();
     }, [idUsuarioLogado]);
 
-    useEffect(() =>{
-        const fetchContribuicoes = async () =>{
-            try{
-                const response = await api.get(`/qtd-reacoes-comentario-usuarios/buscar-nivel-de-classificacao-do-usuario/${idUsuarioLogado}`)
-                setContribuicoes(response.data.qtdReacoes);
-                console.log(response)
-                console.log(contribuicoes)
-            }catch(error){
-                console.error("Ocorreu um erro ao buscar os dados do usuário:", error)
-                setContribuicoes('Erro ao carregar')
+    useEffect(() => {
+        const fetchContribuicoes = async () => {
+            try {
+                const response = await api.get(`/qtd-reacoes-comentario-usuarios/buscar-nivel-de-classificacao-do-usuario/${idUsuarioLogado}`);
+                const qtdReacoes = response.data.qtdReacoes;
+                setContribuicoes(qtdReacoes >= 1 ? qtdReacoes : 0);
+                if (qtdReacoes < 1) setClassificacao('Iniciante');
+            } catch (error) {
+                console.error("Erro ao carregar contribuições:", error);
+                setContribuicoes(0);
+                setClassificacao('Iniciante');
             }
         };
         fetchContribuicoes();
-    },[idUsuarioLogado])
-
+    }, [idUsuarioLogado]);
 
     return (
         <>

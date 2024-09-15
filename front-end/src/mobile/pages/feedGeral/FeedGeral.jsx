@@ -6,9 +6,7 @@ import Publicacao from '../../components/publicacao/Publicacao';
 import Header from '../../components/headerAplicacao/Header';
 import Modal from 'react-modal';
 import Comentario from '../../components/comentario/Comentario';
-import { ToastContainer, toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
-
+import { toast } from 'react-toastify';
 
 import fechar from '../../utils/assets/icone_x.svg';
 import Filtro from '../../utils/assets/Filtro direcao.png';

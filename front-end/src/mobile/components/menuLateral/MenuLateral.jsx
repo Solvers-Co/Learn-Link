@@ -1,5 +1,5 @@
-import { useNavigate } from 'react-router-dom';  // Adicione esta linha
-import { useMemo, useState } from 'react'; // Adicione esta linha
+import { useNavigate } from 'react-router-dom';
+import { useMemo, useState } from 'react';
 import styles from './MenuLateral.module.css';
 import IconePerfil from '../../utils/assets/perfil-menu-lateral.png';
 import IconeFeedGeral from '../../utils/assets/feed-geral-menu-lateral.png';
@@ -10,47 +10,12 @@ import IconeSair from '../../utils/assets/sair-menu-lateral.png';
 import OpcaoNavegacao from '../opcaoNavegacaoMenuInicial/OpcaoNavegacao';
 import IconeX from '../../utils/assets/icone_x.svg';
 import Linha from '../linha/Linha';
-
-function generateInitials(name) {
-    if (!name) {
-        return <div style={{ color: 'red' }}>N/A</div>;
-    }
-
-    const nameParts = name.trim().split(' ');
-    const firstInitial = nameParts[0].charAt(0).toUpperCase();
-    const lastInitial = nameParts[nameParts.length - 1].charAt(0).toUpperCase();
-
-    const pastelColors = [
-        '#FFB3BA', '#FFDFBA', '#FFFFBA', '#BAFFC9', '#BAE1FF',
-        '#FFB3B3', '#FFCCB3', '#FFFFCC', '#CCFFCC', '#CCE5FF',
-        '#FFC3A0', '#FFEDCC', '#FFFFE0', '#E0FFCC', '#CCE0FF',
-        '#FFC4C4', '#FFE1C4', '#FFFFD1', '#D1FFD1', '#D1E8FF'
-    ];
-
-    const randomIndex = Math.floor(Math.random() * pastelColors.length);
-    const backgroundColor = pastelColors[randomIndex];
-
-    const avatar = {
-        borderRadius: '50%',
-        border: '1px solid rgba(0, 0, 0, .3)',
-        fontSize: '15px',
-        width: '30px',
-        height: '30px',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontFamily: '"NunitoSans", sans-serif',
-        backgroundColor
-    };
-
-    return <div style={avatar}>{firstInitial + lastInitial}</div>;
-}
-
+import { generateInitials } from '../../utils/functions/GerarIniciais';
 
 const MenuLateral = ({ nome }) => {
     const [isVisible, setIsVisible] = useState(true); // Adiciona estado para visibilidade
     const navigate = useNavigate();
-    
+
     const nomeUsuarioLogado = sessionStorage.getItem('nome');
 
     // Mova a declaração de nomeFormatado para fora do bloco if
@@ -94,6 +59,7 @@ const MenuLateral = ({ nome }) => {
     };
 
     const handleLogout = () => {
+        sessionStorage.clear();
         navigate('/');
     };
 
@@ -162,4 +128,3 @@ const MenuLateral = ({ nome }) => {
 }
 
 export default MenuLateral;
-

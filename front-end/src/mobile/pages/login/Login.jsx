@@ -6,14 +6,11 @@ import styles from "./Login.module.css";
 import InputFormulario from "../../components/inputs/inputFormularios/InputFormulario";
 import Botao from "../../components/botoes/botaoLoginCadastro/Botao";
 import Header from "../../components/header/Header";
-import { ToastContainer } from "react-toastify";
+
 
 const Login = () => {
 
-    sessionStorage.nome = "";
-    sessionStorage.situacao = "";
-    sessionStorage.userId = "";
-    sessionStorage.token = "";
+    sessionStorage.clear();
 
     const navigate = useNavigate();
 
