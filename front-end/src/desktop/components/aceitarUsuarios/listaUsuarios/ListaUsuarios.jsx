@@ -103,16 +103,18 @@ const ListaUsuarios = () => {
             <div className={styles.listaUsuarios}>
                 <div className={styles.cabecalho}>
                     <Titulo>Aceitar Usuários</Titulo>
-                    <button onClick={aceitarTodosPendentes}>
-                        Ativar todos os usuários pendentes
-                    </button>
-                    <Dropdown
-                        value={opcoes}
-                        onChange={(value) => {
-                            setOpcoes(value);
-                            setOrigemChamada('dropdown'); // Marca que a origem é o dropdown
-                        }}
-                    />
+                    <div className={styles.interacao}>
+                        <button className={styles.btnAtivarTodos} onClick={aceitarTodosPendentes}>
+                            Ativar <span className={styles.bold}>todos</span> os usuários pendentes
+                        </button>
+                        <Dropdown
+                            value={opcoes}
+                            onChange={(value) => {
+                                setOpcoes(value);
+                                setOrigemChamada('dropdown'); // Marca que a origem é o dropdown
+                            }}
+                        />
+                    </div>
                 </div>
                 <div className={styles.descricaoColunas}>
                     <div className={styles.divNome}>Nome</div>

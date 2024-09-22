@@ -23,6 +23,39 @@
     align-items: center;
 }
 
+.interacao {
+    display: flex;
+    width: 50%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btnAtivarTodos {
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    width: 60%;
+    height: 40px;
+    background-color: #ffffff;
+    border: 1px solid green;
+    color: green;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btnAtivarTodos:hover {
+    background-color: #2c5f24;
+    color: #ffffff;
+}
+
+.bold {
+    font-weight: bold;
+    padding: 0px 5px 0px 5px;
+}
+
 .descricaoColunas {
     display: flex;
     flex-direction: row;

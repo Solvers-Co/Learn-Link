@@ -1,9 +1,10 @@
 .btnDropdown {
-    border: none;
     outline: none;
     background-color: transparent;
     opacity: 75%;
     font-family: "Nunito Sans", sans-serif;
+    padding: 5px;
+    border-radius: 5px;
 }
 
 .btnDropdown option {
