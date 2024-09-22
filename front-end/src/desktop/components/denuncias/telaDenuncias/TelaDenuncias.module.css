@@ -43,14 +43,11 @@
     font-family: "Nunito Sans", sans-serif;
 }
 
-.btnDropdown {
-    border: none;
+.dropdown {
     outline: none;
     background-color: transparent;
     opacity: 75%;
     font-family: "Nunito Sans", sans-serif;
-}
-
-.dropdown {
-    border: none;
+    padding: 5px;
+    border-radius: 5px;
 }
