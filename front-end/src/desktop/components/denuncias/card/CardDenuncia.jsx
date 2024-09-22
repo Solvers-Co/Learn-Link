@@ -2,23 +2,12 @@ import React, { useState, useMemo } from 'react';
 import styles from './CardDenuncia.module.css';
 import api from '../../../../api';
 import { toast } from 'react-toastify';
-// import { generateInitials } from '../../../utils/functions/GerarIniciais';
-
+import { generateInitials } from '../../../../mobile/utils/functions/GerarIniciais';
 
 import IconeDenuncia from '../../../utils/assets/icone_denuncia_vermelho.png';
 import MenuVertical from '../../../../mobile/utils/assets/MenuVertical.png';
 import Excluir from '../../../../mobile/utils/assets/Deletar.png';
 import Ignorar from '../../../utils/assets/icone_ignorar.png';
-
-function generateInitials(name) {
-    if (!name) return '';
-
-    const nameParts = name.trim().split(' ');
-    const firstInitial = nameParts[0].charAt(0).toUpperCase();
-    const lastInitial = nameParts.length > 1 ? nameParts[nameParts.length - 1].charAt(0).toUpperCase() : '';
-
-    return `${firstInitial}${lastInitial}`;
-}
 
 function ignorarDenuncia(id, tipo) {
     const endpoint = tipo === 'publicacoes' ? `/publicacoes/${id}/remover-denuncias` : `/comentarios/${id}/remover-denuncias`;
@@ -51,15 +40,7 @@ const CardDenuncia = ({ idItem, item, quantidadeDenuncias, tipo }) => {
 
     const togglePopup = () => setShowPopup(!showPopup);
 
-    const avatarColor = useMemo(() => {
-        const pastelColors = [
-            '#FFB3BA', '#FFDFBA', '#FFFFBA', '#BAFFC9', '#BAE1FF',
-        ];
-        const randomIndex = Math.floor(Math.random() * pastelColors.length);
-        return pastelColors[randomIndex];
-    }, []);
-
-    const avatarInitials = useMemo(() => generateInitials(item.usuario.nome), [item.usuario.nome]);
+    const avatar = useMemo(() => generateInitials(item.usuario.nome), [item.usuario.nome]);
 
     return (
         <div className={styles.card}>
@@ -69,22 +50,7 @@ const CardDenuncia = ({ idItem, item, quantidadeDenuncias, tipo }) => {
                 </div>
             </div>
             <div className={styles.userInfo}>
-                <div
-                    style={{
-                        borderRadius: '50%',
-                        border: '1px solid rgba(0, 0, 0, .3)',
-                        width: '35px',
-                        height: '35px',
-                        marginRight: '12px',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        fontFamily: '"NunitoSansExtraBold", sans-serif',
-                        backgroundColor: avatarColor
-                    }}
-                >
-                    {avatarInitials}
-                </div>
+                {avatar}
                 <span className={styles.nome}>{item.usuario.nome}</span>
             </div>
             <div className={styles.conteudo}>
