@@ -38,6 +38,9 @@ const FeedGeral = () => {
     const [showComentarios, setShowComentarios] = useState(false);
     const [comentariosPublicacao, setComentarios] = useState([]);
     const [searchResults, setSearchResults] = useState(null);
+    const [isSearching, setIsSearching] = useState(false);
+    const [searchKeyword, setSearchKeyword] = useState('');
+
     const [page, setPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
     const [sortDirection, setSortDirection] = useState('desc'); // Estado para controlar a direção do sort
@@ -57,15 +60,13 @@ const FeedGeral = () => {
     const handleSortChange = (direction) => {
         if (direction !== sortDirection) {
             setSortDirection(direction);
-            setPage(0); // Reseta para a primeira página ao mudar a ordenação
             setPublicacoes([]); // Limpa a lista de publicações
+            setPage(0); // Reseta para a primeira página ao mudar a ordenação
             setIsSortPopupOpen(false); // Fecha o popup ao escolher uma opção
         } else {
             setIsSortPopupOpen(false); // Apenas fecha o popup se a direção for a mesma
         }
     };
-
-
 
     useEffect(() => {
         const fetchPublicacoes = async () => {
@@ -76,27 +77,33 @@ const FeedGeral = () => {
                     sortDirection,
                     ...(canalId && { canalId }),
                 };
-                const url = canalId ? '/publicacoes/publicacoes-por-canal-paginado' : '/publicacoes/publicacoes-mais-recentes-paginado';
+                let url = '/publicacoes/publicacoes-mais-recentes-paginado'; // URL padrão
+
+                if (isSearching) {
+                    // Caso esteja pesquisando, não busca publicações padrão
+                    url = `/publicacoes/buscar-palavra-chave-paginado?palavraChave=${encodeURIComponent(searchKeyword)}`; // Alterar conforme sua rota de pesquisa
+                } else if (canalId) {
+                    url = '/publicacoes/publicacoes-por-canal-paginado'; // Caso esteja filtrando por canal
+                }
+
                 const response = await api.get(url, { params });
                 const publicacoesRecebidas = response?.data?.content || [];
 
-                // Se estiver na primeira página, substitui as publicações, caso contrário, concatena
                 if (page === 0) {
                     setPublicacoes(publicacoesRecebidas); // Substitui as publicações quando está na primeira página
                 } else {
                     setPublicacoes(prev => [...prev, ...publicacoesRecebidas]); // Concatena as próximas páginas
                 }
-
+                console.log(url, response.data);
                 setTotalPages(response?.data.totalPages || 0);
-
-                console.log("Publicacoes recebidas:", response.data.content);
             } catch (error) {
                 console.error("Erro ao buscar publicações:", error);
             }
         };
 
         fetchPublicacoes();
-    }, [page, canalId, sortDirection]);
+    }, [page, canalId, sortDirection, isSearching]); // Inclui isSearching na dependência
+
 
 
     useEffect(() => {
@@ -121,8 +128,14 @@ const FeedGeral = () => {
         };
     }, [totalPages]);
 
-    const handleSearchResult = (results) => {
-        setSearchResults(results);
+    // Função para capturar os resultados da pesquisa e ativar o estado isSearching
+    const handleSearchResult = (searchValue) => {
+        setSearchResults([]); // Limpa os resultados anteriores
+        setIsSearching(true); // Ativa a pesquisa
+        setPage(0); // Reinicia a paginação
+
+        // Armazena o valor pesquisado no estado
+        setSearchKeyword(searchValue); // Adicione este estado no início do seu componente
     };
 
     // Função para capturar o texto do comentário
@@ -189,7 +202,7 @@ const FeedGeral = () => {
     };
 
     const nomeUsuarioLogado = sessionStorage.getItem('nome');
-    const publicacoesParaExibir = searchResults || publicacoes;
+    const publicacoesParaExibir = publicacoes;
 
     return (
         <>

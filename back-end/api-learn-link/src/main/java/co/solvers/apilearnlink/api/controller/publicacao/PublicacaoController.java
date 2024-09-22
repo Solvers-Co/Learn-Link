@@ -216,25 +216,51 @@ public class PublicacaoController {
         return ResponseEntity.ok(ComentarioMapper.toDto(comentario));
     }
 
+//    @ApiResponse(responseCode = "204", description = "Publicações vazias")
+//    @ApiResponse(responseCode = "200", description = "Publicações encontradas")
+//    @ApiResponse(responseCode = "400", description = "Palavra chave inválida")
+//    @Operation(summary = "Listar publicações por palavra chave", description = "Método que lista todas as publicações por uma palavra chave ordenada pela mais recete", tags = {"Publicações"})
+//    @GetMapping("/buscar-palavra-chave")
+//    public ResponseEntity<List<PublicacaoListagemResponseDto>> buscarPublicacaoPorPalavraChave(
+//            @RequestParam
+//            @Parameter(name = "palavraChave", description = "Palavra chave", example = "Bhaskara") String palavraChave) {
+//
+//        List<Publicacao> publicacoes = publicacaoService.listarPorPalavraChave(palavraChave);
+//        List<PublicacaoListagemResponseDto> dtos = PublicacaoMapper.toDto(publicacoes);
+//
+//        if (dtos.isEmpty()) {
+//            return ResponseEntity.noContent().build();
+//        }
+//
+//        return ResponseEntity.status(200).body(dtos);
+//    }
+
     @ApiResponse(responseCode = "204", description = "Publicações vazias")
     @ApiResponse(responseCode = "200", description = "Publicações encontradas")
     @ApiResponse(responseCode = "400", description = "Palavra chave inválida")
-    @Operation(summary = "Listar publicações por palavra chave", description = "Método que lista todas as publicações por uma palavra chave ordenada pela mais recete", tags = {"Publicações"})
-    @GetMapping("/buscar-palavra-chave")
-    public ResponseEntity<List<PublicacaoListagemResponseDto>> buscarPublicacaoPorPalavraChave(
+    @Operation(summary = "Listar publicações por palavra chave com paginação", description = "Método que lista todas as publicações por uma palavra chave de maneira paginada e ordenada pela mais recente", tags = {"Publicações"})
+    @GetMapping("/buscar-palavra-chave-paginado")
+    public ResponseEntity<Page<PublicacaoListagemResponseDto>> buscarPublicacaoPorPalavraChavePaginado(
             @RequestParam
-            @Parameter(name = "palavraChave", description = "Palavra chave", example = "Bhaskara") String palavraChave) {
+            @Parameter(name = "palavraChave", description = "Palavra chave", example = "Bhaskara") String palavraChave,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "desc") String sortDirection) {
 
-        List<Publicacao> publicacoes = publicacaoService.listarPorPalavraChave(palavraChave);
-        List<PublicacaoListagemResponseDto> dtos = PublicacaoMapper.toDto(publicacoes);
+        // Define a direção do sort (descendente ou ascendente)
+        Sort.Direction direction = sortDirection.equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
 
-        if (dtos.isEmpty()) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, "dataHora"));
+        Page<Publicacao> publicacoesPage = publicacaoService.listarPorPalavraChavePaginado(palavraChave, pageable);
+        Page<PublicacaoListagemResponseDto> dtosPage = publicacoesPage.map(PublicacaoMapper::toDto);
+
+        if (dtosPage.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
 
-        return ResponseEntity.status(200).body(dtos);
+        return ResponseEntity.ok(dtosPage);
     }
-
+    
 //    @ApiResponse(responseCode = "200", description = "Publicações encontradas")
 //    @ApiResponse(responseCode = "204", description = "Publicações vazias")
 //    @Operation(summary = "Quantidade de publicações por dia", description = "Método que retorna a quantidade de publicações por dia", tags = {"Publicações"})

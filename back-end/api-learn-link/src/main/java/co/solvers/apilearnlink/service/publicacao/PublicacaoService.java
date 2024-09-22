@@ -136,13 +136,22 @@ public class PublicacaoService {
     }
 
 
-    public List<Publicacao> listarPorPalavraChave(String palavraChave) {
+//    public List<Publicacao> listarPorPalavraChave(String palavraChave) {
+//
+//        if (palavraChave.isBlank()) {
+//            throw new InvalidoException("Palavra chave");
+//        }
+//
+//        return publicacaoRepository.findByConteudoLikePalavrachaveOrderByDataHoraDesc(palavraChave.toUpperCase());
+//    }
+
+    public Page<Publicacao> listarPorPalavraChavePaginado(String palavraChave, Pageable pageable) {
 
         if (palavraChave.isBlank()) {
             throw new InvalidoException("Palavra chave");
         }
 
-        return publicacaoRepository.findByConteudoLikePalavrachaveOrderByDataHoraDesc(palavraChave.toUpperCase());
+        return publicacaoRepository.findByConteudoLikePalavrachaveOrderByDataHoraDesc(palavraChave.toUpperCase(), pageable);
     }
 
 //    public String[][] buscaQuantidadeDePublicacoesPorDiaMatriz(int mes, int ano) {

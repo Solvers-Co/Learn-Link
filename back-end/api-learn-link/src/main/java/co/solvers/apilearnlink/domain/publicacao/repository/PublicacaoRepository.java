@@ -27,8 +27,13 @@ public interface PublicacaoRepository extends JpaRepository<Publicacao, Integer>
 
     List<Publicacao> findAllByTipoPublicacaoTipoOrderByDataHoraDesc(String tipo);
 
+//    @Query("SELECT p FROM Publicacao p WHERE p.conteudo LIKE %:palavrachave% ORDER BY p.dataHora DESC")
+//    List<Publicacao> findByConteudoLikePalavrachaveOrderByDataHoraDesc(@Param("palavrachave") String palavrachave);
+
+
     @Query("SELECT p FROM Publicacao p WHERE p.conteudo LIKE %:palavrachave% ORDER BY p.dataHora DESC")
-    List<Publicacao> findByConteudoLikePalavrachaveOrderByDataHoraDesc(@Param("palavrachave") String palavrachave);
+    Page<Publicacao> findByConteudoLikePalavrachaveOrderByDataHoraDesc(@Param("palavrachave") String palavrachave, Pageable pageable);
+
 
 //    @Query("SELECT new co.solvers.apilearnlink.service.publicacao.dto.QuantidadePublicacaoDiaListagemDto(" +
 //            "DATE(p.dataHora) as data_publicacao" +
