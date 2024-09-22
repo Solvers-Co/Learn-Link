@@ -79,7 +79,7 @@ const FeedGeral = () => {
                 };
                 let url = '/publicacoes/publicacoes-mais-recentes-paginado'; // URL padrão
 
-                if (isSearching) {
+                if (isSearching && searchKeyword.trim() !== '') {
                     // Caso esteja pesquisando, não busca publicações padrão
                     url = `/publicacoes/buscar-palavra-chave-paginado?palavraChave=${encodeURIComponent(searchKeyword)}`; // Alterar conforme sua rota de pesquisa
                 } else if (canalId) {
@@ -102,7 +102,7 @@ const FeedGeral = () => {
         };
 
         fetchPublicacoes();
-    }, [page, canalId, sortDirection, isSearching]); // Inclui isSearching na dependência
+    }, [page, canalId, sortDirection, isSearching, searchKeyword]); // Inclui isSearching na dependência
 
 
 
@@ -128,14 +128,22 @@ const FeedGeral = () => {
         };
     }, [totalPages]);
 
-    // Função para capturar os resultados da pesquisa e ativar o estado isSearching
     const handleSearchResult = (searchValue) => {
-        setSearchResults([]); // Limpa os resultados anteriores
-        setIsSearching(true); // Ativa a pesquisa
-        setPage(0); // Reinicia a paginação
+        // Se o campo de pesquisa estiver vazio, reseta os estados de busca
+        if (searchValue.trim() === '') {
+            setIsSearching(false);
+            setSearchKeyword('');
+            setPublicacoes([]);  // Reseta a lista de publicações
+            setPage(0); // Reinicia a paginação
+            return;
+        }
 
-        // Armazena o valor pesquisado no estado
-        setSearchKeyword(searchValue); // Adicione este estado no início do seu componente
+        // Se há algo para pesquisar, reinicia o estado de busca
+        setIsSearching(true);
+        setSearchResults([]); // Limpa os resultados anteriores
+        setSearchKeyword(searchValue); // Armazena o valor pesquisado no estado
+        setPublicacoes([]); 
+        setPage(0);
     };
 
     // Função para capturar o texto do comentário
