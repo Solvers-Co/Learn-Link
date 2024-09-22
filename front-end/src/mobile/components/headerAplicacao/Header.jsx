@@ -4,10 +4,9 @@ import Logo from '../../utils/assets/logo_vermelha_fundo_branco.png';
 import IconePesquisar from '../../utils/assets/icone_pesquisar.svg';
 import IconeMenu from '../../utils/assets/icone_menu_hamburguer.svg';
 import { useNavigate } from 'react-router-dom';
-import api from "../../../api";
 import MenuLateral from '../menuLateral/MenuLateral';
 
-function Header({ onSearchResult }) { // Recebe a função onSearchResult como prop
+function Header({ onSearchResult }) {
     const [searchVisible, setSearchVisible] = useState(false);
     const [searchValue, setSearchValue] = useState('');
     const [menuVisible, setMenuVisible] = useState(false);
@@ -22,35 +21,13 @@ function Header({ onSearchResult }) { // Recebe a função onSearchResult como p
     };
 
     const handleSearchClick = () => {
-        // verifica se a barra de busca tá visível e se tem txt no campo
-        if (searchVisible && searchValue) {
-            // encodeURIComponent: garantir q qualquer caractere especial seja corretamente codificado na URL
-            api.get(`/publicacoes/buscar-palavra-chave?palavraChave=${encodeURIComponent(searchValue)}`)
-                .then(response => {
-                    console.log('Resultado da busca:', response.data);
-                    onSearchResult(response.data); // Passa os resultados da busca para o FeedGeral
-                })
-                .catch(error => {
-                    if (error.response) {
-                        const { status } = error.response;
-                        if (status === 204) {
-                            console.log("Nenhuma publicação encontrada.");
-                            onSearchResult([]); // Passa um array vazio se nada for encontrado
-                        } else if (status === 400) {
-                            console.error("Palavra chave inválida.");
-                        } else {
-                            console.error("Erro ao realizar a busca:", error);
-                        }
-                    } else {
-                        console.error("Erro ao realizar a busca:", error);
-                    }
-                });
+        if (searchVisible) {
+            onSearchResult(searchValue); // Passa o valor da busca para FeedGeral
         } else {
             setSearchVisible(!searchVisible);
         }
     };
 
-    // sempre q algo é digitado no campo, o valor é capturado e atualizado no seachValue
     const handleInputChange = (event) => {
         setSearchValue(event.target.value);
     };
@@ -71,7 +48,6 @@ function Header({ onSearchResult }) { // Recebe a função onSearchResult como p
         setMenuVisible(!menuVisible);
     };
 
-    // qnd clica fora da barra de busca, ela fecha
     useEffect(() => {
         document.addEventListener('mousedown', handleClickOutside);
         return () => {
