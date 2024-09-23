@@ -33,18 +33,25 @@ function deletarItem(id, tipo) {
         });
 }
 
-const CardDenuncia = ({ idItem, item, quantidadeDenuncias, tipo }) => {
+const CardDenuncia = ({ idItem, item, quantidadeDenuncias, tipo, modoSelecao }) => {
     const [showPopup, setShowPopup] = useState(false);
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [showConfirmationIgnore, setShowConfirmationIgnore] = useState(false);
+    const [isSelected, setIsSelected] = useState(false);
 
     const togglePopup = () => setShowPopup(!showPopup);
+    const toggleSelection = () => setIsSelected(!isSelected);
 
     const avatar = useMemo(() => generateInitials(item.usuario.nome), [item.usuario.nome]);
 
     return (
         <div className={styles.card}>
             <div className={styles.header}>
+                {modoSelecao && (
+                    <div className={styles.selecao} onClick={toggleSelection}>
+                        <div className={isSelected ? styles.bolinhaPreenchida : styles.bolinhaVazia}></div>
+                    </div>
+                )}
                 <div className={styles.menuVertical} onClick={togglePopup}>
                     <img src={MenuVertical} alt="Menu" />
                 </div>
@@ -60,7 +67,11 @@ const CardDenuncia = ({ idItem, item, quantidadeDenuncias, tipo }) => {
                 <img src={IconeDenuncia} className={styles.iconeDenuncia} alt='Ícone de denúncia' />
                 <div className={styles.denuncias}>
                     <span className={styles.quantidadeDenuncias}>{quantidadeDenuncias}</span>
-                    <p>denúncias</p>
+                    {quantidadeDenuncias === 1 ? (
+                        <p>denúncia</p>
+                    ) : (
+                        <p>denúncias</p>
+                    )}
                 </div>
             </div>
 

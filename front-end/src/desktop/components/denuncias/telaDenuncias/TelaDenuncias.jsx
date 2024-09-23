@@ -9,6 +9,7 @@ const TelaDenuncias = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [tipoDenuncia, setTipoDenuncia] = useState('publicacoes');
+    const [modoSelecao, setModoSelecao] = useState(false);
 
     const fetchDenuncias = async () => {
         setLoading(true);
@@ -31,40 +32,47 @@ const TelaDenuncias = () => {
 
     const handleTipoDenunciaChange = (e) => setTipoDenuncia(e.target.value);
 
+    const toggleModoSelecao = () => setModoSelecao(!modoSelecao); 
+
     return (
         <div className={styles.telaDenuncias}>
             <div className={styles.cabecalho}>
                 <Titulo>Denúncias</Titulo>
-                <select
-                    value={tipoDenuncia}
-                    onChange={handleTipoDenunciaChange}
-                    className={styles.dropdown}
-                >
-                    <option value="publicacoes">Publicações</option>
-                    <option value="comentarios">Comentários</option>
-                </select>
+                <div className={styles.interacao}>
+                    <button className={styles.btnSelecionar} onClick={toggleModoSelecao}>
+                        {modoSelecao ? 'Cancelar' : 'Selecionar'}
+                    </button>
+                    <select
+                        value={tipoDenuncia}
+                        onChange={handleTipoDenunciaChange}
+                        className={styles.dropdown}
+                    >
+                        <option value="publicacoes">Publicações</option>
+                        <option value="comentarios">Comentários</option>
+                    </select>
+                </div>
             </div>
             {loading ? (
                 <div>Carregando...</div>
             ) : error ? (
                 <div>{error}</div>
             ) : (
-                    <div className={styles.cardContainer}>
-                <div className={styles.cardsDenuncias}>
-                        
-                    {denuncias.length === 0 ? (
-                        <div className={styles.semDenuncias}>Não há denúncias para exibir</div>
-                    ) : (
-                        denuncias.map((denuncia, index) => (
-                            <CardDenuncia
-                            key={index}
-                            idItem={denuncia.publicacao?.id || denuncia.comentario?.id}
-                            item={denuncia.publicacao || denuncia.comentario}
-                            quantidadeDenuncias={denuncia.quantidadeDenuncias}
-                            tipo={tipoDenuncia} // Passa o tipo de denúncia
-                            />
-                        ))
-                    )}
+                <div className={styles.cardContainer}>
+                    <div className={styles.cardsDenuncias}>
+                        {denuncias.length === 0 ? (
+                            <div className={styles.semDenuncias}>Não há denúncias para exibir</div>
+                        ) : (
+                            denuncias.map((denuncia, index) => (
+                                <CardDenuncia
+                                    key={index}
+                                    idItem={denuncia.publicacao?.id || denuncia.comentario?.id}
+                                    item={denuncia.publicacao || denuncia.comentario}
+                                    quantidadeDenuncias={denuncia.quantidadeDenuncias}
+                                    tipo={tipoDenuncia}
+                                    modoSelecao={modoSelecao}
+                                />
+                            ))
+                        )}
                     </div>
                 </div>
             )}
@@ -73,3 +81,4 @@ const TelaDenuncias = () => {
 };
 
 export default TelaDenuncias;
+
