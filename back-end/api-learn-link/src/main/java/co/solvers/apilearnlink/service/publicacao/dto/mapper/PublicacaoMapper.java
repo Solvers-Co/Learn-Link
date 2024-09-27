@@ -101,6 +101,7 @@ public class PublicacaoMapper {
         PublicacaoListagemResponseDto.UsuarioPublicacaoListagemDto usuarioDto = new PublicacaoListagemResponseDto.UsuarioPublicacaoListagemDto();
         if (entity == null) return null;
 
+        usuarioDto.setId(entity.getId());
         usuarioDto.setNome(entity.getNome());
         usuarioDto.setEmail(entity.getEmail());
         usuarioDto.setEspecialidade(EspecialidadeMapper.toDto(entity.getEspecialidade()));

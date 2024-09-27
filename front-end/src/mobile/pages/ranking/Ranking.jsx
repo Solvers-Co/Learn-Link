@@ -3,6 +3,7 @@ import api from '../../../api';
 import Styles from '../ranking/Ranking.module.css';
 import Header from '../../components/headerAplicacao/Header';
 import { generateInitials } from '../../utils/functions/GerarIniciais';
+import { useNavigate } from "react-router-dom";
 
 import Primeiro from '../../utils/assets/ranking/Primeiro lugar.png';
 import Segundo from '../../utils/assets/ranking/Segundo lugar.png';
@@ -10,6 +11,13 @@ import Terceiro from '../../utils/assets/ranking/Terceiro lugar.png';
 
 const Ranking = () => {
     const [users, setUsers] = useState([]);
+
+    const navigate = useNavigate();
+
+    const visualizarPerfil = (id) => {
+        console.log(id)
+        navigate(`/perfil/${id}`)
+    }
 
     useEffect(() => {
         api.get('/qtd-reacoes-comentario-usuarios/buscar-nivel-de-classificacao-de-todos-usuarios')
@@ -36,7 +44,7 @@ const Ranking = () => {
                                 <div className={Styles.infos}>
                                     <div className={Styles.header}>
                                         {avatar}
-                                        <span className={Styles.nome}>{user.nome}</span>
+                                        <span className={Styles.nome} onClick={() => { visualizarPerfil(user.usuarioId) }}>{user.nome}</span>
                                     </div>
 
                                     <span className={Styles.contribuicoes}>Contribuições: {user.qtdReacoes}</span>
