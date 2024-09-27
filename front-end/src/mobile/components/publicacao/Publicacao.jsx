@@ -3,6 +3,7 @@ import Styles from '../publicacao/Publicacao.module.css';
 import api from '../../../api';
 import { toast } from 'react-toastify';
 import Modal from 'react-modal';
+import { useNavigate } from "react-router-dom";
 import StylesModal from '../../components/botoes/botaoFazerPublicacao/BotaoFazerPublicacao.module.css'
 import { generateInitials } from '../../utils/functions/GerarIniciais';
 
@@ -100,7 +101,7 @@ function denunciarPublicacao(idPublicacao, idUsuario) {
         });
 }
 
-const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas, comentarios, listarComentarios, togglePopup, popupAbertoId }) => {
+const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas, comentarios, listarComentarios, togglePopup, popupAbertoId, idUsuarioQuePublicou }) => {
     const [showPopup, setShowPopup] = useState(null);
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [curtida, setCurtida] = useState(quemCurtiu.includes(sessionStorage.getItem('nome')));
@@ -112,6 +113,8 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
     const maxCaracteres = 255;
     const [showDenunciaModal, setShowDenunciaModal] = useState(false);
     // const [motivoDenuncia, setMotivoDenuncia] = useState("");
+
+    const navigate = useNavigate();
 
     const handleTogglePopup = () => {
         togglePopup(id);
@@ -156,6 +159,11 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
         closeDenunciaModal();
     };
 
+    const visualizarPerfil = (id) => {
+        console.log(id)
+        navigate(`/perfil/${id}`)
+    }
+
     // Obtem o nome do usuário armazenado no sessionStorage
     const nomeUsuarioLogado = sessionStorage.getItem('nome');
     const idUsuarioLogado = sessionStorage.getItem('userId');
@@ -196,9 +204,9 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
                     </div>
                 </div>
 
-                <div className={Styles['userInfo']}>
+                <div className={Styles['userInfo']} >
                     {avatar}
-                    <span className={Styles['nome']}>{nome}</span>
+                    <span className={Styles['nome']} onClick={() => { visualizarPerfil(idUsuarioQuePublicou) }}>{nome}</span>
                 </div>
 
                 <div className={Styles['mensagem']}>{mensagem}</div>

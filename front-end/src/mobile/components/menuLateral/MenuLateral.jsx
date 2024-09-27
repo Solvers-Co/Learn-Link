@@ -38,7 +38,8 @@ const MenuLateral = ({ nome }) => {
     const avatar = useMemo(() => generateInitials(nomeFormatado), [nomeFormatado]);
 
     const handlePerfil = () => {
-        navigate('/perfil');
+        navigate(`/perfil/${sessionStorage.getItem('userId')}`);
+        window.location.reload();
     };
 
     const handleFeedGeral = () => {

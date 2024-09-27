@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import styles from './CardAtividade.module.css';
 import api from "../../../../api";
 
-const CardAtividade = () => {
+const CardAtividade = ({idUsuario}) => {
     const [selectedIndex, setSelectedIndex] = useState(null); // Estado para armazenar o índice do quadrado clicado
     const cardRef = useRef(null); // Referência para o container dos quadrados
     const [datasRetornadas, setDatasRetornadas] = useState([]);
@@ -11,7 +11,7 @@ const CardAtividade = () => {
     useEffect(() => {
         const fetchAtividade = async () => {
             try {
-                const response = await api.get(`registro-logins/${sessionStorage.getItem("userId")}`);
+                const response = await api.get(`registro-logins/${idUsuario}`);
                 const registros = response.data.map(item => {
                     // Converte LocalDateTime para o formato "DD/MM/YYYY"
                     const data = new Date(item.registroLogin); // Converte a string da API em um objeto Date
@@ -23,7 +23,7 @@ const CardAtividade = () => {
             }
         };
         fetchAtividade();
-    }, [sessionStorage.getItem("userId")]);
+    }, [idUsuario]);
 
     const gerarUltimasDatas = (quantidade) => {
         const datas = [];
