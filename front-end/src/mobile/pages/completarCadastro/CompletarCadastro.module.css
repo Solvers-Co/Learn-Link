@@ -30,6 +30,22 @@
     margin-left: 3%;
 }
 
+.info {
+    width: 100%;
+    display: flex;
+
+}
+
+.txt {
+    width: 87%;
+}
+
+.tooltip {
+    display: flex;
+    align-items: end;
+}
+
+
 .divInputs{
     height: 50vh;
     display: flex;

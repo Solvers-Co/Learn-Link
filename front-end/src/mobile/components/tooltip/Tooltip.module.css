@@ -1,0 +1,27 @@
+.container {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip {
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+}
+
+.tooltipText {
+    background-color: #535353;
+    color: #fff;
+    text-align: center;
+    border-radius: 10px;
+    padding: 10px;
+    position: absolute;
+    z-index: 1;
+    width: 200px;
+    top: 100%;
+    left: -80px;
+    transform: translateX(-50%);
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.3s;
+}
