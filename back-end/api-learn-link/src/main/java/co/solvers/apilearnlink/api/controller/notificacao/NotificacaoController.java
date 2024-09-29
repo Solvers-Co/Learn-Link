@@ -33,4 +33,11 @@ public class NotificacaoController {
 
         return ResponseEntity.ok(NotificacaoMapper.toListagemDto(notificacoes));
     }
+
+    @PatchMapping("/visualizar-notificacao/{id}")
+    private ResponseEntity<NotificacaoListagemDto> visualizarNotificacao(@PathVariable Long id){
+        Notificacao notificacao = notificacaoService.visualizarNotificacao(id);
+
+        return  ResponseEntity.ok(NotificacaoMapper.toListagemDto(notificacao));
+    }
 }

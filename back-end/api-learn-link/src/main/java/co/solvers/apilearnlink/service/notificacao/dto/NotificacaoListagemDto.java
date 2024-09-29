@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Setter
 public class NotificacaoListagemDto {
 
+    private Long id;
     private LocalDateTime dataHora;
     private String corpo;
     private String nomeUsuarioGerador;

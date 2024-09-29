@@ -14,7 +14,7 @@ public class NotificacaoMapper {
         Notificacao entidade = new Notificacao();
 
         entidade.setCorpo(dto.getCorpo());
-        entidade.setVista(dto.getVista());
+        entidade.setVista(1);
         entidade.setDataHora(LocalDateTime.now());
 
         return entidade;
@@ -23,6 +23,7 @@ public class NotificacaoMapper {
     public static NotificacaoListagemDto toListagemDto(Notificacao entidade){
         NotificacaoListagemDto dto = new NotificacaoListagemDto();
 
+        dto.setId(entidade.getId());
         dto.setCorpo(entidade.getCorpo());
         dto.setDataHora(entidade.getDataHora());
         dto.setNomeUsuarioGerador(entidade.getUsuarioGerador().getNome());

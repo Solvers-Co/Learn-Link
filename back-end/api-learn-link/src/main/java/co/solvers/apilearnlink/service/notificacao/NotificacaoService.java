@@ -3,6 +3,7 @@ package co.solvers.apilearnlink.service.notificacao;
 import co.solvers.apilearnlink.domain.notificacao.Notificacao;
 import co.solvers.apilearnlink.domain.notificacao.repository.NotificacaoRepository;
 import co.solvers.apilearnlink.domain.usuario.Usuario;
+import co.solvers.apilearnlink.exception.NaoEncontradoException;
 import co.solvers.apilearnlink.service.usuario.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,5 +31,17 @@ public class NotificacaoService {
     public List<Notificacao> listarNotificacoesUsuario(Long id){
 
         return notificacaoRepository.findByUsuarioRecebedorId(id);
+    }
+
+    public Notificacao visualizarNotificacao(Long id){
+
+        Notificacao notificacao = notificacaoRepository.findById(id)
+                        .orElseThrow(
+                                () -> new NaoEncontradoException("Notificação")
+                        );
+
+        notificacao.setVista(0);
+
+        return notificacaoRepository.save(notificacao);
     }
 }

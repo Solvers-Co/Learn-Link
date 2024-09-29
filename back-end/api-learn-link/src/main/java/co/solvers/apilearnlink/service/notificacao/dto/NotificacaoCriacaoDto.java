@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 public class NotificacaoCriacaoDto {
 
     private String corpo;
-    private int vista;
     private Long usuarioGeradorId;
     private Long usuarioRecebedorId;
 }
