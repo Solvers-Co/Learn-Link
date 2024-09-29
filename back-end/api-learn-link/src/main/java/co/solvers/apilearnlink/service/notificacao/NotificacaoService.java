@@ -29,6 +29,6 @@ public class NotificacaoService {
 
     public List<Notificacao> listarNotificacoesUsuario(Long id){
 
-        return notificacaoRepository.getByUsuarioRecebedorId(id);
+        return notificacaoRepository.findByUsuarioRecebedorId(id);
     }
 }
