@@ -34,6 +34,18 @@ function formatTimeAgo(dateString) {
     return 'agora mesmo';
 }
 
+function gerarNotificacao(corpo,idUsuarioLogado, idUsuarioRecebedor){
+    const notificacao = {
+        corpo,
+        idUsuarioLogado,
+        idUsuarioRecebedor
+    }
+    api.post(`/notificacoes`, notificacao).then(() =>{
+    }).catch(() =>{
+        toast.error("Erro ao gerar notificacao")
+    })
+}
+
 function reagirComentario(idComentario, idReacao, tipoReacao, idUsuario, curtida, setCurtida, setCurtidas) {
     if (curtida) {
         // Se o usuário já curtiu, remove a curtida

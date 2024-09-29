@@ -25,6 +25,17 @@ function formatDateTime(dateString) {
     return `${hours}:${minutes} - ${day}/${month}/${year}`;
 }
 
+function gerarNotificacao(corpo,idUsuarioLogado, idUsuarioRecebedor){
+    const notificacao = {
+        corpo,
+        idUsuarioLogado,
+        idUsuarioRecebedor
+    }
+    api.post(`/notificacoes`, notificacao).then(() =>{
+    }).catch(() =>{
+        toast.error("Erro ao gerar notificacao")
+    })
+}
 function reagirPublicacao(idPublicacao, tipoReacao, idUsuario, curtida, setCurtida, setCurtidas) {
 
     if (curtida) {
