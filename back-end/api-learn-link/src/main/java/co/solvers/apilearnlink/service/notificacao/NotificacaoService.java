@@ -7,6 +7,8 @@ import co.solvers.apilearnlink.service.usuario.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class NotificacaoService {
@@ -23,5 +25,10 @@ public class NotificacaoService {
         notificacao.setUsuarioRecebedor(usuarioRecebedor);
 
         return notificacaoRepository.save(notificacao);
+    }
+
+    public List<Notificacao> listarNotificacoesUsuario(Long id){
+
+        return notificacaoRepository.getByUsuarioRecebedorId(id);
     }
 }

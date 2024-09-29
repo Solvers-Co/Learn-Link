@@ -102,7 +102,8 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/usuarios/classificar-usuario/{id}"),
             new AntPathRequestMatcher("/usuarios/buscarEmail/{email}"),
             new AntPathRequestMatcher("/media-usuarios-ativos/mes"),
-            new AntPathRequestMatcher("/notificacoes")
+            new AntPathRequestMatcher("/notificacoes"),
+            new AntPathRequestMatcher("/notificacoes/{id}")
     };
 
     @Bean

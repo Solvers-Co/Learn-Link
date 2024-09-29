@@ -5,6 +5,8 @@ import co.solvers.apilearnlink.service.notificacao.dto.NotificacaoCriacaoDto;
 import co.solvers.apilearnlink.service.notificacao.dto.NotificacaoListagemDto;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class NotificacaoMapper {
 
@@ -27,5 +29,14 @@ public class NotificacaoMapper {
         dto.setNomeUsuarioRecebedor(entidade.getUsuarioRecebedor().getNome());
 
         return dto;
+    }
+
+    public static List<NotificacaoListagemDto> toListagemDto(List<Notificacao> entidades){
+        List<NotificacaoListagemDto> dtos = new ArrayList<>();
+
+        for (Notificacao entidade : entidades){
+            dtos.add(toListagemDto(entidade));
+        }
+        return dtos;
     }
 }
