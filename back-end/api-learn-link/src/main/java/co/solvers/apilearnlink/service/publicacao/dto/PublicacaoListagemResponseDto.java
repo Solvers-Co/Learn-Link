@@ -34,6 +34,7 @@ public class PublicacaoListagemResponseDto {
     @Getter
     @Setter
     public static class UsuarioPublicacaoListagemDto {
+        private Long id;
         private String nome;
         private String email;
         private EspecialidadeListagemDto especialidade;

@@ -2,18 +2,17 @@ import styles from './Perfil.module.css';
 import Header from '../../components/headerAplicacao/Header';
 import CardPerfil from '../../components/cards/cardPerfil/CardPerfil';
 import React, { useMemo, useState, useEffect } from 'react';
+import { useParams } from "react-router-dom";
 import CardAtividade from '../../components/cards/cardAtividade/CardAtividade';
 import api from "../../../api";
+import Tooltip from '../../components/tooltip/Tooltip';
 
 // generateInitials diferente do padrão
 function generateInitials(name) {
-    if (!name) {
-        return <div style={{ color: 'red' }}>N/A</div>;
-    }
+    if (!name) return <div style={{ color: 'red' }}>N/A</div>;
 
     const nameParts = name.trim().split(' ');
-    const firstInitial = nameParts[0].charAt(0).toUpperCase();
-    const lastInitial = nameParts.length > 1 ? nameParts[nameParts.length - 1].charAt(0).toUpperCase() : '';
+    const initials = nameParts[0].charAt(0).toUpperCase() + (nameParts.length > 1 ? nameParts[nameParts.length - 1].charAt(0).toUpperCase() : '');
 
     const pastelColors = [
         '#FFB3BA', '#FFDFBA', '#FFFFBA', '#BAFFC9', '#BAE1FF',
@@ -22,10 +21,9 @@ function generateInitials(name) {
         '#FFC4C4', '#FFE1C4', '#FFFFD1', '#D1FFD1', '#D1E8FF'
     ];
 
-    const randomIndex = Math.floor(Math.random() * pastelColors.length);
-    const backgroundColor = pastelColors[randomIndex];
+    const backgroundColor = pastelColors[Math.floor(Math.random() * pastelColors.length)];
 
-    const avatar = {
+    const avatarStyle = {
         borderRadius: '50%',
         border: '1px solid rgba(0, 0, 0, .3)',
         fontSize: '40px',
@@ -39,25 +37,38 @@ function generateInitials(name) {
         backgroundColor
     };
 
-    return <div style={avatar}>{firstInitial + lastInitial}</div>;
+    return <div style={avatarStyle}>{initials}</div>;
 }
 
 const Perfil = () => {
+    const { idUsuario } = useParams(); // Pegando o id do usuário da URL
+    const [nome, setNome] = useState('Usuário Desconhecido');
+    const [email, setEmail] = useState('E-mail Desconhecido');
     const [classificacao, setClassificacao] = useState('Iniciante');
     const [especialidade, setEspecialidade] = useState('Desconhecido');
     const [contribuicoes, setContribuicoes] = useState(0);
 
-    const idUsuarioLogado = sessionStorage.getItem('userId') || 'N/A';
-    const nomeUsuarioLogado = sessionStorage.getItem('nome') || 'Usuário Anônimo';
-    const emailUsuarioLogado = sessionStorage.getItem('email') || 'E-mail Anônimo';
+    const idUsuarioLogado = idUsuario;
+
+    useEffect(() => {
+        const fetchUsuario = async () => {
+            try {
+                const response = await api.get(`/usuarios/${idUsuario}`);
+                const usuario = response.data;
+                setNome(usuario.nome || 'Usuário Desconhecido');
+                setEmail(usuario.email || 'E-mail Desconhecido');
+                setEspecialidade(formatSubjectName(usuario.especialidade?.materia) || 'Desconhecido');
+            } catch (error) {
+                console.error("Erro ao carregar dados do usuário:", error);
+            }
+        };
+        fetchUsuario();
+    }, [idUsuario]);
 
     const nomeFormatado = useMemo(() => {
-        if (!nomeUsuarioLogado) return 'Usuário Desconhecido';
-        const nomes = nomeUsuarioLogado.trim().split(' ');
+        const nomes = nome.trim().split(' ');
         return nomes.length === 1 ? nomes[0] : `${nomes[0]} ${nomes[nomes.length - 1]}`;
-    }, [nomeUsuarioLogado]);
-
-    const avatar = useMemo(() => generateInitials(nomeFormatado), [nomeFormatado]);
+    }, [nome]);
 
     useEffect(() => {
         const fetchClassificacao = async () => {
@@ -73,39 +84,26 @@ const Perfil = () => {
                 setClassificacao(classificacoes[nivel] || 'Iniciante');
             } catch (error) {
                 console.error("Erro ao carregar classificação:", error);
-                setClassificacao('Iniciante');
             }
         };
         fetchClassificacao();
     }, [idUsuarioLogado]);
 
-    const subjectNameMap = {
-        'MATEMATICA': 'Matemática',
-        'HISTORIA': 'História',
-        'GEOGRAFIA': 'Geografia',
-        'QUIMICA': 'Química',
-        'PORTUGUES': 'Português',
-        'FISICA': 'Física',
-        'BIOLOGIA': 'Biologia',
-        'INGLES': 'Inglês',
-        'FILOSOFIA': 'Filosofia',
-        'SOCIOLOGIA': 'Sociologia',
-    };
-
-    const formatSubjectName = (name) => subjectNameMap[name] || name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
-
-    useEffect(() => {
-        const fetchEspecialidade = async () => {
-            try {
-                const response = await api.get(`/usuarios/${idUsuarioLogado}`);
-                setEspecialidade(formatSubjectName(response.data.especialidade.materia));
-            } catch (error) {
-                console.error("Erro ao carregar especialidade:", error);
-                setEspecialidade('Erro ao carregar');
-            }
+    const formatSubjectName = (name) => {
+        const subjectNameMap = {
+            'MATEMATICA': 'Matemática',
+            'HISTORIA': 'História',
+            'GEOGRAFIA': 'Geografia',
+            'QUIMICA': 'Química',
+            'PORTUGUES': 'Português',
+            'FISICA': 'Física',
+            'BIOLOGIA': 'Biologia',
+            'INGLES': 'Inglês',
+            'FILOSOFIA': 'Filosofia',
+            'SOCIOLOGIA': 'Sociologia',
         };
-        fetchEspecialidade();
-    }, [idUsuarioLogado]);
+        return subjectNameMap[name] || name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+    };
 
     useEffect(() => {
         const fetchContribuicoes = async () => {
@@ -116,12 +114,12 @@ const Perfil = () => {
                 if (qtdReacoes < 1) setClassificacao('Iniciante');
             } catch (error) {
                 console.error("Erro ao carregar contribuições:", error);
-                setContribuicoes(0);
-                setClassificacao('Iniciante');
             }
         };
         fetchContribuicoes();
     }, [idUsuarioLogado]);
+
+    const avatar = useMemo(() => generateInitials(nomeFormatado), [nomeFormatado]);
 
     return (
         <>
@@ -129,9 +127,18 @@ const Perfil = () => {
             <div className={styles.perfil}>
                 <div className={styles.corFundo}>
                     <div className={styles.userInfo}>
-                        {avatar}
-                        <span className={styles.nome}>{nomeUsuarioLogado}</span>
-                        <span className={styles.email}>{emailUsuarioLogado}</span>
+                        <div className={styles.user}>
+                            {avatar}
+                            <span className={styles.nome}>{nome}</span>
+                            <span className={styles.email}>{email}</span>
+                        </div>
+                        <div className={styles.tooltip}>
+                            <Tooltip txt="Ganhará a classificação: Iniciante - 0 interações
+                            Júnior - 1 interação
+Pleno – 30 interações
+Sênior - 60 interações
+Especialista – 100 interações"/>
+                        </div>
                     </div>
                 </div>
                 <div className={styles.cards}>
@@ -140,11 +147,11 @@ const Perfil = () => {
                     <CardPerfil conteudo={especialidade} classificacao="Especialidade" />
                 </div>
                 <div className={styles.atividade}>
-                    <CardAtividade />
+                    <CardAtividade idUsuario={idUsuarioLogado} />
                 </div>
             </div>
         </>
     );
-}
+};
 
 export default Perfil;

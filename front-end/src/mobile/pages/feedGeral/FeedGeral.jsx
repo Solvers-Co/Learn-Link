@@ -142,7 +142,7 @@ const FeedGeral = () => {
         setIsSearching(true);
         setSearchResults([]); // Limpa os resultados anteriores
         setSearchKeyword(searchValue); // Armazena o valor pesquisado no estado
-        setPublicacoes([]); 
+        setPublicacoes([]);
         setPage(0);
     };
 
@@ -191,6 +191,7 @@ const FeedGeral = () => {
             setComentarios(response.data);
             setShowComentarios(true);
             setIdPublicacaoAtual(id); // Define a publicação atual para usar no envio do comentário
+            console.log("Comentários da publicação:", response.data);
         } catch (error) {
             console.error("Erro ao buscar comentários:", error);
         }
@@ -236,6 +237,7 @@ const FeedGeral = () => {
                                 listarComentarios={listarComentarios}
                                 togglePopup={togglePopup}
                                 popupAbertoId={popupAbertoId}
+                                idUsuarioQuePublicou={publicacao.usuario.id}
                             />
                         ))
                     ) : (
@@ -289,6 +291,7 @@ const FeedGeral = () => {
                                 curtidas={comentario.reacoes.length}
                                 nomePublicacao={comentario.publicacao.usuario.nome}
                                 idPublicacao={comentario.publicacao.id}
+                                idUsuarioQuePublicou={comentario.usuario.id}
                             />
                         ))
                     ) : (

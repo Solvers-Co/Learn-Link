@@ -3,6 +3,7 @@ import Styles from '../comentario/Comentario.module.css';
 import api from '../../../api';
 import { toast } from 'react-toastify';
 import { generateInitials } from '../../utils/functions/GerarIniciais';
+import { useNavigate } from "react-router-dom";
 
 import Curtir from '../../utils/assets/Curtir.png';
 import Curtido from '../../utils/assets/Curtido.png';
@@ -102,7 +103,7 @@ function denunciarComentario(idComentario, idUsuario) {
         });
 }
 
-const Comentario = ({ quemCurtiu, id, nome, mensagem, horario, curtidas, idReacao, nomePublicacao, idPublicacao }) => {
+const Comentario = ({ quemCurtiu, id, nome, mensagem, horario, curtidas, idReacao, nomePublicacao, idPublicacao, idUsuarioQuePublicou, emailDeQuemPublicou }) => {
     const [curtida, setCurtida] = useState(quemCurtiu.includes(sessionStorage.getItem('nome')));
     const [numCurtidas, setCurtidas] = useState(curtidas);
     const [showPopup, setShowPopup] = useState(false);
@@ -110,6 +111,8 @@ const Comentario = ({ quemCurtiu, id, nome, mensagem, horario, curtidas, idReaca
     const [showDenunciaModal, setShowDenunciaModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
     const [novoComentario, setNovoComentario] = useState(mensagem);
+
+    const navigate = useNavigate();
 
     const togglePopup = () => {
         setShowPopup(!showPopup);
@@ -151,6 +154,11 @@ const Comentario = ({ quemCurtiu, id, nome, mensagem, horario, curtidas, idReaca
             });
     };
 
+    const visualizarPerfil = (id) => {
+        console.log(id)
+        navigate(`/perfil/${id}`)
+    }
+
 
     // Obtem o nome do usuário armazenado no sessionStorage
     const nomeUsuarioLogado = sessionStorage.getItem('nome');
@@ -165,7 +173,7 @@ const Comentario = ({ quemCurtiu, id, nome, mensagem, horario, curtidas, idReaca
         <>
             <div className={Styles['comentarioContainer']}>
                 <div className={Styles['comentarioUserInfo']}>
-                    <div className={Styles["userComentario"]}>
+                    <div className={Styles["userComentario"]} onClick={() => { visualizarPerfil(idUsuarioQuePublicou) }}>
                         {avatar}
                         <span className={Styles['comentarioNome']}>{nome}</span>
                     </div>

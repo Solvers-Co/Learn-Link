@@ -34,6 +34,7 @@ public class ComentarioListagemDto {
     @Getter
     @Setter
     public static class UsuarioDto {
+        private Long id;
         private String nome;
         private String email;
         private EspecialidadeListagemDto especialidade;
