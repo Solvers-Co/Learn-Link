@@ -19,8 +19,8 @@ public class NotificacaoService {
     public Notificacao criarNotificacao(
             Notificacao notificacao, Long usuarioGeradorId, Long usuarioRecebedorId){
 
-        Usuario usuarioGerador = usuarioService.buscarPorId(usuarioRecebedorId);
-        Usuario usuarioRecebedor = usuarioService.buscarPorId(usuarioGeradorId);
+        Usuario usuarioGerador = usuarioService.buscarPorId(usuarioGeradorId);
+        Usuario usuarioRecebedor = usuarioService.buscarPorId(usuarioRecebedorId);
 
         notificacao.setCorpo(usuarioGerador.getNome() + notificacao.getCorpo());
         notificacao.setUsuarioGerador(usuarioGerador);

@@ -35,19 +35,20 @@ function formatTimeAgo(dateString) {
     return 'agora mesmo';
 }
 
-function gerarNotificacao(corpo,idUsuarioLogado, idUsuarioRecebedor){
+function gerarNotificacao(corpo,usuarioGeradorId, usuarioRecebedorId){
     const notificacao = {
         corpo,
-        idUsuarioLogado,
-        idUsuarioRecebedor
+        usuarioGeradorId,
+        usuarioRecebedorId
     }
-    api.post(`/notificacoes`, notificacao).then(() =>{
+    api.post("/notificacoes", notificacao).then(response =>{
+        console.log(response.data)
     }).catch(() =>{
         toast.error("Erro ao gerar notificacao")
     })
 }
 
-function reagirComentario(idComentario, idReacao, tipoReacao, idUsuario, curtida, setCurtida, setCurtidas) {
+function reagirComentario(idComentario, idReacao, tipoReacao, idUsuario, curtida, setCurtida, setCurtidas, idUsuarioQuePublicou) {
     if (curtida) {
         // Se o usuário já curtiu, remove a curtida
         api.delete(`/comentarios/${idComentario}/reagir`, { data: { tipoReacao, idUsuario } })
@@ -66,6 +67,7 @@ function reagirComentario(idComentario, idReacao, tipoReacao, idUsuario, curtida
                 console.log("Reação registrada com sucesso:", response.data);
                 setCurtida(true);
                 setCurtidas(prevCurtidas => prevCurtidas + 1); // Incrementa o contador de curtidas
+                gerarNotificacao(" curtiu o seu comentário", idUsuario, idUsuarioQuePublicou)
             })
             .catch(error => {
                 console.error("Ocorreu um erro ao reagir ao comentário:", error);
@@ -256,7 +258,7 @@ const Comentario = ({ quemCurtiu, id, nome, mensagem, horario, curtidas, idReaca
                         <img
                             src={curtida ? Curtido : Curtir}
                             alt="Curtir"
-                            onClick={() => { reagirComentario(id, idReacao, "CURTIDA", sessionStorage.getItem('userId'), curtida, setCurtida, setCurtidas) }}
+                            onClick={() => { reagirComentario(id, idReacao, "CURTIDA", sessionStorage.getItem('userId'), curtida, setCurtida, setCurtidas, idUsuarioQuePublicou) }}
                         />
                     </div>
                 </div>
