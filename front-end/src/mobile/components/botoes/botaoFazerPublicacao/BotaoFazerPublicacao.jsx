@@ -11,7 +11,7 @@ import fechar from '../../../utils/assets/icone_x.svg';
 function BotaoFazerPublicacao() {
     const [showComentarios, setShowComentarios] = useState(false);
     const [textoPublicacao, setTextoPublicacao] = useState("");
-    const [materia, setMateria] = useState("");
+    const [materia, setMateria] = useState("0");
     const maxCaracteres = 255;
 
     const nomeUsuario = sessionStorage.getItem('nome');
@@ -31,22 +31,27 @@ function BotaoFazerPublicacao() {
     };
 
     const fazerPublicacao = () => {
-        const publicacao = {
-            conteudo : textoPublicacao,
-            idTipoPublicacao: 1,
-            idUsuario : sessionStorage.userId,
-            idCanal : materia
-        };
-        console.log(publicacao);
-
-        api.post(`/publicacoes`, publicacao)
-            .then(() => {
-                toast.success("Publicação realizada!");
-                window.location.reload();
-            })
-            .catch(() => {
-                toast.error("Ocorreu um erro ao realizar a publicação, por favor, tente novamente.");
-            });
+        if (materia === "0") {
+            toast.error("Selecione uma matéria");
+        } else{
+            const publicacao = {
+                conteudo : textoPublicacao,
+                idTipoPublicacao: 1,
+                idUsuario : sessionStorage.userId,
+                idCanal : materia
+            };
+            console.log(publicacao);
+    
+            api.post(`/publicacoes`, publicacao)
+                .then(() => {
+                    toast.success("Publicação realizada!");
+                    window.location.reload();
+                })
+                .catch(() => {
+                    toast.error("Ocorreu um erro ao realizar a publicação, por favor, tente novamente.");
+                });
+        }
+        
     };
 
     return (
@@ -88,6 +93,7 @@ function BotaoFazerPublicacao() {
                 <div className={Styles["footerPublicar"]}>
                     <span className={Styles["hashtag"]}>#</span>
                     <select name="materias" id="materias" className={Styles["opcoesMaterias"]} onChange={(e) => setMateria(e.target.value)}>
+                        <option value="0">Selecione uma matéria</option>
                         <option value="1">Matemática</option>
                         <option value="2">Português</option>
                         <option value="3">Biologia</option>
