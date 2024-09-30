@@ -42,7 +42,7 @@ function Rotas() {
                     <Route path="/denuncias" element={<Denuncias />} />
                     <Route path="/cadastroFuncionarios" element={<CadastroFuncionarios />} />
                     <Route path="/aceitarUsuarios" element={<AceitarUsuarios />} />
-                    <Route path="/perfil" element={<Perfil />} />
+                    <Route path="/perfil/:idUsuario" element={<Perfil />} />
                     <Route path="/canais" element={<Canais />} />
                     <Route path="/notificacoes" element={<Notificacoes />} />
                     <Route path="/completarCadastro" element={<CompletarCadastro />} />

@@ -67,6 +67,7 @@ public class ComentarioMapper {
         if (entity == null) return null;
 
         ComentarioListagemDto.UsuarioDto dto = new ComentarioListagemDto.UsuarioDto();
+        dto.setId(entity.getId());
         dto.setNome(entity.getNome());
         dto.setEmail(entity.getEmail());
         dto.setEspecialidade(EspecialidadeMapper.toDto(entity.getEspecialidade()));
