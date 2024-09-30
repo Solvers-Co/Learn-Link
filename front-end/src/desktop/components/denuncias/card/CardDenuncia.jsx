@@ -33,14 +33,12 @@ function deletarItem(id, tipo) {
         });
 }
 
-const CardDenuncia = ({ idItem, item, quantidadeDenuncias, tipo, modoSelecao }) => {
+const CardDenuncia = ({ idItem, item, quantidadeDenuncias, tipo, modoSelecao, toggleSelecao, isSelected }) => {
     const [showPopup, setShowPopup] = useState(false);
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [showConfirmationIgnore, setShowConfirmationIgnore] = useState(false);
-    const [isSelected, setIsSelected] = useState(false);
 
     const togglePopup = () => setShowPopup(!showPopup);
-    const toggleSelection = () => setIsSelected(!isSelected);
 
     const avatar = useMemo(() => generateInitials(item.usuario.nome), [item.usuario.nome]);
 
@@ -48,7 +46,7 @@ const CardDenuncia = ({ idItem, item, quantidadeDenuncias, tipo, modoSelecao }) 
         <div className={styles.card}>
             <div className={styles.header}>
                 {modoSelecao && (
-                    <div className={styles.selecao} onClick={toggleSelection}>
+                    <div className={styles.selecao} onClick={() => toggleSelecao(idItem, tipo)}>
                         <div className={isSelected ? styles.bolinhaPreenchida : styles.bolinhaVazia}></div>
                     </div>
                 )}
@@ -78,12 +76,12 @@ const CardDenuncia = ({ idItem, item, quantidadeDenuncias, tipo, modoSelecao }) 
             {showPopup && (
                 <div className={styles.popup}>
                     <div className={styles.opcao} onClick={() => { setShowPopup(false); setShowConfirmationIgnore(true); }}>
-                        <img src={Ignorar} alt="Ignorar" />
+                        <img src={Ignorar} alt="Ignorar denúncia" />
                         <span>Ignorar</span>
                     </div>
                     <div className={styles.opcao} onClick={() => { setShowPopup(false); setShowConfirmation(true); }}>
-                        <img src={Excluir} alt="Excluir" />
-                        <span>Excluir</span>
+                        <img src={Excluir} alt="Deletar" />
+                        <span>Deletar</span>
                     </div>
                 </div>
             )}
