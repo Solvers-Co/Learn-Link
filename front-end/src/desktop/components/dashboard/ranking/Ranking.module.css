@@ -14,16 +14,28 @@
     position: fixed;
 }
 
+.header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 10px 0px 10px;
+}
+
 .titulo {
     display: flex;
     justify-content: start;
     align-self: center;
-    width: 95%;
     font-size: 20px;
     color: #000000;
     font-family: "Nunito Sans", sans-serif;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
+    margin-left: 10px;
     font-weight: bold;
+}
+
+.tooltip {
+    margin: 0px 10px 15px 10px;
 }
 
 .rankingItem {

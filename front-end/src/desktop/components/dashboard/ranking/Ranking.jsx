@@ -5,6 +5,7 @@ import Styles from "./Ranking.module.css";
 import Primeiro from '../../../../mobile/utils/assets/ranking/Primeiro lugar.png';
 import Segundo from '../../../../mobile/utils/assets/ranking/Segundo lugar.png';
 import Terceiro from '../../../../mobile/utils/assets/ranking/Terceiro lugar.png';
+import Tooltip from "../../../../mobile/components/tooltip/Tooltip";
 
 const Ranking = () => {
     const [users, setUsers] = useState([]);
@@ -30,7 +31,12 @@ const Ranking = () => {
     return (
         <>
             <div className={Styles.ranking}>
-                <h1 className={Styles.titulo}>Ranking</h1>
+                <div className={Styles.header}>
+                    <h1 className={Styles.titulo}>Ranking</h1>
+                    <div className={Styles.tooltip}>
+                        <Tooltip txt="O ranking mostra os 10 maiores contribuidores na plataforma"/>
+                    </div>
+                </div>
                 {users.map((user, index) => {
                     const avatar = generateInitials(user.nome);
                     return (
