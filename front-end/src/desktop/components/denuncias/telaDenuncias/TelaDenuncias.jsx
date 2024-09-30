@@ -65,6 +65,11 @@ const TelaDenuncias = () => {
     // Função para remover denúncias de itens selecionados
     const removerDenunciasSelecionadas = async () => {
         try {
+            if (publicacoesSelecionadas.length === 0 && comentariosSelecionados.length === 0) {
+                toast.error('Nenhum item foi selecionado');
+                return;
+            }
+
             let countPublicacoes = 0;
             let countComentarios = 0;
 
@@ -107,6 +112,11 @@ const TelaDenuncias = () => {
                         Ao excluir a denúncia, a publicação/comentário será apagado da plataforma." />
                     </div>
                 </div>
+                {modoSelecao && (
+                    <button className={styles.btnRemover} onClick={removerDenunciasSelecionadas}>
+                        Remover Denúncias Selecionadas
+                    </button>
+                )}
                 <div className={styles.interacao}>
                     <button className={styles.btnSelecionar} onClick={toggleModoSelecao}>
                         {modoSelecao ? 'Cancelar' : 'Selecionar'}
@@ -119,11 +129,6 @@ const TelaDenuncias = () => {
                         <option value="publicacoes">Publicações</option>
                         <option value="comentarios">Comentários</option>
                     </select>
-                    {modoSelecao && (
-                        <button className={styles.btnRemover} onClick={removerDenunciasSelecionadas}>
-                            Remover Denúncias Selecionadas
-                        </button>
-                    )}
                 </div>
             </div>
             {loading ? (
