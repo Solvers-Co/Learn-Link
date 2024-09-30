@@ -22,6 +22,7 @@ public class NotificacaoService {
         Usuario usuarioGerador = usuarioService.buscarPorId(usuarioRecebedorId);
         Usuario usuarioRecebedor = usuarioService.buscarPorId(usuarioGeradorId);
 
+        notificacao.setCorpo(usuarioGerador.getNome() + notificacao.getCorpo());
         notificacao.setUsuarioGerador(usuarioGerador);
         notificacao.setUsuarioRecebedor(usuarioRecebedor);
 
