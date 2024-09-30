@@ -83,6 +83,28 @@
     display: flex;
 }
 
+.selecao {
+    cursor: pointer;
+    display: flex;
+    margin-top: 1px;
+}
+
+.bolinhaVazia {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgb(0, 0, 0, 0.15);
+    border-radius: 50%;
+}
+
+.bolinhaPreenchida {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-image: url("../../../utils/assets/icone_selecionado.png");
+    background-size: cover;
+    background-position: center;
+}
+
 .popup {
     width: 6vw;
     position: absolute;
