@@ -3,6 +3,7 @@ import Titulo from '../../dashboard/tituloDashboard/Titulo';
 import CardDenuncia from '../card/CardDenuncia';
 import styles from './TelaDenuncias.module.css';
 import api from '../../../../api';
+import Tooltip from '../../../../mobile/components/tooltip/Tooltip';
 
 const TelaDenuncias = () => {
     const [denuncias, setDenuncias] = useState([]);
@@ -34,7 +35,13 @@ const TelaDenuncias = () => {
     return (
         <div className={styles.telaDenuncias}>
             <div className={styles.cabecalho}>
-                <Titulo>Denúncias</Titulo>
+                <div className={styles.titulo}>
+                    <Titulo>Denúncias</Titulo>
+                    <div className={styles.tooltip}>
+                        <Tooltip txt="Ao ignorar uma denúncia, ela continuará na plataforma. 
+                        Ao excluir a denúncia, a publicação/comentário será apagado da plataforma." />
+                    </div>
+                </div>
                 <select
                     value={tipoDenuncia}
                     onChange={handleTipoDenunciaChange}

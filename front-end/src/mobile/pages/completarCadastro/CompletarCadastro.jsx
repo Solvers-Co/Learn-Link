@@ -6,6 +6,7 @@ import styles from "./CompletarCadastro.module.css";
 import InputFormulario from "../../components/inputs/inputFormularios/InputFormulario";
 import Botao from "../../components/botoes/botaoLoginCadastro/Botao";
 import InputMask from "react-input-mask";
+import Tooltip from "../../components/tooltip/Tooltip";
 
 const CompletarCadastro = () => {
     const navigate = useNavigate();
@@ -82,7 +83,12 @@ const CompletarCadastro = () => {
     return (
         <div className={styles.container}>
             <h1 className={styles.cadastroMobileTitulo}>Completar Cadastro</h1>
-            <h3>Para usar a plataforma é necessário terminar o cadastro</h3>
+            <div className={styles.info}>
+                <h3 className={styles.txt}>Para usar a plataforma é necessário terminar o cadastro</h3>
+                <div className={styles.tooltip}>
+                    <Tooltip txt="Selecione a matéria em que você tem mais facilidade. Isso será exibido em seu perfil. E informe o CEP para que possamos identificar a sua região."/>
+                </div>
+            </div>
             <div className={styles.divInputs}>
                 {/* <InputFormulario placeHolder="Especialidade" value={especialidade} onChange={(e) => handleInputChange(e, setEspecialidade)} /> */}
                 <select className={styles.select} value={idEspecialidade} name="especialidade" onChange={(e) => handleInputChange(e, setEspecialidade)}>

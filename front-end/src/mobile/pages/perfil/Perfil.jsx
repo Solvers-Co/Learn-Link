@@ -5,6 +5,7 @@ import React, { useMemo, useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import CardAtividade from '../../components/cards/cardAtividade/CardAtividade';
 import api from "../../../api";
+import Tooltip from '../../components/tooltip/Tooltip';
 
 // generateInitials diferente do padrão
 function generateInitials(name) {
@@ -126,9 +127,18 @@ const Perfil = () => {
             <div className={styles.perfil}>
                 <div className={styles.corFundo}>
                     <div className={styles.userInfo}>
-                        {avatar}
-                        <span className={styles.nome}>{nome}</span>
-                        <span className={styles.email}>{email}</span>
+                        <div className={styles.user}>
+                            {avatar}
+                            <span className={styles.nome}>{nome}</span>
+                            <span className={styles.email}>{email}</span>
+                        </div>
+                        <div className={styles.tooltip}>
+                            <Tooltip txt="Ganhará a classificação: Iniciante - 0 interações
+                            Júnior - 1 interação
+Pleno – 30 interações
+Sênior - 60 interações
+Especialista – 100 interações"/>
+                        </div>
                     </div>
                 </div>
                 <div className={styles.cards}>
