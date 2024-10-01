@@ -1,5 +1,6 @@
 import styles from './Notificacao.module.css';
 import { generateInitials } from '../../utils/functions/GerarIniciais';
+import { useState } from 'react';
 
 const users = [
     { nome: 'Ana Luísa Moreira', acao: 'respondeu sua publicação', imageUrl: 'url-da-imagem' },
@@ -14,26 +15,25 @@ const users = [
     { nome: 'Vitor Carvalho', acao: 'respondeu sua publicação', imageUrl: 'url-da-imagem' },
 ];
 
-const Notificacao = ({ corDeFundo }) => {
+const Notificacao = ({ corDeFundo, id, corpo, nomeUsuarioGerador }) => {
+    const [backgroundColor] = useState(corDeFundo)
+    const [idNotificacao, setId] = useState(id);
+    const [conteudo, setConteudo] = useState(corpo);
+    const [nomeUsuario, setNomeUsuarioGerador] = useState(nomeUsuarioGerador);
+    const avatar = generateInitials(nomeUsuario);
     return (
         <div className={styles.notificacao}>
-            {users.map((user, index) => {
-                const avatar = generateInitials(user.nome);
-                const backgroundColor = index === 0 ? corDeFundo : 'white';
-                return (
-                    <div key={index} className={styles.notificacaoItem} style={{ backgroundColor }}>
-                        <div className={styles.infos}>
-                            <div className={styles.avatar}>
-                                {avatar}
-                            </div>
-                            <div className={styles.texto}>
-                                <span className={styles.nome}>{user.nome}</span>
-                                <span className={styles.acao}>{user.acao}</span>
-                            </div>
+                <div className={styles.notificacaoItem} style={{ backgroundColor }}>
+                    <div className={styles.infos}>
+                        <div className={styles.avatar}>
+                            {avatar}
+                        </div>
+                        <div className={styles.texto}>
+                            <span className={styles.nome}>{nomeUsuario}</span>
+                            <span className={styles.acao}>{conteudo}</span>
                         </div>
                     </div>
-                );
-            })}
+                </div>
         </div>
     )
 }
