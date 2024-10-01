@@ -31,7 +31,7 @@ public class NotificacaoService {
 
     public List<Notificacao> listarNotificacoesUsuario(Long id){
 
-        return notificacaoRepository.findByUsuarioRecebedorId(id);
+        return notificacaoRepository.findByUsuarioRecebedorIdOrderByDataHoraDesc(id);
     }
 
     public Notificacao visualizarNotificacao(Long id){
