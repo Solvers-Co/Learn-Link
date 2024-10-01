@@ -14,4 +14,5 @@ public class NotificacaoListagemDto {
     private String corpo;
     private String nomeUsuarioGerador;
     private String nomeUsuarioRecebedor;
+    private int vista;
 }
