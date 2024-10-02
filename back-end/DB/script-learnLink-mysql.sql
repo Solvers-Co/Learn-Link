@@ -131,6 +131,17 @@ CREATE TABLE denuncia (
 	FOREIGN KEY (usuario_id) REFERENCES usuario(id)
 );
 
+CREATE TABLE notificacao (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    corpo VARCHAR(50),
+    data_hora DATETIME,
+    vista TINYINT,
+    usuario_gerador_id INT,
+    usuario_recebedor_id INT,
+    FOREIGN KEY (usuario_gerador_id) REFERENCES usuario(id),
+    FOREIGN KEY (usuario_recebedor_id) REFERENCES usuario(id)
+);
+
 INSERT INTO tipo_status
         (status)
 VALUES
