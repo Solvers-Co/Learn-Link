@@ -37,6 +37,7 @@ public class PublicacaoMapper {
         dto.setConteudo(entity.getConteudo());
         dto.setDataHora(entity.getDataHora());
         dto.setTipoPublicacao(toTipoPublicacaoDto(entity.getTipoPublicacao()));
+        dto.setStatus(entity.getStatus());
         dto.setCanal(CanalMapper.toDto(entity.getCanal()));
         dto.setUsuario(toUsuarioDto(entity.getUsuario()));
         dto.setReacoes(toReacaoDto(entity.getReacoes()));
@@ -53,6 +54,7 @@ public class PublicacaoMapper {
         dto.setConteudo(entity.getConteudo());
         dto.setDataHora(entity.getDataHora());
         dto.setTipoPublicacao(toTipoPublicacaoDto(entity.getTipoPublicacao()));
+        dto.setStatus(entity.getStatus());
         dto.setCanal(CanalMapper.toDto(entity.getCanal()));
         dto.setUsuario(toUsuarioDto(entity.getUsuario()));
 

@@ -1,5 +1,6 @@
 package co.solvers.apilearnlink.service.publicacao.dto;
 
+import co.solvers.apilearnlink.domain.publicacao.Status;
 import co.solvers.apilearnlink.service.canal.dto.CanalListagemDto;
 import co.solvers.apilearnlink.service.especialidade.dto.EspecialidadeListagemDto;
 import co.solvers.apilearnlink.service.tiporeacao.dto.TipoReacaoListagemDto;
@@ -18,6 +19,7 @@ public class PublicacaoListagemSimplesDto {
     private String conteudo;
     private LocalDateTime dataHora;
     private PublicacaoListagemResponseDto.TipoPublicacaoDto tipoPublicacao;
+    private Status status;
     private CanalListagemDto canal;
     private PublicacaoListagemResponseDto.UsuarioPublicacaoListagemDto usuario;
 
