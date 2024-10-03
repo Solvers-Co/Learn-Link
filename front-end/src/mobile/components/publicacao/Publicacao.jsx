@@ -101,7 +101,7 @@ function denunciarPublicacao(idPublicacao, idUsuario) {
         });
 }
 
-const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas, comentarios, listarComentarios, togglePopup, popupAbertoId, idUsuarioQuePublicou }) => {
+const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas, comentarios, listarComentarios, togglePopup, popupAbertoId, idUsuarioQuePublicou, origem, listarComentariosPerfil }) => {
     const [showPopup, setShowPopup] = useState(null);
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [curtida, setCurtida] = useState(quemCurtiu.includes(sessionStorage.getItem('nome')));
@@ -228,7 +228,7 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
                     <div className={Styles['footerItem']}>
                         <span className={Styles['numero']}>{comentarios}</span>
                         <img src={Comentar} alt="Comentar" />
-                        <span className={Styles['footerText']} onClick={() => listarComentarios(id)}>Comentários</span>
+                        <span className={Styles['footerText']} onClick={origem === "perfil" ? (() => listarComentariosPerfil(id)):(() => listarComentarios(id))}>Comentários</span>
                     </div>
                 </div>
 

@@ -79,6 +79,9 @@ public interface PublicacaoRepository extends JpaRepository<Publicacao, Integer>
             "LIMIT 1")
     Optional<QuantidadePublicacaoMesCanalListagemDto> buscaCanalComMaiorNumeroDePublicacoes(@Param("mes") int mes, @Param("ano") int ano);
 
+    //findByUsuarioId
+    @Query("SELECT p FROM Publicacao p WHERE p.usuario.id = :usuarioId")
+    List<Publicacao> findByUsuarioId(@Param("usuarioId") Long usuarioId);
 
 //    @Query("SELECT p FROM Publicacao p WHERE p.descricao LIKE %?1% ORDER BY p.dataHoraPublicacao DESC")
 //    List<Publicacao> findByPublicacaoLikeOrderByDataHoraPublicacaoDesc(String palavraChave);

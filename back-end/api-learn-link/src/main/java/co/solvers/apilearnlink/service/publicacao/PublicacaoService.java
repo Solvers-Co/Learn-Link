@@ -246,4 +246,12 @@ public class PublicacaoService {
         }
     }
 
+    //listarPorUsuario
+    public List<Publicacao> listarPorUsuario(Long idUsuario) {
+        return publicacaoRepository.findByUsuarioId(idUsuario);
+    }
+
+
+
+
 }
