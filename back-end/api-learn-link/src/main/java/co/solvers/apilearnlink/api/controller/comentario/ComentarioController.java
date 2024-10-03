@@ -26,13 +26,17 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -202,6 +206,24 @@ public class ComentarioController {
         } else {
             return ResponseEntity.ok(comentariosDenunciadosDto);
         }
+    }
+
+
+    @ApiResponse(responseCode = "200", description = "Comentários Denunciadas CSV")
+    @ApiResponse(responseCode = "404", description = "Não existem comentários denunciadas")
+    @Operation(summary = "CSV comentários denunciados", description = "Método que grava CSV dos comentários denunciados", tags = {"Publicações"})
+    @GetMapping(value = "/denuncias/csv", produces = "text/csv")
+    public ResponseEntity<Resource> gravarCsvComentariosDenunciados() throws IOException {
+        Resource resource = denunciaService.gravaComentariosDenunciadas();
+
+        if (resource == null) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType("text/csv"))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"denuncias.csv\"")
+                .body(resource);
     }
 
     @ApiResponse(responseCode = "200", description = "Denuncias removidas")

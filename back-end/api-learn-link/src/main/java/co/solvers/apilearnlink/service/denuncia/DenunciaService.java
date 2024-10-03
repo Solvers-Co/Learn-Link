@@ -141,6 +141,34 @@ public class DenunciaService {
         return new UrlResource(tempfile.toUri());
     }
 
+    public Resource gravaComentariosDenunciadas() throws IOException {
+        List<ComentariosDenunciados> comentariosDenunciados = denunciaRespository.buscaComentariosDenunciados();
+
+        if (comentariosDenunciados.isEmpty()) {
+            return null;
+        }
+
+        String nomeArquivo = "denuncias.csv";
+        Path tempfile = Files.createTempFile(nomeArquivo, ".csv");
+
+        try (FileWriter arq = new FileWriter(tempfile.toFile());
+             Formatter saida = new Formatter(arq)) {
+
+            for (ComentariosDenunciados denuncia : comentariosDenunciados) {
+                saida.format("%s;%s;%d\n",
+                        denuncia.getComentario().getUsuario().getNome(),
+                        denuncia.getComentario().getComentario(),
+                        denuncia.getQuantidadeDenuncias());
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao gravar o arquivo: " + e.getMessage());
+            throw e;
+        }
+
+        // Criando o recurso a partir do arquivo temporário gerado
+        return new UrlResource(tempfile.toUri());
+    }
+
 
     public List<ComentariosDenunciados> buscaComentariosDenunciados() {
         List<ComentariosDenunciados> comentariosDenunciados = denunciaRespository.buscaComentariosDenunciados();
