@@ -40,6 +40,15 @@ function generateInitials(name) {
     return <div style={avatarStyle}>{initials}</div>;
 }
 
+function toBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result.split(",")[1]);
+        reader.onerror = (error) => reject(error);
+    });
+}
+
 const Perfil = () => {
     const { idUsuario } = useParams(); // Pegando o id do usuário da URL
     const [nome, setNome] = useState('Usuário Desconhecido');
@@ -47,6 +56,7 @@ const Perfil = () => {
     const [classificacao, setClassificacao] = useState('Iniciante');
     const [especialidade, setEspecialidade] = useState('Desconhecido');
     const [contribuicoes, setContribuicoes] = useState(0);
+    const [imagem, setImagem] = useState("")
 
     const idUsuarioLogado = idUsuario;
 
@@ -69,6 +79,13 @@ const Perfil = () => {
         const nomes = nome.trim().split(' ');
         return nomes.length === 1 ? nomes[0] : `${nomes[0]} ${nomes[nomes.length - 1]}`;
     }, [nome]);
+
+    const handleImageChange = async (file) => {
+        if (file) {
+            const base64Image = await toBase64(file);
+            setImagem(base64Image);
+        }
+    };
 
     useEffect(() => {
         const fetchClassificacao = async () => {
