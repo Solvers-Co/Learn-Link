@@ -5,6 +5,7 @@ import co.solvers.apilearnlink.domain.classificacao.Classificacao;
 import co.solvers.apilearnlink.domain.endereco.Endereco;
 import co.solvers.apilearnlink.domain.especialidade.Especialidade;
 import co.solvers.apilearnlink.domain.registroLogin.RegistroLogin;
+import co.solvers.apilearnlink.domain.respostaImagem.RespostaImagem;
 import co.solvers.apilearnlink.domain.tipostatus.TipoStatus;
 import co.solvers.apilearnlink.domain.tipostatus.repository.TipoStatusRepository;
 import co.solvers.apilearnlink.domain.tipousuario.TipoUsuario;
@@ -29,6 +30,8 @@ import co.solvers.apilearnlink.service.usuario.autenticacao.dto.UsuarioTokenDto;
 import co.solvers.apilearnlink.service.usuario.dto.UsuarioAceitacaoListagemDto;
 import co.solvers.apilearnlink.service.usuario.dto.UsuarioListagemRankingDto;
 import co.solvers.apilearnlink.service.usuario.dto.mapper.UsuarioMapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -40,8 +43,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import software.amazon.awssdk.core.SdkBytes;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.lambda.LambdaClient;
+import software.amazon.awssdk.services.lambda.model.InvokeRequest;
+import software.amazon.awssdk.services.lambda.model.InvokeResponse;
+import software.amazon.awssdk.services.lambda.model.LambdaException;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -271,6 +281,60 @@ public class UsuarioService {
 
         return usuarios;
     }
+
+    public RespostaImagem uploadFotoPerfil(String imagemBase64, Long id){
+
+        String funcao = "lambda-envio-imagens-learnlink";
+        Region region = Region.US_EAST_1;
+
+        LambdaClient awsLambda = LambdaClient.builder()
+                .region(region)
+                .build();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        InvokeResponse res = null;
+        try {
+            Map<String, String> parametros = Map.of("imagemBase64", imagemBase64);
+
+            SdkBytes payload = SdkBytes.fromUtf8String(objectMapper.writeValueAsString(parametros));
+
+            InvokeRequest request = InvokeRequest.builder()
+                    .functionName(funcao)
+                    .payload(payload)
+                    .build();
+
+            res = awsLambda.invoke(request);
+
+            String value = res.payload().asUtf8String();
+
+            RespostaImagem respostaImagem =
+                    objectMapper.readValue(value, RespostaImagem.class);
+
+            System.out.println();
+            if (respostaImagem.valido()) {
+                System.out.println("Upload da imagem concluído!");
+
+                Usuario usuario = buscarPorId(id);
+                usuario.setUrlImagemPerfil(imagemBase64);
+                usuarioRepository.save(usuario);
+
+                return respostaImagem;
+            } else {
+                System.out.println("Upload falhou! Motivo: " + respostaImagem.resultado());
+            }
+
+        } catch (LambdaException | JsonProcessingException e) {
+            System.err.println(e.getMessage());
+        }
+
+
+        awsLambda.close();
+
+
+        return null;
+    }
+
 
 
     // Verificações de existência e vazio

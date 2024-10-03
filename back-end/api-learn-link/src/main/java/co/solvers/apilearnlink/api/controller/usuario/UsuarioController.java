@@ -1,5 +1,6 @@
 package co.solvers.apilearnlink.api.controller.usuario;
 
+import co.solvers.apilearnlink.domain.respostaImagem.RespostaImagem;
 import co.solvers.apilearnlink.domain.usuario.Usuario;
 import co.solvers.apilearnlink.service.reacao.ReacaoService;
 import co.solvers.apilearnlink.service.reacoesEmComentariosDoUsuario.dto.QtdReacoesComentariosUsuarioDto;
@@ -18,6 +19,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -275,6 +277,14 @@ public class UsuarioController {
         UsuarioListagemDto usuarioDto = UsuarioMapper.toUsuarioListagemResponseDto(usuario);
 
         return ResponseEntity.ok(usuarioDto);
+    }
+
+    @PatchMapping("/upload-foto-perfil/{id}")
+    public ResponseEntity<UsuarioListagemDto> uploadFotoPerfil(@RequestBody String imagemBase64, @PathVariable Long id){
+
+        RespostaImagem resposta = usuarioService.uploadFotoPerfil(imagemBase64, id);
+
+        return ResponseEntity.status(200).build();
     }
 
     //    @GetMapping("/buscar-todos-os-usuarios")
