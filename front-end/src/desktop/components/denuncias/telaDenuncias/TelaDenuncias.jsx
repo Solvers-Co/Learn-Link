@@ -11,7 +11,7 @@ const TelaDenuncias = () => {
     const [denuncias, setDenuncias] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [tipoDenuncia, setTipoDenuncia] = useState('publicacoes');
+    const [tipoDenuncia, setTipoDenuncia] = useState('publicacao');
     const [modoSelecao, setModoSelecao] = useState(false);
     const [showModal, setShowModal] = useState(false); // Estado para controlar a exibição do modal
 
@@ -22,7 +22,7 @@ const TelaDenuncias = () => {
     const fetchDenuncias = async () => {
         setLoading(true);
         try {
-            const endpoint = tipoDenuncia === 'publicacoes'
+            const endpoint = tipoDenuncia === 'publicacao'
                 ? '/publicacoes/denuncias'
                 : '/comentarios/denuncias';
             const response = await api.get(endpoint);
@@ -93,9 +93,9 @@ const TelaDenuncias = () => {
         }
     };
 
-    const gerarRelatorio = async (formato) => {
+    const gerarRelatorio = async (formato, tipo) => {
         try {
-            const endpoint = `/publicacoes/denuncias/${formato}`;
+            const endpoint = `/publicacoes/denuncias/${formato}?tipo=${tipo}`;
             const response = await api.get(endpoint, { responseType: 'blob' });
 
             const blob = new Blob([response.data], { type: `text/${formato}` });
@@ -135,11 +135,11 @@ const TelaDenuncias = () => {
                         <div className={styles.modalContent}>
                             <h3>Escolha o formato do relatório</h3>
                             <div className={styles.buttons}>
-                                <button onClick={() => gerarRelatorio('CSV')} className={styles.relatButton}>CSV</button>
-                                <button onClick={() => gerarRelatorio('TXT')} className={styles.relatButton}>TXT</button>
-                                <button onClick={() => gerarRelatorio('JSON')} className={styles.relatButton}>JSON</button>
-                                <button onClick={() => gerarRelatorio('XML')} className={styles.relatButton}>XML</button>
-                                <button onClick={() => gerarRelatorio('PARQUET')} className={styles.relatButton}>PARQUET</button>
+                                <button onClick={() => gerarRelatorio('csv', tipoDenuncia)} className={styles.relatButton}>CSV</button>
+                                <button onClick={() => gerarRelatorio('txt', tipoDenuncia)} className={styles.relatButton}>TXT</button>
+                                <button onClick={() => gerarRelatorio('json', tipoDenuncia)} className={styles.relatButton}>JSON</button>
+                                <button onClick={() => gerarRelatorio('xml', tipoDenuncia)} className={styles.relatButton}>XML</button>
+                                <button onClick={() => gerarRelatorio('parquet', tipoDenuncia)} className={styles.relatButton}>PARQUET</button>
                                 <button onClick={() => setShowModal(false)} className={styles.relatButtonRed}>Cancelar</button>
                             </div>
                         </div>
@@ -159,8 +159,8 @@ const TelaDenuncias = () => {
                         onChange={handleTipoDenunciaChange}
                         className={styles.dropdown}
                     >
-                        <option value="publicacoes">Publicações</option>
-                        <option value="comentarios">Comentários</option>
+                        <option value="publicacao">Publicações</option>
+                        <option value="comentario">Comentários</option>
                     </select>
                 </div>
             </div>
