@@ -397,7 +397,7 @@ public class PublicacaoController {
     @ApiResponse(responseCode = "200", description = "Publicacoes Denunciadas CSV")
     @ApiResponse(responseCode = "404", description = "Não existem publicações denunciadas")
     @Operation(summary = "CSV publicações denunciadas", description = "Método que grava CSV das publicações denunciadas", tags = {"Publicações"})
-    @GetMapping("/denuncias/csv")
+    @GetMapping(value = "/denuncias/csv", produces = "text/csv")
     public ResponseEntity<Resource> gravarCsvPublicacoesDenunciadas() throws IOException {
         Resource resource = denunciaService.gravaPublicacoesDenunciadas();
 

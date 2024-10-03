@@ -101,6 +101,28 @@ const TelaDenuncias = () => {
         }
     };
 
+    const gerarCsv = async () => {
+        try {
+            const response = await api.get('/publicacoes/denuncias/csv', {
+                responseType: 'blob' // This is important for handling file downloads
+            });
+    
+            // Create a URL for the blob (file) and download it
+            const blob = new Blob([response.data], { type: 'text/csv' });
+            const downloadUrl = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = downloadUrl;
+            link.setAttribute('download', 'denuncias.csv'); // Filename to be downloaded
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link); // Clean up after download
+        } catch (error) {
+            console.error('Failed to download the CSV', error);
+            // Handle error (e.g., display a toast message or update the UI)
+        }
+    };
+    
+    
 
     return (
         <div className={styles.telaDenuncias}>
@@ -121,6 +143,7 @@ const TelaDenuncias = () => {
                     <button className={styles.btnSelecionar} onClick={toggleModoSelecao}>
                         {modoSelecao ? 'Cancelar' : 'Selecionar'}
                     </button>
+                    <button onClick={gerarCsv}>teste</button>
                     <select
                         value={tipoDenuncia}
                         onChange={handleTipoDenunciaChange}
