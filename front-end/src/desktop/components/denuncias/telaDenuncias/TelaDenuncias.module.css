@@ -73,6 +73,77 @@
     margin: 18px 0px 0px 10px;
 }
 
+.download {
+    width: 25px;
+    height: 25px;
+    margin: 12px 0px 0px 10px;
+    cursor: pointer;
+}
+
+.modal {
+    display: flex;
+    flex-direction: column;
+}
+
+.modalContent {
+    background-color: #535353;
+    color: #fff;
+    text-align: center;
+    border-radius: 10px;
+    padding: 10px;
+    position: absolute;
+    z-index: 1;
+    width: 200px;
+    top: 10%;
+    left: 530px;
+    transform: translateX(-50%);
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.3s;
+}
+
+.modalContent h3 {
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 16px;
+    padding: 2px;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.relatButton, .relatButtonRed {
+    width: 80%;
+    height: 25px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.relatButton {
+    border: none;
+}
+
+.relatButton:hover {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.relatButtonRed {
+    background-color: #ffffff;
+    border: 1px solid #A80301;
+    color: #A80301;
+}
+
+.relatButtonRed:hover {
+    background-color: #A80301;
+    color: #ffffff;
+}
+
 .cardContainer{
     width: 100%;
     flex: 1;
