@@ -394,12 +394,12 @@ public class PublicacaoController {
         }
     }
 
-    @ApiResponse(responseCode = "200", description = "Publicacoes Denunciadas CSV")
-    @ApiResponse(responseCode = "404", description = "Não existem publicações denunciadas")
-    @Operation(summary = "CSV publicações denunciadas", description = "Método que grava CSV das publicações denunciadas", tags = {"Publicações"})
+    @ApiResponse(responseCode = "200", description = "CSV de Denúncias")
+    @ApiResponse(responseCode = "404", description = "Não existem denúncias para o tipo especificado")
+    @Operation(summary = "CSV de denúncias", description = "Método que grava CSV das denúncias de publicações ou comentários", tags = {"Denúncias"})
     @GetMapping(value = "/denuncias/csv", produces = "text/csv")
-    public ResponseEntity<Resource> gravarCsvPublicacoesDenunciadas() throws IOException {
-        Resource resource = denunciaService.gravaPublicacoesDenunciadas();
+    public ResponseEntity<Resource> gravarCsvDenuncias(@RequestParam String tipo) throws IOException {
+        Resource resource = denunciaService.gravaDenuncias(tipo);
 
         if (resource == null) {
             return ResponseEntity.noContent().build();
@@ -407,9 +407,47 @@ public class PublicacaoController {
 
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType("text/csv"))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"denuncias.csv\"")
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + tipo + "s_denunciados.csv\"")
                 .body(resource);
     }
+
+    @ApiResponse(responseCode = "200", description = "Denúncias TXT")
+    @ApiResponse(responseCode = "404", description = "Não existem denúncias para o tipo especificado")
+    @Operation(summary = "TXT de denúncias", description = "Método que grava TXT das denúncias de publicações ou comentários", tags = {"Denúncias"})
+    @GetMapping(value = "/denuncias/txt", produces = "text/plain")
+    public ResponseEntity<Resource> gravarTxtDenuncias(@RequestParam String tipo) throws IOException {
+        Resource resource = denunciaService.gravaTxtDenuncias(tipo);
+
+        if (resource == null) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType("text/plain"))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + tipo + "s_denunciados.txt\"")
+                .body(resource);
+    }
+
+    @ApiResponse(responseCode = "200", description = "Denúncias JSON")
+    @ApiResponse(responseCode = "404", description = "Não existem denúncias para o tipo especificado")
+    @Operation(summary = "JSON de denúncias", description = "Método que grava JSON das denúncias de publicações ou comentários", tags = {"Denúncias"})
+    @GetMapping(value = "/denuncias/json", produces = "application/json")
+    public ResponseEntity<Resource> gravarJsonDenuncias(@RequestParam String tipo) throws IOException {
+        Resource resource = denunciaService.gravaJsonDenuncias(tipo);
+
+        if (resource == null) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + tipo + "s_denunciados.json\"")
+                .body(resource);
+    }
+
+
+
+
 
 
     @ApiResponse(responseCode = "200", description = "Denuncias removidas")
