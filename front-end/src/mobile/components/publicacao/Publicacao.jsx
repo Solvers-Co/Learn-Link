@@ -26,7 +26,19 @@ function formatDateTime(dateString) {
     return `${hours}:${minutes} - ${day}/${month}/${year}`;
 }
 
-function reagirPublicacao(idPublicacao, tipoReacao, idUsuario, curtida, setCurtida, setCurtidas) {
+function gerarNotificacao(corpo,usuarioGeradorId, usuarioRecebedorId){
+    const notificacao = {
+        corpo,
+        usuarioGeradorId,
+        usuarioRecebedorId
+    }
+    api.post("/notificacoes", notificacao).then(response =>{
+        console.log(response.data)
+    }).catch(() =>{
+        toast.error("Erro ao gerar notificacao")
+    })
+}
+function reagirPublicacao(idPublicacao, tipoReacao, idUsuario, curtida, setCurtida, setCurtidas, idUsuarioQuePublicou) {
 
     if (curtida) {
         // Se o usuário já curtiu, remove a curtida
@@ -49,6 +61,7 @@ function reagirPublicacao(idPublicacao, tipoReacao, idUsuario, curtida, setCurti
                 // toast.success("Reação registrada com sucesso!");
                 setCurtida(true);
                 setCurtidas(prevCurtidas => prevCurtidas + 1); // Incrementa o contador de curtidas
+                gerarNotificacao(" curtiu a sua publicação",idUsuario,idUsuarioQuePublicou)
             })
             .catch(error => {
                 console.error("Ocorreu um erro ao reagir à publicação:", error);
@@ -221,7 +234,7 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
                         <img
                             src={curtida ? Curtido : Curtir}
                             alt="Curtir"
-                            onClick={() => { reagirPublicacao(id, "CURTIDA", idUsuarioLogado, curtida, setCurtida, setCurtidas) }}
+                            onClick={() => { reagirPublicacao(id, "CURTIDA", idUsuarioLogado, curtida, setCurtida, setCurtidas, idUsuarioQuePublicou) }}
                         />
                         <span className={Styles['footerText']}>Curtir</span>
                     </div>

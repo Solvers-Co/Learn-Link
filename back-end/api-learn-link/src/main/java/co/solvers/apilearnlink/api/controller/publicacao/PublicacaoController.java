@@ -35,7 +35,20 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.core.io.Resource;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.core.io.Resource;
+
+
+import java.io.IOException;
 import java.util.List;
 
 
@@ -379,6 +392,23 @@ public class PublicacaoController {
         } else {
             return ResponseEntity.ok(publicacoesDenunciadasDto);
         }
+    }
+
+    @ApiResponse(responseCode = "200", description = "Publicacoes Denunciadas CSV")
+    @ApiResponse(responseCode = "404", description = "Não existem publicações denunciadas")
+    @Operation(summary = "CSV publicações denunciadas", description = "Método que grava CSV das publicações denunciadas", tags = {"Publicações"})
+    @GetMapping("/denuncias/csv")
+    public ResponseEntity<Resource> gravarCsvPublicacoesDenunciadas() throws IOException {
+        Resource resource = denunciaService.gravaPublicacoesDenunciadas();
+
+        if (resource == null) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType("text/csv"))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"denuncias.csv\"")
+                .body(resource);
     }
 
 

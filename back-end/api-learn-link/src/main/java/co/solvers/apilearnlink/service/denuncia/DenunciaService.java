@@ -19,9 +19,25 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
-
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Formatter;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Formatter;
+import java.util.List;
+import java.util.FormatterClosedException;
 
 @Service
 @RequiredArgsConstructor
@@ -96,6 +112,35 @@ public class DenunciaService {
         List<PublicacoesDenunciadas> publicacoesDenunciadas = denunciaRespository.buscaPublicacoesDenunciadas();
         return publicacoesDenunciadas;
     }
+
+    public Resource gravaPublicacoesDenunciadas() throws IOException {
+        List<PublicacoesDenunciadas> publicacoesDenunciadas = denunciaRespository.buscaPublicacoesDenunciadas();
+
+        if (publicacoesDenunciadas.isEmpty()) {
+            return null;
+        }
+
+        String nomeArquivo = "denuncias.csv";
+        Path tempfile = Files.createTempFile(nomeArquivo, ".csv");
+
+        try (FileWriter arq = new FileWriter(tempfile.toFile());
+             Formatter saida = new Formatter(arq)) {
+
+            for (PublicacoesDenunciadas denuncia : publicacoesDenunciadas) {
+                saida.format("%s;%s;%d\n",
+                        denuncia.getPublicacao().getUsuario().getNome(),
+                        denuncia.getPublicacao().getConteudo(),
+                        denuncia.getQuantidadeDenuncias());
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao gravar o arquivo: " + e.getMessage());
+            throw e;
+        }
+
+        // Criando o recurso a partir do arquivo temporário gerado
+        return new UrlResource(tempfile.toUri());
+    }
+
 
     public List<ComentariosDenunciados> buscaComentariosDenunciados() {
         List<ComentariosDenunciados> comentariosDenunciados = denunciaRespository.buscaComentariosDenunciados();

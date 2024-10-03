@@ -84,6 +84,7 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/publicacoes/denuncias"),
             new AntPathRequestMatcher("/publicacoes/{idPublicacao}/remover-denuncias"),
             new AntPathRequestMatcher("/publicacoes/usuario/{idUsuario}"),
+            new AntPathRequestMatcher("/publicacoes/denuncias/csv"),
             new AntPathRequestMatcher("/comentarios"),
             new AntPathRequestMatcher("/comentarios/{id}"),
             new AntPathRequestMatcher("/comentarios/{idComentario}/reagir"),
@@ -102,7 +103,10 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/qtd-reacoes-comentario-usuarios/buscar-nivel-de-classificacao-de-todos-usuarios"),
             new AntPathRequestMatcher("/usuarios/classificar-usuario/{id}"),
             new AntPathRequestMatcher("/usuarios/buscarEmail/{email}"),
-            new AntPathRequestMatcher("/media-usuarios-ativos/mes")
+            new AntPathRequestMatcher("/media-usuarios-ativos/mes"),
+            new AntPathRequestMatcher("/notificacoes"),
+            new AntPathRequestMatcher("/notificacoes/{id}"),
+            new AntPathRequestMatcher("/notificacoes/visualizar-notificacao/{id}")
     };
 
     @Bean
