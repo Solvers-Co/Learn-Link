@@ -86,7 +86,7 @@ const TelaDenuncias = () => {
             setPublicacoesSelecionadas([]);
             setComentariosSelecionados([]);
 
-            toast.success(`${countPublicacoes} publicações removidas e ${countComentarios} comentários removidos.`);
+            toast.success(`${countPublicacoes} ${countPublicacoes === 1 ? 'publicação' : 'publicações'} denunciada(s) removida(s) e ${countComentarios} ${countComentarios === 1 ? 'comentário' : 'comentários'} denunciado(s) removido(s).`);
         } catch (error) {
             console.error('Erro ao remover denúncias:', error);
             toast.error('Erro ao remover denúncias.');
