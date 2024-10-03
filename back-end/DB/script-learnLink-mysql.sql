@@ -39,6 +39,7 @@ CREATE TABLE usuario (
     cpf CHAR(11),
     email VARCHAR(45),
     senha VARCHAR(255),
+    url_imagemPerfil VARCHAR(255),
     especialidade_id INT,
     classificacao_id INT,
     endereco_id INT,
