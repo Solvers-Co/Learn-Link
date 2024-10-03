@@ -423,6 +423,23 @@ public class PublicacaoController {
         return ResponseEntity.ok().build();
     }
 
+    //requisição que lista toda as publicacoes de um usuario que recebe o id do usuario
+    @ApiResponse(responseCode = "200", description = "Publicações encontradas")
+    @ApiResponse(responseCode = "204", description = "Publicações vazias")
+    @Operation(summary = "Listar publicações de um usuário", description = "Método que lista todas as publicações de um usuário", tags = {"Publicações"})
+    @GetMapping("/usuario/{idUsuario}")
+    public ResponseEntity<List<PublicacaoListagemResponseDto>> listarPublicacoesPorUsuario(@PathVariable Long idUsuario) {
+
+        List<Publicacao> publicacoes = publicacaoService.listarPorUsuario(idUsuario);
+        List<PublicacaoListagemResponseDto> dtos = PublicacaoMapper.toDto(publicacoes);
+
+        if (dtos.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(dtos);
+    }
+
 
 
 
