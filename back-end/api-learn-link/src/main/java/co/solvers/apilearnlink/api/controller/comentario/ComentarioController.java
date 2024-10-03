@@ -209,23 +209,6 @@ public class ComentarioController {
     }
 
 
-    @ApiResponse(responseCode = "200", description = "Comentários Denunciadas CSV")
-    @ApiResponse(responseCode = "404", description = "Não existem comentários denunciadas")
-    @Operation(summary = "CSV comentários denunciados", description = "Método que grava CSV dos comentários denunciados", tags = {"Publicações"})
-    @GetMapping(value = "/denuncias/csv", produces = "text/csv")
-    public ResponseEntity<Resource> gravarCsvComentariosDenunciados() throws IOException {
-        Resource resource = denunciaService.gravaComentariosDenunciadas();
-
-        if (resource == null) {
-            return ResponseEntity.noContent().build();
-        }
-
-        return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType("text/csv"))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"denuncias.csv\"")
-                .body(resource);
-    }
-
     @ApiResponse(responseCode = "200", description = "Denuncias removidas")
     @ApiResponse(responseCode = "404", description = "Comentario não encontrado")
     @Operation(summary = "Remover denúncias", description = "Método que remover todas as denuncias de um comentário", tags = {"Publicações"})
