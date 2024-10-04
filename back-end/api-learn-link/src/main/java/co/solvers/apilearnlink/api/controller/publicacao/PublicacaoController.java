@@ -445,7 +445,22 @@ public class PublicacaoController {
                 .body(resource);
     }
 
+    @ApiResponse(responseCode = "200", description = "Denúncias XML")
+    @ApiResponse(responseCode = "404", description = "Não existem denúncias para o tipo especificado")
+    @Operation(summary = "XML de denúncias", description = "Método que grava XML das denúncias de publicações ou comentários", tags = {"Denúncias"})
+    @GetMapping(value = "/denuncias/xml", produces = "application/xml")
+    public ResponseEntity<Resource> gravarXmlDenuncias(@RequestParam String tipo) throws IOException {
+        Resource resource = denunciaService.gravaXmlDenuncias(tipo);
 
+        if (resource == null) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_XML)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + tipo + "s_denunciados.xml\"")
+                .body(resource);
+    }
 
 
 

@@ -299,6 +299,69 @@ public class DenunciaService {
                 .replace("\"", "\\\""); // Escapa aspas duplas
     }
 
+    public Resource gravaXmlDenuncias(String tipo) throws IOException {
+        List<?> denuncias;
+
+        // Verifica o tipo de denúncia solicitado
+        if ("publicacao".equalsIgnoreCase(tipo)) {
+            denuncias = denunciaRespository.buscaPublicacoesDenunciadas();
+        } else if ("comentario".equalsIgnoreCase(tipo)) {
+            denuncias = denunciaRespository.buscaComentariosDenunciados();
+        } else {
+            throw new IllegalArgumentException("Tipo de denúncia inválido");
+        }
+
+        if (denuncias.isEmpty()) {
+            return null;
+        }
+
+        String nomeArquivo = "denuncias_" + tipo + ".xml";
+        Path tempfile = Files.createTempFile(nomeArquivo, ".xml");
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(tempfile.toFile()))) {
+            // Escreve o cabeçalho do XML
+            writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+            writer.write("<denuncias>\n");
+
+            if ("publicacao".equalsIgnoreCase(tipo)) {
+                for (PublicacoesDenunciadas denuncia : (List<PublicacoesDenunciadas>) denuncias) {
+                    writer.write("  <publicacao>\n");
+                    writer.write(String.format("    <nome>%s</nome>\n", escapeXml(denuncia.getPublicacao().getUsuario().getNome())));
+                    writer.write(String.format("    <conteudo>%s</conteudo>\n", escapeXml(denuncia.getPublicacao().getConteudo())));
+                    writer.write(String.format("    <quantidadeDenuncias>%d</quantidadeDenuncias>\n", denuncia.getQuantidadeDenuncias()));
+                    writer.write("  </publicacao>\n");
+                }
+            } else {
+                for (ComentariosDenunciados denuncia : (List<ComentariosDenunciados>) denuncias) {
+                    writer.write("  <comentario>\n");
+                    writer.write(String.format("    <nome>%s</nome>\n", escapeXml(denuncia.getComentario().getUsuario().getNome())));
+                    writer.write(String.format("    <conteudo>%s</conteudo>\n", escapeXml(denuncia.getComentario().getComentario())));
+                    writer.write(String.format("    <quantidadeDenuncias>%d</quantidadeDenuncias>\n", denuncia.getQuantidadeDenuncias()));
+                    writer.write("  </comentario>\n");
+                }
+            }
+
+            // Escreve o rodapé do XML
+            writer.write("</denuncias>\n");
+        } catch (IOException e) {
+            System.out.println("Erro ao gravar o arquivo: " + e.getMessage());
+            throw e;
+        }
+
+        return new UrlResource(tempfile.toUri());
+    }
+
+    private String escapeXml(String valor) {
+        if (valor == null) {
+            return "";
+        }
+        return valor.replace("&", "&amp;") // Escapa o caractere &
+                .replace("<", "&lt;") // Escapa o caractere <
+                .replace(">", "&gt;") // Escapa o caractere >
+                .replace("\"", "&quot;") // Escapa aspas duplas
+                .replace("'", "&apos;"); // Escapa aspas simples
+    }
+
     public List<ComentariosDenunciados> buscaComentariosDenunciados() {
         List<ComentariosDenunciados> comentariosDenunciados = denunciaRespository.buscaComentariosDenunciados();
         return comentariosDenunciados;
