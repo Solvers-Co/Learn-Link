@@ -25,6 +25,8 @@ import org.springframework.core.io.UrlResource;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Formatter;
 import java.util.List;
 import java.util.Optional;
@@ -175,31 +177,34 @@ public class DenunciaService {
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(tempfile.toFile()))) {
             // HEADER
-            writer.write(String.format("%-45s%-256s%-3s\n", "NOME", "CONTEÚDO", "QTD"));
-            writer.write("=".repeat(304)); // Linha separadora de 304 caracteres (45 + 256 + 3)
+            String header = "00DENUNCIA";
+            header += LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+            header += "01";
+
+            writer.write(header);
             writer.newLine();
 
             // Dados das denúncias
+            String corpo = "01";
             if ("publicacao".equalsIgnoreCase(tipo)) {
                 for (PublicacoesDenunciadas denuncia : (List<PublicacoesDenunciadas>) denuncias) {
                     String nome = formatarCampo(denuncia.getPublicacao().getUsuario().getNome(), 45);
                     String conteudo = formatarCampo(denuncia.getPublicacao().getConteudo(), 256);
                     String qtdDenuncias = formatarCampo(String.valueOf(denuncia.getQuantidadeDenuncias()), 3);
-                    writer.write(String.format("%s%s%s\n", nome, conteudo, qtdDenuncias));
+                    writer.write(String.format("%s%s%s%s\n", corpo, nome, conteudo, qtdDenuncias));
                 }
             } else {
                 for (ComentariosDenunciados denuncia : (List<ComentariosDenunciados>) denuncias) {
                     String nome = formatarCampo(denuncia.getComentario().getUsuario().getNome(), 45);
                     String conteudo = formatarCampo(denuncia.getComentario().getComentario(), 256);
                     String qtdDenuncias = formatarCampo(String.valueOf(denuncia.getQuantidadeDenuncias()), 3);
-                    writer.write(String.format("%s%s%s\n", nome, conteudo, qtdDenuncias));
+                    writer.write(String.format("%s%s%s%s\n", corpo, nome, conteudo, qtdDenuncias));
                 }
             }
-
             // TRAILER
-            writer.write("=".repeat(304)); // Linha separadora de trailer
-            writer.newLine();
-            writer.write(String.format("Total de Denúncias: %d", denuncias.size()));
+            String trailer = "02";
+            trailer += String.format("%010d", denuncias.size());
+            writer.write(trailer);
         } catch (IOException e) {
             System.out.println("Erro ao gravar o arquivo: " + e.getMessage());
             throw e;
