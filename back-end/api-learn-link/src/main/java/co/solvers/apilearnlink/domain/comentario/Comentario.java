@@ -23,6 +23,8 @@ public class Comentario {
     private String comentario;
     @CreationTimestamp
     private LocalDateTime dataHora;
+    @Enumerated(EnumType.STRING)
+    private Status status;
     @ManyToOne
     private Publicacao publicacao;
     @ManyToOne

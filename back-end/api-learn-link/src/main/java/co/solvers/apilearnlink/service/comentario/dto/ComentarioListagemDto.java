@@ -1,5 +1,6 @@
 package co.solvers.apilearnlink.service.comentario.dto;
 
+import co.solvers.apilearnlink.domain.comentario.Status;
 import co.solvers.apilearnlink.service.especialidade.dto.EspecialidadeListagemDto;
 import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoListagemResponseDto;
 import co.solvers.apilearnlink.service.tiporeacao.dto.TipoReacaoListagemDto;
@@ -15,6 +16,7 @@ public class ComentarioListagemDto {
     private Integer id;
     private String comentario;
     private LocalDateTime dataHora;
+    private Status status;
     private List<ReacaoDto> reacoes;
     private PublicacaoDto publicacao;
     private UsuarioDto usuario;
