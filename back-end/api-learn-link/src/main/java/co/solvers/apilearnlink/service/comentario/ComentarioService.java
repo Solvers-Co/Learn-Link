@@ -1,6 +1,7 @@
 package co.solvers.apilearnlink.service.comentario;
 
 import co.solvers.apilearnlink.domain.comentario.Comentario;
+import co.solvers.apilearnlink.domain.comentario.ComentarioStatus;
 import co.solvers.apilearnlink.domain.comentario.repository.ComentarioRepository;
 import co.solvers.apilearnlink.domain.publicacao.Publicacao;
 import co.solvers.apilearnlink.domain.usuario.Usuario;
@@ -39,7 +40,7 @@ public class ComentarioService {
     }
 
     public Comentario buscarPorId(int id) {
-        Optional<Comentario> comentario = comentarioRepository.findById(id);
+        Optional<Comentario> comentario = comentarioRepository.findByIdAndStatus(id, ComentarioStatus.ATIVO);
 
         if (comentario.isEmpty()) {
             throw new NaoEncontradoException("Comentário");
@@ -58,27 +59,10 @@ public class ComentarioService {
 
     public void deletar(int id) {
         Comentario comentario = buscarPorId(id);
-        comentarioRepository.delete(comentario);
-    }
 
-//    public String[][] buscaQuantidadeDeComentariosPorDiaMatriz(int mes, int ano) {
-//        List<QuantidadeComentarioDiaListagemDto> quantidadeComentarios = comentarioRepository.buscaQuantidadeDeComentariosPorDia(mes, ano);
-//        String[][] m = new String[31][2];
-//
-//        if (quantidadeComentarios.isEmpty()) return null;
-//
-//        for (int coluna = 0; coluna < m[0].length; coluna++) {
-//
-//            for (int linha = 0; linha < m.length; linha++) {
-//                if (coluna == 0) {
-//                    m[linha][coluna] = quantidadeComentarios.get(linha).getDataComentario().toString();
-//                } else {
-//                    m[linha][coluna] = quantidadeComentarios.get(linha).getQuantidadeComentarios().toString();
-//                }
-//            }
-//        }
-//        return m;
-//    }
+        comentario.setStatus(ComentarioStatus.EXCLUIDO);
+        comentarioRepository.save(comentario);
+    }
 
     public List<QuantidadeComentarioDiaListagemDto> buscaQuantidadeDeComentariosPorDia(int mes, int ano) {
         return comentarioRepository.buscaQuantidadeDeComentariosPorDia(mes, ano);
@@ -87,12 +71,12 @@ public class ComentarioService {
     public List<Comentario> listarPorPublicacao(int idPublicacao) {
         Publicacao publicacao = publicacaoService.listarPorId(idPublicacao);
 
-        return comentarioRepository.findByPublicacao(publicacao);
+        return comentarioRepository.findByPublicacaoAndStatus(publicacao, ComentarioStatus.ATIVO);
     }
 
     public Page<Comentario> listarPorPublicacaoPaginado(int idPublicacao, Pageable pageable) {
         Publicacao publicacao = publicacaoService.listarPorId(idPublicacao);
-        return comentarioRepository.findByPublicacao(publicacao, pageable);
+        return comentarioRepository.findByPublicacaoAndStatus(publicacao, pageable, ComentarioStatus.ATIVO);
     }
 
 }

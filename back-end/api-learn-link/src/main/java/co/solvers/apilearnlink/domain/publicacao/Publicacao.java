@@ -27,6 +27,8 @@ public class Publicacao {
     private LocalDateTime dataHora;
     @ManyToOne
     private TipoPublicacao tipoPublicacao;
+    @Enumerated(EnumType.STRING)
+    private PublicacaoStatus status;
     @ManyToOne
     @JoinColumn(name = "canal_id")
     private Canal canal;

@@ -1,18 +1,18 @@
 package co.solvers.apilearnlink.service.denuncia;
 
 import co.solvers.apilearnlink.domain.comentario.Comentario;
+import co.solvers.apilearnlink.domain.comentario.ComentarioStatus;
 import co.solvers.apilearnlink.domain.denuncia.Denuncia;
 import co.solvers.apilearnlink.domain.denuncia.repository.DenunciaRespository;
 import co.solvers.apilearnlink.domain.publicacao.Publicacao;
+import co.solvers.apilearnlink.domain.publicacao.PublicacaoStatus;
 import co.solvers.apilearnlink.domain.usuario.Usuario;
 import co.solvers.apilearnlink.domain.views.comentariosDenunciados.ComentariosDenunciados;
 import co.solvers.apilearnlink.domain.views.publicacoesDenunciadas.PublicacoesDenunciadas;
 import co.solvers.apilearnlink.service.comentario.ComentarioService;
 import co.solvers.apilearnlink.service.denuncia.dto.DenunciaComentarioCriarDto;
 import co.solvers.apilearnlink.service.denuncia.dto.DenunciaPublicacaoCriarDto;
-import co.solvers.apilearnlink.service.publicacoesDenunciadas.dto.PublicacoesDenunciadasDto;
 import co.solvers.apilearnlink.service.publicacao.PublicacaoService;
-import co.solvers.apilearnlink.service.publicacoesDenunciadas.dto.mapper.PublicacoesDenunciadasMapper;
 import co.solvers.apilearnlink.service.usuario.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -105,7 +105,7 @@ public class DenunciaService {
     }
 
     public List<PublicacoesDenunciadas> buscaPublicacoesDenunciadas() {
-        List<PublicacoesDenunciadas> publicacoesDenunciadas = denunciaRespository.buscaPublicacoesDenunciadas();
+        List<PublicacoesDenunciadas> publicacoesDenunciadas = denunciaRespository.buscaPublicacoesDenunciadas(PublicacaoStatus.ATIVO);
         return publicacoesDenunciadas;
     }
 
@@ -368,7 +368,7 @@ public class DenunciaService {
     }
 
     public List<ComentariosDenunciados> buscaComentariosDenunciados() {
-        List<ComentariosDenunciados> comentariosDenunciados = denunciaRespository.buscaComentariosDenunciados();
+        List<ComentariosDenunciados> comentariosDenunciados = denunciaRespository.buscaComentariosDenunciados(ComentarioStatus.ATIVO);
         return comentariosDenunciados;
     }
 

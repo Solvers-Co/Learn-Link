@@ -36,6 +36,7 @@ public class ComentarioMapper {
         dto.setId(entity.getId());
         dto.setComentario(entity.getComentario());
         dto.setDataHora(entity.getDataHora());
+        dto.setStatus(entity.getStatus());
         dto.setReacoes(toReacaoDto(entity.getReacoes()));
         dto.setPublicacao(toPublicacaoDto(entity.getPublicacao()));
         dto.setUsuario(toUsuarioDto(entity.getUsuario()));
@@ -50,6 +51,7 @@ public class ComentarioMapper {
         dto.setId(entity.getId());
         dto.setComentario(entity.getComentario());
         dto.setDataHora(entity.getDataHora());
+        dto.setStatus(entity.getStatus());
         dto.setUsuario(toUsuarioDto(entity.getUsuario()));
 
         return dto;

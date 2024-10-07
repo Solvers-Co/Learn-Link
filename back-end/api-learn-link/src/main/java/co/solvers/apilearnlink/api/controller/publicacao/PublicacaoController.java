@@ -74,21 +74,6 @@ public class PublicacaoController {
         return ResponseEntity.status(201).body(dto);
     }
 
-    @ApiResponse(responseCode = "204", description = "Publicações vazias")
-    @ApiResponse(responseCode = "200", description = "Publicações encontradas")
-    @Operation(summary = "Listar todas as publicações", description = "Método que Lista todas as publicações", tags = {"Publicações"})
-    @GetMapping("/publicacoes-mais-recentes")
-    public ResponseEntity<List<PublicacaoListagemResponseDto>> listarPublicacoes() {
-
-        List<Publicacao> publicacoes = publicacaoService.listarMaisRecentesPilha();
-        List<PublicacaoListagemResponseDto> dtos = PublicacaoMapper.toDto(publicacoes);
-
-        if (dtos.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-
-        return ResponseEntity.status(200).body(dtos);
-    }
 
     //Listar publicacoes paginado
     @ApiResponse(responseCode = "204", description = "Publicações vazias")
@@ -135,21 +120,6 @@ public class PublicacaoController {
         return ResponseEntity.ok(dtosPage);
     }
 
-    @ApiResponse(responseCode = "204", description = "Publicações vazias")
-    @ApiResponse(responseCode = "200", description = "Publicações encontradas")
-    @Operation(summary = "Listar todas as publicações pelo horário mais antigo", description = "Método que Lista todas as publicações começando da mais antiga para a mais recente", tags = {"Publicações"})
-    @GetMapping("/publicacoes-mais-antigas")
-    public ResponseEntity<List<PublicacaoListagemResponseDto>> listarPublicacoesMaisAntigas() {
-
-        List<Publicacao> publicacoes = publicacaoService.listarMaisAntigo();
-        List<PublicacaoListagemResponseDto> dtos = PublicacaoMapper.toDto(publicacoes);
-
-        if (dtos.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-
-        return ResponseEntity.status(200).body(dtos);
-    }
 
     @ApiResponse(responseCode = "400", description = "Tipo de publicação inválido")
     @ApiResponse(responseCode = "204", description = "Publicação vazia")
@@ -229,25 +199,6 @@ public class PublicacaoController {
         return ResponseEntity.ok(ComentarioMapper.toDto(comentario));
     }
 
-//    @ApiResponse(responseCode = "204", description = "Publicações vazias")
-//    @ApiResponse(responseCode = "200", description = "Publicações encontradas")
-//    @ApiResponse(responseCode = "400", description = "Palavra chave inválida")
-//    @Operation(summary = "Listar publicações por palavra chave", description = "Método que lista todas as publicações por uma palavra chave ordenada pela mais recete", tags = {"Publicações"})
-//    @GetMapping("/buscar-palavra-chave")
-//    public ResponseEntity<List<PublicacaoListagemResponseDto>> buscarPublicacaoPorPalavraChave(
-//            @RequestParam
-//            @Parameter(name = "palavraChave", description = "Palavra chave", example = "Bhaskara") String palavraChave) {
-//
-//        List<Publicacao> publicacoes = publicacaoService.listarPorPalavraChave(palavraChave);
-//        List<PublicacaoListagemResponseDto> dtos = PublicacaoMapper.toDto(publicacoes);
-//
-//        if (dtos.isEmpty()) {
-//            return ResponseEntity.noContent().build();
-//        }
-//
-//        return ResponseEntity.status(200).body(dtos);
-//    }
-
     @ApiResponse(responseCode = "204", description = "Publicações vazias")
     @ApiResponse(responseCode = "200", description = "Publicações encontradas")
     @ApiResponse(responseCode = "400", description = "Palavra chave inválida")
@@ -273,22 +224,6 @@ public class PublicacaoController {
 
         return ResponseEntity.ok(dtosPage);
     }
-    
-//    @ApiResponse(responseCode = "200", description = "Publicações encontradas")
-//    @ApiResponse(responseCode = "204", description = "Publicações vazias")
-//    @Operation(summary = "Quantidade de publicações por dia", description = "Método que retorna a quantidade de publicações por dia", tags = {"Publicações"})
-//    @GetMapping("/quantidade-publicacoes-por-dia-mes")
-//    public ResponseEntity<String[][]> quantidadeDePublicacoesPorDia(
-//            @RequestParam
-//            @Parameter(name = "mes", description = "Mês do ano", example = "5") int mes,
-//            @RequestParam
-//            @Parameter(name = "ano", description = "Ano Publicação", example = "2024") int ano) {
-//        String[][] quantidadePublicacoes = publicacaoService.buscaQuantidadeDePublicacoesPorDiaMatriz(mes, ano);
-//
-//        if (quantidadePublicacoes == null) return ResponseEntity.noContent().build();
-//
-//        return ResponseEntity.ok(quantidadePublicacoes);
-//    }
 
     @ApiResponse(responseCode = "204", description = "Nenhuma publicação encontrada")
     @ApiResponse(responseCode = "200", description = "Publicações encontradas")

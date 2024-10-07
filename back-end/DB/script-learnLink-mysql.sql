@@ -76,6 +76,7 @@ CREATE TABLE publicacao (
     tipo_publicacao_id INT,
     canal_id INT,
     usuario_id INT,
+    status VARCHAR(20),
     PRIMARY KEY (id),
     FOREIGN KEY (tipo_publicacao_id) REFERENCES tipo_publicacao(id),
     FOREIGN KEY (canal_id) REFERENCES canal(id),
@@ -88,6 +89,7 @@ CREATE TABLE comentario (
     data_hora DATETIME,
     publicacao_id INT,
     usuario_id INT,
+     status VARCHAR(20),
     PRIMARY KEY (id),FOREIGN KEY (publicacao_id) REFERENCES publicacao(id), 
     FOREIGN KEY (usuario_id) REFERENCES usuario(id)
 );
@@ -122,6 +124,7 @@ CREATE TABLE reacao (
 CREATE TABLE denuncia (
 	id INT PRIMARY KEY AUTO_INCREMENT,
     publicacao_id INT,
+    
     comentario_id INT,
     usuario_id INT,
 	FOREIGN KEY (publicacao_id) REFERENCES publicacao(id),
@@ -211,17 +214,17 @@ GROUP BY
     canal.id, canal.nome;
     
 CREATE VIEW view_quantidade_reacoes_comentarios_do_usuario AS
-SELECT COUNT(Reacao.id) AS reacoes, Comentario.usuario_id, tipo_reacao.pontuacao, Usuario.nome as nome FROM Reacao 
+SELECT COUNT(reacao.id) AS reacoes, comentario.usuario_id, tipo_reacao.pontuacao, usuario.nome as nome FROM reacao 
 RIGHT JOIN 
-	Comentario ON comentario_id = Comentario.id
+	comentario ON comentario_id = comentario.id
 INNER JOIN
-	Usuario ON comentario.usuario_id = Usuario.id
+	usuario ON comentario.usuario_id = usuario.id
 LEFT JOIN 
 	tipo_reacao ON tipo_reacao.id = tipo_reacao_id
 WHERE 
 	tipo_reacao_id = 1
 GROUP BY 
-	Comentario.usuario_id;
+	comentario.usuario_id;
     
 CREATE VIEW view_usuarios_ativos_no_mes as
     SELECT 
