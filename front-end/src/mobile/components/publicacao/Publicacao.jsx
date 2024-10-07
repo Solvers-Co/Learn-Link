@@ -26,7 +26,19 @@ function formatDateTime(dateString) {
     return `${hours}:${minutes} - ${day}/${month}/${year}`;
 }
 
-function reagirPublicacao(idPublicacao, tipoReacao, idUsuario, curtida, setCurtida, setCurtidas) {
+function gerarNotificacao(corpo,usuarioGeradorId, usuarioRecebedorId){
+    const notificacao = {
+        corpo,
+        usuarioGeradorId,
+        usuarioRecebedorId
+    }
+    api.post("/notificacoes", notificacao).then(response =>{
+        console.log(response.data)
+    }).catch(() =>{
+        toast.error("Erro ao gerar notificacao")
+    })
+}
+function reagirPublicacao(idPublicacao, tipoReacao, idUsuario, curtida, setCurtida, setCurtidas, idUsuarioQuePublicou) {
 
     if (curtida) {
         // Se o usuário já curtiu, remove a curtida
@@ -49,6 +61,7 @@ function reagirPublicacao(idPublicacao, tipoReacao, idUsuario, curtida, setCurti
                 // toast.success("Reação registrada com sucesso!");
                 setCurtida(true);
                 setCurtidas(prevCurtidas => prevCurtidas + 1); // Incrementa o contador de curtidas
+                gerarNotificacao(" curtiu a sua publicação",idUsuario,idUsuarioQuePublicou)
             })
             .catch(error => {
                 console.error("Ocorreu um erro ao reagir à publicação:", error);
@@ -101,7 +114,7 @@ function denunciarPublicacao(idPublicacao, idUsuario) {
         });
 }
 
-const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas, comentarios, listarComentarios, togglePopup, popupAbertoId, idUsuarioQuePublicou }) => {
+const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas, comentarios, listarComentarios, togglePopup, popupAbertoId, idUsuarioQuePublicou, origem, listarComentariosPerfil }) => {
     const [showPopup, setShowPopup] = useState(null);
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [curtida, setCurtida] = useState(quemCurtiu.includes(sessionStorage.getItem('nome')));
@@ -221,14 +234,14 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
                         <img
                             src={curtida ? Curtido : Curtir}
                             alt="Curtir"
-                            onClick={() => { reagirPublicacao(id, "CURTIDA", idUsuarioLogado, curtida, setCurtida, setCurtidas) }}
+                            onClick={() => { reagirPublicacao(id, "CURTIDA", idUsuarioLogado, curtida, setCurtida, setCurtidas, idUsuarioQuePublicou) }}
                         />
                         <span className={Styles['footerText']}>Curtir</span>
                     </div>
                     <div className={Styles['footerItem']}>
                         <span className={Styles['numero']}>{comentarios}</span>
                         <img src={Comentar} alt="Comentar" />
-                        <span className={Styles['footerText']} onClick={() => listarComentarios(id)}>Comentários</span>
+                        <span className={Styles['footerText']} onClick={origem === "perfil" ? (() => listarComentariosPerfil(id)):(() => listarComentarios(id))}>Comentários</span>
                     </div>
                 </div>
 
