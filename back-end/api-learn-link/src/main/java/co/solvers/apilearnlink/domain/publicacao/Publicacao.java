@@ -28,7 +28,7 @@ public class Publicacao {
     @ManyToOne
     private TipoPublicacao tipoPublicacao;
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private PublicacaoStatus status;
     @ManyToOne
     @JoinColumn(name = "canal_id")
     private Canal canal;

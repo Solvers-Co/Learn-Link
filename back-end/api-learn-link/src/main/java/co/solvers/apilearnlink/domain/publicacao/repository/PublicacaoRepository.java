@@ -1,7 +1,7 @@
 package co.solvers.apilearnlink.domain.publicacao.repository;
 
 import co.solvers.apilearnlink.domain.publicacao.Publicacao;
-import co.solvers.apilearnlink.domain.publicacao.Status;
+import co.solvers.apilearnlink.domain.publicacao.PublicacaoStatus;
 import co.solvers.apilearnlink.service.publicacao.dto.QuantidadePublicacaoDiaListagemDto;
 import co.solvers.apilearnlink.service.publicacao.dto.QuantidadePublicacaoMesCanalListagemDto;
 import org.springframework.data.domain.Page;
@@ -17,16 +17,16 @@ import java.util.Optional;
 @Repository
 public interface PublicacaoRepository extends JpaRepository<Publicacao, Integer> {
 
-    Page<Publicacao> findByStatus(Pageable pageable, Status status);
+    Page<Publicacao> findByStatus(Pageable pageable, PublicacaoStatus status);
 
     @Query("SELECT p FROM Publicacao p WHERE p.canal.id = :canalId AND p.status = :status")
-    Page<Publicacao> findByCanalIdAndStatus(@Param("canalId") Long canalId, @Param("status") Status status, Pageable pageable);
+    Page<Publicacao> findByCanalIdAndStatus(@Param("canalId") Long canalId, @Param("status") PublicacaoStatus status, Pageable pageable);
 
-    List<Publicacao> findAllByTipoPublicacaoTipoAndStatusOrderByDataHoraDesc(String tipo, Status status);
+    List<Publicacao> findAllByTipoPublicacaoTipoAndStatusOrderByDataHoraDesc(String tipo, PublicacaoStatus status);
 
 
     @Query("SELECT p FROM Publicacao p WHERE p.conteudo LIKE %:palavrachave% AND p.status = :status ORDER BY p.dataHora DESC")
-    Page<Publicacao> findByConteudoLikePalavrachaveAndStatusOrderByDataHoraDesc(@Param("palavrachave") String palavrachave, @Param("status") Status status, Pageable pageable);
+    Page<Publicacao> findByConteudoLikePalavrachaveAndStatusOrderByDataHoraDesc(@Param("palavrachave") String palavrachave, @Param("status") PublicacaoStatus status, Pageable pageable);
 
     @Query("SELECT new co.solvers.apilearnlink.service.publicacao.dto.QuantidadePublicacaoDiaListagemDto(" +
             "DATE(p.dataHora) as dataPublicacao, COUNT(p)) " +
@@ -42,7 +42,7 @@ public interface PublicacaoRepository extends JpaRepository<Publicacao, Integer>
             "WHERE YEAR(p.dataHora) = :ano AND MONTH(p.dataHora) = :mes AND p.status = :status " +
             "GROUP BY c.nome " +
             "ORDER BY COUNT(p.id) DESC")
-    List<QuantidadePublicacaoMesCanalListagemDto> buscaQuantidadeDePublicacoesEmCadaCanal(@Param("mes") int mes, @Param("ano") int ano, @Param("status") Status status);
+    List<QuantidadePublicacaoMesCanalListagemDto> buscaQuantidadeDePublicacoesEmCadaCanal(@Param("mes") int mes, @Param("ano") int ano, @Param("status") PublicacaoStatus status);
 
     @Query("SELECT new co.solvers.apilearnlink.service.publicacao.dto.QuantidadePublicacaoMesCanalListagemDto(" +
             "c.nome" +
@@ -52,6 +52,6 @@ public interface PublicacaoRepository extends JpaRepository<Publicacao, Integer>
             "GROUP BY c.nome " +
             "ORDER BY COUNT(p.id) DESC " +
             "LIMIT 1")
-    Optional<QuantidadePublicacaoMesCanalListagemDto> buscaCanalComMaiorNumeroDePublicacoes(@Param("mes") int mes, @Param("ano") int ano, @Param("status") Status status);
+    Optional<QuantidadePublicacaoMesCanalListagemDto> buscaCanalComMaiorNumeroDePublicacoes(@Param("mes") int mes, @Param("ano") int ano, @Param("status") PublicacaoStatus status);
 
 }

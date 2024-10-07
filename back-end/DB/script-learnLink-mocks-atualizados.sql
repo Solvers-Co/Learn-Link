@@ -1701,3 +1701,4 @@ VALUES
     ('2024-08-31 20:30:00', 10);
     
     UPDATE publicacao SET status = 'ATIVO' WHERE id < 10000;
+    UPDATE comentario SET status = 'ATIVO' WHERE id < 10000;

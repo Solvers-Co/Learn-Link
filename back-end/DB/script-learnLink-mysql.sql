@@ -124,6 +124,7 @@ CREATE TABLE reacao (
 CREATE TABLE denuncia (
 	id INT PRIMARY KEY AUTO_INCREMENT,
     publicacao_id INT,
+    
     comentario_id INT,
     usuario_id INT,
 	FOREIGN KEY (publicacao_id) REFERENCES publicacao(id),

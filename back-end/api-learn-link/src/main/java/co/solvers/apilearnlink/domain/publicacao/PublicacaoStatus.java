@@ -1,6 +1,6 @@
 package co.solvers.apilearnlink.domain.publicacao;
 
-public enum Status {
+public enum PublicacaoStatus {
     ATIVO,
     EXCLUIDO,
     ARQUIVADO

@@ -3,23 +3,20 @@ package co.solvers.apilearnlink.service.publicacao;
 import co.solvers.apilearnlink.domain.canal.Canal;
 import co.solvers.apilearnlink.domain.canal.repository.CanalRepository;
 import co.solvers.apilearnlink.domain.publicacao.Publicacao;
-import co.solvers.apilearnlink.domain.publicacao.Status;
+import co.solvers.apilearnlink.domain.publicacao.PublicacaoStatus;
 import co.solvers.apilearnlink.domain.publicacao.repository.PublicacaoRepository;
 import co.solvers.apilearnlink.domain.tipopublicacao.TipoPublicacao;
 import co.solvers.apilearnlink.domain.tipopublicacao.repository.TipoPublicacaoRepository;
 import co.solvers.apilearnlink.domain.usuario.Usuario;
 import co.solvers.apilearnlink.exception.InvalidoException;
 import co.solvers.apilearnlink.exception.NaoEncontradoException;
-import co.solvers.apilearnlink.pilha.PilhaObj;
 import co.solvers.apilearnlink.service.canal.CanalService;
 import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoCriacaoRequestDto;
-import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoListagemResponseDto;
 import co.solvers.apilearnlink.service.publicacao.dto.QuantidadePublicacaoDiaListagemDto;
 import co.solvers.apilearnlink.service.publicacao.dto.QuantidadePublicacaoMesCanalListagemDto;
 import co.solvers.apilearnlink.service.publicacao.dto.mapper.PublicacaoMapper;
 import co.solvers.apilearnlink.service.usuario.UsuarioService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -58,7 +55,7 @@ public class PublicacaoService {
     }
 
     public Page<Publicacao> listarMaisRecentesPaginado(Pageable pageable) {
-        return publicacaoRepository.findByStatus(pageable, Status.ATIVO);
+        return publicacaoRepository.findByStatus(pageable, PublicacaoStatus.ATIVO);
     }
 
     public Page<Publicacao> listarPublicacoesPorCanal(Long canalId, int page, int size, String sortDirection) {
@@ -66,7 +63,7 @@ public class PublicacaoService {
         sort = sortDirection.equalsIgnoreCase("ASC") ? sort.ascending() : sort.descending();
         Pageable pageable = PageRequest.of(page, size, sort);
 
-        return publicacaoRepository.findByCanalIdAndStatus(canalId, Status.ATIVO, pageable);
+        return publicacaoRepository.findByCanalIdAndStatus(canalId, PublicacaoStatus.ATIVO, pageable);
     }
 
 
@@ -74,7 +71,7 @@ public class PublicacaoService {
 
         verificaTipoPublicacaoVazio(tipoPublicacao);
 
-        return publicacaoRepository.findAllByTipoPublicacaoTipoAndStatusOrderByDataHoraDesc(tipoPublicacao.toUpperCase(), Status.ATIVO);
+        return publicacaoRepository.findAllByTipoPublicacaoTipoAndStatusOrderByDataHoraDesc(tipoPublicacao.toUpperCase(), PublicacaoStatus.ATIVO);
     }
 
     public Publicacao listarPorId(int id) {
@@ -110,7 +107,7 @@ public class PublicacaoService {
         Optional<Publicacao> optPublicacao = publicacaoRepository.findById(id);
 
         Publicacao publicacao = optPublicacao.get();
-        publicacao.setStatus(Status.EXCLUIDO);
+        publicacao.setStatus(PublicacaoStatus.EXCLUIDO);
 
         publicacaoRepository.save(publicacao);
     }
@@ -121,7 +118,7 @@ public class PublicacaoService {
             throw new InvalidoException("Palavra chave");
         }
 
-        return publicacaoRepository.findByConteudoLikePalavrachaveAndStatusOrderByDataHoraDesc(palavraChave.toUpperCase(), Status.ATIVO, pageable);
+        return publicacaoRepository.findByConteudoLikePalavrachaveAndStatusOrderByDataHoraDesc(palavraChave.toUpperCase(), PublicacaoStatus.ATIVO, pageable);
     }
 
 
@@ -131,11 +128,11 @@ public class PublicacaoService {
 
     public List<QuantidadePublicacaoMesCanalListagemDto> buscaQuantidadePublicacoesEmCadaCanal(int mes, int ano) {
 
-        return publicacaoRepository.buscaQuantidadeDePublicacoesEmCadaCanal(mes, ano, Status.ATIVO);
+        return publicacaoRepository.buscaQuantidadeDePublicacoesEmCadaCanal(mes, ano, PublicacaoStatus.ATIVO);
     }
 
     public QuantidadePublicacaoMesCanalListagemDto buscaCanalComMaiorNumeroDePublicacoes(int mes, int ano) {
-        Optional<QuantidadePublicacaoMesCanalListagemDto> canalMaisPublicacoes = publicacaoRepository.buscaCanalComMaiorNumeroDePublicacoes(mes, ano, Status.ATIVO);
+        Optional<QuantidadePublicacaoMesCanalListagemDto> canalMaisPublicacoes = publicacaoRepository.buscaCanalComMaiorNumeroDePublicacoes(mes, ano, PublicacaoStatus.ATIVO);
 
         if (canalMaisPublicacoes.isEmpty()) throw new NaoEncontradoException("Canal com maior número de publicações");
 
@@ -180,7 +177,7 @@ public class PublicacaoService {
     public void verificaPublicacaoAtiva (int idPublicacao) {
         Optional<Publicacao> publicacaoOptional = publicacaoRepository.findById(idPublicacao);
 
-        if (publicacaoOptional.get().getStatus().equals(Status.EXCLUIDO)) {
+        if (publicacaoOptional.get().getStatus().equals(PublicacaoStatus.EXCLUIDO)) {
             throw new NaoEncontradoException("Publicação");
         }
     }

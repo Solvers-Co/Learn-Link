@@ -1,7 +1,7 @@
 package co.solvers.apilearnlink.service.comentario;
 
 import co.solvers.apilearnlink.domain.comentario.Comentario;
-import co.solvers.apilearnlink.domain.comentario.Status;
+import co.solvers.apilearnlink.domain.comentario.ComentarioStatus;
 import co.solvers.apilearnlink.domain.comentario.repository.ComentarioRepository;
 import co.solvers.apilearnlink.domain.publicacao.Publicacao;
 import co.solvers.apilearnlink.domain.usuario.Usuario;
@@ -40,7 +40,7 @@ public class ComentarioService {
     }
 
     public Comentario buscarPorId(int id) {
-        Optional<Comentario> comentario = comentarioRepository.findByIdAndStatus(id, Status.ATIVO);
+        Optional<Comentario> comentario = comentarioRepository.findByIdAndStatus(id, ComentarioStatus.ATIVO);
 
         if (comentario.isEmpty()) {
             throw new NaoEncontradoException("Comentário");
@@ -60,7 +60,7 @@ public class ComentarioService {
     public void deletar(int id) {
         Comentario comentario = buscarPorId(id);
 
-        comentario.setStatus(Status.EXCLUIDO);
+        comentario.setStatus(ComentarioStatus.EXCLUIDO);
         comentarioRepository.save(comentario);
     }
 
@@ -71,12 +71,12 @@ public class ComentarioService {
     public List<Comentario> listarPorPublicacao(int idPublicacao) {
         Publicacao publicacao = publicacaoService.listarPorId(idPublicacao);
 
-        return comentarioRepository.findByPublicacaoAndStatus(publicacao, Status.ATIVO);
+        return comentarioRepository.findByPublicacaoAndStatus(publicacao, ComentarioStatus.ATIVO);
     }
 
     public Page<Comentario> listarPorPublicacaoPaginado(int idPublicacao, Pageable pageable) {
         Publicacao publicacao = publicacaoService.listarPorId(idPublicacao);
-        return comentarioRepository.findByPublicacaoAndStatus(publicacao, pageable, Status.ATIVO);
+        return comentarioRepository.findByPublicacaoAndStatus(publicacao, pageable, ComentarioStatus.ATIVO);
     }
 
 }

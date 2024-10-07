@@ -2,7 +2,6 @@ package co.solvers.apilearnlink.domain.comentario;
 
 import co.solvers.apilearnlink.domain.publicacao.Publicacao;
 import co.solvers.apilearnlink.domain.reacao.Reacao;
-import co.solvers.apilearnlink.domain.tipopublicacao.TipoPublicacao;
 import co.solvers.apilearnlink.domain.usuario.Usuario;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -24,7 +23,7 @@ public class Comentario {
     @CreationTimestamp
     private LocalDateTime dataHora;
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private ComentarioStatus status;
     @ManyToOne
     private Publicacao publicacao;
     @ManyToOne
