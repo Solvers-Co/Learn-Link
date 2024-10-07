@@ -174,7 +174,7 @@ public class PublicacaoService {
         }
     }
 
-<<<<<<< HEAD
+
     public void verificaPublicacaoAtiva (int idPublicacao) {
         Optional<Publicacao> publicacaoOptional = publicacaoRepository.findById(idPublicacao);
 
@@ -183,14 +183,10 @@ public class PublicacaoService {
         }
     }
 
-=======
-    //listarPorUsuario
+
     public List<Publicacao> listarPorUsuario(Long idUsuario) {
-        return publicacaoRepository.findByUsuarioId(idUsuario);
+        return publicacaoRepository.findByUsuarioId(idUsuario, PublicacaoStatus.ATIVO);
     }
 
 
-
-
->>>>>>> 2364ee5b7dc730fa0cb4404614ea3e6d9a2bacb1
 }

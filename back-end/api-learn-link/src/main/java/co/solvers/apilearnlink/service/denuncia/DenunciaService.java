@@ -114,9 +114,9 @@ public class DenunciaService {
 
         // Verifica o tipo de denúncia solicitado e busca as respectivas denúncias
         if ("publicacao".equalsIgnoreCase(tipo)) {
-            denuncias = denunciaRespository.buscaPublicacoesDenunciadas();
+            denuncias = buscaPublicacoesDenunciadas();
         } else if ("comentario".equalsIgnoreCase(tipo)) {
-            denuncias = denunciaRespository.buscaComentariosDenunciados();
+            denuncias = buscaComentariosDenunciados();
         } else {
             throw new IllegalArgumentException("Tipo de denúncia inválido");
         }
@@ -161,9 +161,9 @@ public class DenunciaService {
 
         // Verifica o tipo de denúncia solicitado
         if ("publicacao".equalsIgnoreCase(tipo)) {
-            denuncias = denunciaRespository.buscaPublicacoesDenunciadas();
+            denuncias = buscaPublicacoesDenunciadas();
         } else if ("comentario".equalsIgnoreCase(tipo)) {
-            denuncias = denunciaRespository.buscaComentariosDenunciados();
+            denuncias = buscaComentariosDenunciados();
         } else {
             throw new IllegalArgumentException("Tipo de denúncia inválido");
         }
@@ -229,9 +229,9 @@ public class DenunciaService {
 
         // Verifica o tipo de denúncia solicitado
         if ("publicacao".equalsIgnoreCase(tipo)) {
-            denuncias = denunciaRespository.buscaPublicacoesDenunciadas();
+            denuncias = buscaPublicacoesDenunciadas();
         } else if ("comentario".equalsIgnoreCase(tipo)) {
-            denuncias = denunciaRespository.buscaComentariosDenunciados();
+            denuncias = buscaComentariosDenunciados();
         } else {
             throw new IllegalArgumentException("Tipo de denúncia inválido");
         }
@@ -309,9 +309,9 @@ public class DenunciaService {
 
         // Verifica o tipo de denúncia solicitado
         if ("publicacao".equalsIgnoreCase(tipo)) {
-            denuncias = denunciaRespository.buscaPublicacoesDenunciadas();
+            denuncias = buscaPublicacoesDenunciadas();
         } else if ("comentario".equalsIgnoreCase(tipo)) {
-            denuncias = denunciaRespository.buscaComentariosDenunciados();
+            denuncias = buscaComentariosDenunciados();
         } else {
             throw new IllegalArgumentException("Tipo de denúncia inválido");
         }
