@@ -2,6 +2,7 @@ package co.solvers.apilearnlink.api.controller.usuario;
 
 import co.solvers.apilearnlink.domain.respostaImagem.RespostaImagem;
 import co.solvers.apilearnlink.domain.usuario.Usuario;
+import co.solvers.apilearnlink.service.imagem.ImagemPerfilDto;
 import co.solvers.apilearnlink.service.reacao.ReacaoService;
 import co.solvers.apilearnlink.service.reacoesEmComentariosDoUsuario.dto.QtdReacoesComentariosUsuarioDto;
 import co.solvers.apilearnlink.service.usuario.UsuarioService;
@@ -280,9 +281,9 @@ public class UsuarioController {
     }
 
     @PatchMapping("/upload-foto-perfil/{id}")
-    public ResponseEntity<UsuarioListagemDto> uploadFotoPerfil(@RequestBody String imagemBase64, @PathVariable Long id){
+    public ResponseEntity<RespostaImagem> uploadFotoPerfil(@RequestBody ImagemPerfilDto imagemBase64, @PathVariable Long id){
 
-        RespostaImagem resposta = usuarioService.uploadFotoPerfil(imagemBase64, id);
+        RespostaImagem resposta = usuarioService.uploadFotoPerfil(imagemBase64.getImagemBase64(), id);
 
         return ResponseEntity.status(200).build();
     }

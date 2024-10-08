@@ -284,7 +284,7 @@ public class UsuarioService {
 
     public RespostaImagem uploadFotoPerfil(String imagemBase64, Long id){
 
-        String funcao = "lambda-envio-imagens-learnlink";
+        String funcao = "arn:aws:lambda:us-east-1:718117031225:function:lambda-envio-imagens-learnlink";
         Region region = Region.US_EAST_1;
 
         LambdaClient awsLambda = LambdaClient.builder()
@@ -295,7 +295,7 @@ public class UsuarioService {
 
         InvokeResponse res = null;
         try {
-            Map<String, String> parametros = Map.of("imagemBase64", imagemBase64);
+            Map<String, String> parametros = Map.of("imageBase64", imagemBase64);
 
             SdkBytes payload = SdkBytes.fromUtf8String(objectMapper.writeValueAsString(parametros));
 
