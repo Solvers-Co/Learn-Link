@@ -233,7 +233,7 @@ const FeedGeral = () => {
                                 horario={publicacao.dataHora}
                                 curtidas={publicacao.reacoes.length}
                                 quemCurtiu={publicacao.reacoes.map(reacao => reacao.usuario.nome)}
-                                comentarios={publicacao.comentarios.length}
+                                comentarios={4}
                                 listarComentarios={listarComentarios}
                                 togglePopup={togglePopup}
                                 popupAbertoId={popupAbertoId}

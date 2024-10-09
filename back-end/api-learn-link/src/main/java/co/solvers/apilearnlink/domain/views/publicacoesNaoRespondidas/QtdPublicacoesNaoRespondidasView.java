@@ -17,5 +17,6 @@ public class QtdPublicacoesNaoRespondidasView {
     @Id
     private String nomeMateria;
     private Long qtdPublicacoesNaoRespondidas;
+    private Long qtdPublicacoesRespondidas;
 
 }
