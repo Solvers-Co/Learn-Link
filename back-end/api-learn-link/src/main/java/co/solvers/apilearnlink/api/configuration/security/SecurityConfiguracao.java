@@ -89,6 +89,7 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/publicacoes/denuncias/json"),
             new AntPathRequestMatcher("/publicacoes/denuncias/xml"),
             new AntPathRequestMatcher("/publicacoes/denuncias/parquet"),
+            new AntPathRequestMatcher("/publicacoes/{id}/arquivar"),
             new AntPathRequestMatcher("/comentarios"),
             new AntPathRequestMatcher("/comentarios/{id}"),
             new AntPathRequestMatcher("/comentarios/{idComentario}/reagir"),

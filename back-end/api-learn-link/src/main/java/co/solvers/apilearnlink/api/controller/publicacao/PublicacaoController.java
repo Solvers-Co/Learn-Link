@@ -397,9 +397,6 @@ public class PublicacaoController {
                 .body(resource);
     }
 
-
-
-
     @ApiResponse(responseCode = "200", description = "Denuncias removidas")
     @ApiResponse(responseCode = "404", description = "Publicação não encontrada")
     @Operation(summary = "Remover denúncias", description = "Método que remover todas as denuncias de uma publicação", tags = {"Publicações"})
@@ -428,7 +425,18 @@ public class PublicacaoController {
         return ResponseEntity.ok(dtos);
     }
 
+    //requisição que altera o statatus da publicacao de ativo para arquivado
+    @ApiResponse(responseCode = "200", description = "Publicação arquivada")
+    @ApiResponse(responseCode = "404", description = "Publicação não encontrada")
+    @Operation(summary = "Arquivar publicação", description = "Método que arquiva uma publicação", tags = {"Publicações"})
+    @PatchMapping("/{id}/arquivar")
+    public ResponseEntity<PublicacaoListagemResponseDto> arquivarPublicacao(@PathVariable int id) {
 
+        Publicacao publicacao = publicacaoService.arquivarPublicacao(id);
+        PublicacaoListagemResponseDto dto = PublicacaoMapper.toDto(publicacao);
+
+        return ResponseEntity.ok(dto);
+    }
 
 
 

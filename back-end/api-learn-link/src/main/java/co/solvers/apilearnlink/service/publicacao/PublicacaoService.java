@@ -189,4 +189,15 @@ public class PublicacaoService {
     }
 
 
+    public Publicacao arquivarPublicacao(int id) {
+        verificaIdVazio(id);
+        verificaPublicacaoAtiva(id);
+
+        Optional<Publicacao> optPublicacao = publicacaoRepository.findById(id);
+
+        Publicacao publicacao = optPublicacao.get();
+        publicacao.setStatus(PublicacaoStatus.ARQUIVADO);
+
+        return publicacaoRepository.save(publicacao);
+    }
 }
