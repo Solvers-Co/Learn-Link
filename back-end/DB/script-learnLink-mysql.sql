@@ -201,17 +201,17 @@ INSERT INTO classificacao (classificacao) VALUES
 CREATE VIEW view_materias_nao_respondidas AS
 SELECT
     canal.nome AS nome_materia,
-    COUNT(publicacao.id) AS qtd_publicacoes_nao_respondidas
+    COUNT(DISTINCT CASE WHEN comentario.id IS NULL THEN publicacao.id END) AS qtd_publicacoes_nao_respondidas,
+    COUNT(DISTINCT CASE WHEN comentario.id IS NOT NULL THEN publicacao.id END) AS qtd_publicacoes_respondidas
 FROM
     canal
 LEFT JOIN
     publicacao ON canal.id = publicacao.canal_id
 LEFT JOIN
     comentario ON publicacao.id = comentario.publicacao_id
-WHERE
-    comentario.id IS NULL
 GROUP BY
     canal.id, canal.nome;
+    
     
 CREATE VIEW view_quantidade_reacoes_comentarios_do_usuario AS
 SELECT COUNT(reacao.id) AS reacoes, comentario.usuario_id, tipo_reacao.pontuacao, usuario.nome as nome FROM reacao 
