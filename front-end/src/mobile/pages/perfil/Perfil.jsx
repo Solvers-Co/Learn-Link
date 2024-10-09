@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import CardAtividade from '../../components/cards/cardAtividade/CardAtividade';
 import api from "../../../api";
 import Tooltip from '../../components/tooltip/Tooltip';
+import Dropzone from '../../components/dropzone/Dropzone';
 
 // generateInitials diferente do padrão
 function generateInitials(name) {
@@ -40,14 +41,7 @@ function generateInitials(name) {
     return <div style={avatarStyle}>{initials}</div>;
 }
 
-function toBase64(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result.split(",")[1]);
-        reader.onerror = (error) => reject(error);
-    });
-}
+
 
 const Perfil = () => {
     const { idUsuario } = useParams(); // Pegando o id do usuário da URL
@@ -79,13 +73,6 @@ const Perfil = () => {
         const nomes = nome.trim().split(' ');
         return nomes.length === 1 ? nomes[0] : `${nomes[0]} ${nomes[nomes.length - 1]}`;
     }, [nome]);
-
-    const handleImageChange = async (file) => {
-        if (file) {
-            const base64Image = await toBase64(file);
-            setImagem(base64Image);
-        }
-    };
 
     useEffect(() => {
         const fetchClassificacao = async () => {
