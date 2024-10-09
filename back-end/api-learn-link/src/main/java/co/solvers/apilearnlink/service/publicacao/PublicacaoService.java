@@ -50,6 +50,7 @@ public class PublicacaoService {
         publicacao.setTipoPublicacao(optTipoPublicacao.get());
         publicacao.setCanal(canal);
         publicacao.setUsuario(usuario);
+        publicacao.setStatus(PublicacaoStatus.ATIVO);
 
         return publicacaoRepository.save(publicacao);
     }
