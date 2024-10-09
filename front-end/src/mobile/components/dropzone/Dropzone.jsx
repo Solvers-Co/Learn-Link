@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import styles from '.Dropzone.module.css';
+import styles from './Dropzone.module.css';
 import api from '../../../api';
-import { Await } from 'react-router-dom';
+import { toast } from 'react-toastify'; // Usando react-toastify para exibir os toasts
 
 function toBase64(file) {
     return new Promise((resolve, reject) => {
@@ -13,60 +13,65 @@ function toBase64(file) {
     });
 }
 
-const Dropzone = (origem) => {
-  const [uploadedImages, setUploadedImages] = useState([]);
-  const [message, setMessage] = useState('');
+const Dropzone = ({ origem }) => {
+    const [uploadedImages, setUploadedImages] = useState([]);
+    const [message, setMessage] = useState('');
+    const [imagem, setImagem] = useState(null); // Mantém a última imagem carregada
 
     const handleImageChange = async (file) => {
-        let url = `/upload-foto-perfil/${sessionStorage.getItem("userId")}`
-        if (file) {
-            const base64Image = await toBase64(file);
-            setImagem(base64Image);
+        const base64Image = await toBase64(file);
+        setImagem(base64Image); // Atualiza o estado com a imagem em base64
+    };
 
-            const response = await api.patch(`${url}`, base64Image);
+    const onDrop = useCallback(acceptedFiles => {
+        acceptedFiles.forEach(file => {
+            handleImageChange(file); // Converte a imagem para base64
+            setUploadedImages(prevState => [...prevState, URL.createObjectURL(file)]);
+        });
+    }, []);
+
+    const { getRootProps, getInputProps } = useDropzone({ onDrop });
+
+    // Função para salvar a imagem no servidor
+    const handleSaveImage = async () => {
+        if (!imagem) {
+            toast.error("Nenhuma imagem anexada"); // Exibe toast de erro
+            return;
+        }
+
+        const url = `/upload-foto-perfil/${sessionStorage.getItem("userId")}`;
+        try {
+            const response = await api.patch(url, { imagem });
+            if (response.status === 200) {
+                toast.success('Imagem salva com sucesso!'); // Exibe toast de sucesso
+            } else {
+                toast.error('Falha ao salvar a imagem.'); // Exibe toast de falha
+            }
+        } catch (error) {
+            toast.error('Erro ao conectar com o servidor.'); // Exibe toast de erro
+            console.error(error);
         }
     };
 
-  // Função para lidar com o upload
-  const onDrop = useCallback(acceptedFiles => {
-    const formData = new FormData();
-    formData.append('file', acceptedFiles[0]);
+    return (
+        <div className={styles['image-upload-container']}>
+            <h1>Upload de Imagens</h1>
+            <div {...getRootProps()} className={styles['dropzone']}>
+                <input {...getInputProps()} />
+                <p>Arraste e solte suas imagens aqui, ou clique para selecionar</p>
+            </div>
+            {message && <p className={styles['message']}>{message}</p>}
 
-    // Simulando upload (pode ser ajustado para seu backend)
-    fetch('http://seu-backend.com/upload', {
-      method: 'POST',
-      body: formData,
-    })
-    .then(response => {
-      if (response.ok) {
-        setUploadedImages([...uploadedImages, URL.createObjectURL(acceptedFiles[0])]);
-        setMessage('Upload realizado com sucesso!');
-      } else {
-        setMessage('Falha no upload.');
-      }
-    })
-    .catch(() => setMessage('Erro ao conectar com o servidor.'));
-  }, [uploadedImages]);
+            <div className={styles['uploaded-images']}>
+                {uploadedImages.length > 0 && <h2>Imagens enviadas:</h2>}
+                {uploadedImages.map((image, index) => (
+                    <img key={index} src={image} alt={`Uploaded ${index}`} />
+                ))}
+            </div>
 
-  const { getRootProps, getInputProps } = useDropzone({ onDrop });
-
-  return (
-    <div className="image-upload-container">
-      <h1>Upload de Imagens</h1>
-      <div {...getRootProps()} className="dropzone">
-        <input {...getInputProps()} />
-        <p>Arraste e solte suas imagens aqui, ou clique para selecionar</p>
-      </div>
-      {message && <p className="message">{message}</p>}
-      
-      <div className="uploaded-images">
-        {uploadedImages.length > 0 && <h2>Imagens enviadas:</h2>}
-        {uploadedImages.map((image, index) => (
-          <img key={index} src={image} alt={`Uploaded ${index}`} />
-        ))}
-      </div>
-    </div>
-  );
+            <button onClick={handleSaveImage} className={styles['save-button']}>Salvar Imagem</button>
+        </div>
+    );
 };
 
 export default Dropzone;

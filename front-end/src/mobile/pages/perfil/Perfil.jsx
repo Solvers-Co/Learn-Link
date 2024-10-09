@@ -125,6 +125,8 @@ const Perfil = () => {
 
     const avatar = useMemo(() => generateInitials(nomeFormatado), [nomeFormatado]);
 
+    const [showPopup, setShowPopup] = useState(false);
+
     return (
         <>
             <Header />
@@ -135,6 +137,7 @@ const Perfil = () => {
                             {avatar}
                             <span className={styles.nome}>{nome}</span>
                             <span className={styles.email}>{email}</span>
+                            <button onClick={() => setShowPopup(true)}>botao</button>
                         </div>
                         <div className={styles.tooltip}>
                             <Tooltip txt="Ganhará a classificação: Iniciante - 0 interações
@@ -153,6 +156,17 @@ Especialista – 100 interações"/>
                 <div className={styles.atividade}>
                     <CardAtividade idUsuario={idUsuarioLogado} />
                 </div>
+
+                {/* Popup para Dropzone */}
+                {showPopup && (
+                    <div className={styles.popup}>
+                        <div className={styles.popupContent}>
+                            <Dropzone />
+                            <button onClick={() => setShowPopup(false)}>Fechar</button>
+                        </div>
+                    </div>
+                )}
+
             </div>
         </>
     );
