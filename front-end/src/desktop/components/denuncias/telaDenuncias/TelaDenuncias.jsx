@@ -47,7 +47,7 @@ const TelaDenuncias = () => {
     const toggleModoSelecao = () => setModoSelecao(!modoSelecao);
 
     const toggleSelecao = (id, tipo) => {
-        if (tipo === 'publicacoes') {
+        if (tipo === 'publicacao') {
             setPublicacoesSelecionadas(prev =>
                 prev.includes(id)
                     ? prev.filter(item => item !== id)
@@ -185,7 +185,7 @@ const TelaDenuncias = () => {
                                     modoSelecao={modoSelecao}
                                     toggleSelecao={toggleSelecao}
                                     isSelected={
-                                        tipoDenuncia === 'publicacoes'
+                                        tipoDenuncia === 'publicacao'
                                             ? publicacoesSelecionadas.includes(denuncia.publicacao?.id)
                                             : comentariosSelecionados.includes(denuncia.comentario?.id)
                                     }
