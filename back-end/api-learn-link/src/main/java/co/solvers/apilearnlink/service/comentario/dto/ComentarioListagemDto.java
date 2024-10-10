@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
 @Getter
 @Setter
 public class ComentarioListagemDto {
@@ -22,14 +23,12 @@ public class ComentarioListagemDto {
 
     @Getter
     @Setter
-    public static class PublicacaoDto{
+    public static class PublicacaoDto {
         private Integer id;
         private String conteudo;
         private LocalDateTime dataHora;
         private TipoPublicacaoDto tipoPublicacao;
         private UsuarioListagemDto usuario;
-/*        private List<ReacaoDto> reacoes;*/
-/*        private List<PublicacaoListagemResponseDto.ComentarioDto> comentarios;*/
     }
 
     @Getter
@@ -40,21 +39,20 @@ public class ComentarioListagemDto {
         private String email;
         private EspecialidadeListagemDto especialidade;
     }
+
     @Getter
     @Setter
-    public static class TipoPublicacaoDto{
+    public static class TipoPublicacaoDto {
         private Integer id;
         private String tipo;
     }
 
     @Getter
     @Setter
-    public static class ReacaoDto{
+    public static class ReacaoDto {
         private Integer id;
         private TipoReacaoListagemDto tipoReacao;
         private UsuarioDto usuario;
     }
-
-
 
 }

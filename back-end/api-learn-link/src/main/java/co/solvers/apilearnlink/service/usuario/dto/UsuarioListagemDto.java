@@ -27,6 +27,5 @@ public class UsuarioListagemDto {
         public Integer id;
         public String status;
     }
-/*    private int qtdContribuicoes;
-    private String classificacao;*/
+
 }

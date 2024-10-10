@@ -1,11 +1,9 @@
 package co.solvers.apilearnlink.service.usuario.dto.mapper;
 
-import co.solvers.apilearnlink.domain.especialidade.Especialidade;
 import co.solvers.apilearnlink.domain.registroLogin.RegistroLogin;
 import co.solvers.apilearnlink.service.classificacao.dto.mapper.ClassificacaoMapper;
 import co.solvers.apilearnlink.service.endereco.dto.mapper.EnderecoMapper;
 import co.solvers.apilearnlink.service.especialidade.dto.mapper.EspecialidadeMapper;
-import co.solvers.apilearnlink.service.tipousuario.dto.TipoUsuarioListagemDto;
 import co.solvers.apilearnlink.service.tipousuario.dto.mapper.TipoUsuarioMapper;
 import co.solvers.apilearnlink.service.usuario.autenticacao.dto.UsuarioTokenDto;
 import co.solvers.apilearnlink.service.usuario.dto.*;
@@ -16,7 +14,7 @@ import java.util.List;
 
 public class UsuarioMapper {
 
-    public static UsuarioListagemDto toUsuarioListagemResponseDto(Usuario entity){
+    public static UsuarioListagemDto toUsuarioListagemResponseDto(Usuario entity) {
         if (entity == null) return null;
 
         UsuarioListagemDto dto = new UsuarioListagemDto();
@@ -36,16 +34,16 @@ public class UsuarioMapper {
         dto.setEspecialidade(EspecialidadeMapper.toDto(entity.getEspecialidade()));
 
         return dto;
-    };
+    }
 
-    public static List<UsuarioListagemDto> toUsuarioListagemResponseDto(List<Usuario> entities){
+    public static List<UsuarioListagemDto> toUsuarioListagemResponseDto(List<Usuario> entities) {
         return entities
                 .stream()
                 .map(UsuarioMapper::toUsuarioListagemResponseDto)
                 .toList();
     }
 
-    public static UsuarioListagemSimplesDto toUsuarioListagemSimplesDto(Usuario entity){
+    public static UsuarioListagemSimplesDto toUsuarioListagemSimplesDto(Usuario entity) {
         if (entity == null) return null;
 
         UsuarioListagemSimplesDto dto = new UsuarioListagemSimplesDto();
@@ -55,7 +53,7 @@ public class UsuarioMapper {
         return dto;
     }
 
-    public static UsuarioListagemRecuperarSenhaDto toUsuarioListagemRecuperarSenhaDto(Usuario entity){
+    public static UsuarioListagemRecuperarSenhaDto toUsuarioListagemRecuperarSenhaDto(Usuario entity) {
         if (entity == null) return null;
 
         UsuarioListagemRecuperarSenhaDto dto = new UsuarioListagemRecuperarSenhaDto();
@@ -66,7 +64,7 @@ public class UsuarioMapper {
         return dto;
     }
 
-    public static List<UsuarioListagemSimplesDto> toUsuarioListagemSimplesDto(List<Usuario> entities){
+    public static List<UsuarioListagemSimplesDto> toUsuarioListagemSimplesDto(List<Usuario> entities) {
         if (entities == null) return null;
 
         List<UsuarioListagemSimplesDto> dtos = new ArrayList<UsuarioListagemSimplesDto>();
@@ -76,39 +74,19 @@ public class UsuarioMapper {
 
         return dtos;
     }
-//    public static UsuarioListagemRankingDto toUsuarioListagemRankingDto(Usuario entity){
-//        if (entity == null) return null;
-//        UsuarioListagemRankingDto dto = new UsuarioListagemRankingDto();
-//        dto.setEmail(entity.getEmail());
-//        dto.setNome(entity.getNome());
-//        dto.setTotalReacoes(entity.getTotalReacoes());
-//        return dto;
-//    }
-//    public static List<UsuarioListagemRankingDto> toUsuarioListagemRankingDto(List<Usuario> entities){
-//        if (entities == null) return null;
-//
-//        List<UsuarioListagemRankingDto> dtos = new ArrayList<>();
-//
-//        for (Usuario entity : entities) {
-//            toUsuarioListagemRankingDto(entity);
-//            dtos.add(toUsuarioListagemRankingDto(entity));
-//        }
-//
-//        return dtos;
-//    }
 
-    public static Usuario toEntity(UsuarioCriacaoRequestDto dto){
+    public static Usuario toEntity(UsuarioCriacaoRequestDto dto) {
         if (dto == null) return null;
 
         Usuario usuario = new Usuario();
-        
+
         usuario.setEmail(dto.getEmail());
         usuario.setCpf(dto.getCpf());
         usuario.setNome(dto.getNome());
         usuario.setSenha(dto.getSenha());
 
         return usuario;
-    };
+    }
 
     public static Usuario of(UsuarioCriacaoRequestDto usuarioCriacaoDto) {
         if (usuarioCriacaoDto == null) return null;
@@ -125,8 +103,6 @@ public class UsuarioMapper {
     public static UsuarioTokenDto of(Usuario usuario, String token, RegistroLogin registroLogin) {
         UsuarioTokenDto usuarioTokenDto = new UsuarioTokenDto();
 
-        ;
-
         usuarioTokenDto.setUserId(usuario.getId());
         usuarioTokenDto.setEmail(usuario.getEmail());
         usuarioTokenDto.setNome(usuario.getNome());
@@ -142,7 +118,7 @@ public class UsuarioMapper {
         return usuarioTokenDto;
     }
 
-    public static UsuarioTokenDto desconectar(Usuario usuario){
+    public static UsuarioTokenDto desconectar(Usuario usuario) {
         UsuarioTokenDto usuarioTokenDto = new UsuarioTokenDto();
 
         usuarioTokenDto.setUserId(usuario.getId());

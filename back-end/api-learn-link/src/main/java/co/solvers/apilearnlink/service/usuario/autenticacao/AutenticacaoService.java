@@ -22,7 +22,7 @@ public class AutenticacaoService implements UserDetailsService {
 
         Optional<Usuario> usuarioOpt = usuarioRepository.findByEmail(username);
 
-        if (usuarioOpt.isEmpty()){
+        if (usuarioOpt.isEmpty()) {
             throw new UsernameNotFoundException(String.format("usuário: % não encontrado", username));
         }
         return new UsuarioDetalhesDto(usuarioOpt.get());

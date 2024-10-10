@@ -1,6 +1,6 @@
 package co.solvers.apilearnlink.pilha;
 
-public class PilhaObj <T>{
+public class PilhaObj<T> {
 
     // 01) Atributos
     private T[] pilha;
@@ -15,7 +15,7 @@ public class PilhaObj <T>{
     // 03) MÃ©todo isEmpty
     public Boolean isEmpty() {
 
-        if (topo == -1){
+        if (topo == -1) {
             return true;
         } else {
             return false;
@@ -24,7 +24,7 @@ public class PilhaObj <T>{
 
     // 04) MÃ©todo isFull
     public Boolean isFull() {
-        if (topo+1 == pilha.length){
+        if (topo + 1 == pilha.length) {
             return true;
         } else {
             return false;
@@ -42,7 +42,7 @@ public class PilhaObj <T>{
 
     // 06) MÃ©todo pop
     public T pop() {
-        if (isEmpty()){
+        if (isEmpty()) {
             return null;
         } else {
             T aux = pilha[topo--];
@@ -52,7 +52,7 @@ public class PilhaObj <T>{
 
     // 07) MÃ©todo peek
     public T peek() {
-        if (isEmpty()){
+        if (isEmpty()) {
             return null;
         } else {
             return pilha[topo];
@@ -61,7 +61,7 @@ public class PilhaObj <T>{
 
     // 08) MÃ©todo exibe
     public void exibe() {
-        for (int i = topo ; i >= 0 ; i--){
+        for (int i = topo; i >= 0; i--) {
             System.out.println(pilha[i]);
         }
     }

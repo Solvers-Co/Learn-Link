@@ -9,4 +9,4 @@ public class ConflitoException extends RuntimeException {
     public ConflitoException(String entidade) {
         super(String.format("%s com conflito", entidade));
     }
-    }
+}

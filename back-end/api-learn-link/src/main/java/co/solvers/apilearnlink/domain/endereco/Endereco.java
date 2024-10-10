@@ -1,6 +1,5 @@
 package co.solvers.apilearnlink.domain.endereco;
 
-import co.solvers.apilearnlink.domain.usuario.Usuario;
 import jakarta.persistence.*;
 import lombok.*;
 

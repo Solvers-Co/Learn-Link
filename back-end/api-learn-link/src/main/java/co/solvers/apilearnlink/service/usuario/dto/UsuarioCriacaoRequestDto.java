@@ -1,10 +1,6 @@
 package co.solvers.apilearnlink.service.usuario.dto;
 
-import co.solvers.apilearnlink.service.endereco.dto.EnderecoCriacaoDto;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

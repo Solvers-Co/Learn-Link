@@ -13,7 +13,7 @@ import java.util.Optional;
 public class CanalService {
     private final CanalRepository canalRepository;
 
-    public Canal buscarPorId (int id){
+    public Canal buscarPorId(int id) {
         Optional<Canal> canal = canalRepository.findById(id);
 
         if (canal.isEmpty()) throw new NaoEncontradoException("Canal");

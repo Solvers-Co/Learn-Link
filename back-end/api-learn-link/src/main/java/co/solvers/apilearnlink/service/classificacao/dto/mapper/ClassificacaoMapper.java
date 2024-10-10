@@ -5,7 +5,7 @@ import co.solvers.apilearnlink.service.classificacao.dto.ClassificacaoListagemDt
 
 public class ClassificacaoMapper {
 
-    public static ClassificacaoListagemDto toDto (Classificacao entity){
+    public static ClassificacaoListagemDto toDto(Classificacao entity) {
         if (entity == null) return null;
 
         ClassificacaoListagemDto dto = new ClassificacaoListagemDto();

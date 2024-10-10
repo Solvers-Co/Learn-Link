@@ -24,7 +24,6 @@ public interface PublicacaoRepository extends JpaRepository<Publicacao, Integer>
 
     List<Publicacao> findAllByTipoPublicacaoTipoAndStatusOrderByDataHoraDesc(String tipo, PublicacaoStatus status);
 
-
     @Query("SELECT p FROM Publicacao p WHERE p.conteudo LIKE %:palavrachave% AND p.status = :status ORDER BY p.dataHora DESC")
     Page<Publicacao> findByConteudoLikePalavrachaveAndStatusOrderByDataHoraDesc(@Param("palavrachave") String palavrachave, @Param("status") PublicacaoStatus status, Pageable pageable);
 
@@ -54,11 +53,7 @@ public interface PublicacaoRepository extends JpaRepository<Publicacao, Integer>
             "LIMIT 1")
     Optional<QuantidadePublicacaoMesCanalListagemDto> buscaCanalComMaiorNumeroDePublicacoes(@Param("mes") int mes, @Param("ano") int ano, @Param("status") PublicacaoStatus status);
 
-    //findByUsuarioId
     @Query("SELECT p FROM Publicacao p WHERE p.usuario.id = :usuarioId AND p.status = :status")
     List<Publicacao> findByUsuarioId(@Param("usuarioId") Long usuarioId, @Param("status") PublicacaoStatus status);
-
-//    @Query("SELECT p FROM Publicacao p WHERE p.descricao LIKE %?1% ORDER BY p.dataHoraPublicacao DESC")
-//    List<Publicacao> findByPublicacaoLikeOrderByDataHoraPublicacaoDesc(String palavraChave);
 
 }

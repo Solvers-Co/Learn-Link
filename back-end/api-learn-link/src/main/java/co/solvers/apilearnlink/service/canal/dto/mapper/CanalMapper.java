@@ -5,7 +5,7 @@ import co.solvers.apilearnlink.service.canal.dto.CanalListagemDto;
 
 public class CanalMapper {
 
-    public static CanalListagemDto toDto (Canal entity){
+    public static CanalListagemDto toDto(Canal entity) {
         if (entity == null) return null;
 
         CanalListagemDto dto = new CanalListagemDto();

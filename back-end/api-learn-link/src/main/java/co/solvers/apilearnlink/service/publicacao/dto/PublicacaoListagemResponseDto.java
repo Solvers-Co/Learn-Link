@@ -43,7 +43,6 @@ public class PublicacaoListagemResponseDto {
     @Getter
     @Setter
     public static class ComentarioDto {
-
         private Integer id;
         private String comentario;
         private LocalDateTime dataHora;

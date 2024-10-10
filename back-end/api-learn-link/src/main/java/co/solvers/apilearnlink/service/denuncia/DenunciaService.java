@@ -29,11 +29,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Formatter;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import java.io.FileWriter;
 import java.io.IOException;
-
 
 @Service
 @RequiredArgsConstructor
@@ -48,7 +48,7 @@ public class DenunciaService {
         Publicacao publicacao = publicacaoService.listarPorId(idPublicacao);
         Usuario usuario = usuarioService.buscarPorId(denunciaPublicacaoCriarDto.getIdUsuario());
 
-        if (usuario.getId() == publicacao.getUsuario().getId()) {
+        if (Objects.equals(usuario.getId(), publicacao.getUsuario().getId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "O usuário não pode denúnciar sua própria publicação");
         }
 
@@ -68,7 +68,7 @@ public class DenunciaService {
         Comentario comentario = comentarioService.buscarPorId(idComentario);
         Usuario usuario = usuarioService.buscarPorId(denunciaComentarioCriarDto.getIdUsuario());
 
-        if (usuario.getId() == comentario.getUsuario().getId()) {
+        if (Objects.equals(usuario.getId(), comentario.getUsuario().getId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "O usuário não pode denúnciar seu próprio comentário");
         }
 
@@ -87,11 +87,7 @@ public class DenunciaService {
     private Boolean verificaSeUsuarioJaDenunciouPublicacao(Publicacao publicacao, Usuario usuario) {
         Optional<Denuncia> denuncia = denunciaRespository.findByPublicacaoAndUsuario(publicacao, usuario);
 
-        if (denuncia.isPresent()) {
-            return true;
-        } else {
-            return false;
-        }
+        return denuncia.isPresent();
     }
 
     private Boolean verificaSeUsuarioJaDenunciouComentario(Comentario comentario, Usuario usuario) {
@@ -105,8 +101,7 @@ public class DenunciaService {
     }
 
     public List<PublicacoesDenunciadas> buscaPublicacoesDenunciadas() {
-        List<PublicacoesDenunciadas> publicacoesDenunciadas = denunciaRespository.buscaPublicacoesDenunciadas(PublicacaoStatus.ATIVO);
-        return publicacoesDenunciadas;
+        return denunciaRespository.buscaPublicacoesDenunciadas(PublicacaoStatus.ATIVO);
     }
 
     public Resource gravaDenuncias(String tipo) throws IOException {
@@ -212,7 +207,7 @@ public class DenunciaService {
 
         return new UrlResource(tempfile.toUri());
     }
-    
+
     private String formatarCampo(String valor, int tamanho) {
         if (valor == null) {
             valor = "";
@@ -368,8 +363,7 @@ public class DenunciaService {
     }
 
     public List<ComentariosDenunciados> buscaComentariosDenunciados() {
-        List<ComentariosDenunciados> comentariosDenunciados = denunciaRespository.buscaComentariosDenunciados(ComentarioStatus.ATIVO);
-        return comentariosDenunciados;
+        return denunciaRespository.buscaComentariosDenunciados(ComentarioStatus.ATIVO);
     }
 
     @Transactional

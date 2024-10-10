@@ -17,7 +17,7 @@ public class NotificacaoService {
     private final UsuarioService usuarioService;
 
     public Notificacao criarNotificacao(
-            Notificacao notificacao, Long usuarioGeradorId, Long usuarioRecebedorId){
+            Notificacao notificacao, Long usuarioGeradorId, Long usuarioRecebedorId) {
 
         Usuario usuarioGerador = usuarioService.buscarPorId(usuarioGeradorId);
         Usuario usuarioRecebedor = usuarioService.buscarPorId(usuarioRecebedorId);
@@ -29,17 +29,17 @@ public class NotificacaoService {
         return notificacaoRepository.save(notificacao);
     }
 
-    public List<Notificacao> listarNotificacoesUsuario(Long id){
+    public List<Notificacao> listarNotificacoesUsuario(Long id) {
 
         return notificacaoRepository.findByUsuarioRecebedorIdOrderByDataHoraDesc(id);
     }
 
-    public Notificacao visualizarNotificacao(Long id){
+    public Notificacao visualizarNotificacao(Long id) {
 
         Notificacao notificacao = notificacaoRepository.findById(id)
-                        .orElseThrow(
-                                () -> new NaoEncontradoException("Notificação")
-                        );
+                .orElseThrow(
+                        () -> new NaoEncontradoException("Notificação")
+                );
 
         notificacao.setVista(0);
 

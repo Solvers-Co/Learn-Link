@@ -35,8 +35,4 @@ public class PublicacaoListagemSimplesDto {
         private EspecialidadeListagemDto especialidade;
     }
 
-
-
-
-
 }
