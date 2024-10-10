@@ -3,7 +3,6 @@ package co.solvers.apilearnlink.service.especialidade.dto.mapper;
 import co.solvers.apilearnlink.domain.especialidade.Especialidade;
 import co.solvers.apilearnlink.service.especialidade.dto.EspecialidadeCriacaoDto;
 import co.solvers.apilearnlink.service.especialidade.dto.EspecialidadeListagemDto;
-import co.solvers.apilearnlink.service.publicacao.dto.mapper.PublicacaoMapper;
 
 import java.util.List;
 
@@ -29,7 +28,7 @@ public class EspecialidadeMapper {
         return dto;
     }
 
-    public static List<EspecialidadeListagemDto> toDto(List<Especialidade> especialidades){
+    public static List<EspecialidadeListagemDto> toDto(List<Especialidade> especialidades) {
         return especialidades
                 .stream()
                 .map(EspecialidadeMapper::toDto)

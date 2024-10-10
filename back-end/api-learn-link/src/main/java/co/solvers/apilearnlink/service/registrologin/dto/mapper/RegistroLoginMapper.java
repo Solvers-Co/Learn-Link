@@ -24,17 +24,17 @@ public class RegistroLoginMapper {
         return dto;
     }
 
-    public static List<RegistroLoginListagemDto> toDto(List<RegistroLogin> entidades){
+    public static List<RegistroLoginListagemDto> toDto(List<RegistroLogin> entidades) {
         List<RegistroLoginListagemDto> dtos = new ArrayList<>();
 
-        for(RegistroLogin registroLogin : entidades){
+        for (RegistroLogin registroLogin : entidades) {
             dtos.add(toDto(registroLogin));
         }
 
         return dtos;
     }
 
-    public static RegistroLoginPerfilListagemDto toPerfilDto(RegistroLogin registroLogin){
+    public static RegistroLoginPerfilListagemDto toPerfilDto(RegistroLogin registroLogin) {
         RegistroLoginPerfilListagemDto dto = new RegistroLoginPerfilListagemDto();
 
         dto.setRegistroLogin(registroLogin.getRegistroLogin());
@@ -42,7 +42,7 @@ public class RegistroLoginMapper {
         return dto;
     }
 
-    public static List<RegistroLoginPerfilListagemDto> toPerfilDto(List<RegistroLogin> registroLogins){
+    public static List<RegistroLoginPerfilListagemDto> toPerfilDto(List<RegistroLogin> registroLogins) {
         List<RegistroLoginPerfilListagemDto> dtos = new ArrayList<>();
 
         for (RegistroLogin registroLogin : registroLogins) {

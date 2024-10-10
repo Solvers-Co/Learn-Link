@@ -13,7 +13,7 @@ import java.util.Optional;
 public class TipoStatusService {
     private final TipoStatusRepository tipoStatusRepository;
 
-    public TipoStatus buscarPorId (int id){
+    public TipoStatus buscarPorId(int id) {
         Optional<TipoStatus> tipoStatus = tipoStatusRepository.findById(id);
 
         if (tipoStatus.isEmpty()) throw new NaoEncontradoException("Tipo status");
@@ -21,7 +21,7 @@ public class TipoStatusService {
         return tipoStatus.get();
     }
 
-    public TipoStatus buscarPorStatus (String status){
+    public TipoStatus buscarPorStatus(String status) {
         Optional<TipoStatus> tipoStatus = tipoStatusRepository.findByStatusIgnoreCase(status);
 
         if (tipoStatus.isEmpty()) throw new NaoEncontradoException("Tipo status");

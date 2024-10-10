@@ -81,7 +81,6 @@ public class ReacaoService {
         }
     }
 
-
     public Reacao buscarPorId(int id) {
         Optional<Reacao> optReacao = reacaoRepository.findById(id);
 
@@ -90,9 +89,4 @@ public class ReacaoService {
         return optReacao.get();
     }
 
-    public void removerReacao(int idComentario, int idReacao) {
-        Reacao reacao = buscarPorId(idReacao);
-
-        reacaoRepository.deleteById(idReacao);
-    }
 }

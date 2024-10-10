@@ -25,7 +25,6 @@ public class EspecialidadeService {
         }
     }
 
-
     public Especialidade buscarPorNome(String nome) {
         Optional<Especialidade> especialidade = especialidadeRepository.findByMateria(nome);
 
@@ -36,10 +35,8 @@ public class EspecialidadeService {
         }
     }
 
-    public List<Especialidade> listar(){
+    public List<Especialidade> listar() {
         return especialidadeRepository.findAll();
     }
-
-
 
 }

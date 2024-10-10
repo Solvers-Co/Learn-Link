@@ -8,7 +8,7 @@ import java.util.List;
 
 public class EnderecoMapper {
 
-    public static Endereco toEntity (EnderecoCriacaoDto dto){
+    public static Endereco toEntity(EnderecoCriacaoDto dto) {
         if (dto == null) return null;
 
         Endereco entity = new Endereco();
@@ -20,7 +20,7 @@ public class EnderecoMapper {
         return entity;
     }
 
-    public static EnderecoListagemDto toDto (Endereco entity){
+    public static EnderecoListagemDto toDto(Endereco entity) {
         if (entity == null) return null;
 
         EnderecoListagemDto dto = new EnderecoListagemDto();
@@ -32,7 +32,7 @@ public class EnderecoMapper {
         return dto;
     }
 
-    public static List<EnderecoListagemDto> toDto (List<Endereco> entities){
+    public static List<EnderecoListagemDto> toDto(List<Endereco> entities) {
         if (entities == null) return null;
 
         return entities

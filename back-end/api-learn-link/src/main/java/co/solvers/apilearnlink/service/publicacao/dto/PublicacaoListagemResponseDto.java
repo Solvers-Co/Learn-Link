@@ -23,7 +23,6 @@ public class PublicacaoListagemResponseDto {
     private CanalListagemDto canal;
     private UsuarioPublicacaoListagemDto usuario;
     private List<ReacaoDto> reacoes;
-    /*private List<ComentarioDto> comentarios;*/
 
     @Getter
     @Setter
@@ -44,7 +43,6 @@ public class PublicacaoListagemResponseDto {
     @Getter
     @Setter
     public static class ComentarioDto {
-
         private Integer id;
         private String comentario;
         private LocalDateTime dataHora;

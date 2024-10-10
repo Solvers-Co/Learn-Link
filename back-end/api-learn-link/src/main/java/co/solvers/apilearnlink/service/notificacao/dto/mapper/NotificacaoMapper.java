@@ -10,7 +10,7 @@ import java.util.List;
 
 public class NotificacaoMapper {
 
-    public static Notificacao toEntity(NotificacaoCriacaoDto dto){
+    public static Notificacao toEntity(NotificacaoCriacaoDto dto) {
         Notificacao entidade = new Notificacao();
 
         entidade.setCorpo(dto.getCorpo());
@@ -20,7 +20,7 @@ public class NotificacaoMapper {
         return entidade;
     }
 
-    public static NotificacaoListagemDto toListagemDto(Notificacao entidade){
+    public static NotificacaoListagemDto toListagemDto(Notificacao entidade) {
         NotificacaoListagemDto dto = new NotificacaoListagemDto();
 
         dto.setId(entidade.getId());
@@ -33,10 +33,10 @@ public class NotificacaoMapper {
         return dto;
     }
 
-    public static List<NotificacaoListagemDto> toListagemDto(List<Notificacao> entidades){
+    public static List<NotificacaoListagemDto> toListagemDto(List<Notificacao> entidades) {
         List<NotificacaoListagemDto> dtos = new ArrayList<>();
 
-        for (Notificacao entidade : entidades){
+        for (Notificacao entidade : entidades) {
             dtos.add(toListagemDto(entidade));
         }
         return dtos;

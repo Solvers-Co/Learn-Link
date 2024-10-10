@@ -38,17 +38,8 @@ public class RegistroLoginService {
 
     }
 
-    public List<RegistroLogin> listagemPorId(Long idUsuario){
+    public List<RegistroLogin> listagemPorId(Long idUsuario) {
         return registroLoginRepository.findByIdUsuario(idUsuario);
     }
 
- /*   public boolean[][] retornarAtividadeMes(Long idUsuario){
-        List<RegistroLogin> registros = registroLoginRepository.findAtividadeMes();
-
-        for (RegistroLogin registroLogin : registros){
-            System.out.println(registroLogin.getRegistroLogin());
-        }
-
-        return null;
-    }*/
 }

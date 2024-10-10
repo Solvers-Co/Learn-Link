@@ -66,7 +66,6 @@ public class PublicacaoService {
         return publicacaoRepository.findByCanalIdAndStatus(canalId, PublicacaoStatus.ATIVO, pageable);
     }
 
-
     public List<Publicacao> listarPorTipo(String tipoPublicacao) {
 
         verificaTipoPublicacaoVazio(tipoPublicacao);
@@ -94,10 +93,8 @@ public class PublicacaoService {
         Canal novoCanalNome = canalRepository.findByNome(novoCanal);
         publicacao.setCanal(novoCanalNome);
 
-
         return publicacaoRepository.save(publicacao);
     }
-
 
     public void deletar(Integer id) {
 
@@ -121,7 +118,6 @@ public class PublicacaoService {
         return publicacaoRepository.findByConteudoLikePalavrachaveAndStatusOrderByDataHoraDesc(palavraChave.toUpperCase(), PublicacaoStatus.ATIVO, pageable);
     }
 
-
     public List<QuantidadePublicacaoDiaListagemDto> listarQuantidadeDePublicacaoPorDia(int mes, int ano) {
         return publicacaoRepository.buscaQuantidadeDePublicacaoPorDia(mes, ano);
     }
@@ -138,9 +134,6 @@ public class PublicacaoService {
 
         return canalMaisPublicacoes.get();
     }
-
-
-    // Verificaçoes de existencia e vazio
 
     public void verificaIdVazio(Integer id) {
 
@@ -174,7 +167,6 @@ public class PublicacaoService {
         }
     }
 
-
     public void verificaPublicacaoAtiva (int idPublicacao) {
         Optional<Publicacao> publicacaoOptional = publicacaoRepository.findById(idPublicacao);
 
@@ -183,11 +175,9 @@ public class PublicacaoService {
         }
     }
 
-
     public List<Publicacao> listarPorUsuario(Long idUsuario) {
         return publicacaoRepository.findByUsuarioId(idUsuario, PublicacaoStatus.ATIVO);
     }
-
 
     public Publicacao arquivarPublicacao(int id) {
         verificaIdVazio(id);
