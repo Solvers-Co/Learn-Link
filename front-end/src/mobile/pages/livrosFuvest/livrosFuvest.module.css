@@ -1,0 +1,88 @@
+.livrosContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.titulo {
+    display: flex;
+    justify-content: start;
+    align-self: center;
+    width: 90%;
+    font-size: 32px;
+    color: #707070;
+    margin-top: 70px;
+    margin-bottom: 10px;
+    font-family: "Nunito Sans", sans-serif;
+    font-weight: bold;
+}
+
+.livros {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    justify-content: center;
+    gap: 10px;
+    width: 90%;
+}
+
+.rankingItem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0px 10px 10px;
+    border-radius: 10px;
+    background-color: #f5f5f5;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.rankingItem:last-child {
+    margin-bottom: 10px;
+}
+
+.infos {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    width: 85%;
+}
+
+.posicao {
+    display: flex;
+    width: 20%;
+}
+
+.posicao span {
+    font-size: 20px;
+    font-family: "Nunito Sans", sans-serif;
+    font-weight: bold;
+    color: #707070;
+}
+
+.posicao img {
+    width: 60%;
+    /* height: 80%; */
+    align-self: center;
+}
+
+.contribuicoes {
+    font-size: 15px;
+    font-family: "Nunito Sans", sans-serif;
+    font-weight: bold;
+    color: #707070;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    align-self: center;
+}
+
+.nome {
+    flex: 1;
+    font-weight: bold;
+    font-size: 20px;
+    font-family: "Nunito Sans", sans-serif;
+}
