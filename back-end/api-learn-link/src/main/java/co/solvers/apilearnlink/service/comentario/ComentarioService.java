@@ -35,6 +35,7 @@ public class ComentarioService {
         Comentario comentario = ComentarioMapper.toEntity(comentarioCriacaoDto);
         comentario.setUsuario(usuario);
         comentario.setPublicacao(publicacao);
+        comentario.setStatus(ComentarioStatus.ATIVO);
 
         return comentarioRepository.save(comentario);
     }

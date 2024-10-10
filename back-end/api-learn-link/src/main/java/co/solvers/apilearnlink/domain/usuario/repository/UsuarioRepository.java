@@ -36,25 +36,29 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     List<Usuario> findByTipoStatus(TipoStatus tipoStatus);
 
     @Query("SELECT new co.solvers.apilearnlink.service.usuario.dto.UsuarioAceitacaoListagemDto(u.id, u.nome, u.cpf, u.email, ts.status) " +
-            "FROM Usuario u JOIN u.tipoStatus ts " +
+            "FROM Usuario u JOIN u.tipoStatus ts JOIN u.tipoUsuario tu " +
+            "WHERE tu.tipoUsuario = 'COMUM' " +
             "ORDER BY ts.status DESC")
     Page<UsuarioAceitacaoListagemDto> findAllUsuariosPaginado(Pageable pageable);
 
     @Query("SELECT new co.solvers.apilearnlink.service.usuario.dto.UsuarioAceitacaoListagemDto(u.id, u.nome, u.cpf, u.email, ts.status) " +
-            "FROM Usuario u JOIN u.tipoStatus ts " +
+            "FROM Usuario u JOIN u.tipoStatus ts JOIN u.tipoUsuario tu " +
             "WHERE ts.status = 'APROVADO' " +
+            "AND tu.tipoUsuario = 'COMUM' " +
             "ORDER BY ts.status DESC")
     Page<UsuarioAceitacaoListagemDto> findAllUsuariosAtivosPaginado(Pageable pageable);
 
     @Query("SELECT new co.solvers.apilearnlink.service.usuario.dto.UsuarioAceitacaoListagemDto(u.id, u.nome, u.cpf, u.email, ts.status) " +
-            "FROM Usuario u JOIN u.tipoStatus ts " +
+            "FROM Usuario u JOIN u.tipoStatus ts JOIN u.tipoUsuario tu " +
             "WHERE ts.status = 'PENDENTE' " +
+            "AND tu.tipoUsuario = 'COMUM' " +
             "ORDER BY ts.status DESC")
     Page<UsuarioAceitacaoListagemDto> findAllUsuariosPendentesPaginado(Pageable pageable);
 
     @Query("SELECT new co.solvers.apilearnlink.service.usuario.dto.UsuarioAceitacaoListagemDto(u.id, u.nome, u.cpf, u.email, ts.status) " +
-            "FROM Usuario u JOIN u.tipoStatus ts " +
+            "FROM Usuario u JOIN u.tipoStatus ts JOIN u.tipoUsuario tu " +
             "WHERE ts.status = 'NEGADO' " +
+            "AND tu.tipoUsuario = 'COMUM' " +
             "ORDER BY ts.status DESC")
     Page<UsuarioAceitacaoListagemDto> findAllUsuariosNegadosPaginado(Pageable pageable);
 

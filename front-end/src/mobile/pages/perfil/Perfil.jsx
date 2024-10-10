@@ -259,7 +259,7 @@ const Perfil = () => {
                                     horario={publicacao.dataHora}
                                     curtidas={publicacao.reacoes.length}
                                     quemCurtiu={publicacao.reacoes.map(reacao => reacao.usuario.nome)}
-                                    comentarios={publicacao.comentarios.length}
+                                    comentarios={publicacao.quantidadeComentarios}
                                     listarComentarios={() => {/* implementar função para listar comentários */ }}
                                     togglePopup={togglePopup}
                                     popupAbertoId={popupAbertoId} // ajustar conforme necessidade
