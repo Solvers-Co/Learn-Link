@@ -41,7 +41,4 @@ public class Usuario {
         return nome.hashCode();
     }
 
-
-
-
 }

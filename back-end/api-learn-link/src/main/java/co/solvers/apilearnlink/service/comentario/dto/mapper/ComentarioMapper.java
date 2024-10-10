@@ -9,13 +9,9 @@ import co.solvers.apilearnlink.service.comentario.dto.ComentarioCriacaoDto;
 import co.solvers.apilearnlink.service.comentario.dto.ComentarioListagemDto;
 import co.solvers.apilearnlink.service.comentario.dto.ComentarioListagemSimplesDto;
 import co.solvers.apilearnlink.service.especialidade.dto.mapper.EspecialidadeMapper;
-import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoCriacaoRequestDto;
-import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoListagemResponseDto;
-import co.solvers.apilearnlink.service.publicacao.dto.mapper.PublicacaoMapper;
 import co.solvers.apilearnlink.service.tiporeacao.dto.TipoReacaoMapper;
 import co.solvers.apilearnlink.service.usuario.dto.mapper.UsuarioMapper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ComentarioMapper {
@@ -57,7 +53,6 @@ public class ComentarioMapper {
         return dto;
     }
 
-
     public static List<ComentarioListagemDto> toDto(List<Comentario> entity) {
         return entity
                 .stream()
@@ -65,7 +60,7 @@ public class ComentarioMapper {
                 .toList();
     }
 
-    private static ComentarioListagemDto.UsuarioDto toUsuarioDto (Usuario entity){
+    private static ComentarioListagemDto.UsuarioDto toUsuarioDto(Usuario entity) {
         if (entity == null) return null;
 
         ComentarioListagemDto.UsuarioDto dto = new ComentarioListagemDto.UsuarioDto();
@@ -77,7 +72,7 @@ public class ComentarioMapper {
         return dto;
     }
 
-    private static ComentarioListagemDto.TipoPublicacaoDto toTipoPublicacaoDto (TipoPublicacao entity){
+    private static ComentarioListagemDto.TipoPublicacaoDto toTipoPublicacaoDto(TipoPublicacao entity) {
         if (entity == null) return null;
 
         ComentarioListagemDto.TipoPublicacaoDto dto = new ComentarioListagemDto.TipoPublicacaoDto();
@@ -87,7 +82,7 @@ public class ComentarioMapper {
         return dto;
     }
 
-    private static ComentarioListagemDto.ReacaoDto toReacaoDto(Reacao entity){
+    private static ComentarioListagemDto.ReacaoDto toReacaoDto(Reacao entity) {
         if (entity == null) return null;
 
         ComentarioListagemDto.ReacaoDto dto = new ComentarioListagemDto.ReacaoDto();
@@ -96,18 +91,18 @@ public class ComentarioMapper {
         dto.setUsuario(toUsuarioDto(entity.getUsuario()));
 
         return dto;
-    };
+    }
 
-    private static List<ComentarioListagemDto.ReacaoDto> toReacaoDto(List<Reacao> entities){
+    private static List<ComentarioListagemDto.ReacaoDto> toReacaoDto(List<Reacao> entities) {
         if (entities == null) return null;
 
         return entities
                 .stream()
                 .map(ComentarioMapper::toReacaoDto)
                 .toList();
-    };
+    }
 
-    private static ComentarioListagemDto.PublicacaoDto toPublicacaoDto (Publicacao entity){
+    private static ComentarioListagemDto.PublicacaoDto toPublicacaoDto(Publicacao entity) {
         if (entity == null) return null;
 
         ComentarioListagemDto.PublicacaoDto publicacaoDto = new ComentarioListagemDto.PublicacaoDto();

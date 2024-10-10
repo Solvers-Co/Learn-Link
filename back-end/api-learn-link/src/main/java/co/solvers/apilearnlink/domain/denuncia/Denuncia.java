@@ -21,5 +21,4 @@ public class Denuncia {
     @ManyToOne
     private Usuario usuario;
 
-
 }

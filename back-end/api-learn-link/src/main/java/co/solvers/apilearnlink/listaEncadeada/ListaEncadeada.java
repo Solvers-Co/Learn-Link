@@ -15,7 +15,7 @@ public class ListaEncadeada<T> {
         head.setNext(novo);
     }
 
-    public void exibe(){
+    public void exibe() {
         Node<T> atual = head.getNext();
 
         while (atual != null) {
@@ -39,11 +39,11 @@ public class ListaEncadeada<T> {
     }
 
     public boolean removeNode(T objeto) {
-        Node anterior =  head;
+        Node anterior = head;
         Node atual = head.getNext();
 
         while (atual != null) {
-            if (atual.getInfo() == objeto){
+            if (atual.getInfo() == objeto) {
                 anterior.setNext(atual.getNext());
                 return true;
             } else {
@@ -55,7 +55,7 @@ public class ListaEncadeada<T> {
         return false;
     }
 
-    public int getTamanho(){
+    public int getTamanho() {
         Node<T> atual = head.getNext();
         int tamanho = 0;
 

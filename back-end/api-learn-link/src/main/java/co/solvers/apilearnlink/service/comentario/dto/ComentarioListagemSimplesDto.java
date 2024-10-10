@@ -15,9 +15,4 @@ public class ComentarioListagemSimplesDto {
     private ComentarioStatus status;
     private ComentarioListagemDto.UsuarioDto usuario;
 
-
-
-
-
-
 }

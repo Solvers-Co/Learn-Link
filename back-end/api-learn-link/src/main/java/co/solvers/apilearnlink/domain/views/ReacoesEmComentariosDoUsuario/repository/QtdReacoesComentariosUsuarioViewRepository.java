@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface QtdReacoesComentariosUsuarioViewRepository extends JpaRepository<QtdReacoesComentariosUsuarioView, Integer> {
+
     Optional<QtdReacoesComentariosUsuarioView> findByUsuarioId(Long id);
 
-    //lista os 10 primeiros registros
     List<QtdReacoesComentariosUsuarioView> findTop10ByOrderByReacoesDesc();
 }
