@@ -11,6 +11,7 @@ import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoListagemResponse
 import co.solvers.apilearnlink.domain.publicacao.Publicacao;
 import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoListagemSimplesDto;
 import co.solvers.apilearnlink.service.reacao.dto.ReacaoComentarioListarDto;
+import co.solvers.apilearnlink.service.reacao.dto.mapper.ReacaoMapper;
 import co.solvers.apilearnlink.service.tiporeacao.dto.TipoReacaoMapper;
 import co.solvers.apilearnlink.service.usuario.dto.mapper.UsuarioMapper;
 
@@ -37,11 +38,10 @@ public class PublicacaoMapper {
         dto.setConteudo(entity.getConteudo());
         dto.setDataHora(entity.getDataHora());
         dto.setTipoPublicacao(toTipoPublicacaoDto(entity.getTipoPublicacao()));
-        dto.setStatus(entity.getStatus());
         dto.setCanal(CanalMapper.toDto(entity.getCanal()));
         dto.setUsuario(toUsuarioDto(entity.getUsuario()));
+        dto.setQuantidadeComentarios(entity.getComentarios().size());
         dto.setReacoes(toReacaoDto(entity.getReacoes()));
-        /*dto.setComentarios(toComentariosDto(entity.getComentarios()));*/
 
         return dto;
     }

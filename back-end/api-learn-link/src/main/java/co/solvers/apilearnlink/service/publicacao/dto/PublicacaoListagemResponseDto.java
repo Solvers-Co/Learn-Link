@@ -19,11 +19,10 @@ public class PublicacaoListagemResponseDto {
     private String conteudo;
     private LocalDateTime dataHora;
     private TipoPublicacaoDto tipoPublicacao;
-    private PublicacaoStatus status;
+    private int quantidadeComentarios;
     private CanalListagemDto canal;
     private UsuarioPublicacaoListagemDto usuario;
     private List<ReacaoDto> reacoes;
-    /*private List<ComentarioDto> comentarios;*/
 
     @Getter
     @Setter
