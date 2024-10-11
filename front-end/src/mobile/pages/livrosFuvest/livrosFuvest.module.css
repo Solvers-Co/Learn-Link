@@ -1,0 +1,121 @@
+/* Responsivo :o */
+
+.livrosContainer {
+  width: 90%;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.titulo {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: 35px;
+  color: #333;
+}
+
+.subtitulo {
+  font-size: 1.8rem;
+  color: #555;
+  margin: 20px 0 10px;
+  text-align: left;
+  text-decoration: none;
+}
+
+.livrosPorAno {
+  margin-bottom: 40px;
+}
+
+.livros {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.livroItem {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.livroItem:hover {
+  transform: translateY(-5px);
+}
+
+.infos {
+  text-align: center;
+}
+
+.tituloLivro {
+  font-size: 1.5rem;
+  color: #ff004c;
+  margin-bottom: 10px;
+}
+
+.autor {
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.anoVestibular {
+  font-size: 1rem;
+  color: #777;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+  .livros {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  .titulo {
+    font-size: 1.8rem;
+  }
+
+  .subtitulo {
+    font-size: 1.5rem;
+  }
+
+  .tituloLivro {
+    font-size: 1.3rem;
+  }
+
+  .autor {
+    font-size: 1.1rem;
+  }
+
+  .anoVestibular {
+    font-size: 0.9rem;
+  }
+}
+
+/* Responsividade para dispositivos móveis */
+@media (max-width: 480px) {
+  .livros {
+    grid-template-columns: 1fr;
+  }
+
+  .titulo {
+    font-size: 1.5rem;
+  }
+
+  .subtitulo {
+    font-size: 1.3rem;
+  }
+
+  .tituloLivro {
+    font-size: 1.2rem;
+  }
+
+  .autor {
+    font-size: 1rem;
+  }
+
+  .anoVestibular {
+    font-size: 0.8rem;
+  }
+}

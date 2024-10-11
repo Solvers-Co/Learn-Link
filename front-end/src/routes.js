@@ -19,6 +19,7 @@ import Perfil from "./mobile/pages/perfil/Perfil";
 import Ranking from "./mobile/pages/ranking/Ranking";
 import Denuncias from "./desktop/pages/denuncias/Denuncias";
 import Notificacoes from "./mobile/pages/notificacoes/Notificacoes";
+import LivrosFuvest from "./mobile/pages/livrosFuvest/livrosFuvest";
 import RecuperacaoSenhaDesktop from "./desktop/pages/recuperarSenhaDesktop/RecuperarSenhaDesktop";
 import VerificacaoSenhaDesktop from "./desktop/pages/verificacaoSenhaDesktop/VerificacaoSenhaDesktop";
 import RedefinicaoSenhaDesktop from "./desktop/pages/redefinicaoSenhaDesktop/RedefinicaoSenhaDesktop";
@@ -51,6 +52,7 @@ function Rotas() {
                     <Route path="/redefinirSenha" element={<RedefinicaoSenha />} />
                     <Route path="/feedGeral" element={<FeedGeral />} />
                     <Route path="/ranking" element={<Ranking />} />
+                    <Route path="/livrosFuvest" element={<LivrosFuvest />} />
                  </Routes>
             </BrowserRouter>
         </>
