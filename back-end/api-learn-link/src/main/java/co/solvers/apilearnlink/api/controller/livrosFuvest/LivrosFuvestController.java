@@ -2,7 +2,6 @@ package co.solvers.apilearnlink.api.controller.livrosFuvest;
 
 import co.solvers.apilearnlink.service.livrosFuvest.LivrosFuvestService;
 import co.solvers.apilearnlink.service.livrosFuvest.dto.LivrosFuvestCriacaoDto;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

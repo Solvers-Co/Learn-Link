@@ -1,75 +1,69 @@
-import React, { useEffect, useState } from 'react';
-import api from '../../../api';
-import Styles from '../ranking/Ranking.module.css';
-import Header from '../../components/headerAplicacao/Header';
-import { generateInitials } from '../../utils/functions/GerarIniciais';
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import api from "../../../api";
+import Styles from "../livrosFuvest/livrosFuvest.module.css";
+import Header from "../../components/headerAplicacao/Header";
 
-import Primeiro from '../../utils/assets/ranking/Primeiro lugar.png';
-import Segundo from '../../utils/assets/ranking/Segundo lugar.png';
-import Terceiro from '../../utils/assets/ranking/Terceiro lugar.png';
 
-const Ranking = () => {
-    const [users, setUsers] = useState([]);
-
-    const navigate = useNavigate();
-
-    const visualizarPerfil = (id) => {
-        console.log(id)
-        navigate(`/perfil/${id}`)
-    }
+const LivrosFuvest = () => {
+    const [books, setBooks] = useState([]);
 
     useEffect(() => {
-        api.get('/qtd-reacoes-comentario-usuarios/buscar-nivel-de-classificacao-de-todos-usuarios')
+        api
+            .get("/livros/listar")
             .then((response) => {
-                setUsers(response.data);
-                console.log('Dados do ranking:', response.data);
+                setBooks(response.data);
+                console.log("Livros:", response.data);
             })
             .catch((error) => {
-                console.error('Erro ao buscar dados do ranking:', error);
+                console.error("Erro ao buscar livros:", error);
             });
     }, []);
+
+    const livros2025 = books.filter((book) => book.anoVestibular === 2025);
+    const livros2026 = books.filter((book) => book.anoVestibular === 2026);
 
     return (
         <>
             <Header />
-            <div className={Styles.rankingContainer}>
+            <div className={Styles.livrosContainer}>
                 <h1 className={Styles.titulo}>Livros Fuvest</h1>
-                <div className={Styles.ranking}>
-                    {users.map((user, index) => {
-                        const avatar = generateInitials(user.nome);
 
-                        return (
-                            <div key={index} className={Styles.rankingItem}>
+                <div className={Styles.livrosPorAno}>
+                    <h2 className={Styles.subtitulo}>Vestibular 2025</h2>
+                    <div className={Styles.livros}>
+                        {livros2025.map((book, index) => (
+                            <div key={index} className={Styles.livroItem}>
                                 <div className={Styles.infos}>
-                                    <div className={Styles.header}>
-                                        {avatar}
-                                        <span className={Styles.nome} onClick={() => { visualizarPerfil(user.usuarioId) }}>{user.nome}</span>
-                                    </div>
-
-                                    <span className={Styles.contribuicoes}>Contribuições: {user.qtdReacoes}</span>
-                                </div>
-                                <div className={Styles.posicao}>
-                                    {index === 0 && (
-                                        <img src={Primeiro} alt="Gold Medal" className={Styles.medalIcon} />
-                                    )}
-                                    {index === 1 && (
-                                        <img src={Segundo} alt="Silver Medal" className={Styles.medalIcon} />
-                                    )}
-                                    {index === 2 && (
-                                        <img src={Terceiro} alt="Bronze Medal" className={Styles.medalIcon} />
-                                    )}
-                                    {index > 2 && (
-                                        <span>{index + 1}</span>
-                                    )}
+                                    <h3 className={Styles.tituloLivro}>{book.titulo}</h3>
+                                    <p className={Styles.autor}>Autor: {book.autor}</p>
+                                    <p className={Styles.anoVestibular}>
+                                        Ano Vestibular: {book.anoVestibular}
+                                    </p>
                                 </div>
                             </div>
-                        );
-                    })}
+                        ))}
+                    </div>
+                </div>
+
+                <div className={Styles.livrosPorAno}>
+                    <h2 className={Styles.subtitulo}>Vestibular 2026</h2>
+                    <div className={Styles.livros}>
+                        {livros2026.map((book, index) => (
+                            <div key={index} className={Styles.livroItem}>
+                                <div className={Styles.infos}>
+                                    <h3 className={Styles.tituloLivro}>{book.titulo}</h3>
+                                    <p className={Styles.autor}>Autor: {book.autor}</p>
+                                    <p className={Styles.anoVestibular}>
+                                        Ano Vestibular: {book.anoVestibular}
+                                    </p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
         </>
     );
 };
 
-export default Ranking;
+export default LivrosFuvest;
