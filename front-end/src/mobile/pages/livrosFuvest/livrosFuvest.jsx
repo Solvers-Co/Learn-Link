@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import api from "../../../api";
-import Styles from "../livrosFuvest/livrosFuvest.module.css";
+import Styles from "./LivrosFuvest.module.css";
 import Header from "../../components/headerAplicacao/Header";
+import Tooltip from "../../components/tooltip/Tooltip";
 
 
 const LivrosFuvest = () => {
@@ -26,7 +27,12 @@ const LivrosFuvest = () => {
         <>
             <Header />
             <div className={Styles.livrosContainer}>
-                <h1 className={Styles.titulo}>Livros Fuvest</h1>
+                <div className={Styles.info}> 
+                    <h1 className={Styles.titulo}>Livros Fuvest</h1>
+                    <div className={Styles.tooltip}>
+                        <Tooltip txt="Lista de leituras obrigatórias da Fuvest"/>
+                    </div>
+                </div>
 
                 <div className={Styles.livrosPorAno}>
                     <h2 className={Styles.subtitulo}>Vestibular 2025</h2>
@@ -35,10 +41,7 @@ const LivrosFuvest = () => {
                             <div key={index} className={Styles.livroItem}>
                                 <div className={Styles.infos}>
                                     <h3 className={Styles.tituloLivro}>{book.titulo}</h3>
-                                    <p className={Styles.autor}>Autor: {book.autor}</p>
-                                    <p className={Styles.anoVestibular}>
-                                        Ano Vestibular: {book.anoVestibular}
-                                    </p>
+                                    <p className={Styles.autor}><span className={Styles.bold}>Autor:</span> {book.autor}</p>
                                 </div>
                             </div>
                         ))}
@@ -52,10 +55,7 @@ const LivrosFuvest = () => {
                             <div key={index} className={Styles.livroItem}>
                                 <div className={Styles.infos}>
                                     <h3 className={Styles.tituloLivro}>{book.titulo}</h3>
-                                    <p className={Styles.autor}>Autor: {book.autor}</p>
-                                    <p className={Styles.anoVestibular}>
-                                        Ano Vestibular: {book.anoVestibular}
-                                    </p>
+                                    <p className={Styles.autor}><span className={Styles.bold}>Autor:</span> {book.autor}</p>
                                 </div>
                             </div>
                         ))}
