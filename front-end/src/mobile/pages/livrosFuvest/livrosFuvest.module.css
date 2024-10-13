@@ -1,49 +1,67 @@
-/* Responsivo :o */
-
 .livrosContainer {
-  width: 90%;
-  margin: 0 auto;
-  padding: 20px;
-  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tooltip {
+  display: flex;
+  position: absolute;
+  right: 120px;
+  margin-top: 68px;
 }
 
 .titulo {
-  font-size: 2rem;
-  text-align: center;
-  margin-bottom: 20px;
-  margin-top: 35px;
-  color: #333;
+  display: flex;
+  justify-content: start;
+  align-self: center;
+  width: 90%;
+  font-size: 32px;
+  color: #707070;
+  margin-top: 70px;
+  margin-bottom: 10px;
+  font-family: "Nunito Sans", sans-serif;
+  font-weight: bold;
 }
 
 .subtitulo {
-  font-size: 1.8rem;
+  font-size: 20px;
   color: #555;
-  margin: 20px 0 10px;
+  margin: 10px 0 5px;
   text-align: left;
   text-decoration: none;
+  font-family: "Nunito Sans", sans-serif;
 }
 
 .livrosPorAno {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  justify-content: center;
+  gap: 10px;
+  width: 90%;
   margin-bottom: 40px;
 }
 
 .livros {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
 }
 
 .livroItem {
   background-color: #f9f9f9;
-  padding: 15px;
+  padding: 12px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
 }
 
-.livroItem:hover {
-  transform: translateY(-5px);
-}
 
 .infos {
   text-align: center;
@@ -51,14 +69,21 @@
 
 .tituloLivro {
   font-size: 1.5rem;
-  color: #ff004c;
+  color: #A80301;
   margin-bottom: 10px;
+  font-weight: bold;
+  font-family: "Nunito Sans", sans-serif;
 }
 
 .autor {
   font-size: 1.2rem;
   color: #555;
   margin-bottom: 8px;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.bold {
+  font-weight: 600;
 }
 
 .anoVestibular {
@@ -72,13 +97,13 @@
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   }
 
-  .titulo {
+  /* .titulo {
     font-size: 1.8rem;
-  }
+  } */
 
-  .subtitulo {
+  /* .subtitulo {
     font-size: 1.5rem;
-  }
+  } */
 
   .tituloLivro {
     font-size: 1.3rem;
@@ -99,13 +124,13 @@
     grid-template-columns: 1fr;
   }
 
-  .titulo {
+  /* .titulo {
     font-size: 1.5rem;
-  }
+  } */
 
-  .subtitulo {
+  /* .subtitulo {
     font-size: 1.3rem;
-  }
+  } */
 
   .tituloLivro {
     font-size: 1.2rem;
