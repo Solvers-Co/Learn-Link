@@ -74,10 +74,11 @@ const CardAtividade = ({idUsuario}) => {
 
     return (
         <div ref={cardRef}>
+            
+            <div className={styles.card}>
             <div className={styles.header}>
                 <span className={styles.titulo}>Atividade nos últimos 30 dias</span>
             </div>
-            <div className={styles.card}>
                 <div className={styles.primeiraLinha}>
                     {renderQuadrados(15, 0)}
                 </div>

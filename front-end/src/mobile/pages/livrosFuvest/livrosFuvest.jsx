@@ -27,10 +27,10 @@ const LivrosFuvest = () => {
         <>
             <Header />
             <div className={Styles.livrosContainer}>
-                <div className={Styles.info}> 
+                <div className={Styles.info}>
                     <h1 className={Styles.titulo}>Livros Fuvest</h1>
                     <div className={Styles.tooltip}>
-                        <Tooltip txt="Lista de leituras obrigatórias da Fuvest"/>
+                        <Tooltip txt="Lista de leituras obrigatórias da Fuvest" />
                     </div>
                 </div>
 

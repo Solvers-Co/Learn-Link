@@ -8,23 +8,29 @@
 
 .header {
     width: 100%;
-    position: absolute;
-    bottom: 33%;
-    left: 3px;
+    position: relative;
+    bottom: 10%;
 }
 
 .titulo {
     font-family: "Nunito Sans", sans-serif;
     background-color: rgb(255, 255, 255);
-    padding: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.25);
 }
 
 .primeiraLinha, .segundaLinha {
-    margin-top: 6%;
+    margin-top: 2%;
     display: flex;
     justify-content: space-around;
     padding-right: 5px;
     padding-left: 5px;
+}
+
+.segundaLinha {
+    margin-top: 4%;
+    margin-bottom: 5%;
 }
 
 .quadrado {
@@ -34,7 +40,8 @@
     margin: 5px;
     position: relative;
     display: inline-block;
-    cursor: pointer; /* Indica que é clicável */
+    cursor: pointer;
+    /* Indica que é clicável */
 }
 
 .cinza {
@@ -47,7 +54,8 @@
     color: black;
     padding: 2px 5px 2px 5px;
     border-radius: 4px;
-    top: 100%; /* Exibe abaixo do quadrado */
+    top: 100%;
+    /* Exibe abaixo do quadrado */
     left: 50%;
     transform: translateX(-50%);
     white-space: nowrap;

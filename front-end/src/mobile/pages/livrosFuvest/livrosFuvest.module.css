@@ -1,146 +1,221 @@
 .livrosContainer {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
 }
 
 .info {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .tooltip {
-  display: flex;
-  position: absolute;
-  right: 120px;
-  margin-top: 68px;
+    display: flex;
+    position: absolute;
+    right: 120px;
+    margin-top: 68px;
 }
 
 .titulo {
-  display: flex;
-  justify-content: start;
-  align-self: center;
-  width: 90%;
-  font-size: 32px;
-  color: #707070;
-  margin-top: 70px;
-  margin-bottom: 10px;
-  font-family: "Nunito Sans", sans-serif;
-  font-weight: bold;
+    display: flex;
+    justify-content: start;
+    align-self: center;
+    width: 90%;
+    font-size: 32px;
+    color: #707070;
+    margin-top: 70px;
+    margin-bottom: 10px;
+    font-family: "Nunito Sans", sans-serif;
+    font-weight: bold;
 }
 
 .subtitulo {
-  font-size: 20px;
-  color: #555;
-  margin: 10px 0 5px;
-  text-align: left;
-  text-decoration: none;
-  font-family: "Nunito Sans", sans-serif;
+    font-size: 20px;
+    color: #555;
+    margin: 10px 0 5px;
+    text-align: left;
+    text-decoration: none;
+    font-family: "Nunito Sans", sans-serif;
 }
 
 .livrosPorAno {
-  display: flex;
-  flex-direction: column;
-  align-self: center;
-  justify-content: center;
-  gap: 10px;
-  width: 90%;
-  margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    justify-content: center;
+    gap: 10px;
+    width: 90%;
+    margin-bottom: 40px;
 }
 
 .livros {
-  display: grid;
-  gap: 20px;
+    display: grid;
+    gap: 20px;
 }
 
 .livroItem {
-  background-color: #f9f9f9;
-  padding: 12px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    padding: 12px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 
 .infos {
-  text-align: center;
+    text-align: center;
 }
 
 .tituloLivro {
-  font-size: 1.5rem;
-  color: #A80301;
-  margin-bottom: 10px;
-  font-weight: bold;
-  font-family: "Nunito Sans", sans-serif;
+    font-size: 1.5rem;
+    color: #A80301;
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-family: "Nunito Sans", sans-serif;
 }
 
 .autor {
-  font-size: 1.2rem;
-  color: #555;
-  margin-bottom: 8px;
-  font-family: "Nunito Sans", sans-serif;
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 8px;
+    font-family: "Nunito Sans", sans-serif;
 }
 
 .bold {
-  font-weight: 600;
+    font-weight: 600;
 }
 
 .anoVestibular {
-  font-size: 1rem;
-  color: #777;
+    font-size: 1rem;
+    color: #777;
 }
 
 /* Responsividade para telas menores */
 @media (max-width: 768px) {
-  .livros {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  }
+    .livros {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
 
-  /* .titulo {
-    font-size: 1.8rem;
-  } */
+    /* .titulo {
+      font-size: 1.8rem;
+    } */
 
-  /* .subtitulo {
-    font-size: 1.5rem;
-  } */
+    /* .subtitulo {
+      font-size: 1.5rem;
+    } */
 
-  .tituloLivro {
-    font-size: 1.3rem;
-  }
+    .tituloLivro {
+        font-size: 1.3rem;
+    }
 
-  .autor {
-    font-size: 1.1rem;
-  }
+    .autor {
+        font-size: 1.1rem;
+    }
 
-  .anoVestibular {
-    font-size: 0.9rem;
-  }
+    .anoVestibular {
+        font-size: 0.9rem;
+    }
 }
 
 /* Responsividade para dispositivos móveis */
 @media (max-width: 480px) {
-  .livros {
-    grid-template-columns: 1fr;
-  }
+    .livros {
+        grid-template-columns: 1fr;
+    }
 
-  /* .titulo {
-    font-size: 1.5rem;
-  } */
+    /* .titulo {
+      font-size: 1.5rem;
+    } */
 
-  /* .subtitulo {
-    font-size: 1.3rem;
-  } */
+    /* .subtitulo {
+      font-size: 1.3rem;
+    } */
 
-  .tituloLivro {
-    font-size: 1.2rem;
-  }
+    .tituloLivro {
+        font-size: 1.2rem;
+    }
 
-  .autor {
-    font-size: 1rem;
-  }
+    .autor {
+        font-size: 1rem;
+    }
 
-  .anoVestibular {
-    font-size: 0.8rem;
-  }
+    .anoVestibular {
+        font-size: 0.8rem;
+    }
+}
+
+/* Responsividade para telas entre 768px e 1024px (tablets) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .livros {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        /* Aumentando o tamanho mínimo dos cards */
+    }
+
+    .titulo {
+        font-size: 2.5rem;
+    }
+
+    .subtitulo {
+        font-size: 1.8rem;
+    }
+
+    .tituloLivro {
+        font-size: 1.7rem;
+    }
+
+    .autor {
+        font-size: 1.3rem;
+    }
+
+    .anoVestibular {
+        font-size: 1rem;
+    }
+
+    .livroItem {
+        padding: 20px;
+        /* Aumentando o espaçamento interno */
+    }
+}
+
+/* Responsividade para telas maiores que 1024px (desktops e monitores grandes) */
+@media (min-width: 1024px) {
+    .livros {
+        grid-template-columns: repeat(3, minmax(300px, 1fr));
+        /* Cards maiores */
+    }
+
+    .titulo {
+        font-size: 3.5rem;
+    }
+
+    .subtitulo {
+        font-size: 2rem;
+    }
+
+    .tituloLivro {
+        font-size: 2rem;
+    }
+
+    .autor {
+        font-size: 1.5rem;
+    }
+
+    .anoVestibular {
+        font-size: 1.2rem;
+    }
+
+    .livroItem {
+        padding: 30px;
+        /* Mais espaço dentro dos cards */
+        font-size: 1.2rem;
+        /* Ajuste no tamanho geral do texto */
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        /* Mais sombra para destacar os cards */
+    }
+
+    .livrosPorAno {
+        gap: 30px;
+        /* Mais espaço entre os itens */
+    }
 }
