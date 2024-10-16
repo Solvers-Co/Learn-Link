@@ -73,12 +73,12 @@ const TelaDenuncias = () => {
             let countComentarios = 0;
 
             for (const id of publicacoesSelecionadas) {
-                await api.delete(`/publicacoes/${id}/remover-denuncias`);
+                await api.delete(`/publicacoes/${id}`);
                 countPublicacoes++;
             }
 
             for (const id of comentariosSelecionados) {
-                await api.delete(`/comentarios/${id}/remover-denuncias`);
+                await api.delete(`/comentarios/${id}`);
                 countComentarios++;
             }
 
@@ -86,7 +86,7 @@ const TelaDenuncias = () => {
             setPublicacoesSelecionadas([]);
             setComentariosSelecionados([]);
 
-            toast.success(`${countPublicacoes} ${countPublicacoes === 1 ? 'publicação' : 'publicações'} denunciada(s) removida(s) e ${countComentarios} ${countComentarios === 1 ? 'comentário' : 'comentários'} denunciado(s) removido(s).`);
+            toast.success(`${countPublicacoes} ${countPublicacoes === 1 ? 'publicação' : 'publicações'} Deletada(s) e ${countComentarios} ${countComentarios === 1 ? 'comentário' : 'comentários'} Deletado(s).`);
         } catch (error) {
             console.error('Erro ao remover denúncias:', error);
             toast.error('Erro ao remover denúncias.');
@@ -189,6 +189,7 @@ const TelaDenuncias = () => {
                                             ? publicacoesSelecionadas.includes(denuncia.publicacao?.id)
                                             : comentariosSelecionados.includes(denuncia.comentario?.id)
                                     }
+                                    carregarDenuncias={fetchDenuncias}
                                 />
                             ))
                         )}
