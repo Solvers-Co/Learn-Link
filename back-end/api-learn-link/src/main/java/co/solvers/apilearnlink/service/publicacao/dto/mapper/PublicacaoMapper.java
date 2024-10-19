@@ -11,6 +11,7 @@ import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoListagemResponse
 import co.solvers.apilearnlink.domain.publicacao.Publicacao;
 import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoListagemSimplesDto;
 import co.solvers.apilearnlink.service.reacao.dto.ReacaoComentarioListarDto;
+import co.solvers.apilearnlink.service.reacao.dto.mapper.ReacaoMapper;
 import co.solvers.apilearnlink.service.tiporeacao.dto.TipoReacaoMapper;
 import co.solvers.apilearnlink.service.usuario.dto.mapper.UsuarioMapper;
 
@@ -39,8 +40,8 @@ public class PublicacaoMapper {
         dto.setTipoPublicacao(toTipoPublicacaoDto(entity.getTipoPublicacao()));
         dto.setCanal(CanalMapper.toDto(entity.getCanal()));
         dto.setUsuario(toUsuarioDto(entity.getUsuario()));
+        dto.setQuantidadeComentarios(entity.getComentarios().size());
         dto.setReacoes(toReacaoDto(entity.getReacoes()));
-        dto.setComentarios(toComentariosDto(entity.getComentarios()));
 
         return dto;
     }
@@ -53,6 +54,7 @@ public class PublicacaoMapper {
         dto.setConteudo(entity.getConteudo());
         dto.setDataHora(entity.getDataHora());
         dto.setTipoPublicacao(toTipoPublicacaoDto(entity.getTipoPublicacao()));
+        dto.setStatus(entity.getStatus());
         dto.setCanal(CanalMapper.toDto(entity.getCanal()));
         dto.setUsuario(toUsuarioDto(entity.getUsuario()));
 
@@ -66,12 +68,12 @@ public class PublicacaoMapper {
                 .toList();
     }
 
-    public static List<PublicacaoListagemResponseDto.ComentarioDto> toComentariosDto (List<Comentario> entities){
+    public static List<PublicacaoListagemResponseDto.ComentarioDto> toComentariosDto(List<Comentario> entities) {
         if (entities == null) return null;
 
         List<PublicacaoListagemResponseDto.ComentarioDto> comentariosDto = new ArrayList<>();
 
-        for (Comentario comentario : entities){
+        for (Comentario comentario : entities) {
             PublicacaoListagemResponseDto.ComentarioDto comentarioDto = new PublicacaoListagemResponseDto.ComentarioDto();
             comentarioDto.setId(comentario.getId());
             comentarioDto.setComentario(comentario.getComentario());
@@ -85,7 +87,7 @@ public class PublicacaoMapper {
         return comentariosDto;
     }
 
-    private static PublicacaoListagemResponseDto.TipoPublicacaoDto toTipoPublicacaoDto (TipoPublicacao entity){
+    private static PublicacaoListagemResponseDto.TipoPublicacaoDto toTipoPublicacaoDto(TipoPublicacao entity) {
         if (entity == null) return null;
 
         PublicacaoListagemResponseDto.TipoPublicacaoDto dto = new PublicacaoListagemResponseDto.TipoPublicacaoDto();
@@ -97,7 +99,7 @@ public class PublicacaoMapper {
 
     }
 
-    private static PublicacaoListagemResponseDto.UsuarioPublicacaoListagemDto toUsuarioDto (Usuario entity){
+    private static PublicacaoListagemResponseDto.UsuarioPublicacaoListagemDto toUsuarioDto(Usuario entity) {
         PublicacaoListagemResponseDto.UsuarioPublicacaoListagemDto usuarioDto = new PublicacaoListagemResponseDto.UsuarioPublicacaoListagemDto();
         if (entity == null) return null;
 
@@ -109,8 +111,7 @@ public class PublicacaoMapper {
         return usuarioDto;
     }
 
-
-    private static PublicacaoListagemResponseDto.ReacaoDto toReacaoDto(Reacao entity){
+    private static PublicacaoListagemResponseDto.ReacaoDto toReacaoDto(Reacao entity) {
         if (entity == null) return null;
 
         PublicacaoListagemResponseDto.ReacaoDto dto = new PublicacaoListagemResponseDto.ReacaoDto();
@@ -119,14 +120,14 @@ public class PublicacaoMapper {
         dto.setUsuario(toUsuarioDto(entity.getUsuario()));
 
         return dto;
-    };
+    }
 
-    private static List<PublicacaoListagemResponseDto.ReacaoDto> toReacaoDto(List<Reacao> entities){
+    private static List<PublicacaoListagemResponseDto.ReacaoDto> toReacaoDto(List<Reacao> entities) {
         if (entities == null) return null;
 
         return entities
                 .stream()
                 .map(PublicacaoMapper::toReacaoDto)
                 .toList();
-    };
+    }
 }

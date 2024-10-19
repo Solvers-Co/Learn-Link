@@ -13,7 +13,7 @@ import java.util.Optional;
 public class TipoReacaoService {
     private final TipoReacaoRepository tipoReacaoRepository;
 
-    public TipoReacao buscarPorId (int id){
+    public TipoReacao buscarPorId(int id) {
         Optional<TipoReacao> optTipoReacao = tipoReacaoRepository.findById(id);
 
         if (optTipoReacao.isEmpty()) throw new NaoEncontradoException("Tipo de reação");
@@ -21,7 +21,7 @@ public class TipoReacaoService {
         return optTipoReacao.get();
     }
 
-    public TipoReacao buscarPorNome (String nome){
+    public TipoReacao buscarPorNome(String nome) {
         Optional<TipoReacao> optTipoReacao = tipoReacaoRepository.findByNomeIgnoreCase(nome);
 
         if (optTipoReacao.isEmpty()) throw new NaoEncontradoException("Tipo de reação");

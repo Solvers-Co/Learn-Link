@@ -1,6 +1,5 @@
 package co.solvers.apilearnlink.domain.views.ReacoesEmComentariosDoUsuario;
 
-import co.solvers.apilearnlink.domain.usuario.Usuario;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;

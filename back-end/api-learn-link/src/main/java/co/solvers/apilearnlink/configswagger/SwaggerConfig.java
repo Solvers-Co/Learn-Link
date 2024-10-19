@@ -18,7 +18,7 @@ public class SwaggerConfig {
         return new OpenAPI()
                 .info(new Info()
                         .title("LearnLink API")
-                        .version("v4.0.0")
+                        .version("v5.0.0")
                         .description("API para gerenciamento de publicações e usuários")
                 )
                 .externalDocs(new ExternalDocumentation()

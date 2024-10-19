@@ -11,6 +11,7 @@ public class QtdPublicacoesNaoRespondidasMapper {
         QtdPublicacoesNaoRespondidasDto dto = new QtdPublicacoesNaoRespondidasDto();
         dto.setNomeMateria(entity.getNomeMateria());
         dto.setQtdPublicacoesNaoRespondidas(entity.getQtdPublicacoesNaoRespondidas());
+        dto.setQtdPublicacoesRespondidas(entity.getQtdPublicacoesRespondidas());
         return dto;
     }
 }

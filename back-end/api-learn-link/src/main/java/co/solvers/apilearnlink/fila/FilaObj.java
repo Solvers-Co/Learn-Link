@@ -1,6 +1,6 @@
 package co.solvers.apilearnlink.fila;
 
-public class FilaObj<T>{
+public class FilaObj<T> {
     // Atributos
     private int tamanho;
     private T[] fila;
@@ -14,7 +14,7 @@ public class FilaObj<T>{
 
     /* Método isEmpty() - retorna true se a fila está vazia e false caso contrário */
     public boolean isEmpty() {
-        if (tamanho == 0){
+        if (tamanho == 0) {
             return true;
         } else {
             return false;
@@ -24,7 +24,7 @@ public class FilaObj<T>{
     /* Método isFull() - retorna true se a fila está cheia e false caso contrário */
     public boolean isFull() {
 
-        if (tamanho == fila.length){
+        if (tamanho == fila.length) {
             return true;
         } else {
             return false;
@@ -36,7 +36,7 @@ public class FilaObj<T>{
                        Lançar IllegalStateException caso a fila esteja cheia
      */
     public void insert(T info) {
-        if (isFull()){
+        if (isFull()) {
             throw new IllegalStateException("Lista Cheia!");
         } else {
             fila[tamanho++] = info;
@@ -53,7 +53,7 @@ public class FilaObj<T>{
        Depois que a fila andar, "limpar" o ex-último elemento da fila, atribuindo null
      */
     public T poll() {
-        if (!isEmpty()){
+        if (!isEmpty()) {
             T primeiro = fila[0];
 
             andaFila();
@@ -64,23 +64,23 @@ public class FilaObj<T>{
         }
     }
 
-    public void andaFila(){
-        for (int i = 0 ; i < tamanho-1 ; i++){
-            fila[i] = fila[i+1];
+    public void andaFila() {
+        for (int i = 0; i < tamanho - 1; i++) {
+            fila[i] = fila[i + 1];
         }
     }
 
     /* Método exibe() - exibe o conteúdo da fila */
     public void exibe() {
-        for (T object : fila){
-            if (object != null){
+        for (T object : fila) {
+            if (object != null) {
                 System.out.println(object);
             }
         }
     }
 
     /* Usado nos testes  - complete para que fique certo */
-    public int getTamanho(){
+    public int getTamanho() {
         return tamanho;
     }
 }

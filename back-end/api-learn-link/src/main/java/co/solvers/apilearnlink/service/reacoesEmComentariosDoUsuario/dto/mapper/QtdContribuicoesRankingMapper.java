@@ -10,7 +10,7 @@ import java.util.List;
 @Component
 public class QtdContribuicoesRankingMapper {
 
-    public static QtdContribuicoesRankingDto toDto(QtdReacoesComentariosUsuarioView qtdContribuicoes){
+    public static QtdContribuicoesRankingDto toDto(QtdReacoesComentariosUsuarioView qtdContribuicoes) {
         QtdContribuicoesRankingDto dto = new QtdContribuicoesRankingDto();
 
         dto.setQtdReacoes(qtdContribuicoes.getReacoes());
@@ -20,10 +20,10 @@ public class QtdContribuicoesRankingMapper {
         return dto;
     }
 
-    public static List<QtdContribuicoesRankingDto> toDto(List<QtdReacoesComentariosUsuarioView> listaDeContribuicoes){
+    public static List<QtdContribuicoesRankingDto> toDto(List<QtdReacoesComentariosUsuarioView> listaDeContribuicoes) {
         List<QtdContribuicoesRankingDto> dtos = new ArrayList<>();
 
-        for (QtdReacoesComentariosUsuarioView entidade : listaDeContribuicoes){
+        for (QtdReacoesComentariosUsuarioView entidade : listaDeContribuicoes) {
             dtos.add(toDto(entidade));
         }
         return dtos;

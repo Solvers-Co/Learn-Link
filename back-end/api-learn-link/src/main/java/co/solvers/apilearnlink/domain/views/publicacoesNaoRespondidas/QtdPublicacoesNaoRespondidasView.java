@@ -6,7 +6,6 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
-
 @Setter
 @Getter
 @Entity
@@ -17,5 +16,6 @@ public class QtdPublicacoesNaoRespondidasView {
     @Id
     private String nomeMateria;
     private Long qtdPublicacoesNaoRespondidas;
+    private Long qtdPublicacoesRespondidas;
 
 }

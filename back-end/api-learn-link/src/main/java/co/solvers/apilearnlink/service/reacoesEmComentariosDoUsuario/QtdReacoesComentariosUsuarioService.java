@@ -13,11 +13,11 @@ import java.util.Optional;
 public class QtdReacoesComentariosUsuarioService {
     private final QtdReacoesComentariosUsuarioViewRepository qtdReacoesComentariosUsuarioViewRepository;
 
-    public Optional<QtdReacoesComentariosUsuarioView> listagemQtdReacoesComentarios(Long id){
+    public Optional<QtdReacoesComentariosUsuarioView> listagemQtdReacoesComentarios(Long id) {
         return qtdReacoesComentariosUsuarioViewRepository.findByUsuarioId(id);
     }
 
-    public List<QtdReacoesComentariosUsuarioView> qtdContribuicoesRanking(){
+    public List<QtdReacoesComentariosUsuarioView> qtdContribuicoesRanking() {
         return qtdReacoesComentariosUsuarioViewRepository.findTop10ByOrderByReacoesDesc();
     }
 }

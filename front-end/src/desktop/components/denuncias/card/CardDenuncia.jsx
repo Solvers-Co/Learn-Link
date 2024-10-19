@@ -9,31 +9,32 @@ import MenuVertical from '../../../../mobile/utils/assets/MenuVertical.png';
 import Excluir from '../../../../mobile/utils/assets/Deletar.png';
 import Ignorar from '../../../utils/assets/icone_ignorar.png';
 
-function ignorarDenuncia(id, tipo) {
-    const endpoint = tipo === 'publicacoes' ? `/publicacoes/${id}/remover-denuncias` : `/comentarios/${id}/remover-denuncias`;
+function ignorarDenuncia(id, tipo, carregarDenuncias) {
+    const endpoint = tipo === 'publicacao' ? `/publicacoes/${id}/remover-denuncias` : `/comentarios/${id}/remover-denuncias`;
     api.delete(endpoint)
         .then(response => {
             toast.success("Denúncia ignorada com sucesso!");
-            window.location.reload();
+            carregarDenuncias();
         })
         .catch(error => {
             console.error("Erro ao ignorar denúncia:", error);
         });
 }
 
-function deletarItem(id, tipo) {
-    const endpoint = tipo === 'publicacoes' ? `/publicacoes/${id}` : `/comentarios/${id}`;
+function deletarItem(id, tipo, carregarDenuncias) {
+    const endpoint = tipo === 'publicacao' ? `/publicacoes/${id}` : `/comentarios/${id}`;
     api.delete(endpoint)
         .then(response => {
             toast.success(`${tipo === 'publicacoes' ? 'Publicação' : 'Comentário'} deletado(a) com sucesso!`);
-            window.location.reload();
+            console.log(endpoint);
+            carregarDenuncias()
         })
         .catch(error => {
             console.error(`Erro ao deletar ${tipo === 'publicacoes' ? 'publicação' : 'comentário'}:`, error);
         });
 }
 
-const CardDenuncia = ({ idItem, item, quantidadeDenuncias, tipo, modoSelecao, toggleSelecao, isSelected }) => {
+const CardDenuncia = ({ idItem, item, quantidadeDenuncias, tipo, modoSelecao, toggleSelecao, isSelected, carregarDenuncias }) => {
     const [showPopup, setShowPopup] = useState(false);
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [showConfirmationIgnore, setShowConfirmationIgnore] = useState(false);
@@ -90,7 +91,7 @@ const CardDenuncia = ({ idItem, item, quantidadeDenuncias, tipo, modoSelecao, to
                 <div className={styles.modalOverlay}>
                     <div className={styles.modalContent}>
                         <h3>Deseja ignorar esta denúncia?</h3>
-                        <button className={styles.confirmButton} onClick={() => { ignorarDenuncia(idItem, tipo); setShowConfirmationIgnore(false); }}>Sim</button>
+                        <button className={styles.confirmButton} onClick={() => { ignorarDenuncia(idItem, tipo, carregarDenuncias); setShowConfirmationIgnore(false); }}>Sim</button>
                         <button className={styles.cancelButton} onClick={() => setShowConfirmationIgnore(false)}>Cancelar</button>
                     </div>
                 </div>
@@ -101,7 +102,7 @@ const CardDenuncia = ({ idItem, item, quantidadeDenuncias, tipo, modoSelecao, to
                     <div className={styles.modalContent}>
                         <h3>Confirmar Exclusão</h3>
                         <p>Tem certeza de que deseja excluir esta {tipo === 'publicacoes' ? 'publicação' : 'comentário'}?</p>
-                        <button className={styles.confirmButton} onClick={() => { deletarItem(idItem, tipo); setShowConfirmation(false); }}>Sim</button>
+                        <button className={styles.confirmButton} onClick={() => { deletarItem(idItem, tipo, carregarDenuncias); setShowConfirmation(false); }}>Sim</button>
                         <button className={styles.cancelButton} onClick={() => setShowConfirmation(false)}>Cancelar</button>
                     </div>
                 </div>

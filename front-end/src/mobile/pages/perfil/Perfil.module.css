@@ -9,7 +9,7 @@
     height: 20vh;
     background-color: #8B0000;
     border-radius: 0px 0px 25px 25px;
-    position: fixed;
+    position: absolute;
 }
 
 .userInfo {
@@ -58,6 +58,146 @@
     text-align: center;
     margin-top: 20%;
 }
+
+.botaoCarregaPublicacoes {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin-top: 8%;
+}
+
+.botaoCarregaPublicacoes button {
+    background-color: #8B0000;
+    color: white;
+    border: none;
+    width: 95%;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 20px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.publicacoes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+}
+
+.textoSemPublicacoes {
+    font-size: 20px;
+    font-weight: 700;
+    margin-top: 5%;
+}
+
+
+.comentarios {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 1px solid #707070;
+    border-top-right-radius: 25px;
+    border-top-left-radius: 25px;
+}
+
+.comentariosOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Fundo escuro */
+    display: flex;
+    align-items: flex-end;
+    /* Alinha o modal na parte inferior da tela */
+    justify-content: center;
+}
+
+.listaComentarios {
+    margin-bottom: 3rem;
+}
+
+.fechar {
+    display: flex;
+    justify-content: end;
+    width: 90%;
+}
+
+.comentariosModal {
+    width: 100%;
+    max-width: 600px;
+    height: 70%;
+    background-color: #fff;
+    border-radius: 25px 25px 0 0;
+    padding: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    overflow-y: auto;
+}
+
+.listaComentarios {
+    width: 100%;
+    max-height: calc(100% - 60px);
+    overflow-y: auto;
+    padding: 10px 0;
+    text-align: start;
+}
+
+.textoSemComentarios {
+    color: #777;
+}
+
+.fechar {
+    width: 95%;
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+}
+
+.postarComentario {
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 110%;
+    background-color: white;
+    box-shadow: -1px -1px 5px rgba(0, 0, 0, .2);
+    border-top: 1px solid rgba(0, 0, 0, .3);
+    min-height: 70px;
+    max-height: 300px;
+}
+
+.inputComentario {
+    min-height: 32px;
+    max-height: 250px;
+    min-width: 77%;
+    max-width: 77%;
+    border-radius: 5px;
+    border: 1px solid black;
+    font-family: "NunitoSansRegular", sans-serif;
+    padding-left: 5px;
+    word-break: normal;
+}
+
+.botaoComentar {
+    height: 24px;
+    margin-left: 10px;
+}
+
 
 .popup {
     position: absolute;

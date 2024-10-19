@@ -4,14 +4,16 @@ import CardDenuncia from '../card/CardDenuncia';
 import styles from './TelaDenuncias.module.css';
 import api from '../../../../api';
 import Tooltip from '../../../../mobile/components/tooltip/Tooltip';
+import Download from '../../../utils/assets/icone_download.png';
 import { toast } from 'react-toastify';
 
 const TelaDenuncias = () => {
     const [denuncias, setDenuncias] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [tipoDenuncia, setTipoDenuncia] = useState('publicacoes');
+    const [tipoDenuncia, setTipoDenuncia] = useState('publicacao');
     const [modoSelecao, setModoSelecao] = useState(false);
+    const [showModal, setShowModal] = useState(false); // Estado para controlar a exibição do modal
 
     // Listas de IDs selecionados para cada tipo
     const [publicacoesSelecionadas, setPublicacoesSelecionadas] = useState([]);
@@ -20,7 +22,7 @@ const TelaDenuncias = () => {
     const fetchDenuncias = async () => {
         setLoading(true);
         try {
-            const endpoint = tipoDenuncia === 'publicacoes'
+            const endpoint = tipoDenuncia === 'publicacao'
                 ? '/publicacoes/denuncias'
                 : '/comentarios/denuncias';
             const response = await api.get(endpoint);
@@ -38,16 +40,14 @@ const TelaDenuncias = () => {
 
     const handleTipoDenunciaChange = (e) => {
         setTipoDenuncia(e.target.value);
-        // Resetar as listas de seleção quando trocar o tipo
         setPublicacoesSelecionadas([]);
         setComentariosSelecionados([]);
     };
 
     const toggleModoSelecao = () => setModoSelecao(!modoSelecao);
 
-    // Adicionar ou remover itens selecionados
     const toggleSelecao = (id, tipo) => {
-        if (tipo === 'publicacoes') {
+        if (tipo === 'publicacao') {
             setPublicacoesSelecionadas(prev =>
                 prev.includes(id)
                     ? prev.filter(item => item !== id)
@@ -62,7 +62,6 @@ const TelaDenuncias = () => {
         }
     };
 
-    // Função para remover denúncias de itens selecionados
     const removerDenunciasSelecionadas = async () => {
         try {
             if (publicacoesSelecionadas.length === 0 && comentariosSelecionados.length === 0) {
@@ -73,45 +72,79 @@ const TelaDenuncias = () => {
             let countPublicacoes = 0;
             let countComentarios = 0;
 
-            // Remover denúncias de publicações selecionadas
             for (const id of publicacoesSelecionadas) {
-                await api.delete(`/publicacoes/${id}/remover-denuncias`);
+                await api.delete(`/publicacoes/${id}`);
                 countPublicacoes++;
             }
 
-            // Remover denúncias de comentários selecionados
             for (const id of comentariosSelecionados) {
-                await api.delete(`/comentarios/${id}/remover-denuncias`);
+                await api.delete(`/comentarios/${id}`);
                 countComentarios++;
             }
 
-            // Após a remoção, recarregar as denúncias
             await fetchDenuncias();
-
-            // Limpar as listas de selecionados
             setPublicacoesSelecionadas([]);
             setComentariosSelecionados([]);
 
-            // Exibir um toast com a quantidade de denúncias removidas
-            toast.success(`${countPublicacoes} ${countPublicacoes === 1 ? 'publicação' : 'publicações'} denunciada(s) removida(s) e ${countComentarios} ${countComentarios === 1 ? 'comentário' : 'comentários'} denunciado(s) removido(s).`);
-
+            toast.success(`${countPublicacoes} ${countPublicacoes === 1 ? 'publicação' : 'publicações'} Deletada(s) e ${countComentarios} ${countComentarios === 1 ? 'comentário' : 'comentários'} Deletado(s).`);
         } catch (error) {
             console.error('Erro ao remover denúncias:', error);
             toast.error('Erro ao remover denúncias.');
         }
     };
 
+    const gerarRelatorio = async (formato, tipo) => {
+        try {
+            const endpoint = `/publicacoes/denuncias/${formato}?tipo=${tipo}`;
+            const response = await api.get(endpoint, { responseType: 'blob' });
+
+            const blob = new Blob([response.data], { type: `text/${formato}` });
+            const downloadUrl = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = downloadUrl;
+            link.setAttribute('download', `denuncias.${formato}`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            setShowModal(false); // Fechar o modal após o download
+        } catch (error) {
+            console.error(`Falha ao gerar o relatório ${formato}`, error);
+            toast.error('Erro ao gerar o relatório.');
+        }
+    };
 
     return (
         <div className={styles.telaDenuncias}>
-            <div className={styles.cabecalho}>                
+            <div className={styles.cabecalho}>
                 <div className={styles.titulo}>
                     <Titulo>Denúncias</Titulo>
                     <div className={styles.tooltip}>
-                        <Tooltip txt="Ao ignorar uma denúncia, ela continuará na plataforma. 
-                        Ao excluir a denúncia, a publicação/comentário será apagado da plataforma." />
+                        <Tooltip txt="Ao ignorar uma denúncia, ela continuará na plataforma. Ao excluir a denúncia, a publicação/comentário será apagado da plataforma." />
                     </div>
+                    <img
+                        src={Download}
+                        alt="Download"
+                        className={styles.download}
+                        onClick={() => setShowModal(prev => !prev)} // Alterna entre abrir e fechar o modal
+                        title="Exportação de relatórios"
+                    />
                 </div>
+                {showModal && (
+                    <div className={styles.modal}>
+                        <div className={styles.modalContent}>
+                            <h3>Escolha o formato do relatório</h3>
+                            <div className={styles.buttons}>
+                                <button onClick={() => gerarRelatorio('csv', tipoDenuncia)} className={styles.relatButton}>CSV</button>
+                                <button onClick={() => gerarRelatorio('txt', tipoDenuncia)} className={styles.relatButton}>TXT</button>
+                                <button onClick={() => gerarRelatorio('json', tipoDenuncia)} className={styles.relatButton}>JSON</button>
+                                <button onClick={() => gerarRelatorio('xml', tipoDenuncia)} className={styles.relatButton}>XML</button>
+                                <button onClick={() => gerarRelatorio('parquet', tipoDenuncia)} className={styles.relatButton}>PARQUET</button>
+                                <button onClick={() => setShowModal(false)} className={styles.relatButtonRed}>Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                )}
                 {modoSelecao && (
                     <button className={styles.btnRemover} onClick={removerDenunciasSelecionadas}>
                         Remover Denúncias Selecionadas
@@ -126,11 +159,12 @@ const TelaDenuncias = () => {
                         onChange={handleTipoDenunciaChange}
                         className={styles.dropdown}
                     >
-                        <option value="publicacoes">Publicações</option>
-                        <option value="comentarios">Comentários</option>
+                        <option value="publicacao">Publicações</option>
+                        <option value="comentario">Comentários</option>
                     </select>
                 </div>
             </div>
+
             {loading ? (
                 <div>Carregando...</div>
             ) : error ? (
@@ -149,18 +183,21 @@ const TelaDenuncias = () => {
                                     quantidadeDenuncias={denuncia.quantidadeDenuncias}
                                     tipo={tipoDenuncia}
                                     modoSelecao={modoSelecao}
-                                    toggleSelecao={toggleSelecao} // Passa a função para alternar a seleção
+                                    toggleSelecao={toggleSelecao}
                                     isSelected={
-                                        tipoDenuncia === 'publicacoes'
+                                        tipoDenuncia === 'publicacao'
                                             ? publicacoesSelecionadas.includes(denuncia.publicacao?.id)
                                             : comentariosSelecionados.includes(denuncia.comentario?.id)
                                     }
+                                    carregarDenuncias={fetchDenuncias}
                                 />
                             ))
                         )}
                     </div>
                 </div>
             )}
+
+
         </div>
     );
 };

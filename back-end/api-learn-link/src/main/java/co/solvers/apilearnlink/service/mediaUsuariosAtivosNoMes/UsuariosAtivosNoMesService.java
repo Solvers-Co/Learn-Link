@@ -13,7 +13,7 @@ import java.util.List;
 public class UsuariosAtivosNoMesService {
     private final MediaUsuariosAtivosNoMesRepository usuariosAtivosNoMesRepository;
 
-    public List<MediaUsuariosAtivosNoMes> listagemUsuariosAtivosNoMes(){
+    public List<MediaUsuariosAtivosNoMes> listagemUsuariosAtivosNoMes() {
         Integer mesAtual = LocalDate.now().getMonthValue();
 
         return usuariosAtivosNoMesRepository.findByMes(mesAtual);

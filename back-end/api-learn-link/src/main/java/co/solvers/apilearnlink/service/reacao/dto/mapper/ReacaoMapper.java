@@ -2,7 +2,6 @@ package co.solvers.apilearnlink.service.reacao.dto.mapper;
 
 import co.solvers.apilearnlink.domain.reacao.Reacao;
 import co.solvers.apilearnlink.domain.usuario.Usuario;
-import co.solvers.apilearnlink.service.comentario.dto.ComentarioListagemDto;
 import co.solvers.apilearnlink.service.comentario.dto.mapper.ComentarioMapper;
 import co.solvers.apilearnlink.service.publicacao.dto.mapper.PublicacaoMapper;
 import co.solvers.apilearnlink.service.reacao.dto.ReacaoComentarioListarDto;
@@ -12,7 +11,7 @@ import co.solvers.apilearnlink.service.tiporeacao.dto.TipoReacaoMapper;
 
 public class ReacaoMapper {
 
-    public static ReacaoComentarioListarDto toReacaoComentarioListarDto (Reacao entity){
+    public static ReacaoComentarioListarDto toReacaoComentarioListarDto(Reacao entity) {
         if (entity == null) return null;
 
         ReacaoComentarioListarDto dto = new ReacaoComentarioListarDto();
@@ -24,7 +23,7 @@ public class ReacaoMapper {
         return dto;
     }
 
-    public static ReacaoPublicacaoListarDto toReacaoPublicacaoListarDto (Reacao entity){
+    public static ReacaoPublicacaoListarDto toReacaoPublicacaoListarDto(Reacao entity) {
         if (entity == null) return null;
 
         ReacaoPublicacaoListarDto dto = new ReacaoPublicacaoListarDto();
@@ -33,11 +32,10 @@ public class ReacaoMapper {
         dto.setPublicacao(PublicacaoMapper.toDto(entity.getPublicacao()));
         dto.setUsuario(toDto(entity.getUsuario()));
 
-
         return dto;
     }
 
-    private static UsuarioReacaoListagemDto toDto (Usuario entity){
+    private static UsuarioReacaoListagemDto toDto(Usuario entity) {
         if (entity == null) return null;
 
         UsuarioReacaoListagemDto dto = new UsuarioReacaoListagemDto();

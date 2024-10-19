@@ -26,13 +26,17 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -107,22 +111,6 @@ public class ComentarioController {
         reacaoService.removerReacaoComentario(idComentario, reacaoCriarDto);
         return ResponseEntity.noContent().build();
     }
-
-//    @ApiResponse(responseCode = "200", description = "Comentários encontrados")
-//    @ApiResponse(responseCode = "404", description = "Comentários não encontrado")
-//    @Operation(summary = "Listar todos os comentários", description = "Método que lista todos os comentários", tags = {"Comentários"})
-//    @GetMapping("/quantidade-comentarios-por-dia-mes")
-//    public ResponseEntity<String[][]> quantidadeDePublicacoesPorDia(
-//            @RequestParam
-//            @Parameter(name = "mes", description = "Mês", example = "5") int mes,
-//            @RequestParam
-//            @Parameter(name = "ano", description = "Ano", example = "2024") int ano) {
-//        String[][] quantidadeComentarios = comentarioService.buscaQuantidadeDeComentariosPorDiaMatriz(mes, ano);
-//
-//        if (quantidadeComentarios == null) return ResponseEntity.noContent().build();
-//
-//        return ResponseEntity.ok(quantidadeComentarios);
-//    }
 
     @ApiResponse(responseCode = "200", description = "Comentários encontrados")
     @ApiResponse(responseCode = "404", description = "Comentários não encontrados")
@@ -203,6 +191,7 @@ public class ComentarioController {
             return ResponseEntity.ok(comentariosDenunciadosDto);
         }
     }
+
 
     @ApiResponse(responseCode = "200", description = "Denuncias removidas")
     @ApiResponse(responseCode = "404", description = "Comentario não encontrado")

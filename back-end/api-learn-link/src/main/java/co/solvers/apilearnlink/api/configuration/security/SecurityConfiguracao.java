@@ -83,6 +83,13 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/publicacoes/{idPublicacao}/denunciar"),
             new AntPathRequestMatcher("/publicacoes/denuncias"),
             new AntPathRequestMatcher("/publicacoes/{idPublicacao}/remover-denuncias"),
+            new AntPathRequestMatcher("/publicacoes/usuario/{idUsuario}"),
+            new AntPathRequestMatcher("/publicacoes/denuncias/csv"),
+            new AntPathRequestMatcher("/publicacoes/denuncias/txt"),
+            new AntPathRequestMatcher("/publicacoes/denuncias/json"),
+            new AntPathRequestMatcher("/publicacoes/denuncias/xml"),
+            new AntPathRequestMatcher("/publicacoes/denuncias/parquet"),
+            new AntPathRequestMatcher("/publicacoes/{id}/arquivar"),
             new AntPathRequestMatcher("/comentarios"),
             new AntPathRequestMatcher("/comentarios/{id}"),
             new AntPathRequestMatcher("/comentarios/{idComentario}/reagir"),
@@ -93,6 +100,7 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/comentarios/publicacao/{idPublicacao}/paginado"),
             new AntPathRequestMatcher("/comentarios/{idComentario}/denunciar"),
             new AntPathRequestMatcher("/comentarios/denuncias"),
+            new AntPathRequestMatcher("/comentarios/denuncias/csv"),
             new AntPathRequestMatcher("/comentarios/{idPublicacao}/remover-denuncias"),
             new AntPathRequestMatcher("/registros/gerar-log/{id}"),
             new AntPathRequestMatcher("/registro-logins/{idUsuario}"),
@@ -105,7 +113,8 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/media-usuarios-ativos/mes"),
             new AntPathRequestMatcher("/notificacoes"),
             new AntPathRequestMatcher("/notificacoes/{id}"),
-            new AntPathRequestMatcher("/notificacoes/visualizar-notificacao/{id}")
+            new AntPathRequestMatcher("/notificacoes/visualizar-notificacao/{id}"),
+            new AntPathRequestMatcher("/livros/listar")
     };
 
     @Bean

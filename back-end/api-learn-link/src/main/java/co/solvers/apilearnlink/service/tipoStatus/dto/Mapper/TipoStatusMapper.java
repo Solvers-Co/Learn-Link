@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class TipoStatusMapper {
 
-    public static TipoStatus toEntity(TipoStatusCriacaoRequestDto dto){
+    public static TipoStatus toEntity(TipoStatusCriacaoRequestDto dto) {
         TipoStatus tipoStatus = new TipoStatus();
 
         tipoStatus.setId(dto.getId());

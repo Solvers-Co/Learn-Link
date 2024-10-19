@@ -88,6 +88,7 @@ function BotaoFazerPublicacao() {
                 <div className={Styles["footerPublicar"]}>
                     <span className={Styles["hashtag"]}>#</span>
                     <select name="materias" id="materias" className={Styles["opcoesMaterias"]} onChange={(e) => setMateria(e.target.value)}>
+                        <option value="0">Selecionar...</option>
                         <option value="1">Matemática</option>
                         <option value="2">Português</option>
                         <option value="3">Biologia</option>

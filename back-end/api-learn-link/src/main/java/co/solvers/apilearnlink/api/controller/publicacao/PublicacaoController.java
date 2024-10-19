@@ -35,7 +35,20 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.core.io.Resource;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.core.io.Resource;
+
+
+import java.io.IOException;
 import java.util.List;
 
 
@@ -61,21 +74,6 @@ public class PublicacaoController {
         return ResponseEntity.status(201).body(dto);
     }
 
-    @ApiResponse(responseCode = "204", description = "Publicações vazias")
-    @ApiResponse(responseCode = "200", description = "Publicações encontradas")
-    @Operation(summary = "Listar todas as publicações", description = "Método que Lista todas as publicações", tags = {"Publicações"})
-    @GetMapping("/publicacoes-mais-recentes")
-    public ResponseEntity<List<PublicacaoListagemResponseDto>> listarPublicacoes() {
-
-        List<Publicacao> publicacoes = publicacaoService.listarMaisRecentesPilha();
-        List<PublicacaoListagemResponseDto> dtos = PublicacaoMapper.toDto(publicacoes);
-
-        if (dtos.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-
-        return ResponseEntity.status(200).body(dtos);
-    }
 
     //Listar publicacoes paginado
     @ApiResponse(responseCode = "204", description = "Publicações vazias")
@@ -122,21 +120,6 @@ public class PublicacaoController {
         return ResponseEntity.ok(dtosPage);
     }
 
-    @ApiResponse(responseCode = "204", description = "Publicações vazias")
-    @ApiResponse(responseCode = "200", description = "Publicações encontradas")
-    @Operation(summary = "Listar todas as publicações pelo horário mais antigo", description = "Método que Lista todas as publicações começando da mais antiga para a mais recente", tags = {"Publicações"})
-    @GetMapping("/publicacoes-mais-antigas")
-    public ResponseEntity<List<PublicacaoListagemResponseDto>> listarPublicacoesMaisAntigas() {
-
-        List<Publicacao> publicacoes = publicacaoService.listarMaisAntigo();
-        List<PublicacaoListagemResponseDto> dtos = PublicacaoMapper.toDto(publicacoes);
-
-        if (dtos.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-
-        return ResponseEntity.status(200).body(dtos);
-    }
 
     @ApiResponse(responseCode = "400", description = "Tipo de publicação inválido")
     @ApiResponse(responseCode = "204", description = "Publicação vazia")
@@ -216,25 +199,6 @@ public class PublicacaoController {
         return ResponseEntity.ok(ComentarioMapper.toDto(comentario));
     }
 
-//    @ApiResponse(responseCode = "204", description = "Publicações vazias")
-//    @ApiResponse(responseCode = "200", description = "Publicações encontradas")
-//    @ApiResponse(responseCode = "400", description = "Palavra chave inválida")
-//    @Operation(summary = "Listar publicações por palavra chave", description = "Método que lista todas as publicações por uma palavra chave ordenada pela mais recete", tags = {"Publicações"})
-//    @GetMapping("/buscar-palavra-chave")
-//    public ResponseEntity<List<PublicacaoListagemResponseDto>> buscarPublicacaoPorPalavraChave(
-//            @RequestParam
-//            @Parameter(name = "palavraChave", description = "Palavra chave", example = "Bhaskara") String palavraChave) {
-//
-//        List<Publicacao> publicacoes = publicacaoService.listarPorPalavraChave(palavraChave);
-//        List<PublicacaoListagemResponseDto> dtos = PublicacaoMapper.toDto(publicacoes);
-//
-//        if (dtos.isEmpty()) {
-//            return ResponseEntity.noContent().build();
-//        }
-//
-//        return ResponseEntity.status(200).body(dtos);
-//    }
-
     @ApiResponse(responseCode = "204", description = "Publicações vazias")
     @ApiResponse(responseCode = "200", description = "Publicações encontradas")
     @ApiResponse(responseCode = "400", description = "Palavra chave inválida")
@@ -260,22 +224,6 @@ public class PublicacaoController {
 
         return ResponseEntity.ok(dtosPage);
     }
-    
-//    @ApiResponse(responseCode = "200", description = "Publicações encontradas")
-//    @ApiResponse(responseCode = "204", description = "Publicações vazias")
-//    @Operation(summary = "Quantidade de publicações por dia", description = "Método que retorna a quantidade de publicações por dia", tags = {"Publicações"})
-//    @GetMapping("/quantidade-publicacoes-por-dia-mes")
-//    public ResponseEntity<String[][]> quantidadeDePublicacoesPorDia(
-//            @RequestParam
-//            @Parameter(name = "mes", description = "Mês do ano", example = "5") int mes,
-//            @RequestParam
-//            @Parameter(name = "ano", description = "Ano Publicação", example = "2024") int ano) {
-//        String[][] quantidadePublicacoes = publicacaoService.buscaQuantidadeDePublicacoesPorDiaMatriz(mes, ano);
-//
-//        if (quantidadePublicacoes == null) return ResponseEntity.noContent().build();
-//
-//        return ResponseEntity.ok(quantidadePublicacoes);
-//    }
 
     @ApiResponse(responseCode = "204", description = "Nenhuma publicação encontrada")
     @ApiResponse(responseCode = "200", description = "Publicações encontradas")
@@ -381,6 +329,73 @@ public class PublicacaoController {
         }
     }
 
+    @ApiResponse(responseCode = "200", description = "CSV de Denúncias")
+    @ApiResponse(responseCode = "404", description = "Não existem denúncias para o tipo especificado")
+    @Operation(summary = "CSV de denúncias", description = "Método que grava CSV das denúncias de publicações ou comentários", tags = {"Denúncias"})
+    @GetMapping(value = "/denuncias/csv", produces = "text/csv")
+    public ResponseEntity<Resource> gravarCsvDenuncias(@RequestParam String tipo) throws IOException {
+        Resource resource = denunciaService.gravaDenuncias(tipo);
+
+        if (resource == null) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType("text/csv"))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + tipo + "s_denunciados.csv\"")
+                .body(resource);
+    }
+
+    @ApiResponse(responseCode = "200", description = "Denúncias TXT")
+    @ApiResponse(responseCode = "404", description = "Não existem denúncias para o tipo especificado")
+    @Operation(summary = "TXT de denúncias", description = "Método que grava TXT das denúncias de publicações ou comentários", tags = {"Denúncias"})
+    @GetMapping(value = "/denuncias/txt", produces = "text/plain")
+    public ResponseEntity<Resource> gravarTxtDenuncias(@RequestParam String tipo) throws IOException {
+        Resource resource = denunciaService.gravaTxtDenuncias(tipo);
+
+        if (resource == null) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType("text/plain"))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + tipo + "s_denunciados.txt\"")
+                .body(resource);
+    }
+
+    @ApiResponse(responseCode = "200", description = "Denúncias JSON")
+    @ApiResponse(responseCode = "404", description = "Não existem denúncias para o tipo especificado")
+    @Operation(summary = "JSON de denúncias", description = "Método que grava JSON das denúncias de publicações ou comentários", tags = {"Denúncias"})
+    @GetMapping(value = "/denuncias/json", produces = "application/json")
+    public ResponseEntity<Resource> gravarJsonDenuncias(@RequestParam String tipo) throws IOException {
+        Resource resource = denunciaService.gravaJsonDenuncias(tipo);
+
+        if (resource == null) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + tipo + "s_denunciados.json\"")
+                .body(resource);
+    }
+
+    @ApiResponse(responseCode = "200", description = "Denúncias XML")
+    @ApiResponse(responseCode = "404", description = "Não existem denúncias para o tipo especificado")
+    @Operation(summary = "XML de denúncias", description = "Método que grava XML das denúncias de publicações ou comentários", tags = {"Denúncias"})
+    @GetMapping(value = "/denuncias/xml", produces = "application/xml")
+    public ResponseEntity<Resource> gravarXmlDenuncias(@RequestParam String tipo) throws IOException {
+        Resource resource = denunciaService.gravaXmlDenuncias(tipo);
+
+        if (resource == null) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_XML)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + tipo + "s_denunciados.xml\"")
+                .body(resource);
+    }
 
     @ApiResponse(responseCode = "200", description = "Denuncias removidas")
     @ApiResponse(responseCode = "404", description = "Publicação não encontrada")
@@ -393,7 +408,35 @@ public class PublicacaoController {
         return ResponseEntity.ok().build();
     }
 
+    //requisição que lista toda as publicacoes de um usuario que recebe o id do usuario
+    @ApiResponse(responseCode = "200", description = "Publicações encontradas")
+    @ApiResponse(responseCode = "204", description = "Publicações vazias")
+    @Operation(summary = "Listar publicações de um usuário", description = "Método que lista todas as publicações de um usuário", tags = {"Publicações"})
+    @GetMapping("/usuario/{idUsuario}")
+    public ResponseEntity<List<PublicacaoListagemResponseDto>> listarPublicacoesPorUsuario(@PathVariable Long idUsuario) {
 
+        List<Publicacao> publicacoes = publicacaoService.listarPorUsuario(idUsuario);
+        List<PublicacaoListagemResponseDto> dtos = PublicacaoMapper.toDto(publicacoes);
+
+        if (dtos.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(dtos);
+    }
+
+    //requisição que altera o statatus da publicacao de ativo para arquivado
+    @ApiResponse(responseCode = "200", description = "Publicação arquivada")
+    @ApiResponse(responseCode = "404", description = "Publicação não encontrada")
+    @Operation(summary = "Arquivar publicação", description = "Método que arquiva uma publicação", tags = {"Publicações"})
+    @PatchMapping("/{id}/arquivar")
+    public ResponseEntity<PublicacaoListagemResponseDto> arquivarPublicacao(@PathVariable int id) {
+
+        Publicacao publicacao = publicacaoService.arquivarPublicacao(id);
+        PublicacaoListagemResponseDto dto = PublicacaoMapper.toDto(publicacao);
+
+        return ResponseEntity.ok(dto);
+    }
 
 
 

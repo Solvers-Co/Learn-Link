@@ -13,7 +13,7 @@ import java.util.Optional;
 public class TipoUsuarioService {
     private final TipoUsuarioRepository tipoUsuarioRepository;
 
-    public TipoUsuario buscarPorId(int id){
+    public TipoUsuario buscarPorId(int id) {
         Optional<TipoUsuario> tipoUsuario = tipoUsuarioRepository.findById(id);
 
         if (tipoUsuario.isEmpty()) throw new NaoEncontradoException("Tipo de usuário");
@@ -21,7 +21,7 @@ public class TipoUsuarioService {
         return tipoUsuario.get();
     }
 
-    public TipoUsuario buscarPorTipoUsuario(String tipoUsuario){
+    public TipoUsuario buscarPorTipoUsuario(String tipoUsuario) {
         Optional<TipoUsuario> optTipoUsuario = tipoUsuarioRepository.findByTipoUsuario(tipoUsuario);
 
         if (optTipoUsuario.isEmpty()) throw new NaoEncontradoException("Tipo de usuário");

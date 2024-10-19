@@ -3,7 +3,7 @@ import styles from './Header.module.css';
 import Logo from '../../utils/assets/logo_vermelha_fundo_branco.png';
 import IconePesquisar from '../../utils/assets/icone_pesquisar.svg';
 import IconeMenu from '../../utils/assets/icone_menu_hamburguer.svg';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom'; // Importa useLocation
 import MenuLateral from '../menuLateral/MenuLateral';
 
 function Header({ onSearchResult }) {
@@ -14,6 +14,7 @@ function Header({ onSearchResult }) {
     const menuIconRef = useRef(null);
     const menuRef = useRef(null);
     const navigate = useNavigate();
+    const location = useLocation(); // Pega a localização atual
 
     const handleFeedGeral = () => {
         navigate('/feedGeral');
@@ -55,6 +56,9 @@ function Header({ onSearchResult }) {
         };
     }, []);
 
+    // Verifica se a rota atual permite a pesquisa
+    const isSearchAllowed = location.pathname === '/feedGeral'; // Permite apenas na página 'feedGeral'
+
     return (
         <>
             <div className={styles.header} ref={headerRef}>
@@ -62,7 +66,7 @@ function Header({ onSearchResult }) {
                     <img src={Logo} alt='Logo Vermelha' onClick={handleFeedGeral} />
                 </div>
                 <div className={styles.pesquisar}>
-                    {searchVisible && (
+                    {searchVisible && isSearchAllowed && ( // Exibe o campo de pesquisa apenas se for permitido
                         <input
                             type="text"
                             value={searchValue}
@@ -74,8 +78,9 @@ function Header({ onSearchResult }) {
                     <img
                         src={IconePesquisar}
                         alt='Ícone pesquisar'
-                        onClick={handleSearchClick}
+                        onClick={isSearchAllowed ? handleSearchClick : null} // Bloqueia o clique se não for permitido
                         className={styles.searchIcon}
+                        style={{ opacity: isSearchAllowed ? 1 : 0.5 }} // Reduz a opacidade se bloqueado
                     />
                 </div>
                 <div className={styles.menu}>
