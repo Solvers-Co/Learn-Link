@@ -84,13 +84,13 @@ public class DenunciaService {
         return denunciaRespository.save(denuncia);
     }
 
-    private Boolean verificaSeUsuarioJaDenunciouPublicacao(Publicacao publicacao, Usuario usuario) {
+    public Boolean verificaSeUsuarioJaDenunciouPublicacao(Publicacao publicacao, Usuario usuario) {
         Optional<Denuncia> denuncia = denunciaRespository.findByPublicacaoAndUsuario(publicacao, usuario);
 
         return denuncia.isPresent();
     }
 
-    private Boolean verificaSeUsuarioJaDenunciouComentario(Comentario comentario, Usuario usuario) {
+    public Boolean verificaSeUsuarioJaDenunciouComentario(Comentario comentario, Usuario usuario) {
         Optional<Denuncia> denuncia = denunciaRespository.findByComentarioAndUsuario(comentario, usuario);
 
         if (denuncia.isPresent()) {

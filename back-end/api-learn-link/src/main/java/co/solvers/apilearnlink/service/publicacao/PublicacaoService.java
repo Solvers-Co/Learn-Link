@@ -10,6 +10,7 @@ import co.solvers.apilearnlink.domain.tipopublicacao.repository.TipoPublicacaoRe
 import co.solvers.apilearnlink.domain.usuario.Usuario;
 import co.solvers.apilearnlink.exception.InvalidoException;
 import co.solvers.apilearnlink.exception.NaoEncontradoException;
+import co.solvers.apilearnlink.exception.PublicacaoJaArquivadaException;
 import co.solvers.apilearnlink.service.canal.CanalService;
 import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoCriacaoRequestDto;
 import co.solvers.apilearnlink.service.publicacao.dto.QuantidadePublicacaoDiaListagemDto;
@@ -60,6 +61,10 @@ public class PublicacaoService {
     }
 
     public Page<Publicacao> listarPublicacoesPorCanal(Long canalId, int page, int size, String sortDirection) {
+        if (!sortDirection.equalsIgnoreCase("ASC") && !sortDirection.equalsIgnoreCase("DESC")) {
+            throw new IllegalArgumentException("Invalid sort direction: " + sortDirection);
+        }
+
         Sort sort = Sort.by("dataHora");
         sort = sortDirection.equalsIgnoreCase("ASC") ? sort.ascending() : sort.descending();
         Pageable pageable = PageRequest.of(page, size, sort);
@@ -149,7 +154,7 @@ public class PublicacaoService {
         Optional<TipoPublicacao> optTipoPublicacao = tipoPublicacaoRepository.findById(novaPublicacao.getIdTipoPublicacao());
 
         if (optTipoPublicacao.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tipo de publicação inválido");
+            throw new NaoEncontradoException("Tipo de publicação");
         }
     }
 
@@ -161,18 +166,16 @@ public class PublicacaoService {
     }
 
     public void verificaTipoPublicacaoVazio(String tipoPublicacao) {
-
-        if (tipoPublicacao.isBlank()) {
+        if (tipoPublicacao == null || tipoPublicacao.isBlank()) {
             throw new InvalidoException("Tipo de publicação");
-
         }
     }
 
-    public void verificaPublicacaoAtiva (int idPublicacao) {
+    public void verificaPublicacaoAtiva(int idPublicacao) {
         Optional<Publicacao> publicacaoOptional = publicacaoRepository.findById(idPublicacao);
 
         if (publicacaoOptional.get().getStatus().equals(PublicacaoStatus.EXCLUIDO)) {
-            throw new NaoEncontradoException("Publicação");
+            throw new InvalidoException("Publicação");
         }
     }
 
@@ -181,12 +184,18 @@ public class PublicacaoService {
     }
 
     public Publicacao arquivarPublicacao(int id) {
-        verificaIdVazio(id);
-        verificaPublicacaoAtiva(id);
-
         Optional<Publicacao> optPublicacao = publicacaoRepository.findById(id);
 
+        if (optPublicacao.isEmpty()) {
+            throw new NaoEncontradoException("Publicação não encontrada");
+        }
+
         Publicacao publicacao = optPublicacao.get();
+
+        if (publicacao.getStatus() == PublicacaoStatus.ARQUIVADO) {
+            throw new PublicacaoJaArquivadaException("Publicação já arquivada");
+        }
+
         publicacao.setStatus(PublicacaoStatus.ARQUIVADO);
 
         return publicacaoRepository.save(publicacao);

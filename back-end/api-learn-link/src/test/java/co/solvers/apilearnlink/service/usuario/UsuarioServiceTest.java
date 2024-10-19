@@ -2,7 +2,6 @@ package co.solvers.apilearnlink.service.usuario;
 
 import co.solvers.apilearnlink.domain.classificacao.Classificacao;
 import co.solvers.apilearnlink.domain.endereco.Endereco;
-import co.solvers.apilearnlink.domain.escolaridade.Escolaridade;
 import co.solvers.apilearnlink.domain.tipostatus.TipoStatus;
 import co.solvers.apilearnlink.domain.tipostatus.repository.TipoStatusRepository;
 import co.solvers.apilearnlink.domain.tipousuario.TipoUsuario;
@@ -11,7 +10,6 @@ import co.solvers.apilearnlink.domain.usuario.repository.UsuarioRepository;
 import co.solvers.apilearnlink.exception.NaoEncontradoException;
 import co.solvers.apilearnlink.service.classificacao.ClassificacaoService;
 import co.solvers.apilearnlink.service.endereco.EnderecoService;
-import co.solvers.apilearnlink.service.escolaridade.EscolaridadeService;
 import co.solvers.apilearnlink.service.tipoStatus.TipoStatusService;
 import co.solvers.apilearnlink.service.tipousuario.TipoUsuarioService;
 import org.junit.jupiter.api.DisplayName;
@@ -37,14 +35,10 @@ public class UsuarioServiceTest {
     private UsuarioService service;
 
     @Mock
-    private EscolaridadeService escolaridadeService;
-
-    @Mock
     private ClassificacaoService classificacaoService;
 
     @Mock
     private EnderecoService enderecoService;
-
 
     @Mock
     private TipoUsuarioService tipoUsuarioService;
@@ -67,43 +61,40 @@ public class UsuarioServiceTest {
         @DisplayName("Deve criar um usuário")
         public void deveCriarUmUsuario() {
 
-            Escolaridade escolaridade = new Escolaridade(1, "ENSINO MEDIO COMPLETO");
             Classificacao classificacao = new Classificacao(1, "JUNIOR");
-            Endereco endereco = new Endereco(1, "Rua dos Bobos", 10, "Algum Lugar", "São Paulo", "SP", "04798522");
+            Endereco endereco = new Endereco(1, "Bairro dos Bobos", "São Paulo", "São Paulo", "04798522");
             TipoStatus tipoStatus = new TipoStatus(1, "PENDENTE");
             TipoUsuario tipoUsuario = new TipoUsuario(1, "COMUM");
 
-            Usuario usuario = new Usuario(
-                    100L,
-                    "Paulo",
-                    "69732014789",
-                    "paulo.gmail.com",
-                    "paulo123",
-                    "MATEMATICA",
-                    escolaridade,
-                    classificacao,
-                    endereco,
-                    tipoStatus,
-                    tipoUsuario);
+            Usuario usuario = new Usuario();
+            usuario.setNome("Paulo");
+            usuario.setCpf("69732014789");
+            usuario.setEmail("paulo@gmail.com");
+            usuario.setSenha("paulo123");
+            usuario.setEndereco(endereco);
 
-            Usuario usuarioNovo = new Usuario();
-            usuarioNovo.setNome("Paulo");
-            usuarioNovo.setCpf("69732014789");
-            usuarioNovo.setEmail("paulo.gmail.com");
-            usuarioNovo.setSenha("paulo123");
-            usuarioNovo.setEndereco(endereco);
-
+            Usuario usuarioSalvo = new Usuario();
+            usuarioSalvo.setId(100L);
+            usuarioSalvo.setNome("Paulo");
+            usuarioSalvo.setCpf("69732014789");
+            usuarioSalvo.setEmail("paulo@gmail.com");
+            usuarioSalvo.setSenha("senhaCriptografada");
+            usuarioSalvo.setEndereco(endereco);
+            usuarioSalvo.setTipoStatus(tipoStatus);
+            usuarioSalvo.setTipoUsuario(tipoUsuario);
+            usuarioSalvo.setClassificacao(classificacao);
 
             Mockito.when(tipoStatusService.buscarPorId(1)).thenReturn(tipoStatus);
             Mockito.when(classificacaoService.buscarPorClassificacao("JUNIOR")).thenReturn(classificacao);
             Mockito.when(tipoUsuarioService.buscarPorTipoUsuario("COMUM")).thenReturn(tipoUsuario);
-            Mockito.when(service.criar(usuarioNovo, 1)).thenReturn(usuario);
+            Mockito.when(passwordEncoder.encode("paulo123")).thenReturn("senhaCriptografada");
+            Mockito.when(repository.save(usuario)).thenReturn(usuarioSalvo);
 
-            Usuario usuarioSalvo = service.criar(usuarioNovo, 1);
+            Usuario resultado = service.criar(usuario);
 
-            assertEquals(usuario.getTipoUsuario().getTipoUsuario(), usuarioSalvo.getTipoUsuario().getTipoUsuario());
-            assertEquals(usuario.getTipoStatus().getStatus(), usuarioSalvo.getTipoStatus().getStatus());
-            assertEquals(usuario, usuarioSalvo);
+            assertEquals(usuarioSalvo.getTipoUsuario().getTipoUsuario(), resultado.getTipoUsuario().getTipoUsuario());
+            assertEquals(usuarioSalvo.getTipoStatus().getStatus(), resultado.getTipoStatus().getStatus());
+            assertEquals(usuarioSalvo, resultado);
         }
     }
 

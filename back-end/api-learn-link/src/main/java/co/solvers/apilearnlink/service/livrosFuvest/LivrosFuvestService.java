@@ -92,4 +92,10 @@ public class LivrosFuvestService {
 
         return listaLivros;
     }
+
+    protected BufferedReader createBufferedReader(Path path) throws IOException {
+        return new BufferedReader(new FileReader(path.toFile()));
+    }
+
+
 }
