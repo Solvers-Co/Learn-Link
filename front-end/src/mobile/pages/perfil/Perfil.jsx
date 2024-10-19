@@ -14,6 +14,7 @@ import Comentario from '../../components/comentario/Comentario';
 import Enviar from '../../utils/assets/Enviar.png';
 import fechar from '../../utils/assets/icone_x.svg';
 
+import Dropzone from '../../components/dropzone/Dropzone';
 
 // generateInitials diferente do padrão
 function generateInitials(name) {
@@ -48,6 +49,8 @@ function generateInitials(name) {
     return <div style={avatarStyle}>{initials}</div>;
 }
 
+
+
 const Perfil = () => {
     const { idUsuario } = useParams(); // Pegando o id do usuário da URL
     const [nome, setNome] = useState('Usuário Desconhecido');
@@ -65,6 +68,7 @@ const Perfil = () => {
 
     const [popupAbertoId, setPopupAbertoId] = useState(null);
 
+    const [imagem, setImagem] = useState("")
 
     const idUsuarioLogado = idUsuario;
     const nomeUsuarioLogado = sessionStorage.getItem('nome');
@@ -215,6 +219,8 @@ const Perfil = () => {
 
     const avatar = useMemo(() => generateInitials(nomeFormatado), [nomeFormatado]);
 
+    const [showPopup, setShowPopup] = useState(false);
+
     return (
         <>
             <Header />
@@ -225,6 +231,7 @@ const Perfil = () => {
                             {avatar}
                             <span className={styles.nome}>{nome}</span>
                             <span className={styles.email}>{email}</span>
+                            <button onClick={() => setShowPopup(true)}>botao</button>
                         </div>
                         <div className={styles.tooltip}>
                             <Tooltip txt="Ganhará a classificação: Iniciante - 0 interações
@@ -317,6 +324,17 @@ const Perfil = () => {
                         />
                     </div>
                 </Modal>
+
+                {/* Popup para Dropzone */}
+                {showPopup && (
+                    <div className={styles.popup}>
+                        <div className={styles.popupContent}>
+                            <Dropzone />
+                            <button onClick={() => setShowPopup(false)}>Fechar</button>
+                        </div>
+                    </div>
+                )}
+
             </div>
         </>
     );
