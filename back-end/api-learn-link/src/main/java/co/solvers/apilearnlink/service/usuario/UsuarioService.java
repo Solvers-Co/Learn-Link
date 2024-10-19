@@ -50,9 +50,8 @@ import software.amazon.awssdk.services.lambda.model.InvokeRequest;
 import software.amazon.awssdk.services.lambda.model.InvokeResponse;
 import software.amazon.awssdk.services.lambda.model.LambdaException;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -282,10 +281,14 @@ public class UsuarioService {
         return usuarios;
     }
 
-    public RespostaImagem uploadFotoPerfil(String imagemBase64, Long id){
+    public RespostaImagem uploadFotoPerfil(byte[] imagemBytes, Long id){
 
         String funcao = "arn:aws:lambda:us-east-1:718117031225:function:lambda-envio-imagens-learnlink";
         Region region = Region.US_EAST_1;
+
+        String base64String = Base64.getEncoder().encodeToString(imagemBytes);
+        LocalDateTime dataImagem = LocalDateTime.now();
+        String dataImagemString = dataImagem.toString();
 
         LambdaClient awsLambda = LambdaClient.builder()
                 .region(region)
@@ -295,7 +298,10 @@ public class UsuarioService {
 
         InvokeResponse res = null;
         try {
-            Map<String, String> parametros = Map.of("imageBase64", imagemBase64);
+            Map<String, String> parametros = new HashMap<>();
+            parametros.put("imageBase64", base64String);
+            parametros.put("nomeArquivo", dataImagemString);
+            System.out.println(parametros);
 
             SdkBytes payload = SdkBytes.fromUtf8String(objectMapper.writeValueAsString(parametros));
 
@@ -312,11 +318,11 @@ public class UsuarioService {
                     objectMapper.readValue(value, RespostaImagem.class);
 
             System.out.println();
-            if (respostaImagem.valido()) {
+            if (respostaImagem.status() == 201) {
                 System.out.println("Upload da imagem concluído!");
 
                 Usuario usuario = buscarPorId(id);
-                usuario.setUrlImagemPerfil(imagemBase64);
+                usuario.setUrlImagemPerfil(dataImagemString);
                 usuarioRepository.save(usuario);
 
                 return respostaImagem;

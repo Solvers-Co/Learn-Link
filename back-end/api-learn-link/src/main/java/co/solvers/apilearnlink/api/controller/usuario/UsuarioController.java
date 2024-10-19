@@ -281,9 +281,9 @@ public class UsuarioController {
     }
 
     @PatchMapping("/upload-foto-perfil/{id}")
-    public ResponseEntity<RespostaImagem> uploadFotoPerfil(@RequestBody ImagemPerfilDto imagemBase64, @PathVariable Long id){
+    public ResponseEntity<RespostaImagem> uploadFotoPerfil(@RequestBody ImagemPerfilDto imagemBytes, @PathVariable Long id){
 
-        RespostaImagem resposta = usuarioService.uploadFotoPerfil(imagemBase64.getImagemBase64(), id);
+        RespostaImagem resposta = usuarioService.uploadFotoPerfil(imagemBytes.getImagemBytes(), id);
 
         return ResponseEntity.status(200).build();
     }

@@ -6,5 +6,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ImagemPerfilDto {
-    private String imagemBase64;
+    private byte[] imagemBytes;
 }
