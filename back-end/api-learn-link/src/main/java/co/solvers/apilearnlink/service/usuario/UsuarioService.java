@@ -110,7 +110,7 @@ public class UsuarioService {
     public Usuario finalizarCadastro(Long idUsuario, Long idEspecialidade, @Valid EnderecoCriacaoDto enderecoCadastrar) {
         Usuario usuarioBd = buscarPorId(idUsuario);
 
-        if (usuarioBd.getEndereco() != null && usuarioBd.getEspecialidade() != null){
+        if (usuarioBd.getEndereco() != null && usuarioBd.getEspecialidade() != null) {
             throw new ConflitoException("Usuário");
         }
 
@@ -151,7 +151,7 @@ public class UsuarioService {
         );
     }
 
-    private HashTableUsuario populaHashTable(){
+    private HashTableUsuario populaHashTable() {
         List<Usuario> usuarios = usuarioRepository.findAll();
         HashTableUsuario usuariosHashTable = new HashTableUsuario(5);
 
@@ -170,13 +170,13 @@ public class UsuarioService {
 
         HashTableUsuario usuarios = populaHashTable();
 
-        if (usuarios.isEmpty()){
+        if (usuarios.isEmpty()) {
             throw new NaoEncontradoException("Usuario");
         }
 
         Usuario usuario = usuarios.busca(nome);
 
-        if (usuario == null){
+        if (usuario == null) {
             throw new NaoEncontradoException("Usuario");
         } else {
             return usuario;
@@ -324,42 +324,27 @@ public class UsuarioService {
     public Page<UsuarioAceitacaoListagemDto> listagemDeUsuariosNegadosPaginado(Pageable pageable) {
         return usuarioRepository.findAllUsuariosNegadosPaginado(pageable);
     }
+
     public Usuario classificarUsuario(Long id) {
         Optional<QtdReacoesComentariosUsuarioView> reacoes = qtdReacoesComentariosUsuarioService.listagemQtdReacoesComentarios(id);
         Optional<Usuario> usuarioEncontrado = usuarioRepository.findById(id);
 
         int qtdPontosUsuario = reacoes.get().getReacoes() * reacoes.get().getPontuacao();
-        if (qtdPontosUsuario >= 100){
+        if (qtdPontosUsuario >= 100) {
             Classificacao classificacao = classificacaoService.buscarPorClassificacao("ESPECIALISTA");
             usuarioEncontrado.get().setClassificacao(classificacao);
-        }else if (qtdPontosUsuario >= 60){
+        } else if (qtdPontosUsuario >= 60) {
             Classificacao classificacao = classificacaoService.buscarPorClassificacao("SENIOR");
             usuarioEncontrado.get().setClassificacao(classificacao);
-        }else if (qtdPontosUsuario >= 30){
+        } else if (qtdPontosUsuario >= 30) {
             Classificacao classificacao = classificacaoService.buscarPorClassificacao("PLENO");
             usuarioEncontrado.get().setClassificacao(classificacao);
-        }else {
+        } else {
             Classificacao classificacao = classificacaoService.buscarPorClassificacao("JUNIOR");
             usuarioEncontrado.get().setClassificacao(classificacao);
         }
 
         return usuarioRepository.save(usuarioEncontrado.get());
     }
-
-//    public List<UsuarioAceitacaoListagemDto> listagemDeUsuariosAtivos(){
-//        return usuarioRepository.findAllUsuariosAtivos();
-//    }
-//
-//    public List<UsuarioAceitacaoListagemDto> listagemDeUsuariosPendentes(){
-//        return usuarioRepository.findAllUsuariosPendentes();
-//    }
-
-//    public List<UsuarioAceitacaoListagemDto> listagemDeUsuariosNegados(){
-//        return usuarioRepository.findAllUsuariosNegados();
-//    }
-
-    //    public List<UsuarioAceitacaoListagemDto> listagemDeUsuarios(){
-//        return usuarioRepository.findAllUsuarios();
-//    }
 
 }

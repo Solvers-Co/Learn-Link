@@ -26,14 +26,14 @@ public class EspecialidadeService {
     }
 
     public Especialidade buscarPorNome(String nome) {
-        Optional<Especialidade> especialidade = especialidadeRepository.findByMateria(nome);
+    Optional<Especialidade> especialidade = especialidadeRepository.findByMateria(nome);
 
-        if (especialidade.isPresent()) {
-            throw new NaoEncontradoException("Especialidade");
-        } else {
-            return especialidade.get();
-        }
+    if (especialidade.isEmpty()) {
+        throw new NaoEncontradoException("Especialidade");
+    } else {
+        return especialidade.get();
     }
+}
 
     public List<Especialidade> listar() {
         return especialidadeRepository.findAll();

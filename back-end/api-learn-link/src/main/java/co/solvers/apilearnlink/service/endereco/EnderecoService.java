@@ -22,8 +22,10 @@ public class EnderecoService {
         return endereco.get();
     }
 
-    public Endereco salvar(Endereco endereco) {
-        return enderecoRepository.save(endereco);
+public Endereco salvar(Endereco endereco) {
+    if (endereco == null) {
+        throw new IllegalArgumentException("Endereço não pode ser nulo");
     }
-
+    return enderecoRepository.save(endereco);
+}
 }
