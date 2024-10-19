@@ -4,53 +4,63 @@ import styles from './Dropzone.module.css';
 import api from '../../../api';
 import { toast } from 'react-toastify'; // Usando react-toastify para exibir os toasts
 
-function toBase64(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result.split(",")[1]);
-        reader.onerror = (error) => reject(error);
-    });
-}
-
 const Dropzone = ({ origem }) => {
     const [uploadedImages, setUploadedImages] = useState([]);
-    const [message, setMessage] = useState('');
     const [imagem, setImagem] = useState(null); // Mantém a última imagem carregada
 
-    const handleImageChange = async (file) => {
-        const base64Image = await toBase64(file);
-        setImagem(base64Image); // Atualiza o estado com a imagem em base64
+    // Função para ler a imagem e convertê-la para bytes
+    const handleImageChange = (file) => {
+        if (file) {
+            const reader = new FileReader();
+            reader.readAsArrayBuffer(file);  // Isso vai disparar o 'onloadend'
+
+            reader.onloadend = () => {
+                const imageBytes = reader.result;
+                console.log("Imagem lida como ArrayBuffer:", imageBytes);
+
+                setImagem(imageBytes); // Salva os bytes da imagem no estado
+            };
+
+            reader.onerror = () => {
+                toast.error("Erro ao ler o arquivo");
+            };
+        }
     };
 
-    const onDrop = useCallback(acceptedFiles => {
+    const fetchImagem = async (imageBytes) => {
+        const payload = {
+            imagemBytes: Array.from(new Uint8Array(imageBytes))
+        };
+
+        try {
+            const response = await api.patch(`/usuarios/upload-foto-perfil/${sessionStorage.getItem("userId")}`, payload);
+            if (response.status === 200) {
+                toast.success('Imagem salva com sucesso!');
+            } else {
+                toast.error('Falha ao salvar a imagem.');
+            }
+        } catch (error) {
+            toast.error('Erro ao conectar com o servidor.');
+            console.error(error);
+        }
+    };
+
+    const onDrop = useCallback((acceptedFiles) => {
         acceptedFiles.forEach(file => {
-            handleImageChange(file); // Converte a imagem para base64
-            setUploadedImages(prevState => [...prevState, URL.createObjectURL(file)]);
+            handleImageChange(file); // Lê o arquivo selecionado e o converte para ArrayBuffer
+            setUploadedImages(prevState => [...prevState, URL.createObjectURL(file)]); // Exibe a imagem para o usuário
         });
     }, []);
 
     const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
-    // Função para salvar a imagem no servidor
-    const handleSaveImage = async () => {
+    const handleSaveImage = () => {
         if (!imagem) {
-            toast.error("Nenhuma imagem anexada"); // Exibe toast de erro
+            toast.error("Nenhuma imagem anexada");
             return;
         }
 
-        const url = `/upload-foto-perfil/${sessionStorage.getItem("userId")}`;
-        try {
-            const response = await api.patch(url, { imagem });
-            if (response.status === 200) {
-                toast.success('Imagem salva com sucesso!'); // Exibe toast de sucesso
-            } else {
-                toast.error('Falha ao salvar a imagem.'); // Exibe toast de falha
-            }
-        } catch (error) {
-            toast.error('Erro ao conectar com o servidor.'); // Exibe toast de erro
-            console.error(error);
-        }
+        fetchImagem(imagem); // Chama a função para salvar a imagem no servidor
     };
 
     return (
@@ -60,7 +70,6 @@ const Dropzone = ({ origem }) => {
                 <input {...getInputProps()} />
                 <p>Arraste e solte suas imagens aqui, ou clique para selecionar</p>
             </div>
-            {message && <p className={styles['message']}>{message}</p>}
 
             <div className={styles['uploaded-images']}>
                 {uploadedImages.length > 0 && <h2>Imagens enviadas:</h2>}
