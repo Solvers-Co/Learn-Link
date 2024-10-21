@@ -25,6 +25,7 @@ public class Usuario {
     private String cpf;
     private String email;
     private String senha;
+    private String urlImagemPerfil;
     @OneToOne
     private Especialidade especialidade;
     @OneToOne

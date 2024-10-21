@@ -1,0 +1,23 @@
+.image-upload-container {
+  text-align: center;
+}
+
+.dropzone {
+  margin: 20px auto;
+  padding: 20px;
+  border: 2px dashed #cccccc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.message {
+  color: green;
+  font-weight: bold;
+}
+
+.uploaded-images img {
+  max-width: 100px;
+  margin: 10px;
+}
+
+  
