@@ -96,6 +96,7 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/comentarios/{idComentario}/reagir/{idReacao}"),
             new AntPathRequestMatcher("/comentarios/publicacao/{idPublicacao}"),
             new AntPathRequestMatcher("/publicacoes/quantidade-publicacoes-por-dia-mes/"),
+            new AntPathRequestMatcher("/publicacoes/denuncias/ordenadasPorIa"),
             new AntPathRequestMatcher("/comentarios/quantidade-comentarios-por-dia-mes/"),
             new AntPathRequestMatcher("/comentarios/publicacao/{idPublicacao}/paginado"),
             new AntPathRequestMatcher("/comentarios/{idComentario}/denunciar"),

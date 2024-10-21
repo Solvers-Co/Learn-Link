@@ -11,13 +11,10 @@ import co.solvers.apilearnlink.service.comentario.dto.mapper.ComentarioMapper;
 import co.solvers.apilearnlink.service.denuncia.DenunciaService;
 import co.solvers.apilearnlink.service.denuncia.dto.DenunciaPublicacaoCriarDto;
 import co.solvers.apilearnlink.service.denuncia.dto.DenunciaPublicacaoListagemDto;
+import co.solvers.apilearnlink.service.publicacao.dto.*;
 import co.solvers.apilearnlink.service.publicacoesDenunciadas.dto.PublicacoesDenunciadasDto;
 import co.solvers.apilearnlink.service.denuncia.dto.mapper.DenunciaMapper;
 import co.solvers.apilearnlink.service.publicacao.PublicacaoService;
-import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoCriacaoRequestDto;
-import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoListagemResponseDto;
-import co.solvers.apilearnlink.service.publicacao.dto.QuantidadePublicacaoDiaListagemDto;
-import co.solvers.apilearnlink.service.publicacao.dto.QuantidadePublicacaoMesCanalListagemDto;
 import co.solvers.apilearnlink.service.publicacao.dto.mapper.PublicacaoMapper;
 import co.solvers.apilearnlink.service.publicacoesDenunciadas.dto.mapper.PublicacoesDenunciadasMapper;
 import co.solvers.apilearnlink.service.reacao.ReacaoService;
@@ -33,10 +30,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.core.io.Resource;
@@ -329,6 +324,16 @@ public class PublicacaoController {
         }
     }
 
+    @GetMapping("/denuncias/ordenadasPorIa")
+    public ResponseEntity<List<PublicacaoDenunciadasListagemComIa>> listarPublicacoesDenunciadasOrdenadasPorIa() {
+        try {
+            List<PublicacaoDenunciadasListagemComIa> publicacoesClassificadas = denunciaService.buscaPublicacoesDenunciadasOrdenadasPorIa();
+            return ResponseEntity.ok(publicacoesClassificadas);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
     @ApiResponse(responseCode = "200", description = "CSV de Denúncias")
     @ApiResponse(responseCode = "404", description = "Não existem denúncias para o tipo especificado")
     @Operation(summary = "CSV de denúncias", description = "Método que grava CSV das denúncias de publicações ou comentários", tags = {"Denúncias"})
@@ -437,7 +442,6 @@ public class PublicacaoController {
 
         return ResponseEntity.ok(dto);
     }
-
 
 
 //    @PostMapping("/comentarios")
