@@ -34,6 +34,20 @@ const TelaDenuncias = () => {
         }
     };
 
+    const fetchDenunciasPorIa = async () => {
+        setLoading(true);
+        try {
+            const endpoint = `/publicacoes/denuncias/ordenadasPorIa`;
+            const response = await api.get(endpoint);
+            console.log(response.data);
+            setDenuncias(response.data);
+        } catch (err) {
+            setError('Não foi possível carregar as denúncias');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
         fetchDenuncias();
     }, [tipoDenuncia]);
@@ -114,6 +128,8 @@ const TelaDenuncias = () => {
         }
     };
 
+
+
     return (
         <div className={styles.telaDenuncias}>
             <div className={styles.cabecalho}>
@@ -129,6 +145,7 @@ const TelaDenuncias = () => {
                         onClick={() => setShowModal(prev => !prev)} // Alterna entre abrir e fechar o modal
                         title="Exportação de relatórios"
                     />
+                    <button onClick={fetchDenunciasPorIa} className={styles.btnOrdenarPorIa}>Ordenar por IA</button>
                 </div>
                 {showModal && (
                     <div className={styles.modal}>
@@ -190,6 +207,7 @@ const TelaDenuncias = () => {
                                             : comentariosSelecionados.includes(denuncia.comentario?.id)
                                     }
                                     carregarDenuncias={fetchDenuncias}
+                                    classificacao={denuncia?.classificacao}
                                 />
                             ))
                         )}

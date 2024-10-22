@@ -34,7 +34,7 @@ function deletarItem(id, tipo, carregarDenuncias) {
         });
 }
 
-const CardDenuncia = ({ idItem, item, quantidadeDenuncias, tipo, modoSelecao, toggleSelecao, isSelected, carregarDenuncias }) => {
+const CardDenuncia = ({ idItem, item, quantidadeDenuncias, tipo, modoSelecao, toggleSelecao, isSelected, carregarDenuncias, classificacao }) => {
     const [showPopup, setShowPopup] = useState(false);
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [showConfirmationIgnore, setShowConfirmationIgnore] = useState(false);
@@ -44,7 +44,7 @@ const CardDenuncia = ({ idItem, item, quantidadeDenuncias, tipo, modoSelecao, to
     const avatar = useMemo(() => generateInitials(item.usuario.nome), [item.usuario.nome]);
 
     return (
-        <div className={styles.card}>
+        <div className={styles.card} style={classificacao === 'Nocivo' ? { border: '1px solid red' } : { border: 'none' }}>
             <div className={styles.header}>
                 {modoSelecao && (
                     <div className={styles.selecao} onClick={() => toggleSelecao(idItem, tipo)}>
