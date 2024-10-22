@@ -10,6 +10,8 @@ import co.solvers.apilearnlink.domain.usuario.Usuario;
 import co.solvers.apilearnlink.domain.views.comentariosDenunciados.ComentariosDenunciados;
 import co.solvers.apilearnlink.domain.views.publicacoesDenunciadas.PublicacoesDenunciadas;
 import co.solvers.apilearnlink.service.comentario.ComentarioService;
+import co.solvers.apilearnlink.service.comentario.dto.ComentariosDenunciadosListagemComIa;
+import co.solvers.apilearnlink.service.comentariosDenunciados.dto.mapper.ComentariosDenunciadosMapper;
 import co.solvers.apilearnlink.service.denuncia.dto.DenunciaComentarioCriarDto;
 import co.solvers.apilearnlink.service.denuncia.dto.DenunciaPublicacaoCriarDto;
 import co.solvers.apilearnlink.service.publicacao.PublicacaoService;
@@ -448,7 +450,7 @@ public class DenunciaService {
         var modelo = "gpt-3.5-turbo";
         int tamanhoRespostaEsperada = 2048;
         List<Map<String, Object>> resultados = new ArrayList<>();
-        String token = "OPEN_AI_KEY";
+        String token = "KEY_AI";
         var service = new OpenAiService(token, Duration.ofSeconds(60));
 
         // Formatar o prompt com a lista de publicações
@@ -482,6 +484,119 @@ public class DenunciaService {
             // Separar a resposta em linhas e associar a classificação de volta às publicações
             String[] classificacoes = respostaBot.split("\n");
             for (int i = 0; i < publicacoes.size(); i++) {
+                Map<String, Object> publicacaoMap = new HashMap<>();
+                if (i < classificacoes.length) {
+                    publicacaoMap.put("classificacao", classificacoes[i].trim());
+                } else {
+                    publicacaoMap.put("classificacao", "Não classificado");
+                }
+                resultados.add(publicacaoMap);
+            }
+
+            return ResponseEntity.ok(resultados);
+
+        } catch (Exception e) {
+            System.err.println("Erro ao processar a requisição para a API do OpenAI: " + e.getMessage());
+            return ResponseEntity.status(500).body(null);
+        }
+    }
+
+
+    public List<ComentariosDenunciadosListagemComIa> buscaComentariosDenunciadosOrdenadosPorIa() {
+        // Busca publicações denunciadas com status ativo
+        List<ComentariosDenunciados> comentariosDenunciados = denunciaRespository.buscaComentariosDenunciados(ComentarioStatus.ATIVO);
+
+        // Mapeia as publicações para a lista de saída
+        List<ComentariosDenunciadosListagemComIa> comentariosDenunciadosListagemComIa = ComentariosDenunciadosMapper.toIaList(comentariosDenunciados);
+
+        // Prepara a lista de conteúdos para enviar à IA
+        List<String> requestIa = new ArrayList<>();
+        for (ComentariosDenunciadosListagemComIa obj : comentariosDenunciadosListagemComIa) {
+            requestIa.add(obj.getComentario().getComentario());
+        }
+
+        // Chamar o serviço de IA para classificar os conteúdos das publicações
+        ResponseEntity<List<Map<String, Object>>> respostaIa = classificarComentarios(requestIa);
+
+        // Verificar se a resposta da IA foi bem-sucedida
+        if (respostaIa.getStatusCode().is2xxSuccessful() && respostaIa.getBody() != null) {
+            List<Map<String, Object>> comentariosClassificados = respostaIa.getBody();
+
+            // Associar as classificações retornadas às publicações
+            for (int i = 0; i < comentariosDenunciadosListagemComIa.size(); i++) {
+                String classificacao = (String) comentariosClassificados.get(i).get("classificacao");
+                // Ajuste aqui para garantir que a classificação seja "Nocivo" ou "Não nocivo"
+                if ("nocivo".equalsIgnoreCase(classificacao)) {
+                    comentariosDenunciadosListagemComIa.get(i).setClassificacao("Nocivo");
+                } else {
+                    comentariosDenunciadosListagemComIa.get(i).setClassificacao("Não nocivo");
+                }
+            }
+        } else {
+            // Em caso de erro, adicionar uma classificação padrão
+            for (ComentariosDenunciadosListagemComIa obj : comentariosDenunciadosListagemComIa) {
+                obj.setClassificacao("Não classificado");
+            }
+        }
+
+        // Ordenar a lista com base na classificação: Nocivo primeiro
+        comentariosDenunciadosListagemComIa.sort((a, b) -> {
+            if ("Nocivo".equals(a.getClassificacao()) && "Não nocivo".equals(b.getClassificacao())) {
+                return -1; // a deve vir antes
+            } else if ("Não nocivo".equals(a.getClassificacao()) && "Nocivo".equals(b.getClassificacao())) {
+                return 1; // b deve vir antes
+            }
+            return 0; // sem alteração na ordem
+        });
+
+        // Retornar a lista de publicações com classificações
+        return comentariosDenunciadosListagemComIa;
+    }
+
+
+    private ResponseEntity<List<Map<String, Object>>> classificarComentarios(List<String> comentarios) {
+        String promptSistema = "Você receberá uma lista de comentarios. Para cada comentario, classifique-o como 'Nocivo' ou 'Não nocivo' com base no conteúdo. " +
+                "'Nocivo' indica conteúdo que é ofensivo, inapropriado ou desinformativo, enquanto 'Não nocivo' indica que o conteúdo é aceitável para discussões. " +
+                "Por favor, responda apenas com 'Nocivo' ou 'Não nocivo' sem nenhuma explicação adicional ou informação extra. " +
+                "Certifique-se de que suas respostas sejam concisas e diretas.";
+
+        var modelo = "gpt-3.5-turbo";
+        int tamanhoRespostaEsperada = 2048;
+        List<Map<String, Object>> resultados = new ArrayList<>();
+        String token = "KEY_AI";
+        var service = new OpenAiService(token, Duration.ofSeconds(60));
+
+        // Formatar o prompt com a lista de publicações
+        StringBuilder promptBuilder = new StringBuilder(promptSistema);
+        promptBuilder.append("\n\nPublicações:\n");
+
+        for (int i = 0; i < comentarios.size(); i++) {
+            String conteudo = comentarios.get(i);
+            promptBuilder.append(i + 1).append(". Conteúdo: ").append(conteudo).append("\n");
+        }
+
+        promptBuilder.append("\nClassifique cada publicação como 'nocivo' ou 'não nocivo'.");
+
+        // Criar a mensagem para o modelo
+        var mensagens = List.of(
+                new ChatMessage(ChatMessageRole.SYSTEM.value(), promptSistema),
+                new ChatMessage(ChatMessageRole.USER.value(), promptBuilder.toString())
+        );
+
+        var request = ChatCompletionRequest.builder()
+                .model(modelo)
+                .maxTokens(tamanhoRespostaEsperada)
+                .messages(mensagens)
+                .n(1)
+                .build();
+
+        try {
+            var response = service.createChatCompletion(request);
+            var respostaBot = response.getChoices().get(0).getMessage().getContent();
+
+            // Separar a resposta em linhas e associar a classificação de volta às publicações
+            String[] classificacoes = respostaBot.split("\n");
+            for (int i = 0; i < comentarios.size(); i++) {
                 Map<String, Object> publicacaoMap = new HashMap<>();
                 if (i < classificacoes.length) {
                     publicacaoMap.put("classificacao", classificacoes[i].trim());

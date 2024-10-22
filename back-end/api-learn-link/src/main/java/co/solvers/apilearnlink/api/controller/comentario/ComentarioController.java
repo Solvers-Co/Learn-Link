@@ -6,6 +6,7 @@ import co.solvers.apilearnlink.domain.views.comentariosDenunciados.ComentariosDe
 import co.solvers.apilearnlink.domain.views.publicacoesDenunciadas.PublicacoesDenunciadas;
 import co.solvers.apilearnlink.service.comentario.ComentarioService;
 import co.solvers.apilearnlink.service.comentario.dto.ComentarioListagemDto;
+import co.solvers.apilearnlink.service.comentario.dto.ComentariosDenunciadosListagemComIa;
 import co.solvers.apilearnlink.service.comentario.dto.QuantidadeComentarioDiaListagemDto;
 import co.solvers.apilearnlink.service.comentario.dto.mapper.ComentarioMapper;
 import co.solvers.apilearnlink.service.comentariosDenunciados.dto.ComentariosDenunciadosDto;
@@ -16,6 +17,7 @@ import co.solvers.apilearnlink.service.denuncia.dto.DenunciaComentarioListagemDt
 import co.solvers.apilearnlink.service.denuncia.dto.DenunciaPublicacaoCriarDto;
 import co.solvers.apilearnlink.service.denuncia.dto.DenunciaPublicacaoListagemDto;
 import co.solvers.apilearnlink.service.denuncia.dto.mapper.DenunciaMapper;
+import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoDenunciadasListagemComIa;
 import co.solvers.apilearnlink.service.publicacoesDenunciadas.dto.PublicacoesDenunciadasDto;
 import co.solvers.apilearnlink.service.publicacoesDenunciadas.dto.mapper.PublicacoesDenunciadasMapper;
 import co.solvers.apilearnlink.service.reacao.ReacaoService;
@@ -32,6 +34,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -192,6 +195,15 @@ public class ComentarioController {
         }
     }
 
+    @GetMapping("/denuncias/ordenadasPorIa")
+    public ResponseEntity<List<ComentariosDenunciadosListagemComIa>> listarComentariosDenunciadasOrdenadasPorIa() {
+        try {
+            List<ComentariosDenunciadosListagemComIa> comentariosClassificados = denunciaService.buscaComentariosDenunciadosOrdenadosPorIa();
+            return ResponseEntity.ok(comentariosClassificados);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
 
     @ApiResponse(responseCode = "200", description = "Denuncias removidas")
     @ApiResponse(responseCode = "404", description = "Comentario não encontrado")

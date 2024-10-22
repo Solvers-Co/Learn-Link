@@ -1,10 +1,15 @@
 package co.solvers.apilearnlink.service.comentariosDenunciados.dto.mapper;
 
 import co.solvers.apilearnlink.domain.views.comentariosDenunciados.ComentariosDenunciados;
+import co.solvers.apilearnlink.domain.views.publicacoesDenunciadas.PublicacoesDenunciadas;
+import co.solvers.apilearnlink.service.comentario.dto.ComentariosDenunciadosListagemComIa;
 import co.solvers.apilearnlink.service.comentario.dto.mapper.ComentarioMapper;
 import co.solvers.apilearnlink.service.comentariosDenunciados.dto.ComentariosDenunciadosDto;
+import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoDenunciadasListagemComIa;
+import co.solvers.apilearnlink.service.publicacao.dto.mapper.PublicacaoMapper;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ComentariosDenunciadosMapper {
 
@@ -24,5 +29,17 @@ public class ComentariosDenunciadosMapper {
                 .stream()
                 .map(ComentariosDenunciadosMapper::toComentariosDenunciadosDto)
                 .toList();
+    }
+
+    public static List<ComentariosDenunciadosListagemComIa> toIaList(List<ComentariosDenunciados> comentariosDenunciados) {
+        return comentariosDenunciados.stream()
+                .map(entity -> {
+                    ComentariosDenunciadosListagemComIa dto = new ComentariosDenunciadosListagemComIa();
+                    dto.setComentario(ComentarioMapper.toComentarioListagemSimples(entity.getComentario()));
+                    dto.setQuantidadeDenuncias(entity.getQuantidadeDenuncias());
+                    dto.setClassificacao(null);
+                    return dto;
+                })
+                .collect(Collectors.toList());
     }
 }
