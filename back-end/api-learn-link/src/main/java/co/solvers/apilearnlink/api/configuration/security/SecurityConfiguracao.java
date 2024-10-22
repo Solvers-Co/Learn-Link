@@ -103,6 +103,7 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/comentarios/denuncias"),
             new AntPathRequestMatcher("/comentarios/denuncias/csv"),
             new AntPathRequestMatcher("/comentarios/{idPublicacao}/remover-denuncias"),
+            new AntPathRequestMatcher("/comentarios/denuncias/ordenadasPorIa"),
             new AntPathRequestMatcher("/registros/gerar-log/{id}"),
             new AntPathRequestMatcher("/registro-logins/{idUsuario}"),
             new AntPathRequestMatcher("/qtd-materias-nao-respondidas"),
