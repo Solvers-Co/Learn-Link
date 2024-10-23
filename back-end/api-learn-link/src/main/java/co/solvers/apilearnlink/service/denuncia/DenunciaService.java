@@ -450,7 +450,7 @@ public class DenunciaService {
         var modelo = "gpt-3.5-turbo";
         int tamanhoRespostaEsperada = 2048;
         List<Map<String, Object>> resultados = new ArrayList<>();
-        String token = "KEY_AI";
+        String token = System.getenv("OPEN_AI_KEY");
         var service = new OpenAiService(token, Duration.ofSeconds(60));
 
         // Formatar o prompt com a lista de publicações
@@ -563,7 +563,7 @@ public class DenunciaService {
         var modelo = "gpt-3.5-turbo";
         int tamanhoRespostaEsperada = 2048;
         List<Map<String, Object>> resultados = new ArrayList<>();
-        String token = "KEY_AI";
+        String token = System.getenv("OPEN_AI_KEY");
         var service = new OpenAiService(token, Duration.ofSeconds(60));
 
         // Formatar o prompt com a lista de publicações
