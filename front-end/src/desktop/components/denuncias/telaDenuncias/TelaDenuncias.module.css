@@ -19,6 +19,7 @@
 }
 
 .btnOrdenarPorIa {
+    margin: 10px 0px 0px 20px;
     font-family: "Nunito Sans", sans-serif;
     font-size: 16px;
     cursor: pointer;
@@ -32,7 +33,6 @@
     cursor: pointer;
     position: relative;
     z-index: 0;
-    margin-left: 20px;
     border-radius: 10px;
 }
 
@@ -226,7 +226,7 @@
     column-gap: 2vw;
 }
 
-.semDenuncias {
+.semDenuncias, .msgTelaCarregando, .msgTelaErro {
     width: 100%;
     height: 550px;
     font-size: 3rem;

@@ -37,7 +37,9 @@ const TelaDenuncias = () => {
     const fetchDenunciasPorIa = async () => {
         setLoading(true);
         try {
-            const endpoint = `/publicacoes/denuncias/ordenadasPorIa`;
+            const endpoint = tipoDenuncia === 'publicacao'
+                ? '/publicacoes/denuncias/ordenadasPorIa'
+                : '/comentarios/denuncias/ordenadasPorIa';
             const response = await api.get(endpoint);
             console.log(response.data);
             setDenuncias(response.data);
@@ -146,6 +148,9 @@ const TelaDenuncias = () => {
                         title="Exportação de relatórios"
                     />
                     <button onClick={fetchDenunciasPorIa} className={styles.btnOrdenarPorIa}>Ordenar por IA</button>
+                    <div className={styles.tooltip}>
+                        <Tooltip txt={"O botão 'Ordenar por IA' exibe primeiro as publicações ou comentários nocivos em destaque vermelho. A ordenação é feita por IA, podendo haver erros"}/>
+                    </div>
                 </div>
                 {showModal && (
                     <div className={styles.modal}>
@@ -183,9 +188,9 @@ const TelaDenuncias = () => {
             </div>
 
             {loading ? (
-                <div>Carregando...</div>
+                <div className={styles.msgTelaCarregando}>Carregando...</div>
             ) : error ? (
-                <div>{error}</div>
+                <div className={styles.msgTelaErro}>{error}</div>
             ) : (
                 <div className={styles.cardContainer}>
                     <div className={styles.cardsDenuncias}>
