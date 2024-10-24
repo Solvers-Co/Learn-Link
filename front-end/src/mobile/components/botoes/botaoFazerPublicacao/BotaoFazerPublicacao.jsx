@@ -34,6 +34,7 @@ function BotaoFazerPublicacao() {
 
     const fazerPublicacao = () => {
         let byteArray = Uint8Array.from(atob(sessionStorage.getItem("bytesImagemPublicacao")), c => c.charCodeAt(0));
+        console.log("converti " + byteArray)
         const publicacao = {
             conteudo : textoPublicacao,
             idTipoPublicacao: 1,
