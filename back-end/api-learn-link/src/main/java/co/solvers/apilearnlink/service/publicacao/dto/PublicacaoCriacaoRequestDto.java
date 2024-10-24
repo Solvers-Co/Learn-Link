@@ -27,4 +27,5 @@ public class PublicacaoCriacaoRequestDto {
     @Positive
     @Schema(description = "Id do canal", example = "4")
     private int idCanal;
+    private byte[] imagemUrl;
 }

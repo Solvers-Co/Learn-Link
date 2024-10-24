@@ -329,7 +329,7 @@ const Perfil = () => {
                 {showPopup && (
                     <div className={styles.popup}>
                         <div className={styles.popupContent}>
-                            <Dropzone />
+                            <Dropzone origem="usuarios"/>
                             <button onClick={() => setShowPopup(false)}>Fechar</button>
                         </div>
                     </div>
