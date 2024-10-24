@@ -188,9 +188,9 @@ const TelaDenuncias = () => {
             </div>
 
             {loading ? (
-                <div>Carregando...</div>
+                <div className={styles.msgTelaCarregando}>Carregando...</div>
             ) : error ? (
-                <div>{error}</div>
+                <div className={styles.msgTelaErro}>{error}</div>
             ) : (
                 <div className={styles.cardContainer}>
                     <div className={styles.cardsDenuncias}>
