@@ -38,5 +38,6 @@ public class Publicacao {
     List<Comentario> comentarios;
     @OneToMany(mappedBy = "publicacao", cascade = CascadeType.REMOVE)
     List<Reacao> reacoes;
+    private String urlImagem;
 
 }

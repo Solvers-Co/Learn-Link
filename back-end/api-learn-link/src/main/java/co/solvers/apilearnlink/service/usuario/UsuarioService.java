@@ -281,7 +281,7 @@ public class UsuarioService {
         return usuarios;
     }
 
-    public RespostaImagem uploadFotoPerfil(byte[] imagemBytes, Long id){
+    public RespostaImagem uploadFoto(byte[] imagemBytes, Long id){
 
         String funcao = "arn:aws:lambda:us-east-1:718117031225:function:lambda-envio-imagens-learnlink";
         Region region = Region.US_EAST_1;

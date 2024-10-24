@@ -4,6 +4,7 @@ import api from "../../../../api";
 import Styles from "./BotaoFazerPublicacao.module.css";
 import Modal from 'react-modal';
 import { generateInitials } from '../../../utils/functions/GerarIniciais';
+import Dropzone from "../../dropzone/Dropzone";
 
 import publicarIcone from "../../../utils/assets/Publicar.png";
 import fechar from '../../../utils/assets/icone_x.svg';
@@ -12,6 +13,7 @@ function BotaoFazerPublicacao() {
     const [showComentarios, setShowComentarios] = useState(false);
     const [textoPublicacao, setTextoPublicacao] = useState("");
     const [materia, setMateria] = useState("");
+    const [showPopup, setShowPopup] = useState(false);
     const maxCaracteres = 255;
 
     const nomeUsuario = sessionStorage.getItem('nome');
@@ -31,11 +33,13 @@ function BotaoFazerPublicacao() {
     };
 
     const fazerPublicacao = () => {
+        let byteArray = Uint8Array.from(atob(sessionStorage.getItem("bytesImagemPublicacao")), c => c.charCodeAt(0));
         const publicacao = {
             conteudo : textoPublicacao,
             idTipoPublicacao: 1,
             idUsuario : sessionStorage.userId,
-            idCanal : materia
+            idCanal : materia,
+            imagemUrl: byteArray
         };
         console.log(publicacao);
 
@@ -79,11 +83,20 @@ function BotaoFazerPublicacao() {
                             value={textoPublicacao}
                             onChange={handleChange}
                         />
+                    <button onClick={() => setShowPopup(true)}>botao</button>
                     </div>
                     <div className={Styles["contadorCaracteres"]}>
                         {textoPublicacao.length} / {maxCaracteres}
                     </div>
                 </div>
+                {showPopup && (
+                    <div className={Styles.popup}>
+                        <div className={Styles.popupContent}>
+                            <Dropzone origem="publicacoes"/>
+                            <button onClick={() => setShowPopup(false)}>Fechar</button>
+                        </div>
+                    </div>
+                )}
 
                 <div className={Styles["footerPublicar"]}>
                     <span className={Styles["hashtag"]}>#</span>
