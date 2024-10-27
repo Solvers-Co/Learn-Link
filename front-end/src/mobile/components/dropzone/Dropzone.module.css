@@ -2,12 +2,26 @@
   text-align: center;
 }
 
+.titulo {
+  margin-top: 5px;
+  font-size: 25px;
+  font-family: "Nunito Sans", sans-serif;
+}
+
 .dropzone {
-  margin: 20px auto;
+  margin: 40px auto;
   padding: 20px;
   border: 2px dashed #cccccc;
   border-radius: 5px;
   cursor: pointer;
+  width: 70%;
+}
+
+.subtitulo {
+  font-size: 18px;
+  font-family: "Nunito Sans", sans-serif;
+  text-decoration: none;
+  color: #A80301;
 }
 
 .message {
@@ -18,6 +32,17 @@
 .uploaded-images img {
   max-width: 100px;
   margin: 10px;
+}
+
+.save-button {
+  /* margin-top: 20px; */
+  background-color: #A80301;
+  color: white;
+  font-weight: 700;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
   

@@ -6,6 +6,7 @@ import Modal from 'react-modal';
 import { generateInitials } from '../../../utils/functions/GerarIniciais';
 import Dropzone from "../../dropzone/Dropzone";
 
+import IconeImagem from '../../../utils/assets/icone_imagem.png'
 import publicarIcone from "../../../utils/assets/Publicar.png";
 import fechar from '../../../utils/assets/icone_x.svg';
 
@@ -36,10 +37,10 @@ function BotaoFazerPublicacao() {
         let byteArray = Uint8Array.from(atob(sessionStorage.getItem("bytesImagemPublicacao")), c => c.charCodeAt(0));
         console.log("converti " + byteArray)
         const publicacao = {
-            conteudo : textoPublicacao,
+            conteudo: textoPublicacao,
             idTipoPublicacao: 1,
-            idUsuario : sessionStorage.userId,
-            idCanal : materia,
+            idUsuario: sessionStorage.userId,
+            idCanal: materia,
             imagemUrl: byteArray
         };
         console.log(publicacao);
@@ -84,37 +85,54 @@ function BotaoFazerPublicacao() {
                             value={textoPublicacao}
                             onChange={handleChange}
                         />
-                    <button onClick={() => setShowPopup(true)}>botao</button>
                     </div>
                     <div className={Styles["contadorCaracteres"]}>
                         {textoPublicacao.length} / {maxCaracteres}
                     </div>
                 </div>
                 {showPopup && (
-                    <div className={Styles.popup}>
-                        <div className={Styles.popupContent}>
-                            <Dropzone origem="publicacoes"/>
-                            <button onClick={() => setShowPopup(false)}>Fechar</button>
+                    <div className={Styles.blur}>
+                        <div className={Styles.popup}>
+                            <div className={Styles.popupContent}>
+                                <div className={Styles.iconeFechar}>
+                                    <img 
+                                        src={fechar} 
+                                        onClick={() => setShowPopup(false)}
+                                    />
+                                </div>
+                                <div className={Styles.dropzone}>
+                                    <Dropzone origem="publicacoes" />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 )}
 
                 <div className={Styles["footerPublicar"]}>
-                    <span className={Styles["hashtag"]}>#</span>
-                    <select name="materias" id="materias" className={Styles["opcoesMaterias"]} onChange={(e) => setMateria(e.target.value)}>
-                        <option value="0">Selecionar...</option>
-                        <option value="1">Matemática</option>
-                        <option value="2">Português</option>
-                        <option value="3">Biologia</option>
-                        <option value="4">História</option>
-                        <option value="5">Física</option>
-                        <option value="6">Química</option>
-                        <option value="7">Sociologia</option>
-                        <option value="8">Geografia</option>
-                        <option value="9">Inglês</option>
-                        <option value="10">Filosofia</option>
-                        <option value="11">Doações</option>
-                    </select>
+                    <div className={Styles["divCanal"]}>
+                        <span className={Styles["hashtag"]}>#</span>
+                        <select name="materias" id="materias" className={Styles["opcoesMaterias"]} onChange={(e) => setMateria(e.target.value)}>
+                            <option value="0">Selecionar...</option>
+                            <option value="1">Matemática</option>
+                            <option value="2">Português</option>
+                            <option value="3">Biologia</option>
+                            <option value="4">História</option>
+                            <option value="5">Física</option>
+                            <option value="6">Química</option>
+                            <option value="7">Sociologia</option>
+                            <option value="8">Geografia</option>
+                            <option value="9">Inglês</option>
+                            <option value="10">Filosofia</option>
+                            <option value="11">Doações</option>
+                        </select>
+                    </div>
+                    <div className={Styles["divImagem"]}>
+                        <img
+                            src={IconeImagem}
+                            className={Styles["iconeImagem"]}
+                            onClick={() => setShowPopup(true)}
+                        />
+                    </div>
                 </div>
 
             </Modal>

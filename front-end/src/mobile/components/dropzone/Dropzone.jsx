@@ -70,14 +70,14 @@ const Dropzone = ({ origem }) => {
 
     return (
         <div className={styles['image-upload-container']}>
-            <h1>Upload de Imagens</h1>
+            <h1 className={styles['titulo']}>Upload de Imagem</h1>
             <div {...getRootProps()} className={styles['dropzone']}>
                 <input {...getInputProps()} />
-                <p>Arraste e solte suas imagens aqui, ou clique para selecionar</p>
+                <p>Clique para selecionar a imagem</p>
             </div>
 
             <div className={styles['uploaded-images']}>
-                {uploadedImages.length > 0 && <h2>Imagens enviadas:</h2>}
+                {uploadedImages.length > 0 && <h2 className={styles['subtitulo']}>Imagem enviada:</h2>}
                 {uploadedImages.map((image, index) => (
                     <img key={index} src={image} alt={`Uploaded ${index}`} />
                 ))}

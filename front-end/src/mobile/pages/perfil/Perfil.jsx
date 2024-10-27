@@ -13,6 +13,7 @@ import Comentario from '../../components/comentario/Comentario';
 
 import Enviar from '../../utils/assets/Enviar.png';
 import fechar from '../../utils/assets/icone_x.svg';
+import Lapis from '../../utils/assets/icone_lapis.png';
 
 import Dropzone from '../../components/dropzone/Dropzone';
 
@@ -229,9 +230,9 @@ const Perfil = () => {
                     <div className={styles.userInfo}>
                         <div className={styles.user}>
                             {avatar}
+                            <img src={Lapis} className={styles.iconeLapis} onClick={() => setShowPopup(true)}/>
                             <span className={styles.nome}>{nome}</span>
                             <span className={styles.email}>{email}</span>
-                            <button onClick={() => setShowPopup(true)}>botao</button>
                         </div>
                         <div className={styles.tooltip}>
                             <Tooltip txt="Ganhará a classificação: Iniciante - 0 interações
@@ -327,10 +328,17 @@ const Perfil = () => {
 
                 {/* Popup para Dropzone */}
                 {showPopup && (
-                    <div className={styles.popup}>
-                        <div className={styles.popupContent}>
-                            <Dropzone origem="usuarios"/>
-                            <button onClick={() => setShowPopup(false)}>Fechar</button>
+                    <div className={styles.blur}>
+                        <div className={styles.popup}>
+                            <div className={styles.popupContent}>
+                                <div className={styles.iconeFechar}>
+                                        <img 
+                                            src={fechar} 
+                                            onClick={() => setShowPopup(false)}
+                                        />
+                                </div>
+                                <Dropzone origem="usuarios"/>
+                            </div>
                         </div>
                     </div>
                 )}

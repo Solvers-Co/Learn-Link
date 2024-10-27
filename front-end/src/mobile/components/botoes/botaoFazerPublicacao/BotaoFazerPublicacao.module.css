@@ -99,6 +99,31 @@
     margin-left: 47px;
 }
 
+.footerPublicar{
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    gap: 10px;
+    height: 50px;
+    /* margin: 0px 15px 0px 15px; */
+    border-top: 1px solid rgba(0, 0, 0, .4);
+}
+
+/* .divCanal {
+    display: flex;
+    align-self: center;
+} */
+
+.hashtag{
+    font-size: 25px;
+    color: #A80301;
+    font-family: "NunitoSansExtraBold", sans-serif;
+    padding-right: 10px;
+}
+
 .opcoesMaterias{
     height: 30px;
     width: 150px;
@@ -107,6 +132,7 @@
     color: #A80301;
     font-family: "NunitoSansRegular", sans-serif;
     font-size: 18px;
+    margin-bottom: 3px;
 }
 
 .opcoesMaterias option{
@@ -115,21 +141,55 @@
     font-size: 18px;
 }
 
-.footerPublicar{
-    position: fixed;
-    bottom: 0;
+.iconeImagem {
+    width: 35px;
     display: flex;
-    justify-content: start;
-    align-items: center;
-    width: 100%;
-    gap: 10px;
-    height: 50px;
-    padding-left: 30px;
-    border-top: 1px solid rgba(0, 0, 0, .4);
+    justify-content: center;
 }
 
-.hashtag{
-    font-size: 25px;
-    color: #A80301;
-    font-family: "NunitoSansExtraBold", sans-serif;
+.blur {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(2px);
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.popup {
+    position: absolute;
+    top: 30%;
+    background-color: rgb(227, 227, 227);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 10000;
+    padding: 10px;
+    display: flex;
+    left: 10%;
+    height: auto;
+    flex-direction: column;
+    align-items: center;
+    font-family: "Nunito Sans", sans-serif;
+}
+
+.popupContent {
+    height: 100%;
+}
+
+.dropzone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.iconeFechar {
+    display: flex;
+    justify-content: end;
+    align-self: flex-start;
+    padding: 8px 5px 0px 0px;
 }

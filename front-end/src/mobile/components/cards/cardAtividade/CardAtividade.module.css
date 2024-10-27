@@ -17,7 +17,7 @@
     background-color: rgb(255, 255, 255);
     padding: 5px;
     border-radius: 5px;
-    border: 1px solid rgba(0, 0, 0, 0.25);
+    /* border: 1px solid rgba(0, 0, 0, 0.25); */
 }
 
 .primeiraLinha, .segundaLinha {
