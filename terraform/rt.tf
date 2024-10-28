@@ -19,8 +19,13 @@ resource "aws_route" "route" {
 
 // Associando a route table "rt_vpc_learnlink" com a sub-rede "sn_learnlink_public"
 
-resource "aws_route_table_association" "rt_sn_learnlink_public" {
-  subnet_id      = aws_subnet.sn_learnlink_public.id
+resource "aws_route_table_association" "rt_sn_learnlink_public_1" {
+  subnet_id      = aws_subnet.sn_learnlink_public_1.id
+  route_table_id = aws_route_table.rt_vpc_learnlink.id
+}
+
+resource "aws_route_table_association" "rt_sn_learnlink_public_2" {
+  subnet_id      = aws_subnet.sn_learnlink_public_2.id
   route_table_id = aws_route_table.rt_vpc_learnlink.id
 }
 
