@@ -26,6 +26,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -441,6 +442,17 @@ public class PublicacaoController {
         PublicacaoListagemResponseDto dto = PublicacaoMapper.toDto(publicacao);
 
         return ResponseEntity.ok(dto);
+    }
+
+    @GetMapping("/buscar-imagem/{id}")
+    public ResponseEntity<String> buscarImagem(@PathVariable Integer id){
+        String urlImagem = publicacaoService.buscarImagem(id);
+
+        if (urlImagem == null){
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(urlImagem);
     }
 
 

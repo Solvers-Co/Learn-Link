@@ -322,7 +322,7 @@ public class UsuarioService {
                 System.out.println("Upload da imagem concluído!");
 
                 Usuario usuario = buscarPorId(id);
-                usuario.setUrlImagemPerfil(dataImagemString);
+                usuario.setUrlImagemPerfil(respostaImagem.urlArquivo());
                 usuarioRepository.save(usuario);
 
                 return respostaImagem;
@@ -341,6 +341,11 @@ public class UsuarioService {
         return null;
     }
 
+    public String buscarImagem(Long idUsuario){
+        String urlImagemPerfil = usuarioRepository.findUrlImagemPerfilById(idUsuario);
+
+        return  urlImagemPerfil;
+    }
 
 
     // Verificações de existência e vazio

@@ -106,7 +106,7 @@ public class PublicacaoService {
             if (respostaImagem.status() == 201) {
                 System.out.println("Upload da imagem concluído!");
 
-                publicacao.setUrlImagem(dataImagemString);
+                publicacao.setUrlImagem(respostaImagem.urlArquivo());
 
                 return publicacao;
             } else {
@@ -264,5 +264,10 @@ public class PublicacaoService {
         publicacao.setStatus(PublicacaoStatus.ARQUIVADO);
 
         return publicacaoRepository.save(publicacao);
+    }
+
+    public String buscarImagem(Integer id){
+        Publicacao publicacao = publicacaoRepository.findUrlImagemById(id);
+        return publicacao.getUrlImagem();
     }
 }

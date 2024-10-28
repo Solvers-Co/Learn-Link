@@ -56,4 +56,5 @@ public interface PublicacaoRepository extends JpaRepository<Publicacao, Integer>
     @Query("SELECT p FROM Publicacao p WHERE p.usuario.id = :usuarioId AND p.status = :status")
     List<Publicacao> findByUsuarioId(@Param("usuarioId") Long usuarioId, @Param("status") PublicacaoStatus status);
 
+    Publicacao findUrlImagemById(Integer id);
 }

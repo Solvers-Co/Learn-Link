@@ -285,6 +285,17 @@ public class UsuarioController {
         return ResponseEntity.status(200).build();
     }
 
+    @GetMapping("/buscar-imagem-perfil/{id}")
+    public ResponseEntity<String> buscarImagenPerfil(@PathVariable Long id){
+        String urlImagemPerfil = usuarioService.buscarImagem(id);
+
+        if (urlImagemPerfil == null){
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(urlImagemPerfil);
+    }
+
     //    @GetMapping("/buscar-todos-os-usuarios")
 //    public ResponseEntity<List<UsuarioAceitacaoListagemDto>> listagemDeUsuarios() {
 //
