@@ -113,6 +113,7 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/usuarios/classificar-usuario/{id}"),
             new AntPathRequestMatcher("/usuarios/buscarEmail/{email}"),
             new AntPathRequestMatcher("/usuarios/upload-foto-perfil/{id}"),
+            new AntPathRequestMatcher("/buscar-imagem-perfil/{id}"),
             new AntPathRequestMatcher("/media-usuarios-ativos/mes"),
             new AntPathRequestMatcher("/notificacoes"),
             new AntPathRequestMatcher("/notificacoes/{id}"),
