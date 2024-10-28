@@ -33,19 +33,24 @@ function BotaoFazerPublicacao() {
         }
     };
 
-    const fazerPublicacao = () => {
+    async function  fazerPublicacao(){
         let byteArray = Uint8Array.from(atob(sessionStorage.getItem("bytesImagemPublicacao")), c => c.charCodeAt(0));
-        console.log("converti " + byteArray)
+        
+        const imagemUrl = [];
+
+        for (let i = 0; i < byteArray.length; i++) {
+            imagemUrl.push(byteArray[i])       
+        }
+        
         const publicacao = {
             conteudo: textoPublicacao,
             idTipoPublicacao: 1,
             idUsuario: sessionStorage.userId,
             idCanal: materia,
-            imagemUrl: byteArray
+            imagemUrl: imagemUrl
         };
-        console.log(publicacao);
 
-        api.post(`/publicacoes`, publicacao)
+        await api.post(`/publicacoes`, publicacao)
             .then(() => {
                 toast.success("Publicação realizada!");
                 window.location.reload();
