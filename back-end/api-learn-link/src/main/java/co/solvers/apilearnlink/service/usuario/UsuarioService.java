@@ -342,9 +342,9 @@ public class UsuarioService {
     }
 
     public String buscarImagem(Long idUsuario){
-        String urlImagemPerfil = usuarioRepository.findUrlImagemPerfilById(idUsuario);
+        Usuario usuario = usuarioRepository.findUrlImagemPerfilById(idUsuario);
 
-        return  urlImagemPerfil;
+        return  usuario.getUrlImagemPerfil();
     }
 
 
