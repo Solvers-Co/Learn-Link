@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import api from "../../../api"
 
-const Notificacao = ({ corDeFundo, id, corpo, nomeUsuarioGerador, vista }) => {
+const Notificacao = ({ corDeFundo, id, corpo, nomeUsuarioGerador, vista, idUsuarioGerador}) => {
     const [idNotificacao, setId] = useState(id);
     const [conteudo, setConteudo] = useState(corpo);
     const [nomeUsuario, setNomeUsuarioGerador] = useState(nomeUsuarioGerador);
@@ -24,7 +24,7 @@ const Notificacao = ({ corDeFundo, id, corpo, nomeUsuarioGerador, vista }) => {
     useEffect(() => {
         async function buscarImagemPerfil() {
             try {
-                const response = await api.get(`usuarios/buscar-imagem-perfil/${sessionStorage.getItem("userId")}`);
+                const response = await api.get(`usuarios/buscar-imagem-perfil/${idUsuarioGerador}`);
                 console.log(response.data)
                 setSrcImagemPerfil(response.data)
                 // setSrcImagemPerfil("https://s3-learnlink.s3.us-east-1.amazonaws.com/WIN_20240909_09_30_09_Pro.jpg")

@@ -36,6 +36,7 @@ const Notificacoes = () => {
                             id={notificacao.id}
                             corpo={notificacao.corpo}
                             nomeUsuarioGerador={notificacao.nomeUsuarioGerador}
+                            idUsuarioGerador={notificacao.idUsuarioGerador}
                             nomeUsuarioRecebedor={notificacao.nomeUsuarioRecebedor}
                             vista={notificacao.vista}
                         />

@@ -26,6 +26,7 @@ public class NotificacaoMapper {
         dto.setId(entidade.getId());
         dto.setCorpo(entidade.getCorpo());
         dto.setDataHora(entidade.getDataHora());
+        dto.setIdUsuarioGerador(entidade.getUsuarioGerador().getId());
         dto.setNomeUsuarioGerador(entidade.getUsuarioGerador().getNome());
         dto.setNomeUsuarioRecebedor(entidade.getUsuarioRecebedor().getNome());
         dto.setVista(entidade.getVista());
