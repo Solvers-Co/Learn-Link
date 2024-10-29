@@ -145,17 +145,17 @@ const Perfil = () => {
 
     useEffect(() => {
         async function buscarImagemPerfil() {
-            try{
+            try {
                 const response = await api.get(`usuarios/buscar-imagem-perfil/${sessionStorage.getItem("userId")}`);
                 console.log(response.data)
                 setSrcImagemPerfil(response.data)
                 // setSrcImagemPerfil("https://s3-learnlink.s3.us-east-1.amazonaws.com/WIN_20240909_09_30_09_Pro.jpg")
-            }catch(error){
+            } catch (error) {
                 console.log(error)
             }
         }
         buscarImagemPerfil();
-    },[])
+    }, [])
 
     const fetchPublicacoes = async () => {
         try {
@@ -243,9 +243,12 @@ const Perfil = () => {
                 <div className={styles.corFundo}>
                     <div className={styles.userInfo}>
                         <div className={styles.user}>
-                            {srcImagemPerfil == null ? avatar : <img src={srcImagemPerfil}></img>}
-                            {/* {avatar} */}
-                            <img src={Lapis} className={styles.iconeLapis} onClick={() => setShowPopup(true)}/>
+                            {srcImagemPerfil ? (
+                                <img className={styles.imagemPerfil} src={srcImagemPerfil} alt="Imagem de Perfil" />
+                            ) : (
+                                <span className={styles.avatar}>{avatar}</span>
+                            )}  
+                            <img src={Lapis} className={styles.iconeLapis} onClick={() => setShowPopup(true)} />
                             <span className={styles.nome}>{nome}</span>
                             <span className={styles.email}>{email}</span>
                         </div>
@@ -347,12 +350,12 @@ const Perfil = () => {
                         <div className={styles.popup}>
                             <div className={styles.popupContent}>
                                 <div className={styles.iconeFechar}>
-                                        <img 
-                                            src={fechar} 
-                                            onClick={() => setShowPopup(false)}
-                                        />
+                                    <img
+                                        src={fechar}
+                                        onClick={() => setShowPopup(false)}
+                                    />
                                 </div>
-                                <Dropzone origem="usuarios"/>
+                                <Dropzone origem="usuarios" />
                             </div>
                         </div>
                     </div>

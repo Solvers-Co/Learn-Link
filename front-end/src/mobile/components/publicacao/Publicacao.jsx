@@ -230,14 +230,17 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
                         <img src={MenuVertical} alt="Menu" />
                     </div>
                 </div>
-
-                <div className={Styles['userInfo']} >
-                    {srcImagemPerfil === null ? avatar : <img src={srcImagemPerfil}></img>}
+                <div className={Styles['userInfo']}>
+                    {srcImagemPerfil ? (
+                        <img className={Styles['imagemPerfil']} src={srcImagemPerfil} alt="Imagem de Perfil" />
+                    ) : (
+                        <span className={Styles['avatar']}>{avatar}</span>
+                    )}
                     <span className={Styles['nome']} onClick={() => { visualizarPerfil(idUsuarioQuePublicou) }}>{nome}</span>
                 </div>
 
                 <div className={Styles['mensagem']}>{mensagem}</div>
-                {srcImagem !== null ? <img src={srcImagem}></img> : ''}
+                {srcImagem !== null ? <img className={Styles['imagemPublicacao']} src={srcImagem}></img> : ''}
                 <div className={Styles['dataHora']}>{formatDateTime(horario)}</div>
 
 

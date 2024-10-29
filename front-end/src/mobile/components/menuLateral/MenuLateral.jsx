@@ -97,7 +97,11 @@ const MenuLateral = ({ nome }) => {
             <div className={styles.menuInicial}>
                 <img src={IconeX} className={styles.cancelar} onClick={handleClose} alt="Fechar Menu" />
                 <div className={styles.userInfo}>
-                    {srcImagemPerfil == null ? avatar : <img src={srcImagemPerfil}></img>}
+                    {srcImagemPerfil ? (
+                        <img className={styles.imagemPerfil} src={srcImagemPerfil} alt="Imagem de Perfil" />
+                    ) : (
+                        <span className={styles.avatar}>{avatar}</span>
+                    )}
                     <span className={styles.nome}>{nomeFormatado}</span>
                 </div>
                 <Linha />
