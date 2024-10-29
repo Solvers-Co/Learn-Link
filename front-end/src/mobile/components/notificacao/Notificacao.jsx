@@ -39,8 +39,8 @@ const Notificacao = ({ corDeFundo, id, corpo, nomeUsuarioGerador, vista }) => {
         <div className={styles.notificacao} onClick={fetchVisualizarNotificacao}>
                 <div className={styles.notificacaoItem} style={{ backgroundColor }}>
                     <div className={styles.infos}>
-                        <div className={styles.avatar}>
-                        {srcImagemPerfil ? (
+                        <div className={styles.userInfo}>
+                            {srcImagemPerfil ? (
                                 <img className={styles.imagemPerfil} src={srcImagemPerfil} alt="Imagem de Perfil" />
                             ) : (
                                 <span className={styles.avatar}>{avatar}</span>
