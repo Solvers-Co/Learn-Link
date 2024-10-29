@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import Styles from '../publicacao/Publicacao.module.css';
 import api from '../../../api';
 import { toast } from 'react-toastify';
@@ -114,7 +114,7 @@ function denunciarPublicacao(idPublicacao, idUsuario) {
         });
 }
 
-const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas, comentarios, listarComentarios, togglePopup, popupAbertoId, idUsuarioQuePublicou, origem, listarComentariosPerfil }) => {
+const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas, comentarios, listarComentarios, togglePopup, popupAbertoId, idUsuarioQuePublicou, origem, listarComentariosPerfil, urlImagem }) => {
     const [showPopup, setShowPopup] = useState(null);
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [curtida, setCurtida] = useState(quemCurtiu.includes(sessionStorage.getItem('nome')));
@@ -125,6 +125,7 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
     const [textoPublicacao, setTextoPublicacao] = useState("");
     const maxCaracteres = 255;
     const [showDenunciaModal, setShowDenunciaModal] = useState(false);
+    const [srcImagem, setSrcImagem] = useState(urlImagem);
     // const [motivoDenuncia, setMotivoDenuncia] = useState("");
 
     const navigate = useNavigate();
@@ -223,6 +224,7 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
                 </div>
 
                 <div className={Styles['mensagem']}>{mensagem}</div>
+                {srcImagem !== null ? <img src={srcImagem}></img> : ''}
                 <div className={Styles['dataHora']}>{formatDateTime(horario)}</div>
 
 
