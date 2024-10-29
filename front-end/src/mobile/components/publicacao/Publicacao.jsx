@@ -126,6 +126,7 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
     const maxCaracteres = 255;
     const [showDenunciaModal, setShowDenunciaModal] = useState(false);
     const [srcImagem, setSrcImagem] = useState(urlImagem);
+    const [srcImagemPerfil, setSrcImagemPerfil] = useState('')
     // const [motivoDenuncia, setMotivoDenuncia] = useState("");
 
     const navigate = useNavigate();
@@ -199,6 +200,18 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
 
     // Use useMemo com nomeFormatado
     const avatar = useMemo(() => generateInitials(nomeFormatado), [nomeFormatado]);
+    useEffect(() => {
+        async function buscarImagemPerfil() {
+            try{
+                const response = await api.get(`usuarios/buscar-imagem-perfil/${idUsuarioQuePublicou}`);
+                console.log(response.data)
+                setSrcImagemPerfil(response.data)
+            }catch(error){
+                console.log(error)
+            }
+        }
+        buscarImagemPerfil();
+    },[])
 
     // Memorize o avatar gerado com base no nome
     const handleChange = (e) => {
@@ -219,7 +232,7 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
                 </div>
 
                 <div className={Styles['userInfo']} >
-                    {avatar}
+                    {srcImagemPerfil === null ? avatar : <img src={srcImagemPerfil}></img>}
                     <span className={Styles['nome']} onClick={() => { visualizarPerfil(idUsuarioQuePublicou) }}>{nome}</span>
                 </div>
 
