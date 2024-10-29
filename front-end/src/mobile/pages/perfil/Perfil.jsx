@@ -61,7 +61,7 @@ const Perfil = () => {
     const [contribuicoes, setContribuicoes] = useState(0);
     const [publicacoes, setPublicacoes] = useState([]);
     const [publicacoesCarregadas, setPublicacoesCarregadas] = useState(false); // Estado para controlar o clique no botão
-
+    const [srcImagemPerfil, setSrcImagemPerfil] = useState('')
     const [showComentarios, setShowComentarios] = useState(false);
     const [comentariosPublicacao, setComentarios] = useState([]);
     const [idPublicacaoAtual, setIdPublicacaoAtual] = useState(null); // Estado para armazenar o ID da publicação atual
@@ -142,6 +142,20 @@ const Perfil = () => {
         };
         fetchContribuicoes();
     }, [idUsuarioLogado]);
+
+    useEffect(() => {
+        async function buscarImagemPerfil() {
+            try{
+                const response = await api.get(`usuarios/buscar-imagem-perfil/${sessionStorage.getItem("userId")}`);
+                console.log(response.data)
+                setSrcImagemPerfil(response.data)
+                // setSrcImagemPerfil("https://s3-learnlink.s3.us-east-1.amazonaws.com/WIN_20240909_09_30_09_Pro.jpg")
+            }catch(error){
+                console.log(error)
+            }
+        }
+        buscarImagemPerfil();
+    },[])
 
     const fetchPublicacoes = async () => {
         try {
@@ -229,7 +243,8 @@ const Perfil = () => {
                 <div className={styles.corFundo}>
                     <div className={styles.userInfo}>
                         <div className={styles.user}>
-                            {avatar}
+                            {srcImagemPerfil == null ? avatar : <img src={srcImagemPerfil}></img>}
+                            {/* {avatar} */}
                             <img src={Lapis} className={styles.iconeLapis} onClick={() => setShowPopup(true)}/>
                             <span className={styles.nome}>{nome}</span>
                             <span className={styles.email}>{email}</span>
