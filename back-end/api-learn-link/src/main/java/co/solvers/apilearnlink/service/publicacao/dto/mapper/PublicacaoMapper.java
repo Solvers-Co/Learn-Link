@@ -41,6 +41,10 @@ public class PublicacaoMapper {
         dto.setCanal(CanalMapper.toDto(entity.getCanal()));
         dto.setUsuario(toUsuarioDto(entity.getUsuario()));
 
+        if (entity.getUrlImagem() != null){
+            dto.setUrlImagem(entity.getUrlImagem());
+        }
+
         if (entity.getComentarios() == null){
             dto.setQuantidadeComentarios(0);
         } else {

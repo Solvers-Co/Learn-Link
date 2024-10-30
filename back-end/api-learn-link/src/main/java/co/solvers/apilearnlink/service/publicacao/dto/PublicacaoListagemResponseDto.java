@@ -22,6 +22,7 @@ public class PublicacaoListagemResponseDto {
     private int quantidadeComentarios;
     private CanalListagemDto canal;
     private UsuarioPublicacaoListagemDto usuario;
+    private String urlImagem;
     private List<ReacaoDto> reacoes;
 
     @Getter

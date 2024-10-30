@@ -77,6 +77,7 @@ CREATE TABLE publicacao (
     tipo_publicacao_id INT,
     canal_id INT,
     usuario_id INT,
+    url_imagem VARCHAR(255),
     status VARCHAR(20),
     PRIMARY KEY (id),
     FOREIGN KEY (tipo_publicacao_id) REFERENCES tipo_publicacao(id),

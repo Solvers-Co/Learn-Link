@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import Styles from '../publicacao/Publicacao.module.css';
 import api from '../../../api';
 import { toast } from 'react-toastify';
@@ -114,7 +114,7 @@ function denunciarPublicacao(idPublicacao, idUsuario) {
         });
 }
 
-const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas, comentarios, listarComentarios, togglePopup, popupAbertoId, idUsuarioQuePublicou, origem, listarComentariosPerfil }) => {
+const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas, comentarios, listarComentarios, togglePopup, popupAbertoId, idUsuarioQuePublicou, origem, listarComentariosPerfil, urlImagem }) => {
     const [showPopup, setShowPopup] = useState(null);
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [curtida, setCurtida] = useState(quemCurtiu.includes(sessionStorage.getItem('nome')));
@@ -125,6 +125,8 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
     const [textoPublicacao, setTextoPublicacao] = useState("");
     const maxCaracteres = 255;
     const [showDenunciaModal, setShowDenunciaModal] = useState(false);
+    const [srcImagem, setSrcImagem] = useState(urlImagem);
+    const [srcImagemPerfil, setSrcImagemPerfil] = useState('')
     // const [motivoDenuncia, setMotivoDenuncia] = useState("");
 
     const navigate = useNavigate();
@@ -198,6 +200,18 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
 
     // Use useMemo com nomeFormatado
     const avatar = useMemo(() => generateInitials(nomeFormatado), [nomeFormatado]);
+    useEffect(() => {
+        async function buscarImagemPerfil() {
+            try{
+                const response = await api.get(`usuarios/buscar-imagem-perfil/${idUsuarioQuePublicou}`);
+                console.log(response.data)
+                setSrcImagemPerfil(response.data)
+            }catch(error){
+                console.log(error)
+            }
+        }
+        buscarImagemPerfil();
+    },[])
 
     // Memorize o avatar gerado com base no nome
     const handleChange = (e) => {
@@ -216,13 +230,17 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
                         <img src={MenuVertical} alt="Menu" />
                     </div>
                 </div>
-
-                <div className={Styles['userInfo']} >
-                    {avatar}
+                <div className={Styles['userInfo']}>
+                    {srcImagemPerfil ? (
+                        <img className={Styles['imagemPerfil']} src={srcImagemPerfil} alt="Imagem de Perfil" />
+                    ) : (
+                        <span className={Styles['avatar']}>{avatar}</span>
+                    )}
                     <span className={Styles['nome']} onClick={() => { visualizarPerfil(idUsuarioQuePublicou) }}>{nome}</span>
                 </div>
 
                 <div className={Styles['mensagem']}>{mensagem}</div>
+                {srcImagem !== null ? <img className={Styles['imagemPublicacao']} src={srcImagem}></img> : ''}
                 <div className={Styles['dataHora']}>{formatDateTime(horario)}</div>
 
 

@@ -13,6 +13,21 @@
     justify-content: flex-start;
 }
 
+.imagemPerfil {
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, .3);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "NunitoSans", sans-serif;
+    box-shadow: 2px 2px 16px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
 .texto {
     display: flex;
     flex-direction: column;

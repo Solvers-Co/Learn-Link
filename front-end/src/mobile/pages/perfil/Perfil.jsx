@@ -13,6 +13,7 @@ import Comentario from '../../components/comentario/Comentario';
 
 import Enviar from '../../utils/assets/Enviar.png';
 import fechar from '../../utils/assets/icone_x.svg';
+import Lapis from '../../utils/assets/icone_lapis.png';
 
 import Dropzone from '../../components/dropzone/Dropzone';
 
@@ -60,7 +61,7 @@ const Perfil = () => {
     const [contribuicoes, setContribuicoes] = useState(0);
     const [publicacoes, setPublicacoes] = useState([]);
     const [publicacoesCarregadas, setPublicacoesCarregadas] = useState(false); // Estado para controlar o clique no botão
-
+    const [srcImagemPerfil, setSrcImagemPerfil] = useState('')
     const [showComentarios, setShowComentarios] = useState(false);
     const [comentariosPublicacao, setComentarios] = useState([]);
     const [idPublicacaoAtual, setIdPublicacaoAtual] = useState(null); // Estado para armazenar o ID da publicação atual
@@ -141,6 +142,20 @@ const Perfil = () => {
         };
         fetchContribuicoes();
     }, [idUsuarioLogado]);
+
+    useEffect(() => {
+        async function buscarImagemPerfil() {
+            try {
+                const response = await api.get(`usuarios/buscar-imagem-perfil/${sessionStorage.getItem("userId")}`);
+                console.log(response.data)
+                setSrcImagemPerfil(response.data)
+                // setSrcImagemPerfil("https://s3-learnlink.s3.us-east-1.amazonaws.com/WIN_20240909_09_30_09_Pro.jpg")
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        buscarImagemPerfil();
+    }, [])
 
     const fetchPublicacoes = async () => {
         try {
@@ -228,10 +243,14 @@ const Perfil = () => {
                 <div className={styles.corFundo}>
                     <div className={styles.userInfo}>
                         <div className={styles.user}>
-                            {avatar}
+                            {srcImagemPerfil ? (
+                                <img className={styles.imagemPerfil} src={srcImagemPerfil} alt="Imagem de Perfil" />
+                            ) : (
+                                <span className={styles.avatar}>{avatar}</span>
+                            )}  
+                            <img src={Lapis} className={styles.iconeLapis} onClick={() => setShowPopup(true)} />
                             <span className={styles.nome}>{nome}</span>
                             <span className={styles.email}>{email}</span>
-                            <button onClick={() => setShowPopup(true)}>botao</button>
                         </div>
                         <div className={styles.tooltip}>
                             <Tooltip txt="Ganhará a classificação: Iniciante - 0 interações
@@ -327,10 +346,17 @@ const Perfil = () => {
 
                 {/* Popup para Dropzone */}
                 {showPopup && (
-                    <div className={styles.popup}>
-                        <div className={styles.popupContent}>
-                            <Dropzone />
-                            <button onClick={() => setShowPopup(false)}>Fechar</button>
+                    <div className={styles.blur}>
+                        <div className={styles.popup}>
+                            <div className={styles.popupContent}>
+                                <div className={styles.iconeFechar}>
+                                    <img
+                                        src={fechar}
+                                        onClick={() => setShowPopup(false)}
+                                    />
+                                </div>
+                                <Dropzone origem="usuarios" />
+                            </div>
                         </div>
                     </div>
                 )}

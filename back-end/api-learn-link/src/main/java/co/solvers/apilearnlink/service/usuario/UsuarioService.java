@@ -281,7 +281,7 @@ public class UsuarioService {
         return usuarios;
     }
 
-    public RespostaImagem uploadFotoPerfil(byte[] imagemBytes, Long id){
+    public RespostaImagem uploadFoto(byte[] imagemBytes, Long id){
 
         String funcao = "arn:aws:lambda:us-east-1:718117031225:function:lambda-envio-imagens-learnlink";
         Region region = Region.US_EAST_1;
@@ -322,7 +322,7 @@ public class UsuarioService {
                 System.out.println("Upload da imagem concluído!");
 
                 Usuario usuario = buscarPorId(id);
-                usuario.setUrlImagemPerfil(dataImagemString);
+                usuario.setUrlImagemPerfil(respostaImagem.urlArquivo());
                 usuarioRepository.save(usuario);
 
                 return respostaImagem;
@@ -341,6 +341,11 @@ public class UsuarioService {
         return null;
     }
 
+    public String buscarImagem(Long idUsuario){
+        Usuario usuario = usuarioRepository.findUrlImagemPerfilById(idUsuario);
+
+        return  usuario.getUrlImagemPerfil();
+    }
 
 
     // Verificações de existência e vazio

@@ -238,6 +238,7 @@ const FeedGeral = () => {
                                 togglePopup={togglePopup}
                                 popupAbertoId={popupAbertoId}
                                 idUsuarioQuePublicou={publicacao.usuario.id}
+                                urlImagem={publicacao.urlImagem}
                             />
                         ))
                     ) : (

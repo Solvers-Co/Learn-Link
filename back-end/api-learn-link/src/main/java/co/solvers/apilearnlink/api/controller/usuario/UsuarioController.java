@@ -4,7 +4,6 @@ import co.solvers.apilearnlink.domain.respostaImagem.RespostaImagem;
 import co.solvers.apilearnlink.domain.usuario.Usuario;
 import co.solvers.apilearnlink.service.imagem.ImagemPerfilDto;
 import co.solvers.apilearnlink.service.reacao.ReacaoService;
-import co.solvers.apilearnlink.service.reacoesEmComentariosDoUsuario.dto.QtdReacoesComentariosUsuarioDto;
 import co.solvers.apilearnlink.service.usuario.UsuarioService;
 import co.solvers.apilearnlink.service.usuario.autenticacao.dto.UsuarioLoginDto;
 import co.solvers.apilearnlink.service.usuario.autenticacao.dto.UsuarioTokenDto;
@@ -20,10 +19,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -283,9 +280,20 @@ public class UsuarioController {
     @PatchMapping("/upload-foto-perfil/{id}")
     public ResponseEntity<RespostaImagem> uploadFotoPerfil(@RequestBody ImagemPerfilDto imagemBytes, @PathVariable Long id){
 
-        RespostaImagem resposta = usuarioService.uploadFotoPerfil(imagemBytes.getImagemBytes(), id);
+        RespostaImagem resposta = usuarioService.uploadFoto(imagemBytes.getImagemBytes(), id);
 
         return ResponseEntity.status(200).build();
+    }
+
+    @GetMapping("/buscar-imagem-perfil/{id}")
+    public ResponseEntity<String> buscarImagenPerfil(@PathVariable Long id){
+        String urlImagemPerfil = usuarioService.buscarImagem(id);
+
+        if (urlImagemPerfil == null){
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(urlImagemPerfil);
     }
 
     //    @GetMapping("/buscar-todos-os-usuarios")

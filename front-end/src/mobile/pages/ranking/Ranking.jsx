@@ -11,6 +11,7 @@ import Terceiro from '../../utils/assets/ranking/Terceiro lugar.png';
 
 const Ranking = () => {
     const [users, setUsers] = useState([]);
+    const [imagensPerfil, setImagensPerfil] = useState({});
 
     const navigate = useNavigate();
 
@@ -30,6 +31,25 @@ const Ranking = () => {
             });
     }, []);
 
+    useEffect(() => {
+        const buscarImagensPerfil = async () => {
+            const novasImagensPerfil = {};
+            await Promise.all(users.map(async (user) => {
+                try {
+                    const response = await api.get(`usuarios/buscar-imagem-perfil/${user.usuarioId}`);
+                    novasImagensPerfil[user.usuarioId] = response.data;
+                } catch (error) {
+                    console.error('Erro ao buscar imagem de perfil para usuário', user.usuarioId, error);
+                }
+            }));
+            setImagensPerfil(novasImagensPerfil);
+        };
+
+        if (users.length > 0) {
+            buscarImagensPerfil();
+        }
+    }, [users]);
+
     return (
         <>
             <Header />
@@ -38,12 +58,17 @@ const Ranking = () => {
                 <div className={Styles.ranking}>
                     {users.map((user, index) => {
                         const avatar = generateInitials(user.nome);
-
+                        const srcImagemPerfil = imagensPerfil[user.usuarioId];
+                    
                         return (
                             <div key={index} className={Styles.rankingItem}>
                                 <div className={Styles.infos}>
                                     <div className={Styles.header}>
-                                        {avatar}
+                                        {srcImagemPerfil ? (
+                                            <img className={Styles.imagemPerfil} src={srcImagemPerfil} alt="Imagem de Perfil" />
+                                        ) : (
+                                            <span className={Styles.avatar}>{avatar}</span>
+                                        )}
                                         <span className={Styles.nome} onClick={() => { visualizarPerfil(user.usuarioId) }}>{user.nome}</span>
                                     </div>
 

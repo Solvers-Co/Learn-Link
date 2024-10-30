@@ -9,6 +9,7 @@ public record RespostaImagem(
         int status,
         Map<String,Object> parametros,
         boolean valido,
-        String resultado
+        String resultado,
+        String urlArquivo
 ) {
 }
