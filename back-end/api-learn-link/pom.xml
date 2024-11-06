@@ -132,6 +132,44 @@
             <artifactId>lambda</artifactId>
             <version>2.27.4</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.avro</groupId>
+            <artifactId>avro</artifactId>
+            <version>1.11.1</version> <!-- Verifique se há uma versão mais recente -->
+        </dependency>
+
+        <!-- Parquet para suporte a Avro e gravação em arquivos Parquet -->
+        <dependency>
+            <groupId>org.apache.parquet</groupId>
+            <artifactId>parquet-avro</artifactId>
+            <version>1.12.3</version> <!-- Verifique se há uma versão mais recente -->
+        </dependency>
+
+        <!-- Hadoop Common para suporte ao sistema de arquivos -->
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-common</artifactId>
+            <version>3.3.1</version> <!-- Verifique se há uma versão mais recente -->
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>reload4j</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>log4j</groupId>
+                    <artifactId>log4j</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
     </dependencies>
 
     <build>

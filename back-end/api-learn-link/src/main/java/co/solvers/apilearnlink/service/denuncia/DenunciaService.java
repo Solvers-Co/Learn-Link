@@ -23,7 +23,6 @@ import com.theokanning.openai.completion.chat.ChatMessage;
 import com.theokanning.openai.completion.chat.ChatMessageRole;
 import com.theokanning.openai.service.OpenAiService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -31,6 +30,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.apache.avro.Schema;
+import org.apache.avro.generic.GenericData;
+import org.apache.avro.generic.GenericRecord;
+import org.apache.parquet.avro.AvroParquetWriter;
+import org.apache.parquet.hadoop.ParquetWriter;
+import org.apache.parquet.hadoop.metadata.CompressionCodecName;
+import org.springframework.core.io.FileSystemResource;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -369,6 +375,53 @@ public class DenunciaService {
                 .replace(">", "&gt;") // Escapa o caractere >
                 .replace("\"", "&quot;") // Escapa aspas duplas
                 .replace("'", "&apos;"); // Escapa aspas simples
+    }
+
+    public static Schema getSchema() {
+        // Defina o schema como uma string JSON
+        String schemaJson = "{"
+                + "\"type\":\"record\","
+                + "\"name\":\"Usuario\","
+                + "\"fields\":["
+                + " {\"name\":\"nome\", \"type\":\"string\"},"
+                + " {\"name\":\"idade\", \"type\":\"int\"},"
+                + " {\"name\":\"email\", \"type\":\"string\"}"
+                + "]}";
+
+        return new Schema.Parser().parse(schemaJson);
+    }
+
+    public static Resource gravarParquetDenuncias(List<?> denuncias) throws IOException {
+        // Define o schema usando Avro
+        Schema schema = getSchema();
+
+        // Define um arquivo temporário para armazenar o Parquet
+        File tempFile = File.createTempFile("denuncias", ".parquet");
+        tempFile.deleteOnExit();  // Configura o arquivo para ser excluído ao final da execução
+        org.apache.hadoop.fs.Path path = new org.apache.hadoop.fs.Path(tempFile.getAbsolutePath());
+
+        // Escreve a lista no arquivo Parquet
+        try (ParquetWriter<GenericRecord> writer = AvroParquetWriter.<GenericRecord>builder(path)
+                .withSchema(schema)
+                .withCompressionCodec(CompressionCodecName.SNAPPY)
+                .withConf(new org.apache.hadoop.conf.Configuration())
+                .build()) {
+
+            for (Object denuncia : denuncias) {
+                GenericRecord record = new GenericData.Record(schema);
+                record.put("denuncia: ", denuncia);
+
+                writer.write(record);
+            }
+
+            System.out.println("Arquivo Parquet criado com sucesso em: " + tempFile.getAbsolutePath());
+
+        } catch (IOException e) {
+            throw new IOException("Erro ao escrever o arquivo Parquet", e);
+        }
+
+        // Retorna o arquivo Parquet como um Resource
+        return new FileSystemResource(tempFile);
     }
 
     public List<ComentariosDenunciados> buscaComentariosDenunciados() {
