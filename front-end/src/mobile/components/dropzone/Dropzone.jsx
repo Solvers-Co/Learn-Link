@@ -40,9 +40,11 @@ const Dropzone = ({ origem }) => {
                 } else {
                     toast.error('Falha ao salvar a imagem.');
                 }
-            }else if (origem === "publicacoes") {
+                window.location.reload();
+            } else if (origem === "publicacoes") {
                 let base64String = btoa(String.fromCharCode.apply(null, payload.imagemBytes))
                 sessionStorage.setItem("bytesImagemPublicacao", base64String)
+                toast.success("Imagem salva")
             }
         } catch (error) {
             toast.error('Erro ao conectar com o servidor.');

@@ -80,11 +80,13 @@
 
 .mensagem {
     color: #707070;
+    margin-top: 2px;
     margin-bottom: 12px;
     font-size: 14px;
     font-family: "Nunito Sans", sans-serif;
     width: 90%;
     align-self: center;
+    word-break: break-word;
 }
 
 .imagemPublicacao {
