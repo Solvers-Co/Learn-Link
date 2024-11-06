@@ -50,6 +50,7 @@
     /* height: 40%; */
     align-self: center;
     margin-bottom: 16px;
+    word-break: break-word;
 }
 
 .denuncia {

@@ -240,7 +240,7 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
                 </div>
 
                 <div className={Styles['mensagem']}>{mensagem}</div>
-                {srcImagem !== null ? <img className={Styles['imagemPublicacao']} src={srcImagem}></img> : ''}
+                {srcImagem != null ? <img className={Styles['imagemPublicacao']} src={srcImagem}></img> : <div style={{ border: 'none' }}></div>}
                 <div className={Styles['dataHora']}>{formatDateTime(horario)}</div>
 
 

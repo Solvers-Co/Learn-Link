@@ -247,8 +247,10 @@ const Perfil = () => {
                                 <img className={styles.imagemPerfil} src={srcImagemPerfil} alt="Imagem de Perfil" />
                             ) : (
                                 <span className={styles.avatar}>{avatar}</span>
-                            )}  
-                            <img src={Lapis} className={styles.iconeLapis} onClick={() => setShowPopup(true)} />
+                            )}
+                            {sessionStorage.getItem("userId") === idUsuario ? (
+                                <img src={Lapis} className={styles.iconeLapis} onClick={() => setShowPopup(true)} />
+                            ) : null}
                             <span className={styles.nome}>{nome}</span>
                             <span className={styles.email}>{email}</span>
                         </div>
@@ -292,6 +294,7 @@ const Perfil = () => {
                                     idUsuarioQuePublicou={publicacao.usuario.id}
                                     origem="perfil"
                                     listarComentariosPerfil={() => listarComentarios(publicacao.id)}
+                                    urlImagem={publicacao.urlImagem}
                                 />
                             ))
                         ) : (
