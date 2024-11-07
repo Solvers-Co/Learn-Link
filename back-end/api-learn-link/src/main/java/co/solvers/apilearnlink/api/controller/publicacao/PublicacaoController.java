@@ -409,13 +409,13 @@ public class PublicacaoController {
     @GetMapping(value = "/denuncias/parquet", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     public ResponseEntity<Resource> gravarParquetDenuncias(@RequestParam String tipo) throws IOException {
 
-        List<?> denuncias;
+        List<PublicacoesDenunciadas> denuncias;
+        List<PublicacaoListagemParquetDto> publicacoes;
 
         // Verifica o tipo de denúncia solicitado
         if ("publicacao".equalsIgnoreCase(tipo)) {
             denuncias = denunciaService.buscaPublicacoesDenunciadas();
-        } else if ("comentario".equalsIgnoreCase(tipo)) {
-            denuncias = denunciaService.buscaComentariosDenunciados();
+            publicacoes = PublicacaoMapper.toParquetDto(denuncias);
         } else {
             throw new IllegalArgumentException("Tipo de denúncia inválido");
         }
@@ -424,7 +424,7 @@ public class PublicacaoController {
             return null;
         }
 
-        Resource resource = denunciaService.gravarParquetDenuncias(denuncias);
+        Resource resource = denunciaService.gravarParquetDenuncias(publicacoes);
 
         if (resource == null) {
             return ResponseEntity.noContent().build();
