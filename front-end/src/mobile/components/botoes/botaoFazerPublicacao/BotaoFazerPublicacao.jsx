@@ -33,15 +33,20 @@ function BotaoFazerPublicacao() {
         }
     };
 
-    async function  fazerPublicacao(){
-        let byteArray = Uint8Array.from(atob(sessionStorage.getItem("bytesImagemPublicacao")), c => c.charCodeAt(0));
-        
-        const imagemUrl = [];
+    async function fazerPublicacao() {
+        var imagemUrl = [];
+        if (sessionStorage.getItem("bytesImagemPublicacao")) {
+            var byteArray = Uint8Array.from(atob(sessionStorage.getItem("bytesImagemPublicacao")), c => c.charCodeAt(0));
 
-        for (let i = 0; i < byteArray.length; i++) {
-            imagemUrl.push(byteArray[i])       
-        }
-        
+            for (let i = 0; i < byteArray.length; i++) {
+                imagemUrl.push(byteArray[i])
+            }
+
+        } else { imagemUrl = null }
+
+        sessionStorage.removeItem("bytesImagemPublicacao");
+
+
         const publicacao = {
             conteudo: textoPublicacao,
             idTipoPublicacao: 1,
@@ -100,8 +105,8 @@ function BotaoFazerPublicacao() {
                         <div className={Styles.popup}>
                             <div className={Styles.popupContent}>
                                 <div className={Styles.iconeFechar}>
-                                    <img 
-                                        src={fechar} 
+                                    <img
+                                        src={fechar}
                                         onClick={() => setShowPopup(false)}
                                     />
                                 </div>

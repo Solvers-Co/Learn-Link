@@ -61,7 +61,9 @@ public class PublicacaoService {
         publicacao.setCanal(canal);
         publicacao.setUsuario(usuario);
         publicacao.setStatus(PublicacaoStatus.ATIVO);
-        uploadFoto(publicacaoCriacaoRequestDto.getImagemUrl(), publicacao);
+        if (publicacaoCriacaoRequestDto.getImagemUrl() != null) {
+            uploadFoto(publicacaoCriacaoRequestDto.getImagemUrl(), publicacao);
+        }
 
         return publicacaoRepository.save(publicacao);
     }

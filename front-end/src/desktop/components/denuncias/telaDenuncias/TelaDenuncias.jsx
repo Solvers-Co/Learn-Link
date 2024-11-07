@@ -14,6 +14,7 @@ const TelaDenuncias = () => {
     const [tipoDenuncia, setTipoDenuncia] = useState('publicacao');
     const [modoSelecao, setModoSelecao] = useState(false);
     const [showModal, setShowModal] = useState(false); // Estado para controlar a exibição do modal
+    const [ordenadoPorIa, setOrdenadoPorIa] = useState(false); // Estado para controlar a ordenação por IA
 
     // Listas de IDs selecionados para cada tipo
     const [publicacoesSelecionadas, setPublicacoesSelecionadas] = useState([]);
@@ -35,6 +36,11 @@ const TelaDenuncias = () => {
     };
 
     const fetchDenunciasPorIa = async () => {
+        if (ordenadoPorIa) {
+            toast.info('As denúncias já estão ordenadas por IA');
+            // setLoading(false);
+            return;
+        }
         setLoading(true);
         try {
             const endpoint = tipoDenuncia === 'publicacao'
@@ -43,6 +49,7 @@ const TelaDenuncias = () => {
             const response = await api.get(endpoint);
             console.log(response.data);
             setDenuncias(response.data);
+            setOrdenadoPorIa(true);
         } catch (err) {
             setError('Não foi possível carregar as denúncias');
         } finally {
@@ -149,7 +156,7 @@ const TelaDenuncias = () => {
                     />
                     <button onClick={fetchDenunciasPorIa} className={styles.btnOrdenarPorIa}>Ordenar por IA</button>
                     <div className={styles.tooltip}>
-                        <Tooltip txt={"O botão 'Ordenar por IA' exibe primeiro as publicações ou comentários nocivos em destaque vermelho. A ordenação é feita por IA, podendo haver erros"}/>
+                        <Tooltip txt={"O botão 'Ordenar por IA' exibe primeiro as publicações ou comentários nocivos em destaque vermelho. A ordenação é feita por IA, podendo haver erros"} />
                     </div>
                 </div>
                 {showModal && (
