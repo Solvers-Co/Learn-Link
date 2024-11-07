@@ -4,9 +4,11 @@ import co.solvers.apilearnlink.domain.comentario.Comentario;
 import co.solvers.apilearnlink.domain.reacao.Reacao;
 import co.solvers.apilearnlink.domain.tipopublicacao.TipoPublicacao;
 import co.solvers.apilearnlink.domain.usuario.Usuario;
+import co.solvers.apilearnlink.domain.views.publicacoesDenunciadas.PublicacoesDenunciadas;
 import co.solvers.apilearnlink.service.canal.dto.mapper.CanalMapper;
 import co.solvers.apilearnlink.service.especialidade.dto.mapper.EspecialidadeMapper;
 import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoCriacaoRequestDto;
+import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoListagemParquetDto;
 import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoListagemResponseDto;
 import co.solvers.apilearnlink.domain.publicacao.Publicacao;
 import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoListagemSimplesDto;
@@ -139,4 +141,24 @@ public class PublicacaoMapper {
                 .map(PublicacaoMapper::toReacaoDto)
                 .toList();
     }
+
+    public static PublicacaoListagemParquetDto toParquetDto(PublicacoesDenunciadas publicacao){
+        PublicacaoListagemParquetDto dto = new PublicacaoListagemParquetDto();
+
+        dto.setId(publicacao.getPublicacao().getId());
+        dto.setConteudo(publicacao.getPublicacao().getConteudo());
+        dto.setUsuario(publicacao.getPublicacao().getUsuario());
+
+        return dto;
+    }
+
+    public static List<PublicacaoListagemParquetDto> toParquetDto(List<PublicacoesDenunciadas> publicacoes){
+        List<PublicacaoListagemParquetDto> dtos = new ArrayList<>();
+
+        for (PublicacoesDenunciadas publicacao : publicacoes){
+            dtos.add(toParquetDto(publicacao));
+        }
+
+        return dtos;
+     }
 }

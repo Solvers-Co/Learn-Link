@@ -6,6 +6,8 @@ import co.solvers.apilearnlink.domain.denuncia.Denuncia;
 import co.solvers.apilearnlink.domain.denuncia.repository.DenunciaRespository;
 import co.solvers.apilearnlink.domain.publicacao.Publicacao;
 import co.solvers.apilearnlink.domain.publicacao.PublicacaoStatus;
+import co.solvers.apilearnlink.domain.respostaImagem.RespostaImagem;
+import co.solvers.apilearnlink.domain.respostaParquet.RespostaParquet;
 import co.solvers.apilearnlink.domain.usuario.Usuario;
 import co.solvers.apilearnlink.domain.views.comentariosDenunciados.ComentariosDenunciados;
 import co.solvers.apilearnlink.domain.views.publicacoesDenunciadas.PublicacoesDenunciadas;
@@ -18,12 +20,14 @@ import co.solvers.apilearnlink.service.publicacao.PublicacaoService;
 import co.solvers.apilearnlink.service.publicacao.dto.PublicacaoDenunciadasListagemComIa;
 import co.solvers.apilearnlink.service.publicacoesDenunciadas.dto.mapper.PublicacoesDenunciadasMapper;
 import co.solvers.apilearnlink.service.usuario.UsuarioService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.theokanning.openai.completion.chat.ChatCompletionRequest;
 import com.theokanning.openai.completion.chat.ChatMessage;
 import com.theokanning.openai.completion.chat.ChatMessageRole;
 import com.theokanning.openai.service.OpenAiService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -31,6 +35,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import software.amazon.awssdk.core.SdkBytes;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.lambda.LambdaClient;
+import software.amazon.awssdk.services.lambda.model.InvokeRequest;
+import software.amazon.awssdk.services.lambda.model.InvokeResponse;
+import software.amazon.awssdk.services.lambda.model.LambdaException;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -369,6 +379,56 @@ public class DenunciaService {
                 .replace(">", "&gt;") // Escapa o caractere >
                 .replace("\"", "&quot;") // Escapa aspas duplas
                 .replace("'", "&apos;"); // Escapa aspas simples
+    }
+
+
+    public static Resource gravarParquetDenuncias(List<?> denuncias) throws IOException {
+        String funcao = "arn:aws:lambda:us-east-1:718117031225:function:lamda-salvar-parquet";
+        Region region = Region.US_EAST_1;
+
+        LambdaClient awsLambda = LambdaClient.builder()
+                .region(region)
+                .build();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        InvokeResponse res = null;
+        try {
+            Map<String, List> parametros = new HashMap<>();
+            parametros.put("denuncias", denuncias);
+            System.out.println(parametros);
+
+            SdkBytes payload = SdkBytes.fromUtf8String(objectMapper.writeValueAsString(parametros));
+
+            System.out.println("payload" + payload);
+            InvokeRequest request = InvokeRequest.builder()
+                    .functionName(funcao)
+                    .payload(payload)
+                    .build();
+
+            res = awsLambda.invoke(request);
+
+            String value = res.payload().asUtf8String();
+
+            System.out.println("value" + value);
+
+            RespostaParquet respostaParquet =
+                    objectMapper.readValue(value, RespostaParquet.class);
+
+            System.out.println();
+
+            System.out.println("status" + respostaParquet.status());
+            System.out.println("reposta:" + respostaParquet.parquet());
+
+            Resource resource = new ByteArrayResource(respostaParquet.parquet().getBytes());
+
+            return resource;
+        } catch (LambdaException | JsonProcessingException e) {
+            System.err.println(e.getMessage());
+        }
+
+        awsLambda.close();
+        return null;
     }
 
     public List<ComentariosDenunciados> buscaComentariosDenunciados() {

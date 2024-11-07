@@ -403,6 +403,39 @@ public class PublicacaoController {
                 .body(resource);
     }
 
+    @ApiResponse(responseCode = "200", description = "Denúncias XML")
+    @ApiResponse(responseCode = "404", description = "Não existem denúncias para o tipo especificado")
+    @Operation(summary = "PARQUET de denúncias", description = "Método que grava XML das denúncias de publicações ou comentários", tags = {"Denúncias"})
+    @GetMapping(value = "/denuncias/parquet", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    public ResponseEntity<Resource> gravarParquetDenuncias(@RequestParam String tipo) throws IOException {
+
+        List<PublicacoesDenunciadas> denuncias;
+        List<PublicacaoListagemParquetDto> publicacoes;
+
+        // Verifica o tipo de denúncia solicitado
+        if ("publicacao".equalsIgnoreCase(tipo)) {
+            denuncias = denunciaService.buscaPublicacoesDenunciadas();
+            publicacoes = PublicacaoMapper.toParquetDto(denuncias);
+        } else {
+            throw new IllegalArgumentException("Tipo de denúncia inválido");
+        }
+
+        if (denuncias.isEmpty()) {
+            return null;
+        }
+
+        Resource resource = denunciaService.gravarParquetDenuncias(publicacoes);
+
+        if (resource == null) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_XML)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + tipo + "s_denunciados.xml\"")
+                .body(resource);
+    }
+
     @ApiResponse(responseCode = "200", description = "Denuncias removidas")
     @ApiResponse(responseCode = "404", description = "Publicação não encontrada")
     @Operation(summary = "Remover denúncias", description = "Método que remover todas as denuncias de uma publicação", tags = {"Publicações"})
