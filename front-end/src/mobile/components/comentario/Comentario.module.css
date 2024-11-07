@@ -30,6 +30,7 @@
     margin-bottom: 6px;
     font-size: 16px;
     font-family: "Nunito Sans", sans-serif;
+    word-break: break-word;
 }
 
 .footerComentario {
