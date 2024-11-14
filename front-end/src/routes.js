@@ -24,35 +24,38 @@ import RecuperacaoSenhaDesktop from "./desktop/pages/recuperarSenhaDesktop/Recup
 import VerificacaoSenhaDesktop from "./desktop/pages/verificacaoSenhaDesktop/VerificacaoSenhaDesktop";
 import RedefinicaoSenhaDesktop from "./desktop/pages/redefinicaoSenhaDesktop/RedefinicaoSenhaDesktop";
 import CadastroFuncionarios from "./desktop/pages/cadastroFuncionarios/CadastroFuncionarios";
+import ProtectedLayout from "./ProtectedLayout";
 
 function Rotas() {
     return (
         <>
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<PaginaInicial />} />
                     <Route path="/homeDesktop" element={<PaginaInicialDesktop />} />
-                    <Route path="/cadastro" element={<Cadastro />} />
+                    <Route path="/" element={<PaginaInicial />} />  
                     <Route path="/login" element={<Login />} />
-                    <Route path="/cadastroDesktop" element={<CadastroDesktop />} />
-                    <Route path="/recuperarSenhaDesktop" element={<RecuperacaoSenhaDesktop />} />
-                    <Route path="/verificarSenhaDesktop" element={<VerificacaoSenhaDesktop />} />
-                    <Route path="/redefinirSenhaDesktop" element={<RedefinicaoSenhaDesktop />} />
                     <Route path="/loginDesktop" element={<LoginDesktop />} />
-                    <Route path="/dashboard" element={<Dashboard />} />
-                    <Route path="/denuncias" element={<Denuncias />} />
-                    <Route path="/cadastroFuncionarios" element={<CadastroFuncionarios />} />
-                    <Route path="/aceitarUsuarios" element={<AceitarUsuarios />} />
-                    <Route path="/perfil/:idUsuario" element={<Perfil />} />
-                    <Route path="/canais" element={<Canais />} />
-                    <Route path="/notificacoes" element={<Notificacoes />} />
-                    <Route path="/completarCadastro" element={<CompletarCadastro />} />
-                    <Route path="/recuperarSenha" element={<RecuperacaoSenha />} />
-                    <Route path="/verificarSenha" element={<VerificacaoSenha />} />
-                    <Route path="/redefinirSenha" element={<RedefinicaoSenha />} />
-                    <Route path="/feedGeral" element={<FeedGeral />} />
-                    <Route path="/ranking" element={<Ranking />} />
-                    <Route path="/livrosFuvest" element={<LivrosFuvest />} />
+                    <Route path="/cadastro" element={<Cadastro />} />
+                    <Route path="/cadastroDesktop" element={<CadastroDesktop />} />
+                    <Route element={<ProtectedLayout />}>
+                        <Route path="/recuperarSenhaDesktop" element={<RecuperacaoSenhaDesktop />} />
+                        <Route path="/verificarSenhaDesktop" element={<VerificacaoSenhaDesktop />} />
+                        <Route path="/redefinirSenhaDesktop" element={<RedefinicaoSenhaDesktop />} />
+                        <Route path="/dashboard" element={<Dashboard />} />
+                        <Route path="/denuncias" element={<Denuncias />} />
+                        <Route path="/cadastroFuncionarios" element={<CadastroFuncionarios />} />
+                        <Route path="/aceitarUsuarios" element={<AceitarUsuarios />} />
+                        <Route path="/perfil/:idUsuario" element={<Perfil />} />
+                        <Route path="/canais" element={<Canais />} />
+                        <Route path="/notificacoes" element={<Notificacoes />} />
+                        <Route path="/completarCadastro" element={<CompletarCadastro />} />
+                        <Route path="/recuperarSenha" element={<RecuperacaoSenha />} />
+                        <Route path="/verificarSenha" element={<VerificacaoSenha />} />
+                        <Route path="/redefinirSenha" element={<RedefinicaoSenha />} />
+                        <Route path="/feedGeral" element={<FeedGeral />} />
+                        <Route path="/ranking" element={<Ranking />} />
+                        <Route path="/livrosFuvest" element={<LivrosFuvest />} />
+                    </Route>    
                  </Routes>
             </BrowserRouter>
         </>
