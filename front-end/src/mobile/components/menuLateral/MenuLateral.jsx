@@ -13,6 +13,7 @@ import IconeX from '../../utils/assets/icone_x.svg';
 import Linha from '../linha/Linha';
 import { generateInitials } from '../../utils/functions/GerarIniciais';
 import api from "../../../api";
+import { toast } from 'react-toastify';
 
 const MenuLateral = ({ nome }) => {
     const [isVisible, setIsVisible] = useState(true); // Adiciona estado para visibilidade
@@ -34,22 +35,21 @@ const MenuLateral = ({ nome }) => {
             nomeFormatado = `${primeiroNome} ${ultimoNome}`;
         }
     } else {
-        console.log('Nome de usuário não encontrado');
+        toast.error('Nome de usuário não encontrado');
     }
     useEffect(() => {
         async function buscarImagemPerfil() {
-            try{
+            try {
                 const response = await api.get(`usuarios/buscar-imagem-perfil/${sessionStorage.getItem("userId")}`);
-                console.log(response.data)
                 setSrcImagemPerfil(response.data)
                 // setSrcImagemPerfil("https://s3-learnlink.s3.us-east-1.amazonaws.com/WIN_20240909_09_30_09_Pro.jpg")
-            }catch(error){
-                console.log(error)
+            } catch (error) {
+                toast.error("Erro ao buscar imagem de perfil")
             }
         }
         buscarImagemPerfil();
-    },[])
-    
+    }, [])
+
 
     // Use useMemo com nomeFormatado
     const avatar = useMemo(() => generateInitials(nomeFormatado), [nomeFormatado]);

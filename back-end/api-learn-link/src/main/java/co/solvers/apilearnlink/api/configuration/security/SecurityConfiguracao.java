@@ -118,6 +118,7 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/notificacoes"),
             new AntPathRequestMatcher("/notificacoes/{id}"),
             new AntPathRequestMatcher("/notificacoes/visualizar-notificacao/{id}"),
+            new AntPathRequestMatcher("/notificacoes/deletar-notificacoes/{idUsuario}"),
             new AntPathRequestMatcher("/livros/listar")
     };
 

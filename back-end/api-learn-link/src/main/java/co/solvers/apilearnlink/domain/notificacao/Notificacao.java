@@ -2,6 +2,7 @@ package co.solvers.apilearnlink.domain.notificacao;
 
 import co.solvers.apilearnlink.domain.usuario.Usuario;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,4 +30,8 @@ public class Notificacao {
 
     @OneToOne
     private Usuario usuarioRecebedor;
+
+    @NotNull
+    private int idPublicacao;
+    private int idComentario;
 }

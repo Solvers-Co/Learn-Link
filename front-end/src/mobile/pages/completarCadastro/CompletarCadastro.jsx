@@ -37,7 +37,6 @@ const CompletarCadastro = () => {
         try {
             const response = await fetch(`https://brasilapi.com.br/api/cep/v1/${cep}`);
             const data = await response.json();
-            console.log("Endereço encontrado:", data);
 
             // Atualiza os estados diretamente
             const estadoForm = document.getElementById("estado");
@@ -61,14 +60,13 @@ const CompletarCadastro = () => {
         const usuarioCompleto = {
             idUsuario: sessionStorage.getItem("userId"),
             idEspecialidade,
-            endereco : {
+            endereco: {
                 bairro,
                 cidade,
                 estado,
                 cep
             }
         };
-        console.log(usuarioCompleto);
 
         api.patch(`/usuarios/finalizar-cadastro`, usuarioCompleto)
             .then(() => {
@@ -86,7 +84,7 @@ const CompletarCadastro = () => {
             <div className={styles.info}>
                 <h3 className={styles.txt}>Para usar a plataforma é necessário terminar o cadastro</h3>
                 <div className={styles.tooltip}>
-                    <Tooltip txt="Selecione a matéria em que você tem mais facilidade. Isso será exibido em seu perfil. E informe o CEP para que possamos identificar a sua região."/>
+                    <Tooltip txt="Selecione a matéria em que você tem mais facilidade. Isso será exibido em seu perfil. E informe o CEP para que possamos identificar a sua região." />
                 </div>
             </div>
             <div className={styles.divInputs}>
@@ -110,7 +108,7 @@ const CompletarCadastro = () => {
                 <InputFormulario id="bairro" placeHolder="Bairro" readOnly />
 
                 <Botao funcao={handleSave} tipo="button" textoBotao="Finalizar" />
-            </div> 
+            </div>
         </div>
     );
 };
