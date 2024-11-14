@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
 import styles from "./GraficoLinhas.module.css";
 
@@ -15,118 +15,59 @@ const getDaysInMonth = (year, month) => {
 
 // Função para preencher dados com zero para dias ausentes
 const fillMissingDays = (data, daysInMonth, dateKey, quantityKey) => {
-    const dataMap = data.reduce((acc, item) => {
-        const date = new Date(item[dateKey]);
-        const day = date.getDate() + 1; // Ajusta para adicionar um dia
-        acc[day] = item[quantityKey];
-        return acc;
-    }, {});
+    const dataMap = Array.isArray(data)
+        ? data.reduce((acc, item) => {
+              const date = new Date(item[dateKey]);
+              const day = date.getDate();
+              acc[day] = item[quantityKey];
+              return acc;
+          }, {})
+        : {};
 
-    // Adiciona zero para dias ausentes
-    return daysInMonth.map(day => dataMap[day] || 0);
+    return daysInMonth.map((day) => dataMap[day] || 0);
 };
 
-const GraficoLinhas = ({ data: dadosPublicacoes, data1: dadosComentarios }) => {
-    const isDataEmpty = dadosPublicacoes.length === 0 && dadosComentarios.length === 0;
+const GraficoLinhas = ({ data: initialPublicacoes, data1: initialComentarios }) => {
+    const isDataEmpty = initialPublicacoes.length === 0 && initialComentarios.length === 0;
 
-    // Pega o mês e o ano do primeiro item, ou usa o mês atual como fallback
-    const firstDate = dadosPublicacoes.length > 0 ? new Date(dadosPublicacoes[0].dataPublicacao) : new Date();
+    // Obtém o mês e o ano do primeiro item, ou usa o mês atual
+    const firstDate = initialPublicacoes.length > 0 ? new Date(initialPublicacoes[0].dataPublicacao) : new Date();
     const year = firstDate.getFullYear();
     const month = firstDate.getMonth();
-
-    // Gera os dias do mês para o eixo x
     const daysInMonth = getDaysInMonth(year, month);
 
+    // Configurações do gráfico
     const options = {
         chart: {
             id: "basic-line",
             toolbar: { show: true },
             zoom: { enabled: true },
-            animations: {
-                enabled: true,
-                easing: 'easeinout',
-                speed: 800,
-            },
-            background: '#f4f4f4',
+            animations: { enabled: true, easing: "easeinout", speed: 800 },
+            background: "#f4f4f4",
             dropShadow: { enabled: false },
         },
         xaxis: {
             categories: isDataEmpty ? [""] : daysInMonth,
-            labels: {
-                style: {
-                    fontSize: '12px',
-                    fontFamily: 'Nunito Sans, sans-serif',
-                    colors: ['#333'],
-                },
-            },
-            title: {
-                text: 'Dias do Mês',
-                style: {
-                    fontSize: '14px',
-                    fontFamily: 'Nunito Sans, sans-serif',
-                    color: '#333',
-                },
-            },
+            labels: { style: { fontSize: "12px", colors: ["#333"] } },
+            title: { text: "Dias do Mês", style: { fontSize: "14px", color: "#333" } },
         },
         yaxis: {
-            labels: {
-                style: {
-                    fontSize: '12px',
-                    fontFamily: 'Nunito Sans, sans-serif',
-                    colors: ['#333'],
-                },
-            },
-            title: {
-                text: 'Quantidade',
-                style: {
-                    fontSize: '14px',
-                    fontFamily: 'Nunito Sans, sans-serif',
-                    color: '#333',
-                },
-            },
+            labels: { style: { fontSize: "12px", colors: ["#333"] } },
+            title: { text: "Quantidade", style: { fontSize: "14px", color: "#333" } },
         },
-        colors: ['#1f77b4', '#ff7f0e'],
-        legend: {
-            position: 'top',
-            horizontalAlign: 'left',
-            fontFamily: 'Nunito Sans, sans-serif',
-            fontWeight: 600,
-            fontSize: '14px',
-            markers: {
-                width: 10,
-                height: 10,
-                radius: 12,
-            },
-        },
+        colors: ["#1f77b4", "#ff7f0e"],
+        legend: { position: "top", horizontalAlign: "left" },
         title: {
-            text: 'Quantidade de Publicações e Comentários por Mês',
-            align: 'left',
+            text: "Quantidade de Publicações e Comentários por Mês",
+            align: "left",
             margin: 10,
-            style: {
-                fontSize: '20px',
-                fontWeight: 'bold',
-                color: '#333',
-            },
+            style: { fontSize: "20px", fontWeight: "bold", color: "#333" },
         },
-        stroke: {
-            curve: 'smooth',
-            width: 3,
-        },
-        markers: {
-            size: 5,
-            strokeColors: '#fff',
-            strokeWidth: 2,
-            hover: { size: 7 },
-        },
+        stroke: { curve: "smooth", width: 3 },
+        markers: { size: 5, strokeColors: "#fff", strokeWidth: 2, hover: { size: 7 } },
         dataLabels: { enabled: false },
-        grid: {
-            borderColor: '#e7e7e7',
-            strokeDashArray: 5,
-        },
-        tooltip: {
-            theme: 'dark',
-            x: { show: true },
-        },
+        grid: { borderColor: "#e7e7e7", strokeDashArray: 5 },
+        tooltip: { theme: "dark", x: { show: true } },
     };
 
     const series = isDataEmpty
@@ -137,13 +78,16 @@ const GraficoLinhas = ({ data: dadosPublicacoes, data1: dadosComentarios }) => {
         : [
               {
                   name: "Quantidade de Publicações",
-                  data: fillMissingDays(dadosPublicacoes, daysInMonth, 'dataPublicacao', 'quantidadePublicacoes'),
+                  data: fillMissingDays(initialPublicacoes, daysInMonth, "dataPublicacao", "quantidadePublicacoes"),
               },
               {
                   name: "Quantidade de Comentários",
-                  data: fillMissingDays(dadosComentarios, daysInMonth, 'dataComentario', 'quantidadeComentarios'),
+                  data: fillMissingDays(initialComentarios, daysInMonth, "dataComentario", "quantidadeComentarios"),
               },
           ];
+
+    // Força a re-renderização do gráfico ao trocar o mês
+    const chartKey = `${month}-${year}-${initialPublicacoes.length}-${initialComentarios.length}`;
 
     return (
         <div className={styles.grafico}>
@@ -153,7 +97,7 @@ const GraficoLinhas = ({ data: dadosPublicacoes, data1: dadosComentarios }) => {
                 </div>
             ) : (
                 <div className={styles.chart}>
-                    <Chart options={options} series={series} type="line" width="100%" height="450" />
+                    <Chart key={chartKey} options={options} series={series} type="line" width="100%" height="450" />
                 </div>
             )}
         </div>

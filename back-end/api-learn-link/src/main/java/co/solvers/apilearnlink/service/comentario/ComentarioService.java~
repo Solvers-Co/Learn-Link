@@ -66,7 +66,7 @@ public class ComentarioService {
     }
 
     public List<QuantidadeComentarioDiaListagemDto> buscaQuantidadeDeComentariosPorDia(int mes, int ano) {
-        return comentarioRepository.buscaQuantidadeDeComentariosPorDia(mes, ano, ComentarioStatus.ATIVO);
+        return comentarioRepository.buscaQuantidadeDeComentariosPorDia(mes, ano);
     }
 
     public List<Comentario> listarPorPublicacao(int idPublicacao) {
