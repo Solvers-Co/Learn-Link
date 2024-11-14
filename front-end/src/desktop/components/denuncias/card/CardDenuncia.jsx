@@ -26,7 +26,6 @@ function deletarItem(id, tipo, carregarDenuncias) {
     api.delete(endpoint)
         .then(response => {
             toast.success(`${tipo === 'publicacoes' ? 'Publicação' : 'Comentário'} deletado(a) com sucesso!`);
-            console.log(endpoint);
             carregarDenuncias()
         })
         .catch(error => {

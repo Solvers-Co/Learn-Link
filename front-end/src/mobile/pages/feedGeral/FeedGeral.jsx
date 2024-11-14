@@ -94,7 +94,6 @@ const FeedGeral = () => {
                 } else {
                     setPublicacoes(prev => [...prev, ...publicacoesRecebidas]); // Concatena as próximas páginas
                 }
-                console.log(url, response.data);
                 setTotalPages(response?.data.totalPages || 0);
             } catch (error) {
                 console.error("Erro ao buscar publicações:", error);
@@ -171,8 +170,6 @@ const FeedGeral = () => {
                 idUsuario,
             });
 
-            console.log("Comentário enviado com sucesso:", response.data);
-
             // Limpa o campo de texto após enviar o comentário
             setTextoComentario('');
 
@@ -191,7 +188,6 @@ const FeedGeral = () => {
             setComentarios(response.data);
             setShowComentarios(true);
             setIdPublicacaoAtual(id); // Define a publicação atual para usar no envio do comentário
-            console.log("Comentários da publicação:", response.data);
         } catch (error) {
             console.error("Erro ao buscar comentários:", error);
         }

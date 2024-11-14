@@ -3,7 +3,7 @@ import Styles from '../publicacao/Publicacao.module.css';
 import api from '../../../api';
 import { toast } from 'react-toastify';
 import Modal from 'react-modal';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import StylesModal from '../../components/botoes/botaoFazerPublicacao/BotaoFazerPublicacao.module.css'
 import { generateInitials } from '../../utils/functions/GerarIniciais';
 
@@ -28,26 +28,25 @@ function formatDateTime(dateString) {
     return `${hours}:${minutes} - ${day}/${month}/${year}`;
 }
 
-function gerarNotificacao(corpo, usuarioGeradorId, usuarioRecebedorId) {
+function gerarNotificacao(corpo, usuarioGeradorId, usuarioRecebedorId, idPublicacao) {
     const notificacao = {
         corpo,
         usuarioGeradorId,
-        usuarioRecebedorId
+        usuarioRecebedorId,
+        idPublicacao
     }
     api.post("/notificacoes", notificacao).then(response => {
-        console.log(response.data)
     }).catch(() => {
         toast.error("Erro ao gerar notificacao")
     })
 }
+
 function reagirPublicacao(idPublicacao, tipoReacao, idUsuario, curtida, setCurtida, setCurtidas, idUsuarioQuePublicou) {
 
     if (curtida) {
         // Se o usuário já curtiu, remove a curtida
         api.delete(`/publicacoes/${idPublicacao}/remover-reacao`, { data: { tipoReacao, idUsuario } })
             .then(response => {
-                console.log("Reação removida com sucesso:", response.data);
-                // toast.success("Reação removida com sucesso!");
                 setCurtida(false);
                 setCurtidas(prevCurtidas => prevCurtidas - 1); // Decrementa o contador de curtidas
             })
@@ -59,11 +58,9 @@ function reagirPublicacao(idPublicacao, tipoReacao, idUsuario, curtida, setCurti
         // Se o usuário não curtiu, adiciona a curtida
         api.post(`/publicacoes/${idPublicacao}/reagir`, { tipoReacao, idUsuario })
             .then(response => {
-                console.log("Reação registrada com sucesso:", response.data);
-                // toast.success("Reação registrada com sucesso!");
                 setCurtida(true);
                 setCurtidas(prevCurtidas => prevCurtidas + 1); // Incrementa o contador de curtidas
-                gerarNotificacao(" curtiu a sua publicação", idUsuario, idUsuarioQuePublicou)
+                gerarNotificacao(" curtiu a sua publicação", idUsuario, idUsuarioQuePublicou, idPublicacao)
             })
             .catch(error => {
                 console.error("Ocorreu um erro ao reagir à publicação:", error);
@@ -75,7 +72,6 @@ function reagirPublicacao(idPublicacao, tipoReacao, idUsuario, curtida, setCurti
 function deletarPublicacao(id) {
     api.delete(`/publicacoes/${id}`)
         .then(response => {
-            console.log("Publicação deletada com sucesso:", response.data);
             toast.success("Publicação deletada com sucesso!");
         })
         .catch(error => {
@@ -86,7 +82,6 @@ function deletarPublicacao(id) {
 function editarPublicacao(id, novoConteudo, novoCanal) {
     api.patch(`/publicacoes/${id}/conteudo?novoConteudo=${encodeURIComponent(novoConteudo)}&novoCanal=${encodeURIComponent(novoCanal)}`)
         .then(response => {
-            console.log("Publicação editada com sucesso:", response.data);
             toast.success("Publicação editada com sucesso!");
             window.location.reload();
         })
@@ -103,7 +98,7 @@ function denunciarPublicacao(idPublicacao, idUsuario) {
 
     api.post(`/publicacoes/${idPublicacao}/denunciar`, denunciaData)
         .then(response => {
-            console.log("Publicação denunciada com sucesso:", response.data);
+
             toast.success("Publicação denunciada com sucesso!");
         })
         .catch(error => {
@@ -132,6 +127,9 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
     const [showPopupModal, setShowPopupModal] = useState(false);
     // const [motivoDenuncia, setMotivoDenuncia] = useState("");
 
+    const location = useLocation();
+    const isNotificacoesPage = location.pathname === "/notificacoes";
+
     const navigate = useNavigate();
 
     const handleTogglePopup = () => {
@@ -145,9 +143,6 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
     };
 
     const abrirEditarModal = () => {
-        console.log("Abrindo modal");
-        console.log("Mensagem atual:", mensagem);
-        console.log("Matéria atual:", materia);
         setNovoConteudo(mensagem); // Define o novo conteúdo com o valor atual
         setNovaMateria(materia);
         setShowPopup(false);
@@ -178,7 +173,6 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
     };
 
     const visualizarPerfil = (id) => {
-        console.log(id)
         navigate(`/perfil/${id}`)
     }
 
@@ -198,7 +192,7 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
             nomeFormatado = `${primeiroNome} ${ultimoNome}`;
         }
     } else {
-        console.log('Nome de usuário não encontrado');
+        toast.error('Nome de usuário não encontrado');
     }
 
     // Use useMemo com nomeFormatado
@@ -207,10 +201,9 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
         async function buscarImagemPerfil() {
             try {
                 const response = await api.get(`usuarios/buscar-imagem-perfil/${idUsuarioQuePublicou}`);
-                console.log(response.data)
                 setSrcImagemPerfil(response.data)
             } catch (error) {
-                console.log(error)
+                toast.error("Erro ao buscar imagem de perfil")
             }
         }
         buscarImagemPerfil();
@@ -262,7 +255,9 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
                     <div className={Styles['footerItem']}>
                         <span className={Styles['numero']}>{comentarios}</span>
                         <img src={Comentar} alt="Comentar" />
-                        <span className={Styles['footerText']} onClick={origem === "perfil" ? (() => listarComentariosPerfil(id)) : (() => listarComentarios(id))}>Comentários</span>
+                        <span className={Styles['footerText']} onClick={!isNotificacoesPage ?
+                            (origem === "perfil" ? () => listarComentariosPerfil(id) : () => listarComentarios(id))
+                            : undefined}>Comentários</span>
                     </div>
                 </div>
 
@@ -342,7 +337,7 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
                                     id="materias"
                                     className={StylesModal["opcoesMaterias"]}
                                     value={novaMateria}
-                                    onChange={(e) => { console.log("Valor selecionado:", e.target.value); setNovaMateria(e.target.value) }}
+                                    onChange={(e) => { setNovaMateria(e.target.value) }}
                                 >
                                     <option value="portugues">Português</option>
                                     <option value="matematica">Matemática</option>

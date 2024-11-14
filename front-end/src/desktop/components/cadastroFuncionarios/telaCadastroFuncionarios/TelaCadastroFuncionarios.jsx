@@ -78,7 +78,6 @@ const TelaCadastroFuncionarios = () => {
         if (errorMessages.length > 0) {
             errorMessages.forEach(msg => toast.error(msg));
         } else {
-            console.log(usuarioNovo);
             api.post(`/usuarios/adm`, usuarioNovo).then(() => {
                 emailjs.send("service_juy8w7g", "template_lr7u1k4", {
                     to_name: nome,
@@ -86,11 +85,9 @@ const TelaCadastroFuncionarios = () => {
                     to_email: email,
                 }, "tZxktBF31MEVsj2aL")
                     .then((emailResponse) => {
-                        console.log("Email enviado:", emailResponse.status, emailResponse.text);
                         toast.success("Email enviado!");
                     })
                     .catch((emailError) => {
-                        console.log("Erro ao enviar o email:", emailError.text);
                         toast.error("Erro ao enviar o e-mail. Tente novamente.");
                     });
                 toast.success("Usuário cadastrado!");

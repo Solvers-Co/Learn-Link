@@ -65,7 +65,6 @@ const Login = () => {
             const response = await api.get(`/usuarios/${id}`);
             const situacao = response.data.tipoStatus.status;
             sessionStorage.setItem('situacao', situacao);
-            console.log(response.data);
             endereco = response.data.endereco;
             return situacao;
         } catch (error) {

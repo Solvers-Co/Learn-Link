@@ -20,7 +20,7 @@ public class NotificacaoController {
 
     @PostMapping
     private ResponseEntity<NotificacaoListagemDto> criarNotificacao(
-            @RequestBody NotificacaoCriacaoDto notificacaoCriacaoDto){
+            @RequestBody NotificacaoCriacaoDto notificacaoCriacaoDto) {
 
         Notificacao notificacao = notificacaoService.criarNotificacao(NotificacaoMapper.toEntity(notificacaoCriacaoDto), notificacaoCriacaoDto.getUsuarioGeradorId(), notificacaoCriacaoDto.getUsuarioRecebedorId());
 
@@ -28,16 +28,28 @@ public class NotificacaoController {
     }
 
     @GetMapping("/{id}")
-    private ResponseEntity<List<NotificacaoListagemDto>> listarNotificacoesUsuario(@PathVariable Long id){
+    private ResponseEntity<List<NotificacaoListagemDto>> listarNotificacoesUsuario(@PathVariable Long id) {
         List<Notificacao> notificacoes = notificacaoService.listarNotificacoesUsuario(id);
 
         return ResponseEntity.ok(NotificacaoMapper.toListagemDto(notificacoes));
     }
 
     @PatchMapping("/visualizar-notificacao/{id}")
-    private ResponseEntity<NotificacaoListagemDto> visualizarNotificacao(@PathVariable Long id){
+    private ResponseEntity<NotificacaoListagemDto> visualizarNotificacao(@PathVariable Long id) {
         Notificacao notificacao = notificacaoService.visualizarNotificacao(id);
 
-        return  ResponseEntity.ok(NotificacaoMapper.toListagemDto(notificacao));
+        return ResponseEntity.ok(NotificacaoMapper.toListagemDto(notificacao));
     }
+
+    //Metodo para deletar TODAS as notificacoes de um usuario especifico
+    @DeleteMapping("/deletar-notificacoes/{idUsuario}")
+    private ResponseEntity<Void> deletarNotificacoes(@PathVariable Long idUsuario) {
+        notificacaoService.deletarNotificacoes(idUsuario);
+
+        return ResponseEntity.noContent().build();
+    }
+
+
+
+
 }
