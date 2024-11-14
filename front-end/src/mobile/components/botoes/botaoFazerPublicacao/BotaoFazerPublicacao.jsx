@@ -101,10 +101,10 @@ function BotaoFazerPublicacao() {
                     </div>
                 </div>
                 {showPopup && (
-                    <div className={Styles.blur}>
-                        <div className={Styles.popup}>
-                            <div className={Styles.popupContent}>
-                                <div className={Styles.iconeFechar}>
+                    <div className={Styles["blur"]}>
+                        <div className={Styles["popup"]}>
+                            <div className={Styles["popupContent"]}>
+                                <div className={Styles["iconeFechar"]}>
                                     <img
                                         src={fechar}
                                         onClick={() => setShowPopup(false)}
