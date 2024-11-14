@@ -22,11 +22,9 @@ const VerificacaoSenha = () => {
     }
 
     const handleSave = () => {
-        console.log("Verificando o código:", codigo);
-        console.log("Código gerado:", codigoGerado);
         if (codigo === codigoGerado) {
             toast.success("Código correto");
-            navigate("/redefinirSenha", { state: { idUsuarioParam : idUsuario} });
+            navigate("/redefinirSenha", { state: { idUsuarioParam: idUsuario } });
         } else {
             toast.error("Código inválido");
         }

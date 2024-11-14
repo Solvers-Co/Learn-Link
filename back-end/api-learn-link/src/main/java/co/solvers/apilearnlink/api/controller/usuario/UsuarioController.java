@@ -1,7 +1,10 @@
 package co.solvers.apilearnlink.api.controller.usuario;
 
+import co.solvers.apilearnlink.domain.classificacao.Classificacao;
 import co.solvers.apilearnlink.domain.respostaImagem.RespostaImagem;
 import co.solvers.apilearnlink.domain.usuario.Usuario;
+import co.solvers.apilearnlink.service.classificacao.dto.ClassificacaoListagemDto;
+import co.solvers.apilearnlink.service.classificacao.dto.mapper.ClassificacaoMapper;
 import co.solvers.apilearnlink.service.imagem.ImagemPerfilDto;
 import co.solvers.apilearnlink.service.reacao.ReacaoService;
 import co.solvers.apilearnlink.service.usuario.UsuarioService;
@@ -256,10 +259,10 @@ public class UsuarioController {
     }
 
     @PatchMapping("/classificar-usuario/{id}")
-    public ResponseEntity<UsuarioListagemDto> classificarUsuario(@PathVariable Long id) {
-        Usuario usuario = usuarioService.classificarUsuario(id);
+    public ResponseEntity<ClassificacaoListagemDto> classificarUsuario(@PathVariable Long id) {
+        Classificacao classificacao = usuarioService.classificarUsuario(id);
 
-        UsuarioListagemDto dto = UsuarioMapper.toUsuarioListagemResponseDto(usuario);
+        ClassificacaoListagemDto dto = ClassificacaoMapper.toDto(classificacao);
 
         return ResponseEntity.ok(dto);
     }

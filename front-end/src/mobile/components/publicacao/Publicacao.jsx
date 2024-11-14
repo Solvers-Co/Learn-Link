@@ -3,7 +3,7 @@ import Styles from '../publicacao/Publicacao.module.css';
 import api from '../../../api';
 import { toast } from 'react-toastify';
 import Modal from 'react-modal';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import StylesModal from '../../components/botoes/botaoFazerPublicacao/BotaoFazerPublicacao.module.css'
 import { generateInitials } from '../../utils/functions/GerarIniciais';
 
@@ -14,7 +14,9 @@ import MenuVertical from '../../utils/assets/MenuVertical.png';
 import Editar from '../../utils/assets/Editar.png';
 import Deletar from '../../utils/assets/Deletar.png';
 import Denunciar from '../../utils/assets/Denuncia.png';
-import Fechar from '../../utils/assets/icone_x.svg'
+import Fechar from '../../utils/assets/icone_x.svg';
+import IconeImagem from '../../utils/assets/icone_imagem.png';
+import Dropzone from '../dropzone/Dropzone';
 
 function formatDateTime(dateString) {
     const date = new Date(dateString);
@@ -26,26 +28,25 @@ function formatDateTime(dateString) {
     return `${hours}:${minutes} - ${day}/${month}/${year}`;
 }
 
-function gerarNotificacao(corpo,usuarioGeradorId, usuarioRecebedorId){
+function gerarNotificacao(corpo, usuarioGeradorId, usuarioRecebedorId, idPublicacao) {
     const notificacao = {
         corpo,
         usuarioGeradorId,
-        usuarioRecebedorId
+        usuarioRecebedorId,
+        idPublicacao
     }
-    api.post("/notificacoes", notificacao).then(response =>{
-        console.log(response.data)
-    }).catch(() =>{
+    api.post("/notificacoes", notificacao).then(response => {
+    }).catch(() => {
         toast.error("Erro ao gerar notificacao")
     })
 }
+
 function reagirPublicacao(idPublicacao, tipoReacao, idUsuario, curtida, setCurtida, setCurtidas, idUsuarioQuePublicou) {
 
     if (curtida) {
         // Se o usuário já curtiu, remove a curtida
         api.delete(`/publicacoes/${idPublicacao}/remover-reacao`, { data: { tipoReacao, idUsuario } })
             .then(response => {
-                console.log("Reação removida com sucesso:", response.data);
-                // toast.success("Reação removida com sucesso!");
                 setCurtida(false);
                 setCurtidas(prevCurtidas => prevCurtidas - 1); // Decrementa o contador de curtidas
             })
@@ -57,11 +58,9 @@ function reagirPublicacao(idPublicacao, tipoReacao, idUsuario, curtida, setCurti
         // Se o usuário não curtiu, adiciona a curtida
         api.post(`/publicacoes/${idPublicacao}/reagir`, { tipoReacao, idUsuario })
             .then(response => {
-                console.log("Reação registrada com sucesso:", response.data);
-                // toast.success("Reação registrada com sucesso!");
                 setCurtida(true);
                 setCurtidas(prevCurtidas => prevCurtidas + 1); // Incrementa o contador de curtidas
-                gerarNotificacao(" curtiu a sua publicação",idUsuario,idUsuarioQuePublicou)
+                gerarNotificacao(" curtiu a sua publicação", idUsuario, idUsuarioQuePublicou, idPublicacao)
             })
             .catch(error => {
                 console.error("Ocorreu um erro ao reagir à publicação:", error);
@@ -73,7 +72,6 @@ function reagirPublicacao(idPublicacao, tipoReacao, idUsuario, curtida, setCurti
 function deletarPublicacao(id) {
     api.delete(`/publicacoes/${id}`)
         .then(response => {
-            console.log("Publicação deletada com sucesso:", response.data);
             toast.success("Publicação deletada com sucesso!");
         })
         .catch(error => {
@@ -84,7 +82,6 @@ function deletarPublicacao(id) {
 function editarPublicacao(id, novoConteudo, novoCanal) {
     api.patch(`/publicacoes/${id}/conteudo?novoConteudo=${encodeURIComponent(novoConteudo)}&novoCanal=${encodeURIComponent(novoCanal)}`)
         .then(response => {
-            console.log("Publicação editada com sucesso:", response.data);
             toast.success("Publicação editada com sucesso!");
             window.location.reload();
         })
@@ -101,7 +98,7 @@ function denunciarPublicacao(idPublicacao, idUsuario) {
 
     api.post(`/publicacoes/${idPublicacao}/denunciar`, denunciaData)
         .then(response => {
-            console.log("Publicação denunciada com sucesso:", response.data);
+
             toast.success("Publicação denunciada com sucesso!");
         })
         .catch(error => {
@@ -127,7 +124,11 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
     const [showDenunciaModal, setShowDenunciaModal] = useState(false);
     const [srcImagem, setSrcImagem] = useState(urlImagem);
     const [srcImagemPerfil, setSrcImagemPerfil] = useState('')
+    const [showPopupModal, setShowPopupModal] = useState(false);
     // const [motivoDenuncia, setMotivoDenuncia] = useState("");
+
+    const location = useLocation();
+    const isNotificacoesPage = location.pathname === "/notificacoes";
 
     const navigate = useNavigate();
 
@@ -142,9 +143,6 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
     };
 
     const abrirEditarModal = () => {
-        console.log("Abrindo modal");
-        console.log("Mensagem atual:", mensagem);
-        console.log("Matéria atual:", materia);
         setNovoConteudo(mensagem); // Define o novo conteúdo com o valor atual
         setNovaMateria(materia);
         setShowPopup(false);
@@ -175,7 +173,6 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
     };
 
     const visualizarPerfil = (id) => {
-        console.log(id)
         navigate(`/perfil/${id}`)
     }
 
@@ -195,23 +192,22 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
             nomeFormatado = `${primeiroNome} ${ultimoNome}`;
         }
     } else {
-        console.log('Nome de usuário não encontrado');
+        toast.error('Nome de usuário não encontrado');
     }
 
     // Use useMemo com nomeFormatado
     const avatar = useMemo(() => generateInitials(nomeFormatado), [nomeFormatado]);
     useEffect(() => {
         async function buscarImagemPerfil() {
-            try{
+            try {
                 const response = await api.get(`usuarios/buscar-imagem-perfil/${idUsuarioQuePublicou}`);
-                console.log(response.data)
                 setSrcImagemPerfil(response.data)
-            }catch(error){
-                console.log(error)
+            } catch (error) {
+                toast.error("Erro ao buscar imagem de perfil")
             }
         }
         buscarImagemPerfil();
-    },[])
+    }, [])
 
     // Memorize o avatar gerado com base no nome
     const handleChange = (e) => {
@@ -259,7 +255,9 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
                     <div className={Styles['footerItem']}>
                         <span className={Styles['numero']}>{comentarios}</span>
                         <img src={Comentar} alt="Comentar" />
-                        <span className={Styles['footerText']} onClick={origem === "perfil" ? (() => listarComentariosPerfil(id)):(() => listarComentarios(id))}>Comentários</span>
+                        <span className={Styles['footerText']} onClick={!isNotificacoesPage ?
+                            (origem === "perfil" ? () => listarComentariosPerfil(id) : () => listarComentarios(id))
+                            : undefined}>Comentários</span>
                     </div>
                 </div>
 
@@ -314,28 +312,53 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
                                 {textoPublicacao.length} / {maxCaracteres}
                             </div>
                         </div>
-
+                        {showPopupModal && (
+                            <div className={Styles["blur"]}>
+                                <div className={Styles["popup-modal"]}>
+                                    <div className={Styles["popupContent"]}>
+                                        <div className={Styles["iconeFechar"]}>
+                                            <img
+                                                src={Fechar}
+                                                onClick={() => setShowPopupModal(false)}
+                                            />
+                                        </div>
+                                        <div className={Styles.dropzone}>
+                                            <Dropzone origem="publicacoes" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                         <div className={StylesModal["footerPublicar"]}>
-                            <span className={StylesModal["hashtag"]}>#</span>
-                            <select
-                                name="materias"
-                                id="materias"
-                                className={StylesModal["opcoesMaterias"]}
-                                value={novaMateria}
-                                onChange={(e) => { console.log("Valor selecionado:", e.target.value); setNovaMateria(e.target.value) }}
-                            >
-                                <option value="portugues">Português</option>
-                                <option value="matematica">Matemática</option>
-                                <option value="biologia">Biologia</option>
-                                <option value="quimica">Química</option>
-                                <option value="fisica">Física</option>
-                                <option value="historia">História</option>
-                                <option value="geografia">Geografia</option>
-                                <option value="filosofia">Filosofia</option>
-                                <option value="sociologia">Sociologia</option>
-                                <option value="ingles">Inglês</option>
-                                <option value="doacoes">Doações</option>
-                            </select>
+                            <div className={Styles["divCanal"]}>
+                                <span className={StylesModal["hashtag"]}>#</span>
+                                <select
+                                    name="materias"
+                                    id="materias"
+                                    className={StylesModal["opcoesMaterias"]}
+                                    value={novaMateria}
+                                    onChange={(e) => { setNovaMateria(e.target.value) }}
+                                >
+                                    <option value="portugues">Português</option>
+                                    <option value="matematica">Matemática</option>
+                                    <option value="biologia">Biologia</option>
+                                    <option value="quimica">Química</option>
+                                    <option value="fisica">Física</option>
+                                    <option value="historia">História</option>
+                                    <option value="geografia">Geografia</option>
+                                    <option value="filosofia">Filosofia</option>
+                                    <option value="sociologia">Sociologia</option>
+                                    <option value="ingles">Inglês</option>
+                                    <option value="doacoes">Doações</option>
+                                </select>
+                            </div>
+                            <div className={Styles["divImagem"]}>
+                                <img
+                                    src={IconeImagem}
+                                    className={Styles["iconeImagem"]}
+                                    onClick={() => setShowPopupModal(true)}
+                                />
+                            </div>
                         </div>
                     </Modal>
                 )}
@@ -352,7 +375,6 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
                 )}
 
                 {showDenunciaModal && (
-
                     <div className={Styles['modalOverlay']}>
                         <div className={Styles['modalContent']}>
                             <h3>Denunciar Publicação</h3>
@@ -361,8 +383,6 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
                             <button className={Styles['cancelButton']} onClick={() => closeDenunciaModal(false)}>Cancelar</button>
                         </div>
                     </div>
-
-
                 )}
             </div>
         </>
