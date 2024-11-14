@@ -13,8 +13,6 @@ function DadosGrafico({ mes }) {
         api.get(`/publicacoes/quantidade-por-dia`, { params: { mes, ano } }),
         api.get(`/comentarios/quantidade-comentarios-por-dia-mes`, { params: { mes, ano } })
       ]);
-      console.log("Dados publicacao: ", publicacaoResponse.data);
-      console.log("Dados comentario: ", comentarioResponse.data);
       setPublicacao(publicacaoResponse.data);
       setComentario(comentarioResponse.data);
     } catch (error) {

@@ -47,7 +47,6 @@ const TelaDenuncias = () => {
                 ? '/publicacoes/denuncias/ordenadasPorIa'
                 : '/comentarios/denuncias/ordenadasPorIa';
             const response = await api.get(endpoint);
-            console.log(response.data);
             setDenuncias(response.data);
             setOrdenadoPorIa(true);
         } catch (err) {

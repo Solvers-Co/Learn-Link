@@ -23,8 +23,6 @@ const VerificacaoSenhaDesktop = () => {
 
 
     const handleSave = () => {
-        console.log("Verificando o código:", codigo);
-        console.log("Código gerado:", codigoGerado);
         if (codigo === codigoGerado) {
             toast.success("Código correto");
             navigate("/redefinirSenhaDesktop", { state: { idUsuarioParam: idUsuario } });

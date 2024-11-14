@@ -25,16 +25,13 @@ const RedefinicaoSenha = () => {
         if (senha === confirmarSenha) {
             api.patch(`/usuarios/atualizar-senha/${idUsuarioParam}?senha=${senha}`)
             .then(response => {
-                console.log("Senha redefinida com sucesso");
                 toast.success("Senha redefinida com sucesso");
                 navigate("/login");
             })
             .catch(error => {
-                console.log("Erro ao redefinir a senha:", error);
                 toast.error("Erro ao redefinir a senha. Tente novamente");
             })
         } else{
-            console.log("As senhas devem ser iguais");
             toast.error("As senhas devem ser iguais");
         }
     };

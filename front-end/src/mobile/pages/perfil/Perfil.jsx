@@ -147,11 +147,10 @@ const Perfil = () => {
         async function buscarImagemPerfil() {
             try {
                 const response = await api.get(`usuarios/buscar-imagem-perfil/${sessionStorage.getItem("userId")}`);
-                console.log(response.data)
                 setSrcImagemPerfil(response.data)
                 // setSrcImagemPerfil("https://s3-learnlink.s3.us-east-1.amazonaws.com/WIN_20240909_09_30_09_Pro.jpg")
             } catch (error) {
-                console.log(error)
+                toast.error("Erro ao buscar imagem de perfil")
             }
         }
         buscarImagemPerfil();
@@ -173,7 +172,6 @@ const Perfil = () => {
             setComentarios(response.data);
             setShowComentarios(true);
             setIdPublicacaoAtual(id); // Define a publicação atual para usar no envio do comentário
-            console.log("Comentários da publicação:", response.data);
         } catch (error) {
             console.error("Erro ao buscar comentários:", error);
         }
@@ -198,8 +196,6 @@ const Perfil = () => {
                 comentario: textoComentario,
                 idUsuario,
             });
-
-            console.log("Comentário enviado com sucesso:", response.data);
 
             // Limpa o campo de texto após enviar o comentário
             setTextoComentario('');

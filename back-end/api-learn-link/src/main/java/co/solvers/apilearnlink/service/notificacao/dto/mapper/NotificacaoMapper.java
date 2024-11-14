@@ -16,6 +16,8 @@ public class NotificacaoMapper {
         entidade.setCorpo(dto.getCorpo());
         entidade.setVista(1);
         entidade.setDataHora(LocalDateTime.now());
+        entidade.setIdPublicacao(dto.getIdPublicacao());
+        entidade.setIdComentario(dto.getIdComentario());
 
         return entidade;
     }
@@ -30,6 +32,8 @@ public class NotificacaoMapper {
         dto.setNomeUsuarioGerador(entidade.getUsuarioGerador().getNome());
         dto.setNomeUsuarioRecebedor(entidade.getUsuarioRecebedor().getNome());
         dto.setVista(entidade.getVista());
+        dto.setIdPublicacao(entidade.getIdPublicacao());
+        dto.setIdComentario(entidade.getIdComentario());
 
         return dto;
     }

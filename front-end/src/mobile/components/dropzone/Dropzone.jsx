@@ -16,8 +16,6 @@ const Dropzone = ({ origem }) => {
 
             reader.onloadend = () => {
                 const imageBytes = reader.result;
-                console.log("Imagem lida como ArrayBuffer:", imageBytes);
-
                 setImagem(imageBytes); // Salva os bytes da imagem no estado
             };
 

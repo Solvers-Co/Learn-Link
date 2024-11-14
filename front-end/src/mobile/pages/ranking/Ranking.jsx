@@ -16,7 +16,6 @@ const Ranking = () => {
     const navigate = useNavigate();
 
     const visualizarPerfil = (id) => {
-        console.log(id)
         navigate(`/perfil/${id}`)
     }
 
@@ -24,7 +23,6 @@ const Ranking = () => {
         api.get('/qtd-reacoes-comentario-usuarios/buscar-nivel-de-classificacao-de-todos-usuarios')
             .then((response) => {
                 setUsers(response.data);
-                console.log('Dados do ranking:', response.data);
             })
             .catch((error) => {
                 console.error('Erro ao buscar dados do ranking:', error);
@@ -59,7 +57,7 @@ const Ranking = () => {
                     {users.map((user, index) => {
                         const avatar = generateInitials(user.nome);
                         const srcImagemPerfil = imagensPerfil[user.usuarioId];
-                    
+
                         return (
                             <div key={index} className={Styles.rankingItem}>
                                 <div className={Styles.infos}>
