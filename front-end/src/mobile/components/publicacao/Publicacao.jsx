@@ -14,7 +14,9 @@ import MenuVertical from '../../utils/assets/MenuVertical.png';
 import Editar from '../../utils/assets/Editar.png';
 import Deletar from '../../utils/assets/Deletar.png';
 import Denunciar from '../../utils/assets/Denuncia.png';
-import Fechar from '../../utils/assets/icone_x.svg'
+import Fechar from '../../utils/assets/icone_x.svg';
+import IconeImagem from '../../utils/assets/icone_imagem.png';
+import Dropzone from '../dropzone/Dropzone';
 
 function formatDateTime(dateString) {
     const date = new Date(dateString);
@@ -122,6 +124,7 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
     const [showDenunciaModal, setShowDenunciaModal] = useState(false);
     const [srcImagem, setSrcImagem] = useState(urlImagem);
     const [srcImagemPerfil, setSrcImagemPerfil] = useState('')
+    const [showPopupModal, setShowPopupModal] = useState(false);
     // const [motivoDenuncia, setMotivoDenuncia] = useState("");
 
     const location = useLocation();
@@ -309,28 +312,53 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
                                 {textoPublicacao.length} / {maxCaracteres}
                             </div>
                         </div>
-
+                        {showPopupModal && (
+                            <div className={Styles["blur"]}>
+                                <div className={Styles["popup-modal"]}>
+                                    <div className={Styles["popupContent"]}>
+                                        <div className={Styles["iconeFechar"]}>
+                                            <img
+                                                src={Fechar}
+                                                onClick={() => setShowPopupModal(false)}
+                                            />
+                                        </div>
+                                        <div className={Styles.dropzone}>
+                                            <Dropzone origem="publicacoes" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                         <div className={StylesModal["footerPublicar"]}>
-                            <span className={StylesModal["hashtag"]}>#</span>
-                            <select
-                                name="materias"
-                                id="materias"
-                                className={StylesModal["opcoesMaterias"]}
-                                value={novaMateria}
-                                onChange={(e) => { setNovaMateria(e.target.value) }}
-                            >
-                                <option value="portugues">Português</option>
-                                <option value="matematica">Matemática</option>
-                                <option value="biologia">Biologia</option>
-                                <option value="quimica">Química</option>
-                                <option value="fisica">Física</option>
-                                <option value="historia">História</option>
-                                <option value="geografia">Geografia</option>
-                                <option value="filosofia">Filosofia</option>
-                                <option value="sociologia">Sociologia</option>
-                                <option value="ingles">Inglês</option>
-                                <option value="doacoes">Doações</option>
-                            </select>
+                            <div className={Styles["divCanal"]}>
+                                <span className={StylesModal["hashtag"]}>#</span>
+                                <select
+                                    name="materias"
+                                    id="materias"
+                                    className={StylesModal["opcoesMaterias"]}
+                                    value={novaMateria}
+                                    onChange={(e) => { setNovaMateria(e.target.value) }}
+                                >
+                                    <option value="portugues">Português</option>
+                                    <option value="matematica">Matemática</option>
+                                    <option value="biologia">Biologia</option>
+                                    <option value="quimica">Química</option>
+                                    <option value="fisica">Física</option>
+                                    <option value="historia">História</option>
+                                    <option value="geografia">Geografia</option>
+                                    <option value="filosofia">Filosofia</option>
+                                    <option value="sociologia">Sociologia</option>
+                                    <option value="ingles">Inglês</option>
+                                    <option value="doacoes">Doações</option>
+                                </select>
+                            </div>
+                            <div className={Styles["divImagem"]}>
+                                <img
+                                    src={IconeImagem}
+                                    className={Styles["iconeImagem"]}
+                                    onClick={() => setShowPopupModal(true)}
+                                />
+                            </div>
                         </div>
                     </Modal>
                 )}
@@ -347,7 +375,6 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
                 )}
 
                 {showDenunciaModal && (
-
                     <div className={Styles['modalOverlay']}>
                         <div className={Styles['modalContent']}>
                             <h3>Denunciar Publicação</h3>
@@ -356,8 +383,6 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
                             <button className={Styles['cancelButton']} onClick={() => closeDenunciaModal(false)}>Cancelar</button>
                         </div>
                     </div>
-
-
                 )}
             </div>
         </>
