@@ -193,6 +193,7 @@ INSERT INTO tipo_usuario (tipo_usuario) VALUES
 ('ADMIN');
 
 INSERT INTO classificacao (classificacao) VALUES
+('INICIANTE'),
 ('JUNIOR'),
 ('PLENO'),
 ('SENIOR'),
