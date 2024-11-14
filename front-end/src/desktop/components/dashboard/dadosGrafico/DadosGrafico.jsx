@@ -16,13 +16,16 @@ function DadosGrafico({ mes }) {
       setPublicacao(publicacaoResponse.data);
       setComentario(comentarioResponse.data);
     } catch (error) {
-      console.error('Erro ao buscar dados:', error);
+      console.error("Erro ao buscar dados:", error);
     }
   };
 
   useEffect(() => {
     fetchData();
-  }, [mes, ano]);
+    const interval = setInterval(fetchData, 3000); // Atualiza a cada 3 segundos
+
+    return () => clearInterval(interval);
+  }, [mes, ano]); // Atualiza sempre que `mes` ou `ano` mudarem
 
   return (
     <div>
