@@ -98,14 +98,15 @@ const Perfil = () => {
         const fetchClassificacao = async () => {
             try {
                 const response = await api.patch(`/usuarios/classificar-usuario/${idUsuarioLogado}`);
-                const nivel = response.data.classificacao.classificacao;
+                const nivel = response.data.classificacao;
                 const classificacoes = {
+                    'INICIANTE': 'Iniciante',    
                     'JUNIOR': 'Júnior',
                     'PLENO': 'Pleno',
                     'SENIOR': 'Sênior',
                     'ESPECIALISTA': 'Especialista'
                 };
-                setClassificacao(classificacoes[nivel] || 'Iniciante');
+                setClassificacao(classificacoes[nivel]);
             } catch (error) {
                 console.error("Erro ao carregar classificação:", error);
             }
@@ -135,7 +136,6 @@ const Perfil = () => {
                 const response = await api.get(`/qtd-reacoes-comentario-usuarios/buscar-nivel-de-classificacao-do-usuario/${idUsuarioLogado}`);
                 const qtdReacoes = response.data.qtdReacoes;
                 setContribuicoes(qtdReacoes >= 1 ? qtdReacoes : 0);
-                if (qtdReacoes < 1) setClassificacao('Iniciante');
             } catch (error) {
                 console.error("Erro ao carregar contribuições:", error);
             }
