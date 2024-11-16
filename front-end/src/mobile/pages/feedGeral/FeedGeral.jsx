@@ -67,7 +67,7 @@ const FeedGeral = () => {
             setIsSortPopupOpen(false); // Apenas fecha o popup se a direção for a mesma
         }
     };
-
+    
     useEffect(() => {
         const fetchPublicacoes = async () => {
             try {
@@ -193,10 +193,32 @@ const FeedGeral = () => {
         }
     };
 
-    const closeComentariosModal = () => {
+    const closeComentariosModal = async () => {
         setShowComentarios(false);
-        setIdPublicacaoAtual(null); // Limpa a publicação atual quando fechar o modal
+        setIdPublicacaoAtual(null); 
+    
+        if (idPublicacaoAtual) {
+            try {
+                const response = await api.get(`/comentarios/publicacao/${idPublicacaoAtual}`);
+                const comentariosAtualizados = response.data;
+                
+                setPublicacoes((prevPublicacoes) => 
+                    prevPublicacoes.map((publicacao) => {
+                        if (publicacao.id === idPublicacaoAtual) {
+                            return {
+                                ...publicacao,
+                                quantidadeComentarios: comentariosAtualizados.length,
+                            };
+                        }
+                        return publicacao;
+                    })
+                );
+            } catch (error) {
+                console.error("Erro ao atualizar quantidade de comentários:", error);
+            }
+        }
     };
+    
 
     const togglePopup = (id) => {
         if (popupAbertoId === id) {
@@ -289,6 +311,7 @@ const FeedGeral = () => {
                                 nomePublicacao={comentario.publicacao.usuario.nome}
                                 idPublicacao={comentario.publicacao.id}
                                 idUsuarioQuePublicou={comentario.usuario.id}
+                                listarComentarios={listarComentarios}
                             />
                         ))
                     ) : (
