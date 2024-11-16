@@ -164,10 +164,7 @@ const TelaDenuncias = () => {
                         <Tooltip txt={"O Moderador Virtual ajuda a destacar as publicações ou comentários que podem ser nocivos. A ordenação é feita por IA, podendo haver erros."} />
                     </div>
                 </div>
-
-                {/* <div className={styles.btn}>
-
-                </div> */}
+                
                 {showModal && (
                     <div className={styles.modal}>
                         <div className={styles.modalContent}>
