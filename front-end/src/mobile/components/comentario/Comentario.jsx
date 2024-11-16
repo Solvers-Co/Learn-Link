@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Styles from '../comentario/Comentario.module.css';
 import api from '../../../api';
 import { toast } from 'react-toastify';
@@ -105,13 +105,13 @@ function denunciarComentario(idComentario, idUsuario) {
         });
 }
 
-const Comentario = ({ quemCurtiu, id, nome, mensagem, horario, curtidas, idReacao, nomePublicacao, idPublicacao, idUsuarioQuePublicou, emailDeQuemPublicou }) => {
+const Comentario = ({ quemCurtiu, id, nome, mensagem, horario, curtidas, idReacao, nomePublicacao, idPublicacao, idUsuarioQuePublicou, emailDeQuemPublicou, listarComentarios }) => {
     const [curtida, setCurtida] = useState(quemCurtiu.includes(sessionStorage.getItem('nome')));
     const [numCurtidas, setCurtidas] = useState(curtidas);
     const [showPopup, setShowPopup] = useState(false);
     const [showConfirmation, setShowConfirmation] = useState(false);
-    const [showDenunciaModal, setShowDenunciaModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
+    const [showDenunciaModal, setShowDenunciaModal] = useState(false);
     const [novoComentario, setNovoComentario] = useState(mensagem);
 
     const navigate = useNavigate();
@@ -123,13 +123,15 @@ const Comentario = ({ quemCurtiu, id, nome, mensagem, horario, curtidas, idReaca
     };
 
     const confirmarDelecao = () => {
-        deletarComentario(id);
-        setShowConfirmation(false);
-    };
-
-    const confirmarDenuncia = () => {
-        denunciarComentario(id, idUsuario);
-        setShowDenunciaModal(false);
+        api.delete(`/comentarios/${id}`)
+            .then(() => {
+                toast.success("Comentário deletado com sucesso!");
+                listarComentarios(idPublicacao);
+                setShowConfirmation(true);
+            })
+            .catch(() => {
+                toast.error("Ocorreu um erro ao deletar o comentário.");
+            });
     };
 
     const confirmarEdicao = () => {
@@ -147,28 +149,30 @@ const Comentario = ({ quemCurtiu, id, nome, mensagem, horario, curtidas, idReaca
         }
 
         api.patch(`/comentarios/${id}?comentarioAlterar=${encodeURIComponent(novoComentario)}`)
-            .then(response => {
+            .then(() => {
                 toast.success("Comentário editado com sucesso!");
+                listarComentarios(idPublicacao);
                 setShowEditModal(false);
             })
-            .catch(error => {
-                console.error("Ocorreu um erro ao editar o comentário:", error.response ? error.response.data : error.message);
+            .catch(() => {
                 toast.error("Erro ao editar o comentário.");
             });
     };
 
+    const confirmarDenuncia = () => {
+        denunciarComentario(id, idUsuario);
+        setShowDenunciaModal(false);
+    };
+
     const visualizarPerfil = (id) => {
-        navigate(`/perfil/${id}`)
-    }
+        navigate(`/perfil/${id}`);
+    };
 
-    // Obtem o nome do usuário armazenado no sessionStorage
-    const nomeUsuarioLogado = sessionStorage.getItem('nome');
+        const nomeUsuarioLogado = sessionStorage.getItem('nome');
 
-    // Obtem o id do usuário armazenado no sessionStorage
-    const idUsuario = sessionStorage.getItem('userId');
-
-    // Gere o avatar com base no nome
-    const avatar = useMemo(() => generateInitials(nome), [nome]);
+        const idUsuario = sessionStorage.getItem('userId');
+    
+        const avatar = useMemo(() => generateInitials(nome), [nome]);
 
     return (
         <>
