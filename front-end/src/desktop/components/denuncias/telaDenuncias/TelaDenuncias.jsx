@@ -5,6 +5,7 @@ import styles from './TelaDenuncias.module.css';
 import api from '../../../../api';
 import Tooltip from '../../../../mobile/components/tooltip/Tooltip';
 import Download from '../../../utils/assets/icone_download.png';
+import IA from '../../../utils/assets/icone_robo.png';
 import { toast } from 'react-toastify';
 
 const TelaDenuncias = () => {
@@ -153,11 +154,20 @@ const TelaDenuncias = () => {
                         onClick={() => setShowModal(prev => !prev)} // Alterna entre abrir e fechar o modal
                         title="Exportação de relatórios"
                     />
-                    <button onClick={fetchDenunciasPorIa} className={styles.btnOrdenarPorIa}>Ordenar por IA</button>
+                    <button onClick={fetchDenunciasPorIa} className={styles.btnOrdenarPorIa}>
+                        Moderador Virtual
+                        <div className={styles.imgBtn}>
+                            <img src={IA} alt="IA" className={styles.imgRobo} />
+                        </div>
+                    </button>
                     <div className={styles.tooltip}>
-                        <Tooltip txt={"O botão 'Ordenar por IA' exibe primeiro as publicações ou comentários nocivos em destaque vermelho. A ordenação é feita por IA, podendo haver erros"} />
+                        <Tooltip txt={"O Moderador Virtual ajuda a destacar as publicações ou comentários que podem ser nocivos. A ordenação é feita por IA, podendo haver erros."} />
                     </div>
                 </div>
+
+                {/* <div className={styles.btn}>
+
+                </div> */}
                 {showModal && (
                     <div className={styles.modal}>
                         <div className={styles.modalContent}>
