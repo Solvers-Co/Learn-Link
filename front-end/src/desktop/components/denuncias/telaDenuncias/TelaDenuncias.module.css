@@ -19,10 +19,11 @@
 }
 
 .btnRemover {
+    margin-top: 8px;
     display: flex;
     align-items: center;
     border-radius: 10px;
-    width: 30%;
+    width: 25%;
     height: 40px;
     background-color: #ffffff;
     border: 1px solid #8a8a8a;
@@ -41,8 +42,9 @@
 }
 
 .interacao {
+    margin-top: 8px;
     display: flex;
-    width: 30%;
+    width: 25%;
     justify-content: space-between;
     align-items: center;
 }
