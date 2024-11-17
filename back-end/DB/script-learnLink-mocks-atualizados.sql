@@ -1658,8 +1658,9 @@ INSERT INTO publicacao (conteudo, data_hora, tipo_publicacao_id, canal_id, usuar
 ('A importância da leitura crítica de livros', '2024-11-14 11:00:00', 1, 2, 19),
 ('Os principais conceitos de economia para vestibular', '2024-11-15 09:00:00', 1, 8, 25),
 ('Como a arte reflete a sociedade', '2024-11-16 14:00:00', 1, 10, 16),
-('Os desafios da preservação ambiental', '2024-11-17 13:00:00', 1, 8, 25),
-('Matemática aplicada na resolução de problemas cotidianos', '2024-11-18 12:00:00', 1, 1, 19),
+('Os desafios da preservação ambiental', '2024-11-17 13:00:00', 1, 8, 25);
+select * from publicacao;
+/*('Matemática aplicada na resolução de problemas cotidianos', '2024-11-18 12:00:00', 1, 1, 19),
 ('Como a filosofia pode ajudar a entender a ética', '2024-11-19 10:00:00', 1, 10, 20),
 ('O impacto das novas tecnologias no ensino', '2024-11-20 16:00:00', 1, 8, 18),
 ('Como se preparar para provas de matemática', '2024-11-21 08:00:00', 1, 1, 21),
@@ -1672,7 +1673,7 @@ INSERT INTO publicacao (conteudo, data_hora, tipo_publicacao_id, canal_id, usuar
 ('Entendendo a física quântica para iniciantes', '2024-11-28 17:00:00', 1, 5, 25),
 ('Não sei por que esse caralho de ENEM existe', '2024-11-29 10:00:00', 1, 2, 20),
 ('Odeio essa merda de matéria', '2024-11-30 12:00:00', 1, 2, 18);
-
+*/
 -- Comentários nas Publicações
 INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) VALUES
 ('Muito bom! A explicação ficou bem clara.', '2024-11-01 10:00:00', 302, 22),
@@ -1704,7 +1705,7 @@ INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) VALUES
 
 -- DEZEMBRO
 -- Publicação 1
-INSERT INTO publicacao (conteudo, data_hora, tipo_publicacao_id, canal_id, usuario_id) 
+/*INSERT INTO publicacao (conteudo, data_hora, tipo_publicacao_id, canal_id, usuario_id) 
 VALUES ('Como resolver um sistema de equações linear?', '2024-12-01 00:00:00', 1, 1, 20);
 
 -- Comentários
@@ -1792,13 +1793,7 @@ VALUES ('Qual a origem do ser humano segundo a teoria da evolução?', '2024-12-
 INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) 
 VALUES ('A teoria de Darwin afirma que a evolução ocorre por seleção natural.', '2024-12-05 07:00:00', 335, 22),
        ('Essa teoria revolucionou a biologia e nossa compreensão da vida.', '2024-12-05 07:30:00', 335, 20);
-
-
-
-
-
-
-
+*/
 
 
 select * from publicacao;
