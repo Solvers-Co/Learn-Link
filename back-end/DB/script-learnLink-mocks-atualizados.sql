@@ -1657,9 +1657,9 @@ INSERT INTO publicacao (conteudo, data_hora, tipo_publicacao_id, canal_id, usuar
 ('Dicas para escrever um artigo científico de sucesso', '2024-11-13 17:00:00', 1, 2, 22),
 ('A importância da leitura crítica de livros', '2024-11-14 11:00:00', 1, 2, 19),
 ('Os principais conceitos de economia para vestibular', '2024-11-15 09:00:00', 1, 8, 25),
-('Como a arte reflete a sociedade', '2024-11-16 14:00:00', 1, 10, 16),
-('Os desafios da preservação ambiental', '2024-11-17 13:00:00', 1, 8, 25);
-select * from publicacao;
+('Não sei por que esse caralho de ENEM existe', '2024-11-16 10:00:00', 1, 2, 20),
+('Odeio essa merda de matéria', '2024-11-17 12:00:00', 1, 2, 18);
+
 /*('Matemática aplicada na resolução de problemas cotidianos', '2024-11-18 12:00:00', 1, 1, 19),
 ('Como a filosofia pode ajudar a entender a ética', '2024-11-19 10:00:00', 1, 10, 20),
 ('O impacto das novas tecnologias no ensino', '2024-11-20 16:00:00', 1, 8, 18),
@@ -1671,8 +1671,8 @@ select * from publicacao;
 ('Como organizar seus estudos para o vestibular', '2024-11-26 08:00:00', 1, 2, 16),
 ('O papel da ética nas decisões políticas', '2024-11-27 19:00:00', 1, 10, 22),
 ('Entendendo a física quântica para iniciantes', '2024-11-28 17:00:00', 1, 5, 25),
-('Não sei por que esse caralho de ENEM existe', '2024-11-29 10:00:00', 1, 2, 20),
-('Odeio essa merda de matéria', '2024-11-30 12:00:00', 1, 2, 18);
+('Como a arte reflete a sociedade', '2024-11-29 14:00:00', 1, 10, 16),
+('Os desafios da preservação ambiental', '2024-11-30 13:00:00', 1, 8, 25);
 */
 -- Comentários nas Publicações
 INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) VALUES
@@ -1795,8 +1795,6 @@ VALUES ('A teoria de Darwin afirma que a evolução ocorre por seleção natural
        ('Essa teoria revolucionou a biologia e nossa compreensão da vida.', '2024-12-05 07:30:00', 335, 20);
 */
 
-
-select * from publicacao;
 -- Reações para o dia 1 de Setembro de 2024
 INSERT INTO reacao (tipo_reacao_id, publicacao_id, usuario_id) VALUES
 (1, 1, 2),
@@ -2478,10 +2476,10 @@ INSERT INTO denuncia (publicacao_id, usuario_id)
 VALUES (15, 4);
 
 INSERT INTO denuncia (publicacao_id, usuario_id)
-VALUES (368, 20);
+VALUES (355, 20);
 
 INSERT INTO denuncia (publicacao_id, usuario_id)
-VALUES (369, 18);
+VALUES (356, 18);
 
 -- Comentarios
 INSERT INTO denuncia (comentario_id, usuario_id)
