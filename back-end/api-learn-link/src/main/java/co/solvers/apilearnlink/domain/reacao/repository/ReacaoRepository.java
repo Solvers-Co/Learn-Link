@@ -14,5 +14,4 @@ public interface ReacaoRepository extends JpaRepository<Reacao, Integer> {
     Optional<Reacao> findByUsuarioAndPublicacaoAndTipoReacao(Usuario usuario, Publicacao publicacao, TipoReacao tipoReacao);
 
     Optional<Reacao> findByUsuarioAndComentarioAndTipoReacao(Usuario usuario, Comentario comentario, TipoReacao tipoReacao);
-
 }

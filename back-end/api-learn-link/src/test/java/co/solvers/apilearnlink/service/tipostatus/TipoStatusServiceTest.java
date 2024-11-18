@@ -2,7 +2,6 @@ package co.solvers.apilearnlink.service.tipostatus;
 
 
 import co.solvers.apilearnlink.domain.tipostatus.repository.TipoStatusRepository;
-import co.solvers.apilearnlink.service.tipoStatus.TipoStatusService;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;

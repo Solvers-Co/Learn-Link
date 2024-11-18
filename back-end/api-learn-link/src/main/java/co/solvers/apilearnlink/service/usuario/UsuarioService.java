@@ -5,25 +5,23 @@ import co.solvers.apilearnlink.domain.classificacao.Classificacao;
 import co.solvers.apilearnlink.domain.endereco.Endereco;
 import co.solvers.apilearnlink.domain.especialidade.Especialidade;
 import co.solvers.apilearnlink.domain.registroLogin.RegistroLogin;
-import co.solvers.apilearnlink.domain.respostaImagem.RespostaImagem;
+import co.solvers.apilearnlink.domain.respostaimagem.RespostaImagem;
 import co.solvers.apilearnlink.domain.tipostatus.TipoStatus;
 import co.solvers.apilearnlink.domain.tipostatus.repository.TipoStatusRepository;
 import co.solvers.apilearnlink.domain.tipousuario.TipoUsuario;
-import co.solvers.apilearnlink.domain.usuario.HashTableUsuario;
 import co.solvers.apilearnlink.domain.usuario.Usuario;
 import co.solvers.apilearnlink.domain.usuario.repository.UsuarioRepository;
 import co.solvers.apilearnlink.domain.views.ReacoesEmComentariosDoUsuario.QtdReacoesComentariosUsuarioView;
 import co.solvers.apilearnlink.exception.ConflitoException;
 import co.solvers.apilearnlink.exception.NaoEncontradoException;
-import co.solvers.apilearnlink.fila.FilaObj;
 import co.solvers.apilearnlink.service.classificacao.ClassificacaoService;
 import co.solvers.apilearnlink.service.endereco.EnderecoService;
 import co.solvers.apilearnlink.service.endereco.dto.EnderecoCriacaoDto;
 import co.solvers.apilearnlink.service.endereco.dto.mapper.EnderecoMapper;
 import co.solvers.apilearnlink.service.especialidade.EspecialidadeService;
-import co.solvers.apilearnlink.service.reacoesEmComentariosDoUsuario.QtdReacoesComentariosUsuarioService;
+import co.solvers.apilearnlink.service.reacoesemcomentariosdousuario.QtdReacoesComentariosUsuarioService;
 import co.solvers.apilearnlink.service.registrologin.RegistroLoginService;
-import co.solvers.apilearnlink.service.tipoStatus.TipoStatusService;
+import co.solvers.apilearnlink.service.tipostatus.TipoStatusService;
 import co.solvers.apilearnlink.service.tipousuario.TipoUsuarioService;
 import co.solvers.apilearnlink.service.usuario.autenticacao.dto.UsuarioLoginDto;
 import co.solvers.apilearnlink.service.usuario.autenticacao.dto.UsuarioTokenDto;
@@ -137,16 +135,6 @@ public class UsuarioService {
 
         List<Usuario> usuarios = usuarioRepository.findByTipoStatus(tipoStatus);
 
-        FilaObj<Usuario> fila = new FilaObj<>(usuarios.size());
-
-        for (Usuario usuario : usuarios) {
-            fila.insert(usuario);
-        }
-
-        for (int i = 0; i < fila.getTamanho(); i++) {
-            usuarios.set(i, fila.poll());
-        }
-
         return usuarios;
     }
 
@@ -158,39 +146,6 @@ public class UsuarioService {
         return usuarioRepository.findById(id).orElseThrow(
                 () -> new NaoEncontradoException("Usuário")
         );
-    }
-
-    private HashTableUsuario populaHashTable() {
-        List<Usuario> usuarios = usuarioRepository.findAll();
-        HashTableUsuario usuariosHashTable = new HashTableUsuario(5);
-
-        if (usuarios.isEmpty()) {
-            return usuariosHashTable;
-        }
-
-        for (Usuario usuario : usuarios) {
-            usuariosHashTable.insere(usuario);
-        }
-
-        return usuariosHashTable;
-    }
-
-    public Usuario buscarPorNomeHashTable(String nome) {
-
-        HashTableUsuario usuarios = populaHashTable();
-
-        if (usuarios.isEmpty()) {
-            throw new NaoEncontradoException("Usuario");
-        }
-
-        Usuario usuario = usuarios.busca(nome);
-
-        if (usuario == null) {
-            throw new NaoEncontradoException("Usuario");
-        } else {
-            return usuario;
-        }
-
     }
 
     public void deletar(Long id) {

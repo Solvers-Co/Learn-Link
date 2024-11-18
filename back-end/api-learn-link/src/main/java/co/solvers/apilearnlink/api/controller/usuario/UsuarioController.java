@@ -1,6 +1,6 @@
 package co.solvers.apilearnlink.api.controller.usuario;
 
-import co.solvers.apilearnlink.domain.respostaImagem.RespostaImagem;
+import co.solvers.apilearnlink.domain.respostaimagem.RespostaImagem;
 import co.solvers.apilearnlink.domain.usuario.Usuario;
 import co.solvers.apilearnlink.service.imagem.ImagemPerfilDto;
 import co.solvers.apilearnlink.service.reacao.ReacaoService;
@@ -264,19 +264,6 @@ public class UsuarioController {
         return ResponseEntity.ok(dto);
     }
 
-    @ApiResponse(responseCode = "200", description = "Usuário encontrado")
-    @ApiResponse(responseCode = "404", description = "Nenhum usuário encontrado")
-    @Operation(summary = "Buscar usuário por nome - HashTable", description = "Método que busca usuário pelo seu nome", tags = {"Usuários"})
-    @GetMapping("/buscar-usuario-por-nome-hashtable")
-    public ResponseEntity<UsuarioListagemDto> buscarUsuarioPorNomeHashTable(
-            @RequestParam(defaultValue = "João") String nome) {
-
-        Usuario usuario = usuarioService.buscarPorNomeHashTable(nome);
-        UsuarioListagemDto usuarioDto = UsuarioMapper.toUsuarioListagemResponseDto(usuario);
-
-        return ResponseEntity.ok(usuarioDto);
-    }
-
     @PatchMapping("/upload-foto-perfil/{id}")
     public ResponseEntity<RespostaImagem> uploadFotoPerfil(@RequestBody ImagemPerfilDto imagemBytes, @PathVariable Long id){
 
@@ -295,51 +282,4 @@ public class UsuarioController {
 
         return ResponseEntity.ok(urlImagemPerfil);
     }
-
-    //    @GetMapping("/buscar-todos-os-usuarios")
-//    public ResponseEntity<List<UsuarioAceitacaoListagemDto>> listagemDeUsuarios() {
-//
-//        List<UsuarioAceitacaoListagemDto> usuarios = usuarioService.listagemDeUsuarios();
-//
-//        if (usuarios.isEmpty()) {
-//            return ResponseEntity.noContent().build();
-//        }
-//
-//        return ResponseEntity.ok(usuarios);
-//    }
-
-    //    @GetMapping("/usuarios-ativos")
-//    public ResponseEntity<List<UsuarioAceitacaoListagemDto>> listagemDeUsuariosAtivos() {
-//
-//        List<UsuarioAceitacaoListagemDto> usuarios = usuarioService.listagemDeUsuariosAtivos();
-//
-//        if (usuarios.isEmpty()) {
-//            return ResponseEntity.noContent().build();
-//        }
-//
-//        return ResponseEntity.ok(usuarios);
-//    }
-//    @GetMapping("/usuarios-pendentes")
-//    public ResponseEntity<List<UsuarioAceitacaoListagemDto>> listagemDeUsuariosPendentes() {
-//
-//        List<UsuarioAceitacaoListagemDto> usuarios = usuarioService.listagemDeUsuariosPendentes();
-//
-//        if (usuarios.isEmpty()) {
-//            return ResponseEntity.noContent().build();
-//        }
-//
-//        return ResponseEntity.ok(usuarios);
-//    }
-
-//    @GetMapping("/usuarios-negados")
-//    public ResponseEntity<List<UsuarioAceitacaoListagemDto>> listagemDeUsuariosNegados() {
-//
-//        List<UsuarioAceitacaoListagemDto> usuarios = usuarioService.listagemDeUsuariosNegados();
-//
-//        if (usuarios.isEmpty()) {
-//            return ResponseEntity.noContent().build();
-//        }
-//
-//        return ResponseEntity.ok(usuarios);
-//    }
 }
