@@ -51,7 +51,7 @@ function generateInitials(name) {
 }
 
 
-
+    
 const Perfil = () => {
     const { idUsuario } = useParams(); // Pegando o id do usuário da URL
     const [nome, setNome] = useState('Usuário Desconhecido');
@@ -146,7 +146,7 @@ const Perfil = () => {
     useEffect(() => {
         async function buscarImagemPerfil() {
             try {
-                const response = await api.get(`usuarios/buscar-imagem-perfil/${sessionStorage.getItem("userId")}`);
+                const response = await api.get(`usuarios/buscar-imagem-perfil/${idUsuario}`);
                 setSrcImagemPerfil(response.data)
                 // setSrcImagemPerfil("https://s3-learnlink.s3.us-east-1.amazonaws.com/WIN_20240909_09_30_09_Pro.jpg")
             } catch (error) {
