@@ -263,7 +263,7 @@ public class PublicacaoControllerTest {
 
         when(publicacaoService.editarConteudo(id, novoConteudo, novoCanal)).thenReturn(publicacao);
 
-        ResponseEntity<PublicacaoListagemResponseDto> response = publicacaoController.editarConteudo(id, novoConteudo, novoCanal);
+        ResponseEntity<PublicacaoListagemResponseDto> response = publicacaoController.editarConteudo(id, novoConteudo, novoCanal, );
 
         assertEquals(200, response.getStatusCodeValue());
         assertEquals(novoConteudo, Objects.requireNonNull(response.getBody()).getConteudo());

@@ -11,6 +11,7 @@ import co.solvers.apilearnlink.service.comentario.dto.mapper.ComentarioMapper;
 import co.solvers.apilearnlink.service.denuncia.DenunciaService;
 import co.solvers.apilearnlink.service.denuncia.dto.DenunciaPublicacaoCriarDto;
 import co.solvers.apilearnlink.service.denuncia.dto.DenunciaPublicacaoListagemDto;
+import co.solvers.apilearnlink.service.imagem.ImagemPerfilDto;
 import co.solvers.apilearnlink.service.publicacao.dto.*;
 import co.solvers.apilearnlink.service.publicacoesDenunciadas.dto.PublicacoesDenunciadasDto;
 import co.solvers.apilearnlink.service.denuncia.dto.mapper.DenunciaMapper;
@@ -161,10 +162,12 @@ public class PublicacaoController {
             @RequestParam
             @Parameter(name = "novoConteudo", description = "Novo conteúdo", example = "Qual o valor de PI?") String novoConteudo,
             @RequestParam
-            @Parameter(name = "novoCanalId", description = "ID do novo canal", example = "Matemática") String novoCanal
+            @Parameter(name = "novoCanalId", description = "ID do novo canal", example = "Matemática") String novoCanal,
+            @RequestBody(required = false)
+            @Parameter(name = "imageBytes", description =  "Array de bytes da imagem") ImagemPerfilDto imagemUrl
     ) {
 
-        Publicacao publicacaoAlterada = publicacaoService.editarConteudo(id, novoConteudo, novoCanal);
+        Publicacao publicacaoAlterada = publicacaoService.editarConteudo(id, novoConteudo, novoCanal, imagemUrl.getImagemBytes());
         PublicacaoListagemResponseDto dto = PublicacaoMapper.toDto(publicacaoAlterada);
         return ResponseEntity.ok(dto);
     }
@@ -487,7 +490,6 @@ public class PublicacaoController {
 
         return ResponseEntity.ok(urlImagem);
     }
-
 
 //    @PostMapping("/comentarios")
 //    public ResponseEntity<Publicacao> comentar(@RequestBody Publicacao comentario) {
