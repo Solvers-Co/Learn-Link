@@ -69,7 +69,7 @@ jobs:
         source: "./*.jar"
         target: "/home/ubuntu/deploy-api/"
 
-    - name: Enviar os Scripts p/ a EC2 #msma coisa
+    - name: Enviar os Scripts p/ a EC2 #mesma coisa
       uses: appleboy/scp-action@master
       with:
         host: ${{ secrets.DEPLOY_HOST }}
