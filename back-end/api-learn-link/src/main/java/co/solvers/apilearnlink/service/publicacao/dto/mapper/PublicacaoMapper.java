@@ -1,6 +1,7 @@
 package co.solvers.apilearnlink.service.publicacao.dto.mapper;
 
 import co.solvers.apilearnlink.domain.comentario.Comentario;
+import co.solvers.apilearnlink.domain.comentario.ComentarioStatus;
 import co.solvers.apilearnlink.domain.reacao.Reacao;
 import co.solvers.apilearnlink.domain.tipopublicacao.TipoPublicacao;
 import co.solvers.apilearnlink.domain.usuario.Usuario;
@@ -47,10 +48,13 @@ public class PublicacaoMapper {
             dto.setUrlImagem(entity.getUrlImagem());
         }
 
-        if (entity.getComentarios() == null){
+        if (entity.getComentarios() == null) {
             dto.setQuantidadeComentarios(0);
         } else {
-            dto.setQuantidadeComentarios(entity.getComentarios().size());
+            long quantidadeComentariosAtivos = entity.getComentarios().stream()
+                    .filter(comentario -> comentario.getStatus() == ComentarioStatus.ATIVO)
+                    .count();
+            dto.setQuantidadeComentarios((int) quantidadeComentariosAtivos);
         }
         dto.setReacoes(toReacaoDto(entity.getReacoes()));
 

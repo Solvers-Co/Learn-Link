@@ -79,15 +79,55 @@ function deletarPublicacao(id) {
         });
 }
 
-function editarPublicacao(id, novoConteudo, novoCanal) {
-    api.patch(`/publicacoes/${id}/conteudo?novoConteudo=${encodeURIComponent(novoConteudo)}&novoCanal=${encodeURIComponent(novoCanal)}`)
-        .then(response => {
+async function editarPublicacao(id, novoConteudo, novoCanal) {
+    if (sessionStorage.getItem("bytesImagemPublicacao")) {
+        var imagemUrl = [];
+        var byteArray = Uint8Array.from(
+            atob(sessionStorage.getItem("bytesImagemPublicacao")),
+            (c) => c.charCodeAt(0)
+        );
+
+        for (let i = 0; i < byteArray.length; i++) {
+            imagemUrl.push(byteArray[i]);
+        }
+
+        sessionStorage.removeItem("bytesImagemPublicacao");
+
+        const imagemPerfilDto = {
+            imagemBytes: imagemUrl,
+        };
+
+        try {
+            await api.patch(
+                `/publicacoes/${id}/conteudo?novoConteudo=${encodeURIComponent(
+                    novoConteudo
+                )}&novoCanal=${encodeURIComponent(novoCanal)}`,
+                imagemPerfilDto
+            );
             toast.success("Publicação editada com sucesso!");
             window.location.reload();
-        })
-        .catch(error => {
-            console.error("Erro ao editar a publicação:", error.response?.data || error.message);
-        });
+        } catch (error) {
+            console.error(
+                "Erro ao editar a publicação:",
+                error.response?.data || error.message
+            );
+        }
+    } else {
+        try {
+            await api.patch(
+                `/publicacoes/${id}/conteudo?novoConteudo=${encodeURIComponent(
+                    novoConteudo
+                )}&novoCanal=${encodeURIComponent(novoCanal)}`
+            );
+            toast.success("Publicação editada com sucesso!");
+            window.location.reload();
+        } catch (error) {
+            console.error(
+                "Erro ao editar a publicação:",
+                error.response?.data || error.message
+            );
+        }
+    }
 }
 
 
@@ -155,7 +195,6 @@ const Publicacao = ({ quemCurtiu, id, nome, materia, mensagem, horario, curtidas
 
     const confirmarEdicao = () => {
         editarPublicacao(id, novoConteudo, novaMateria);
-        closeEditarModal();
     };
 
     const abrirDenunciaModal = () => {

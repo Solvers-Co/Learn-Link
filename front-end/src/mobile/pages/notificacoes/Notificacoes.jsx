@@ -113,7 +113,7 @@ const Notificacoes = () => {
             <div className={styles.notificacoes}>
                 <div className={styles.cabecalho}>
                     <h1 className={styles.titulo}>Notificações</h1>
-                    <img src={Deletar} alt="Deletar" onClick={() => { deletarNotificacao(sessionStorage.getItem('userId')) }} />
+                    <img src={Deletar}  alt="Deletar" onClick={() => { deletarNotificacao(sessionStorage.getItem('userId')) }} />
                 </div>
                 <div className={styles.notificacao}>
                     {notificacoes.length > 0 ? (
@@ -146,7 +146,7 @@ const Notificacoes = () => {
                 >
                     <div className={styles.modalContent}>
                         <div className={styles.cabecalhoModal}>
-                            <img src={IconeX} alt="Fechar" onClick={() => { closeModal() }} />
+                            <img src={IconeX} className={styles.iconeFechar} alt="Fechar" onClick={() => { closeModal() }} />
                         </div>
                         <div className={styles.publicacao}>
                             {publicacao ? (

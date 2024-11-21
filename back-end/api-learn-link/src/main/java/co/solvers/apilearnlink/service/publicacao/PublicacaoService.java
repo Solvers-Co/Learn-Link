@@ -154,14 +154,20 @@ public class PublicacaoService {
         return publicacaoRepository.findById(id).get();
     }
 
-    public Publicacao editarConteudo(int id, String novoConteudo, String novoCanal) {
+    public Publicacao editarConteudo(int id, String novoConteudo, String novoCanal, byte[] imagemUrl) {
         verificaConteudoVazio(novoConteudo);
         verificaPublicacaoAtiva(id);
         verificaIdVazio(id);
 
+
         Optional<Publicacao> optPublicacao = publicacaoRepository.findById(id);
 
         Publicacao publicacao = optPublicacao.get();
+
+        if (imagemUrl != null){
+            uploadFoto(imagemUrl, publicacao);
+        }
+
         publicacao.setConteudo(novoConteudo);
         Canal novoCanalNome = canalRepository.findByNome(novoCanal);
         publicacao.setCanal(novoCanalNome);
