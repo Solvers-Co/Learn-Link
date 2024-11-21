@@ -31,6 +31,7 @@ function DadosKpi({ mes }) {
             const usuariosResponse = await api.get(`/media-usuarios-ativos/mes`, { params: { mes, ano } });
             if (usuariosResponse.data && usuariosResponse.data.length > 0) {
                 setMediaUsuariosAtivos(usuariosResponse.data[0].usuariosAtivos);
+                console.log(usuariosResponse.data[0].usuariosAtivos);
                 setTemDadosUsuarios(true);
             } else {
                 setMediaUsuariosAtivos(null);
