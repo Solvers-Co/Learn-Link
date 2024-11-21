@@ -32,6 +32,7 @@ function DadosKpi({ mes }) {
             if (usuariosResponse.data && usuariosResponse.data.length > 0) {
                 setMediaUsuariosAtivos(usuariosResponse.data[0].usuariosAtivos);
                 setTemDadosUsuarios(true);
+                console.log(usuariosResponse.data[0].usuariosAtivos)
             } else {
                 setMediaUsuariosAtivos(null);
                 setTemDadosUsuarios(false);
@@ -44,8 +45,9 @@ function DadosKpi({ mes }) {
     };
 
     useEffect(() => {
+        console.log("DadosKpi recebeu o mês:", mes);
         fetchData();
-        const interval = setInterval(fetchData, 3000); // Atualiza a cada 3 segundos
+        const interval = setInterval(fetchData, 30000); // Atualiza a cada 3 segundos
 
         return () => clearInterval(interval);
     }, [mes, ano]);
