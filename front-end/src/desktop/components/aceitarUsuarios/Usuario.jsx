@@ -16,6 +16,7 @@ const formatarCPF = (cpf) => {
 
 const Usuario = ({ usuario, fetchUsuarios, paginaAtual, statusAtual }) => {
 
+    const idUsuarioSs = parseInt(sessionStorage.getItem('userId'));
     var statusAtualTipo = ""
 
     if (usuario.tipoStatus === "APROVADO") {
@@ -44,7 +45,7 @@ const Usuario = ({ usuario, fetchUsuarios, paginaAtual, statusAtual }) => {
     }
 
     const alterarStatus = (id, novoStatus) => {
-        api.patch(`/usuarios/${id}/status/${novoStatus}`)
+        api.patch(`/usuarios/${id}/status/${novoStatus}?idUsuarioRequisicao=${idUsuarioSs}`)
             .then(response => {
                 toast.success('Status alterado com sucesso!');
                 console.log('Resposta da API:', response.data);

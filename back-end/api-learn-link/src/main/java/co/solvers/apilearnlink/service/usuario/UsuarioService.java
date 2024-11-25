@@ -34,6 +34,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -211,7 +212,9 @@ public class UsuarioService {
         return usuarioRepository.save(usuario.get());
     }
 
-    public Usuario alterarStatus(Long id, Integer idTipoStatus) {
+    public Usuario alterarStatus(Long id, Integer idTipoStatus, Long idUsuarioRequisicao) {
+        verificaSeEAdm(idUsuarioRequisicao);
+
         Usuario usuario = buscarPorId(id);
 
         TipoStatus tipoStatus = tipoStatusService.buscarPorId(idTipoStatus);
@@ -305,19 +308,8 @@ public class UsuarioService {
 
     // Verificações de existência e vazio
 
- /*   public void verificaUsuarioAtivo(int id){
-        String status = usuarioRepository.findStatusById(id);
-
-        if (status != "APROVADO"){
-            throw new InvalidoException("Status de usuário");
-        }
-    }*/
 
     public void verificaEmailExistente(String email) {
-
-//        usuarioRepository.findByEmail(email).orElseThrow(
-//                () -> new ConflitoException("Email do usuário")
-//        );
 
         Optional<Usuario> usuarioValidacaoEmailExistente = usuarioRepository.findByEmail(email);
 
@@ -332,11 +324,14 @@ public class UsuarioService {
                 () -> new NaoEncontradoException("Usuário")
         );
 
-//        Optional<Usuario> IdValidacaoExistente = usuarioRepository.findById(id);
-//
-//        if (IdValidacaoExistente.isEmpty()) {
-//            throw new NaoEncontradoException("Usuário");
-//        }
+    }
+
+    public void verificaSeEAdm(Long id) {
+        Usuario usuario = buscarPorId(id);
+
+        if (!usuario.getTipoUsuario().getTipoUsuario().equalsIgnoreCase("ADMIN")){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Usuário não autorizado");
+        }
     }
 
     public Page<UsuarioAceitacaoListagemDto> listagemDeUsuariosPaginado(Pageable pageable) {

@@ -150,8 +150,10 @@ public class UsuarioController {
             @PathVariable
             @Parameter(name = "id", description = "Usuario id", example = "1") Long id,
             @PathVariable
-            @Parameter(name = "idTipoStatus", description = "Tipo status id", example = "1") Integer idTipoStatus) {
-        Usuario usuarioAnalisado = usuarioService.alterarStatus(id, idTipoStatus);
+            @Parameter(name = "idTipoStatus", description = "Tipo status id", example = "1") Integer idTipoStatus,
+            @RequestParam
+            @Parameter(name = "idUsuarioRequisicao", description = "Id do usuario que faz a requisição", example = "1") Long idUsuarioRequisicao) {
+        Usuario usuarioAnalisado = usuarioService.alterarStatus(id, idTipoStatus, idUsuarioRequisicao);
         UsuarioListagemDto dto = UsuarioMapper.toUsuarioListagemResponseDto(usuarioAnalisado);
         return ResponseEntity.status(200).body(dto);
     }
