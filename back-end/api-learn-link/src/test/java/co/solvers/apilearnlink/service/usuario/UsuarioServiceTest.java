@@ -2,20 +2,16 @@ package co.solvers.apilearnlink.service.usuario;
 
 import co.solvers.apilearnlink.domain.classificacao.Classificacao;
 import co.solvers.apilearnlink.domain.endereco.Endereco;
-import co.solvers.apilearnlink.domain.especialidade.Especialidade;
 import co.solvers.apilearnlink.domain.tipostatus.TipoStatus;
 import co.solvers.apilearnlink.domain.tipostatus.repository.TipoStatusRepository;
 import co.solvers.apilearnlink.domain.tipousuario.TipoUsuario;
-import co.solvers.apilearnlink.domain.tipousuario.respository.TipoUsuarioRepository;
 import co.solvers.apilearnlink.domain.usuario.Usuario;
 import co.solvers.apilearnlink.domain.usuario.repository.UsuarioRepository;
 import co.solvers.apilearnlink.exception.ConflitoException;
 import co.solvers.apilearnlink.exception.NaoEncontradoException;
 import co.solvers.apilearnlink.service.classificacao.ClassificacaoService;
 import co.solvers.apilearnlink.service.endereco.EnderecoService;
-import co.solvers.apilearnlink.service.endereco.dto.EnderecoCriacaoDto;
-import co.solvers.apilearnlink.service.especialidade.EspecialidadeService;
-import co.solvers.apilearnlink.service.tipoStatus.TipoStatusService;
+import co.solvers.apilearnlink.service.tipostatus.TipoStatusService;
 import co.solvers.apilearnlink.service.tipousuario.TipoUsuarioService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -27,14 +23,11 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
 
 @ExtendWith(MockitoExtension.class)
 public class UsuarioServiceTest {

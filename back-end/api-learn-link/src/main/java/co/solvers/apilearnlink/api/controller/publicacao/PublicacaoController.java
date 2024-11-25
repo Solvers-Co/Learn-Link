@@ -13,11 +13,11 @@ import co.solvers.apilearnlink.service.denuncia.dto.DenunciaPublicacaoCriarDto;
 import co.solvers.apilearnlink.service.denuncia.dto.DenunciaPublicacaoListagemDto;
 import co.solvers.apilearnlink.service.imagem.ImagemPerfilDto;
 import co.solvers.apilearnlink.service.publicacao.dto.*;
-import co.solvers.apilearnlink.service.publicacoesDenunciadas.dto.PublicacoesDenunciadasDto;
+import co.solvers.apilearnlink.service.publicacoesdenunciadas.dto.PublicacoesDenunciadasDto;
 import co.solvers.apilearnlink.service.denuncia.dto.mapper.DenunciaMapper;
 import co.solvers.apilearnlink.service.publicacao.PublicacaoService;
 import co.solvers.apilearnlink.service.publicacao.dto.mapper.PublicacaoMapper;
-import co.solvers.apilearnlink.service.publicacoesDenunciadas.dto.mapper.PublicacoesDenunciadasMapper;
+import co.solvers.apilearnlink.service.publicacoesdenunciadas.dto.mapper.PublicacoesDenunciadasMapper;
 import co.solvers.apilearnlink.service.reacao.ReacaoService;
 import co.solvers.apilearnlink.service.reacao.dto.ReacaoCriarDto;
 import co.solvers.apilearnlink.service.reacao.dto.ReacaoPublicacaoListarDto;
@@ -490,6 +490,7 @@ public class PublicacaoController {
 
         return ResponseEntity.ok(urlImagem);
     }
+
 
 //    @PostMapping("/comentarios")
 //    public ResponseEntity<Publicacao> comentar(@RequestBody Publicacao comentario) {

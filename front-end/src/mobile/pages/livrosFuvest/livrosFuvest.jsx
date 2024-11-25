@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import api from "../../../api";
-import Styles from "./LivrosFuvest.module.css";
+import Styles from "./livrosFuvest.module.css";
 import Header from "../../components/headerAplicacao/Header";
 import Tooltip from "../../components/tooltip/Tooltip";
 

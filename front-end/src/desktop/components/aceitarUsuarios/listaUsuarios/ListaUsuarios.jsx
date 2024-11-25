@@ -14,6 +14,7 @@ const ListaUsuarios = () => {
     const [itensPorPagina, setItensPorPagina] = useState(7);
     const [totalPaginas, setTotalPaginas] = useState(0);
     const [origemChamada, setOrigemChamada] = useState('');
+    const idUsuarioSs = parseInt(sessionStorage.getItem('userId'));
 
     const fetchUsuarios = (status, paginaAtual = pagina, itens = itensPorPagina) => {
         // Se a origem é o dropdown, reseta para a primeira página
@@ -53,7 +54,7 @@ const ListaUsuarios = () => {
 
     // Função para alterar o status de cada usuário
     const alterarStatus = (id, novoStatus) => {
-        return api.patch(`/usuarios/${id}/status/${novoStatus}`)
+        return api.patch(`/usuarios/${id}/status/${novoStatus}?idUsuarioRequisicao=${idUsuarioSs}`)
             .then(response => {
                 return response.data;
             })
