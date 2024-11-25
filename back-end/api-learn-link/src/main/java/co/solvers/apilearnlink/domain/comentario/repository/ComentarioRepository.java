@@ -21,10 +21,10 @@ public interface ComentarioRepository extends JpaRepository<Comentario, Integer>
 
     @Query("SELECT new co.solvers.apilearnlink.service.comentario.dto.QuantidadeComentarioDiaListagemDto(" +
             "DATE(c.dataHora) as dataComentario, COUNT(c)) " +
-            "FROM Comentario c WHERE YEAR(c.dataHora) = :ano AND MONTH(c.dataHora) = :mes AND c.status = :status " +
+            "FROM Comentario c WHERE YEAR(c.dataHora) = :ano AND MONTH(c.dataHora) = :mes " +
             "GROUP BY DATE(c.dataHora) " +
             "ORDER BY dataComentario")
-    List<QuantidadeComentarioDiaListagemDto> buscaQuantidadeDeComentariosPorDia(@Param("mes") int mes, @Param("ano") int ano, @Param("status") ComentarioStatus status);
+    List<QuantidadeComentarioDiaListagemDto> buscaQuantidadeDeComentariosPorDia(@Param("mes") int mes, @Param("ano") int ano);
 
 
     List<Comentario> findByPublicacaoAndStatus(Publicacao publicacao, ComentarioStatus status);
