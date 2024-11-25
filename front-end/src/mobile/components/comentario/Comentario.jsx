@@ -1,9 +1,9 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Styles from '../comentario/Comentario.module.css';
 import api from '../../../api';
 import { toast } from 'react-toastify';
 import { generateInitials } from '../../utils/functions/GerarIniciais';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import Curtir from '../../utils/assets/Curtir.png';
 import Curtido from '../../utils/assets/Curtido.png';
@@ -35,25 +35,26 @@ function formatTimeAgo(dateString) {
     return 'agora mesmo';
 }
 
-function gerarNotificacao(corpo,usuarioGeradorId, usuarioRecebedorId){
+function gerarNotificacao(corpo, usuarioGeradorId, usuarioRecebedorId, idPublicacao, idComentario) {
     const notificacao = {
         corpo,
         usuarioGeradorId,
-        usuarioRecebedorId
+        usuarioRecebedorId,
+        idPublicacao,
+        idComentario
     }
-    api.post("/notificacoes", notificacao).then(response =>{
-        console.log(response.data)
-    }).catch(() =>{
+    api.post("/notificacoes", notificacao).then(response => {
+    }).catch(() => {
         toast.error("Erro ao gerar notificacao")
     })
 }
 
-function reagirComentario(idComentario, idReacao, tipoReacao, idUsuario, curtida, setCurtida, setCurtidas, idUsuarioQuePublicou) {
+function reagirComentario(idComentario, idReacao, tipoReacao, idUsuario, curtida, setCurtida, setCurtidas, idUsuarioQuePublicou, idPublicacao) {
     if (curtida) {
         // Se o usuário já curtiu, remove a curtida
         api.delete(`/comentarios/${idComentario}/reagir`, { data: { tipoReacao, idUsuario } })
             .then(response => {
-                console.log("Reação removida com sucesso:", response.data);
+                toast.success("Reação removida com sucesso!");
                 setCurtida(false);
                 setCurtidas(prevCurtidas => prevCurtidas - 1); // Decrementa o contador de curtidas
             })
@@ -64,10 +65,10 @@ function reagirComentario(idComentario, idReacao, tipoReacao, idUsuario, curtida
         // Se o usuário não curtiu, adiciona a curtida
         api.post(`/comentarios/${idComentario}/reagir`, { tipoReacao, idUsuario })
             .then(response => {
-                console.log("Reação registrada com sucesso:", response.data);
+                toast.success("Reação adicionada com sucesso!");
                 setCurtida(true);
                 setCurtidas(prevCurtidas => prevCurtidas + 1); // Incrementa o contador de curtidas
-                gerarNotificacao(" curtiu o seu comentário", idUsuario, idUsuarioQuePublicou)
+                gerarNotificacao(" curtiu o seu comentário", idUsuario, idUsuarioQuePublicou, idPublicacao, idComentario)
             })
             .catch(error => {
                 console.error("Ocorreu um erro ao reagir ao comentário:", error);
@@ -78,10 +79,10 @@ function reagirComentario(idComentario, idReacao, tipoReacao, idUsuario, curtida
 function deletarComentario(id) {
     api.delete(`/comentarios/${id}`)
         .then(response => {
-            console.log("Comentário deletado com sucesso:", response.data);
+            toast.success("Comentário deletado com sucesso!");
         })
         .catch(error => {
-            console.error("Ocorreu um erro ao deletar o comentário:", error);
+            toast.error("Ocorreu um erro ao deletar o comentário.");
         });
 }
 
@@ -92,7 +93,6 @@ function denunciarComentario(idComentario, idUsuario) {
 
     api.post(`/comentarios/${idComentario}/denunciar`, denunciaData)
         .then(response => {
-            console.log("Comentário denunciado com sucesso:", response.data);
             toast.success("Comentário denunciado com sucesso!");
         })
         .catch(error => {
@@ -105,29 +105,33 @@ function denunciarComentario(idComentario, idUsuario) {
         });
 }
 
-const Comentario = ({ quemCurtiu, id, nome, mensagem, horario, curtidas, idReacao, nomePublicacao, idPublicacao, idUsuarioQuePublicou, emailDeQuemPublicou }) => {
+const Comentario = ({ quemCurtiu, id, nome, mensagem, horario, curtidas, idReacao, nomePublicacao, idPublicacao, idUsuarioQuePublicou, emailDeQuemPublicou, listarComentarios }) => {
     const [curtida, setCurtida] = useState(quemCurtiu.includes(sessionStorage.getItem('nome')));
     const [numCurtidas, setCurtidas] = useState(curtidas);
     const [showPopup, setShowPopup] = useState(false);
     const [showConfirmation, setShowConfirmation] = useState(false);
-    const [showDenunciaModal, setShowDenunciaModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
+    const [showDenunciaModal, setShowDenunciaModal] = useState(false);
     const [novoComentario, setNovoComentario] = useState(mensagem);
 
     const navigate = useNavigate();
+    const location = useLocation();
+    const isNotificacoesPage = location.pathname === "/notificacoes";
 
     const togglePopup = () => {
         setShowPopup(!showPopup);
     };
 
     const confirmarDelecao = () => {
-        deletarComentario(id);
-        setShowConfirmation(false);
-    };
-
-    const confirmarDenuncia = () => {
-        denunciarComentario(id, idUsuario);
-        setShowDenunciaModal(false);
+        api.delete(`/comentarios/${id}`)
+            .then(() => {
+                toast.success("Comentário deletado com sucesso!");
+                listarComentarios(idPublicacao);
+                setShowConfirmation(true);
+            })
+            .catch(() => {
+                toast.error("Ocorreu um erro ao deletar o comentário.");
+            });
     };
 
     const confirmarEdicao = () => {
@@ -145,31 +149,30 @@ const Comentario = ({ quemCurtiu, id, nome, mensagem, horario, curtidas, idReaca
         }
 
         api.patch(`/comentarios/${id}?comentarioAlterar=${encodeURIComponent(novoComentario)}`)
-            .then(response => {
-                console.log("Comentário editado com sucesso:", response.data);
+            .then(() => {
                 toast.success("Comentário editado com sucesso!");
+                listarComentarios(idPublicacao);
                 setShowEditModal(false);
             })
-            .catch(error => {
-                console.error("Ocorreu um erro ao editar o comentário:", error.response ? error.response.data : error.message);
+            .catch(() => {
                 toast.error("Erro ao editar o comentário.");
             });
     };
 
+    const confirmarDenuncia = () => {
+        denunciarComentario(id, idUsuario);
+        setShowDenunciaModal(false);
+    };
+
     const visualizarPerfil = (id) => {
-        console.log(id)
-        navigate(`/perfil/${id}`)
-    }
+        navigate(`/perfil/${id}`);
+    };
 
+        const nomeUsuarioLogado = sessionStorage.getItem('nome');
 
-    // Obtem o nome do usuário armazenado no sessionStorage
-    const nomeUsuarioLogado = sessionStorage.getItem('nome');
-
-    // Obtem o id do usuário armazenado no sessionStorage
-    const idUsuario = sessionStorage.getItem('userId');
-
-    // Gere o avatar com base no nome
-    const avatar = useMemo(() => generateInitials(nome), [nome]);
+        const idUsuario = sessionStorage.getItem('userId');
+    
+        const avatar = useMemo(() => generateInitials(nome), [nome]);
 
     return (
         <>
@@ -258,12 +261,14 @@ const Comentario = ({ quemCurtiu, id, nome, mensagem, horario, curtidas, idReaca
                         <img
                             src={curtida ? Curtido : Curtir}
                             alt="Curtir"
-                            onClick={() => { reagirComentario(id, idReacao, "CURTIDA", sessionStorage.getItem('userId'), curtida, setCurtida, setCurtidas, idUsuarioQuePublicou) }}
+                            onClick={() => { reagirComentario(id, idReacao, "CURTIDA", sessionStorage.getItem('userId'), curtida, setCurtida, setCurtidas, idUsuarioQuePublicou, idPublicacao) }}
                         />
                     </div>
                 </div>
             </div>
-            <div className={Styles['linha']}></div>
+            {!isNotificacoesPage ?
+                <div className={Styles['linha']}></div>
+                : null}
         </>
     );
 };

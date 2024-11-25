@@ -67,7 +67,7 @@ const FeedGeral = () => {
             setIsSortPopupOpen(false); // Apenas fecha o popup se a direção for a mesma
         }
     };
-
+    
     useEffect(() => {
         const fetchPublicacoes = async () => {
             try {
@@ -94,7 +94,6 @@ const FeedGeral = () => {
                 } else {
                     setPublicacoes(prev => [...prev, ...publicacoesRecebidas]); // Concatena as próximas páginas
                 }
-                console.log(url, response.data);
                 setTotalPages(response?.data.totalPages || 0);
             } catch (error) {
                 console.error("Erro ao buscar publicações:", error);
@@ -171,8 +170,6 @@ const FeedGeral = () => {
                 idUsuario,
             });
 
-            console.log("Comentário enviado com sucesso:", response.data);
-
             // Limpa o campo de texto após enviar o comentário
             setTextoComentario('');
 
@@ -191,16 +188,37 @@ const FeedGeral = () => {
             setComentarios(response.data);
             setShowComentarios(true);
             setIdPublicacaoAtual(id); // Define a publicação atual para usar no envio do comentário
-            console.log("Comentários da publicação:", response.data);
         } catch (error) {
             console.error("Erro ao buscar comentários:", error);
         }
     };
 
-    const closeComentariosModal = () => {
+    const closeComentariosModal = async () => {
         setShowComentarios(false);
-        setIdPublicacaoAtual(null); // Limpa a publicação atual quando fechar o modal
+        setIdPublicacaoAtual(null); 
+    
+        if (idPublicacaoAtual) {
+            try {
+                const response = await api.get(`/comentarios/publicacao/${idPublicacaoAtual}`);
+                const comentariosAtualizados = response.data;
+                
+                setPublicacoes((prevPublicacoes) => 
+                    prevPublicacoes.map((publicacao) => {
+                        if (publicacao.id === idPublicacaoAtual) {
+                            return {
+                                ...publicacao,
+                                quantidadeComentarios: comentariosAtualizados.length,
+                            };
+                        }
+                        return publicacao;
+                    })
+                );
+            } catch (error) {
+                console.error("Erro ao atualizar quantidade de comentários:", error);
+            }
+        }
     };
+    
 
     const togglePopup = (id) => {
         if (popupAbertoId === id) {
@@ -293,6 +311,7 @@ const FeedGeral = () => {
                                 nomePublicacao={comentario.publicacao.usuario.nome}
                                 idPublicacao={comentario.publicacao.id}
                                 idUsuarioQuePublicou={comentario.usuario.id}
+                                listarComentarios={listarComentarios}
                             />
                         ))
                     ) : (

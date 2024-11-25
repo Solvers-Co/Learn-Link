@@ -11,6 +11,7 @@ import co.solvers.apilearnlink.service.comentario.dto.mapper.ComentarioMapper;
 import co.solvers.apilearnlink.service.denuncia.DenunciaService;
 import co.solvers.apilearnlink.service.denuncia.dto.DenunciaPublicacaoCriarDto;
 import co.solvers.apilearnlink.service.denuncia.dto.DenunciaPublicacaoListagemDto;
+import co.solvers.apilearnlink.service.imagem.ImagemPerfilDto;
 import co.solvers.apilearnlink.service.publicacao.dto.*;
 import co.solvers.apilearnlink.service.publicacoesdenunciadas.dto.PublicacoesDenunciadasDto;
 import co.solvers.apilearnlink.service.denuncia.dto.mapper.DenunciaMapper;
@@ -26,6 +27,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -38,6 +40,9 @@ import org.springframework.core.io.Resource;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.core.io.Resource;
 
 
 import java.io.IOException;
@@ -157,10 +162,12 @@ public class PublicacaoController {
             @RequestParam
             @Parameter(name = "novoConteudo", description = "Novo conteúdo", example = "Qual o valor de PI?") String novoConteudo,
             @RequestParam
-            @Parameter(name = "novoCanalId", description = "ID do novo canal", example = "Matemática") String novoCanal
+            @Parameter(name = "novoCanalId", description = "ID do novo canal", example = "Matemática") String novoCanal,
+            @RequestBody(required = false)
+            @Parameter(name = "imageBytes", description =  "Array de bytes da imagem") ImagemPerfilDto imagemUrl
     ) {
 
-        Publicacao publicacaoAlterada = publicacaoService.editarConteudo(id, novoConteudo, novoCanal);
+        Publicacao publicacaoAlterada = publicacaoService.editarConteudo(id, novoConteudo, novoCanal, imagemUrl.getImagemBytes());
         PublicacaoListagemResponseDto dto = PublicacaoMapper.toDto(publicacaoAlterada);
         return ResponseEntity.ok(dto);
     }
@@ -484,6 +491,87 @@ public class PublicacaoController {
         return ResponseEntity.ok(urlImagem);
     }
 
+
+//    @PostMapping("/comentarios")
+//    public ResponseEntity<Publicacao> comentar(@RequestBody Publicacao comentario) {
+//
+//        Publicacao publicacao = buscarPublicacaoPorID(comentario.getFkPublicacao());
+//
+//        if (publicacao == null) {
+//            return ResponseEntity.status(404).build();
+//        }
+//
+//        if (publicacao.getDescricao() == null ||
+//                publicacao.getFkPublicacao() == 0) {
+//            return ResponseEntity.status(400).build();
+//        }
+//
+//        publicacao.setComentarios(comentario);
+//
+//        return ResponseEntity.status(201).body(comentario);
+//    }
+//
+//    @GetMapping("/{id}/comentarios")
+//    public ResponseEntity<List<Publicacao>> listarComentarios(@PathVariable int id) {
+//
+//        Publicacao publicacao = buscarPublicacaoPorID(id);
+//
+//        if (publicacao == null) {
+//            return ResponseEntity.status(404).build();
+//        }
+//
+//        if (publicacao.getComentarios().isEmpty()) {
+//            return ResponseEntity.status(204).build();
+//        }
+//
+//        return ResponseEntity.status(200).body(publicacao.getComentarios());
+//    }
+
+
+//    @PutMapping("/{id}")
+//    public ResponseEntity<Publicacao> editarPublicacao(@PathVariable int id, @RequestBody Publicacao publicacao) {
+//
+//        Publicacao publicacaoAtualizar = buscarPublicacaoPorID(id);
+//
+//        if (publicacaoAtualizar == null) {
+//            ResponseEntity.status(404).build();
+//        }
+//
+//        switch (publicacao.getTipoPublicacao()) {
+//            case COMUM:
+//
+//                if (publicacao.getTitulo() == null || publicacao.getDescricao() == null) {
+//                    ResponseEntity.status(400).build();
+//                }
+//
+//                publicacaoAtualizar.setTitulo(publicacao.getTitulo());
+//                publicacaoAtualizar.setDescricao(publicacao.getDescricao());
+//
+//                return ResponseEntity.status(200).body(publicacaoAtualizar);
+//
+//            case COMENTARIO:
+//
+//                if (publicacao.getDescricao() == null) {
+//                    ResponseEntity.status(400).build();
+//                }
+//
+//                publicacaoAtualizar.setDescricao(publicacao.getDescricao());
+//
+//                return ResponseEntity.status(200).body(publicacaoAtualizar);
+//        }
+//
+//        return ResponseEntity.status(400).build();
+//    }
+
+
+//    public Publicacao buscarPublicacaoPorID(int id) {
+//
+//        return publicacoes
+//                .stream()
+//                .filter(publicacao -> publicacao.getId() == id)
+//                .findFirst()
+//                .orElse(null);
+//    }
 
 
 }

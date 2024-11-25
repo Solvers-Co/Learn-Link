@@ -56,7 +56,6 @@ const ListaUsuarios = () => {
     const alterarStatus = (id, novoStatus) => {
         return api.patch(`/usuarios/${id}/status/${novoStatus}?idUsuarioRequisicao=${idUsuarioSs}`)
             .then(response => {
-                console.log(`${sessionStorage.getItem('userID')} Usuário ${id} alterado com sucesso!`);
                 return response.data;
             })
             .catch(error => {
@@ -88,7 +87,6 @@ const ListaUsuarios = () => {
             toast.success('Todos os ' + idsPendentes.length + ' usuários pendentes foram aprovados!');
             // Atualiza a lista de usuários após aceitar todos
             fetchUsuarios('1');
-            console.log('Todos os ' + idsPendentes.length + ' usuários pendentes foram aprovados!');
         } catch (error) {
             console.error('Erro ao aceitar todos os usuários pendentes:', error);
             toast.error('Ocorreu um erro ao aceitar os usuários.');

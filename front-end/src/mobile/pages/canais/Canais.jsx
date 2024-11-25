@@ -60,7 +60,6 @@ const Canais = () => {
     useEffect(() => {
         api.get('/qtd-materias-nao-respondidas')
             .then(response => {
-                console.log("Dados recebidos:", response.data);
                 setCardsData(response.data); // Atualize o estado com os dados recebidos
             })
             .catch(error => {

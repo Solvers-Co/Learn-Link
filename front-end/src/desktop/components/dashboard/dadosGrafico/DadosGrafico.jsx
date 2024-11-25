@@ -13,18 +13,19 @@ function DadosGrafico({ mes }) {
         api.get(`/publicacoes/quantidade-por-dia`, { params: { mes, ano } }),
         api.get(`/comentarios/quantidade-comentarios-por-dia-mes`, { params: { mes, ano } })
       ]);
-      console.log("Dados publicacao: ", publicacaoResponse.data);
-      console.log("Dados comentario: ", comentarioResponse.data);
       setPublicacao(publicacaoResponse.data);
       setComentario(comentarioResponse.data);
     } catch (error) {
-      console.error('Erro ao buscar dados:', error);
+      console.error("Erro ao buscar dados:", error);
     }
   };
 
   useEffect(() => {
     fetchData();
-  }, [mes, ano]);
+    const interval = setInterval(fetchData, 3000); // Atualiza a cada 3 segundos
+
+    return () => clearInterval(interval);
+  }, [mes, ano]); // Atualiza sempre que `mes` ou `ano` mudarem
 
   return (
     <div>

@@ -141,6 +141,8 @@ CREATE TABLE notificacao (
     vista TINYINT,
     usuario_gerador_id INT,
     usuario_recebedor_id INT,
+    id_publicacao INT,
+    id_comentario INT,
     FOREIGN KEY (usuario_gerador_id) REFERENCES usuario(id),
     FOREIGN KEY (usuario_recebedor_id) REFERENCES usuario(id)
 );
@@ -193,6 +195,7 @@ INSERT INTO tipo_usuario (tipo_usuario) VALUES
 ('ADMIN');
 
 INSERT INTO classificacao (classificacao) VALUES
+('INICIANTE'),
 ('JUNIOR'),
 ('PLENO'),
 ('SENIOR'),

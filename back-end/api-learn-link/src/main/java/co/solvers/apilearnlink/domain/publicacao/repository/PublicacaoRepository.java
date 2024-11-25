@@ -29,10 +29,10 @@ public interface PublicacaoRepository extends JpaRepository<Publicacao, Integer>
 
     @Query("SELECT new co.solvers.apilearnlink.service.publicacao.dto.QuantidadePublicacaoDiaListagemDto(" +
             "DATE(p.dataHora) as dataPublicacao, COUNT(p)) " +
-            "FROM Publicacao p WHERE YEAR(p.dataHora) = :ano AND MONTH(p.dataHora) = :mes " +
+            "FROM Publicacao p WHERE YEAR(p.dataHora) = :ano AND MONTH(p.dataHora) = :mes AND p.status = :status " +
             "GROUP BY DATE(p.dataHora) " +
             "ORDER BY dataPublicacao")
-    List<QuantidadePublicacaoDiaListagemDto> buscaQuantidadeDePublicacaoPorDia(@Param("mes") int mes, @Param("ano") int ano);
+    List<QuantidadePublicacaoDiaListagemDto> buscaQuantidadeDePublicacaoPorDia(@Param("mes") int mes, @Param("ano") int ano, @Param("status") PublicacaoStatus status);
 
     @Query("SELECT new co.solvers.apilearnlink.service.publicacao.dto.QuantidadePublicacaoMesCanalListagemDto(" +
             "c.nome" +

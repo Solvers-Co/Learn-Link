@@ -13,7 +13,6 @@ const LivrosFuvest = () => {
             .get("/livros/listar")
             .then((response) => {
                 setBooks(response.data);
-                console.log("Livros:", response.data);
             })
             .catch((error) => {
                 console.error("Erro ao buscar livros:", error);

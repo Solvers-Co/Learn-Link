@@ -36,6 +36,10 @@ public class QtdReacoesComentariosUsuarioController {
 
         Optional<QtdReacoesComentariosUsuarioView> qtdReacoes = qtdReacoesComentariosUsuarioService.listagemQtdReacoesComentarios(id);
 
+        if (qtdReacoes.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
+
         Optional<QtdReacoesComentariosUsuarioDto> qtdReacoesDto = QtdReacoesComentariosUsuarioMapper.toDto(qtdReacoes);
         return ResponseEntity.ok(qtdReacoesDto);
     }

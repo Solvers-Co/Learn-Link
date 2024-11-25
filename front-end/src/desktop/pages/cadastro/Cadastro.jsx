@@ -19,12 +19,12 @@ const Cadastro = () => {
     const [senha, setSenha] = useState("");
     const [confirmaSenha, setConfirmaSenha] = useState(""); // Definindo o estado para confirmação da senha
 
-    const handleInputChange = (event, setStateFunction) => { 
-        setStateFunction(event.target.value); 
+    const handleInputChange = (event, setStateFunction) => {
+        setStateFunction(event.target.value);
     }
 
     const handleSave = () => {
-        const usuarioNovo = { 
+        const usuarioNovo = {
             nome,
             email,
             cpf,
@@ -115,11 +115,9 @@ const Cadastro = () => {
                     to_email: email,
                 }, "tZxktBF31MEVsj2aL")
                     .then((emailResponse) => {
-                        console.log("Email enviado:", emailResponse.status, emailResponse.text);
                         toast.success("Email enviado!");
                     })
                     .catch((emailError) => {
-                        console.log("Erro ao enviar o email:", emailError.text);
                         toast.error("Erro ao enviar o e-mail. Tente novamente.");
                     });
                 toast.success("Usuário cadastrado!");
@@ -138,13 +136,13 @@ const Cadastro = () => {
                 <h3 className={styles['tituloInput']}>Nome</h3>
                 <Input value={nome} onChange={(e) => handleInputChange(e, setNome)} placeholder="Nome" />
                 <h3 className={styles['tituloInput']}>E-mail</h3>
-                <Input value={email} onChange={(e) => handleInputChange(e, setEmail)} placeholder="E-mail"/>
+                <Input value={email} onChange={(e) => handleInputChange(e, setEmail)} placeholder="E-mail" />
                 <h3 className={styles['tituloInput']}>CPF</h3>
                 <InputMask className={styles.inputMask} mask={"999.999.999-99"} maskChar={null} placeholder="CPF" value={cpf} onChange={e => handleInputChange(e, setCpf)}></InputMask>
                 <h3 className={styles['tituloInput']}>Senha</h3>
-                <Input value={senha} type="password" onChange={(e) => handleInputChange(e, setSenha)} placeholder="Senha"/>
+                <Input value={senha} type="password" onChange={(e) => handleInputChange(e, setSenha)} placeholder="Senha" />
                 <h3 className={styles['tituloInput']}>Confirmar Senha</h3>
-                <Input value={confirmaSenha} type="password" onChange={(e) => handleInputChange(e, setConfirmaSenha)} placeholder="Confirmação de Senha"/>
+                <Input value={confirmaSenha} type="password" onChange={(e) => handleInputChange(e, setConfirmaSenha)} placeholder="Confirmação de Senha" />
                 <div className={styles['divBotao']}>
                     <Botao funcao={handleSave} tipo="button" textoBotao="Cadastrar" />
                 </div>

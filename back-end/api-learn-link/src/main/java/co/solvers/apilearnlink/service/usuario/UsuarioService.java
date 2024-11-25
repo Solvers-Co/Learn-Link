@@ -350,26 +350,41 @@ public class UsuarioService {
         return usuarioRepository.findAllUsuariosNegadosPaginado(pageable);
     }
 
-    public Usuario classificarUsuario(Long id) {
+    public Classificacao classificarUsuario(Long id) {
         Optional<QtdReacoesComentariosUsuarioView> reacoes = qtdReacoesComentariosUsuarioService.listagemQtdReacoesComentarios(id);
         Optional<Usuario> usuarioEncontrado = usuarioRepository.findById(id);
 
+        if (reacoes.isEmpty()){
+            Classificacao classificacao = classificacaoService.buscarPorClassificacao("INICIANTE");
+            usuarioEncontrado.get().setClassificacao(classificacao);
+            usuarioRepository.save(usuarioEncontrado.get());
+            return classificacao;
+        }
+
         int qtdPontosUsuario = reacoes.get().getReacoes() * reacoes.get().getPontuacao();
+
         if (qtdPontosUsuario >= 100) {
             Classificacao classificacao = classificacaoService.buscarPorClassificacao("ESPECIALISTA");
             usuarioEncontrado.get().setClassificacao(classificacao);
+            usuarioRepository.save(usuarioEncontrado.get());
+            return classificacao;
         } else if (qtdPontosUsuario >= 60) {
             Classificacao classificacao = classificacaoService.buscarPorClassificacao("SENIOR");
             usuarioEncontrado.get().setClassificacao(classificacao);
+            usuarioRepository.save(usuarioEncontrado.get());
+            return classificacao;
         } else if (qtdPontosUsuario >= 30) {
             Classificacao classificacao = classificacaoService.buscarPorClassificacao("PLENO");
             usuarioEncontrado.get().setClassificacao(classificacao);
+            usuarioRepository.save(usuarioEncontrado.get());
+            return classificacao;
         } else {
             Classificacao classificacao = classificacaoService.buscarPorClassificacao("JUNIOR");
             usuarioEncontrado.get().setClassificacao(classificacao);
+            usuarioRepository.save(usuarioEncontrado.get());
+            return classificacao;
         }
 
-        return usuarioRepository.save(usuarioEncontrado.get());
     }
 
 }

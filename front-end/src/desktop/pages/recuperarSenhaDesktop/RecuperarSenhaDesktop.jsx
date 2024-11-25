@@ -41,12 +41,10 @@ const RecuperarSenhaDesktop = () => {
                         to_email: email,
                     }, "tZxktBF31MEVsj2aL")
                         .then((emailResponse) => {
-                            console.log("Email enviado:", emailResponse.status, emailResponse.text);
                             toast.success("Email enviado!");
                             navigate("/verificarSenhaDesktop", { state: { codigoGerado: codigo, idUsuario: response.data.id } });
                         })
                         .catch((emailError) => {
-                            console.log("Erro ao enviar o email:", emailError.text);
                             toast.error("Erro ao enviar o e-mail. Tente novamente.");
                         });
                 } else {
@@ -56,12 +54,10 @@ const RecuperarSenhaDesktop = () => {
             .catch(error => {
                 // Verifique se o erro é um 404 (Not Found)
                 if (error.response && error.response.status === 404) {
-                    console.log("E-mail não encontrado. Verifique e tente novamente.");
                     toast.error("E-mail não encontrado. Verifique e tente novamente.");
                 } else {
                     toast.error("Erro ao buscar e-mail. Tente novamente.");
                 }
-                console.log("Erro ao buscar e-mail:", error);
             });
     };
 

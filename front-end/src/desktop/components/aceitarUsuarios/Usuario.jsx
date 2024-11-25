@@ -48,8 +48,6 @@ const Usuario = ({ usuario, fetchUsuarios, paginaAtual, statusAtual }) => {
         api.patch(`/usuarios/${id}/status/${novoStatus}?idUsuarioRequisicao=${idUsuarioSs}`)
             .then(response => {
                 toast.success('Status alterado com sucesso!');
-                console.log('Resposta da API:', response.data);
-
                 //Descomentar para enviar email ao alterar status
                 // var mensagem = "";
 

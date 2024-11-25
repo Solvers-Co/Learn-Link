@@ -40,7 +40,6 @@ const Login = () => {
                 toast.success("Login Efetuado com sucesso!");
                 navigate("/dashboard");
             } else {
-                console.log(response.data);
                 toast.warning("Você não é um administrador.");
             }
         }).catch(() => {

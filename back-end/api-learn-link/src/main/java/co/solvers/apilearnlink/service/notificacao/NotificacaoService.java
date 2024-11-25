@@ -5,6 +5,7 @@ import co.solvers.apilearnlink.domain.notificacao.repository.NotificacaoReposito
 import co.solvers.apilearnlink.domain.usuario.Usuario;
 import co.solvers.apilearnlink.exception.NaoEncontradoException;
 import co.solvers.apilearnlink.service.usuario.UsuarioService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,8 @@ public class NotificacaoService {
         notificacao.setCorpo(usuarioGerador.getNome() + notificacao.getCorpo());
         notificacao.setUsuarioGerador(usuarioGerador);
         notificacao.setUsuarioRecebedor(usuarioRecebedor);
+        notificacao.setIdPublicacao(notificacao.getIdPublicacao());
+        notificacao.setIdComentario(notificacao.getIdComentario());
 
         return notificacaoRepository.save(notificacao);
     }
@@ -44,5 +47,10 @@ public class NotificacaoService {
         notificacao.setVista(0);
 
         return notificacaoRepository.save(notificacao);
+    }
+
+    @Transactional
+    public void deletarNotificacoes(Long idUsuario) {
+        notificacaoRepository.deleteByUsuarioRecebedorId(idUsuario);
     }
 }

@@ -195,6 +195,7 @@ public class ComentarioServiceTest {
     void testBuscaQuantidadeDeComentariosPorDia() {
         int mes = 5;
         int ano = 2023;
+        ComentarioStatus status = ComentarioStatus.ATIVO;
 
         QuantidadeComentarioDiaListagemDto dto1 = new QuantidadeComentarioDiaListagemDto();
         dto1.setDataComentario(new Date(2023, 5, 1));
@@ -207,13 +208,13 @@ public class ComentarioServiceTest {
         List<QuantidadeComentarioDiaListagemDto> listaMock = Arrays.asList(dto1, dto2);
 
         // Mocking the return of the buscaQuantidadeDeComentariosPorDia method from comentarioRepository
-        Mockito.when(comentarioRepository.buscaQuantidadeDeComentariosPorDia(mes, ano)).thenReturn(listaMock);
+        Mockito.when(comentarioRepository.buscaQuantidadeDeComentariosPorDia(mes, ano, status)).thenReturn(listaMock);
 
         // Calling the buscaQuantidadeDeComentariosPorDia method
         List<QuantidadeComentarioDiaListagemDto> resultado = comentarioService.buscaQuantidadeDeComentariosPorDia(mes, ano);
 
         // Verifying if the buscaQuantidadeDeComentariosPorDia method was called with the correct parameters
-        Mockito.verify(comentarioRepository, Mockito.times(1)).buscaQuantidadeDeComentariosPorDia(mes, ano);
+        Mockito.verify(comentarioRepository, Mockito.times(1)).buscaQuantidadeDeComentariosPorDia(mes, ano, status);
 
         // Verifying if the return of the method is as expected
         assertEquals(listaMock.size(), resultado.size());
