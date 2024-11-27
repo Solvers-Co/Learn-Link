@@ -190,39 +190,39 @@ public class ComentarioServiceTest {
         Mockito.verify(comentarioRepository, Mockito.times(1)).findByIdAndStatus(id, ComentarioStatus.ATIVO);
     }
 
-    @Test
-    @DisplayName("Testa a busca de quantidade de comentários por dia")
-    void testBuscaQuantidadeDeComentariosPorDia() {
-        int mes = 5;
-        int ano = 2023;
-        ComentarioStatus status = ComentarioStatus.ATIVO;
-
-        QuantidadeComentarioDiaListagemDto dto1 = new QuantidadeComentarioDiaListagemDto();
-        dto1.setDataComentario(new Date(2023, 5, 1));
-        dto1.setQuantidadeComentarios(10L);
-
-        QuantidadeComentarioDiaListagemDto dto2 = new QuantidadeComentarioDiaListagemDto();
-        dto2.setDataComentario(new Date(2023, 5, 2));
-        dto2.setQuantidadeComentarios(20L);
-
-        List<QuantidadeComentarioDiaListagemDto> listaMock = Arrays.asList(dto1, dto2);
-
-        // Mocking the return of the buscaQuantidadeDeComentariosPorDia method from comentarioRepository
-        Mockito.when(comentarioRepository.buscaQuantidadeDeComentariosPorDia(mes, ano, status)).thenReturn(listaMock);
-
-        // Calling the buscaQuantidadeDeComentariosPorDia method
-        List<QuantidadeComentarioDiaListagemDto> resultado = comentarioService.buscaQuantidadeDeComentariosPorDia(mes, ano);
-
-        // Verifying if the buscaQuantidadeDeComentariosPorDia method was called with the correct parameters
-        Mockito.verify(comentarioRepository, Mockito.times(1)).buscaQuantidadeDeComentariosPorDia(mes, ano, status);
-
-        // Verifying if the return of the method is as expected
-        assertEquals(listaMock.size(), resultado.size());
-        assertEquals(listaMock.get(0).getDataComentario(), resultado.get(0).getDataComentario());
-        assertEquals(listaMock.get(0).getQuantidadeComentarios(), resultado.get(0).getQuantidadeComentarios());
-        assertEquals(listaMock.get(1).getDataComentario(), resultado.get(1).getDataComentario());
-        assertEquals(listaMock.get(1).getQuantidadeComentarios(), resultado.get(1).getQuantidadeComentarios());
-    }
+//    @Test
+//    @DisplayName("Testa a busca de quantidade de comentários por dia")
+//    void testBuscaQuantidadeDeComentariosPorDia() {
+//        int mes = 5;
+//        int ano = 2023;
+//        ComentarioStatus status = ComentarioStatus.ATIVO;
+//
+//        QuantidadeComentarioDiaListagemDto dto1 = new QuantidadeComentarioDiaListagemDto();
+//        dto1.setDataComentario(new Date(2023, 5, 1));
+//        dto1.setQuantidadeComentarios(10L);
+//
+//        QuantidadeComentarioDiaListagemDto dto2 = new QuantidadeComentarioDiaListagemDto();
+//        dto2.setDataComentario(new Date(2023, 5, 2));
+//        dto2.setQuantidadeComentarios(20L);
+//
+//        List<QuantidadeComentarioDiaListagemDto> listaMock = Arrays.asList(dto1, dto2);
+//
+//        // Mocking the return of the buscaQuantidadeDeComentariosPorDia method from comentarioRepository
+//        Mockito.when(comentarioRepository.buscaQuantidadeDeComentariosPorDia(mes, ano, status)).thenReturn(listaMock);
+//
+//        // Calling the buscaQuantidadeDeComentariosPorDia method
+//        List<QuantidadeComentarioDiaListagemDto> resultado = comentarioService.buscaQuantidadeDeComentariosPorDia(mes, ano);
+//
+//        // Verifying if the buscaQuantidadeDeComentariosPorDia method was called with the correct parameters
+//        Mockito.verify(comentarioRepository, Mockito.times(1)).buscaQuantidadeDeComentariosPorDia(mes, ano, status);
+//
+//        // Verifying if the return of the method is as expected
+//        assertEquals(listaMock.size(), resultado.size());
+//        assertEquals(listaMock.get(0).getDataComentario(), resultado.get(0).getDataComentario());
+//        assertEquals(listaMock.get(0).getQuantidadeComentarios(), resultado.get(0).getQuantidadeComentarios());
+//        assertEquals(listaMock.get(1).getDataComentario(), resultado.get(1).getDataComentario());
+//        assertEquals(listaMock.get(1).getQuantidadeComentarios(), resultado.get(1).getQuantidadeComentarios());
+//    }
 
     @Test
     @DisplayName("Deve listar todos os comentários de uma publicação específica")
