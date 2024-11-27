@@ -17,6 +17,6 @@ output "private_key_pem" {
 
 resource "local_file" "private_key" {
   filename   = "learnlink-key-pair.pem"
-  content    = tls_private_key.my_key.private_key_pem
+  content    = tls_private_key.learnlink_key.private_key_pem
   file_permission = "0600"
 }
