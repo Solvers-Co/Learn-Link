@@ -85,3 +85,4 @@ jobs:
           scp -i ${{ secrets.NOME_ARQUIVO_PEM }} deploy-api/*.sh ubuntu@${{ secrets.IP_PRIVADO_EC2 }}:/home/ubuntu/deploy-api
           ssh -i ${{ secrets.NOME_ARQUIVO_PEM }} ubuntu@${{ secrets.IP_PRIVADO_EC2 }} "sh /home/ubuntu/deploy-api/api-restart.sh"          
         '
+
