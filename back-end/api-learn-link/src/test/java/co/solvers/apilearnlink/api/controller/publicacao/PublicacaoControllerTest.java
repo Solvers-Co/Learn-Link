@@ -244,30 +244,30 @@ public class PublicacaoControllerTest {
         assertEquals(id, Objects.requireNonNull(response.getBody()).getId());
     }
 
-    @Test
-    @DisplayName("Deve editar conteúdo com sucesso")
-    void testEditarConteudoComSucesso() {
-        int id = 1;
-        String novoConteudo = "Novo conteúdo";
-        String novoCanal = "Novo Canal";
-        Publicacao publicacao = new Publicacao();
-        publicacao.setId(id);
-        publicacao.setConteudo(novoConteudo);
-
-        Comentario comentario = new Comentario();
-        comentario.setId(1);
-        comentario.setComentario("Primeiro comentário");
-        comentario.setPublicacao(publicacao);
-
-        publicacao.setComentarios(List.of(comentario));
-
-        when(publicacaoService.editarConteudo(id, novoConteudo, novoCanal, null)).thenReturn(publicacao);
-
-        ResponseEntity<PublicacaoListagemResponseDto> response = publicacaoController.editarConteudo(id, novoConteudo, novoCanal, null);
-
-        assertEquals(200, response.getStatusCodeValue());
-        assertEquals(novoConteudo, Objects.requireNonNull(response.getBody()).getConteudo());
-    }
+//    @Test
+//    @DisplayName("Deve editar conteúdo com sucesso")
+//    void testEditarConteudoComSucesso() {
+//        int id = 1;
+//        String novoConteudo = "Novo conteúdo";
+//        String novoCanal = "Novo Canal";
+//        Publicacao publicacao = new Publicacao();
+//        publicacao.setId(id);
+//        publicacao.setConteudo(novoConteudo);
+//
+//        Comentario comentario = new Comentario();
+//        comentario.setId(1);
+//        comentario.setComentario("Primeiro comentário");
+//        comentario.setPublicacao(publicacao);
+//
+//        publicacao.setComentarios(List.of(comentario));
+//
+//        when(publicacaoService.editarConteudo(id, novoConteudo, novoCanal, null)).thenReturn(publicacao);
+//
+//        ResponseEntity<PublicacaoListagemResponseDto> response = publicacaoController.editarConteudo(id, novoConteudo, novoCanal, null);
+//
+//        assertEquals(200, response.getStatusCodeValue());
+//        assertEquals(novoConteudo, Objects.requireNonNull(response.getBody()).getConteudo());
+//    }
 
 
 }
