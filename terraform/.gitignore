@@ -1,0 +1,23 @@
+# Terraform state files
+*.tfstate
+*.tfstate.*
+
+# Crash log files
+crash.log
+
+# Terraform variable override files
+*.tfvars
+*.tfvars.json
+
+# Directory for Terraform provider plugins
+.terraform/
+
+# Terraform lock file
+.terraform.lock.hcl
+
+# Ignore any sensitive output files
+output.json
+plan.out
+
+# Ignore logs or debug files
+*.log
