@@ -4,28 +4,35 @@ import styles from "./GraficoLinhas.module.css";
 
 // Função para obter os dias do mês selecionado
 const getDaysInMonth = (year, month) => {
-    const date = new Date(year, month, 1);
-    const days = [];
-    while (date.getMonth() === month) {
-        days.push(date.getDate());
-        date.setDate(date.getDate() + 1);
-    }
-    return days;
-};
+    // month: 0 = Janeiro, 11 = Dezembro
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    return Array.from({ length: daysInMonth }, (_, index) => index + 1);
+  };
+
+
+
+
 
 // Função para preencher dados com zero para dias ausentes
 const fillMissingDays = (data, daysInMonth, dateKey, quantityKey) => {
+    if (!Array.isArray(daysInMonth)) {
+        console.error("O argumento 'daysInMonth' deve ser um array.");
+        return [];
+    }
+
     const dataMap = Array.isArray(data)
         ? data.reduce((acc, item) => {
-              const date = new Date(item[dateKey]);
-              const day = date.getDate();
-              acc[day] = item[quantityKey];
-              return acc;
-          }, {})
+            const date = new Date(item[dateKey]);
+            const day = date.getUTCDate(); // Usa UTC para evitar problemas de fuso horário
+            acc[day] = item[quantityKey];
+            return acc;
+        }, {})
         : {};
 
     return daysInMonth.map((day) => dataMap[day] || 0);
 };
+
+
 
 const GraficoLinhas = ({ data: initialPublicacoes, data1: initialComentarios }) => {
     const isDataEmpty = initialPublicacoes.length === 0 && initialComentarios.length === 0;
@@ -33,7 +40,7 @@ const GraficoLinhas = ({ data: initialPublicacoes, data1: initialComentarios }) 
     // Obtém o mês e o ano do primeiro item, ou usa o mês atual
     const firstDate = initialPublicacoes.length > 0 ? new Date(initialPublicacoes[0].dataPublicacao) : new Date();
     const year = firstDate.getFullYear();
-    const month = firstDate.getMonth();
+    const month = firstDate.getMonth() + 1; // Ajustar para o formato esperado (1-12)
     const daysInMonth = getDaysInMonth(year, month);
 
     // Configurações do gráfico
@@ -72,19 +79,19 @@ const GraficoLinhas = ({ data: initialPublicacoes, data1: initialComentarios }) 
 
     const series = isDataEmpty
         ? [
-              { name: "Quantidade de Publicações", data: daysInMonth.map(() => 0) },
-              { name: "Quantidade de Comentários", data: daysInMonth.map(() => 0) },
-          ]
+            { name: "Quantidade de Publicações", data: daysInMonth.map(() => 0) },
+            { name: "Quantidade de Comentários", data: daysInMonth.map(() => 0) },
+        ]
         : [
-              {
-                  name: "Quantidade de Publicações",
-                  data: fillMissingDays(initialPublicacoes, daysInMonth, "dataPublicacao", "quantidadePublicacoes"),
-              },
-              {
-                  name: "Quantidade de Comentários",
-                  data: fillMissingDays(initialComentarios, daysInMonth, "dataComentario", "quantidadeComentarios"),
-              },
-          ];
+            {
+                name: "Quantidade de Publicações",
+                data: fillMissingDays(initialPublicacoes, daysInMonth, "dataPublicacao", "quantidadePublicacoes"),
+            },
+            {
+                name: "Quantidade de Comentários",
+                data: fillMissingDays(initialComentarios, daysInMonth, "dataComentario", "quantidadeComentarios"),
+            },
+        ];
 
     // Força a re-renderização do gráfico ao trocar o mês
     const chartKey = `${month}-${year}-${initialPublicacoes.length}-${initialComentarios.length}`;
