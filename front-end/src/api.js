@@ -2,7 +2,7 @@ import axios from "axios";
 
 
 const api = axios.create({
-  baseURL: '/java-api', // Configura para usar o proxy
+  baseURL: '/learnlink', // Configura para usar o proxy
 });
 
 // const api = axios.create({
