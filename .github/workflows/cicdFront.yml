@@ -21,7 +21,7 @@ jobs:
       run: npm install --prefix front-end
 
     - name: Build da aplicação
-      run: npm run build --prefix front-end --no-lint
+      run: CI='' npm run build --prefix front-end --no-lint
 
     - name: Gerar artefato
       uses: actions/upload-artifact@v4
