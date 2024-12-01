@@ -1,5 +1,4 @@
-# é necessário criar as variáveis DEPLOY_HOST, DEPLOY_KEY, NOME_ARQUIVO_PEM e NOME_ARQUIVO_JAR.
-name: CI/CD para Spring Boot com Maven e publicação em EC2
+name: CI/CD para React e Spring Boot com Deploy em EC2
 
 on:
   push:
@@ -11,81 +10,125 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Atualização do código #pegando o código mais recente
+    # Build do Backend
+    - name: Atualização do código
       uses: actions/checkout@v2
 
-    - name: Definindo a versão da JDK #definindo o Java 17
+    - name: Definindo a versão da JDK
       uses: actions/setup-java@v2
       with:
-        distribution: 'temurin' # ver opções em https://github.com/actions/setup-java?tab=readme-ov-file#supported-distributions
-        java-version: '17' 
+        distribution: 'temurin'
+        java-version: '17'
 
-    - name: Build com Maven #gerando .jar na pasta target
-      run: mvn -f back-end/api-learn-link/pom.xml clean package 
+    - name: Build do backend com Maven
+      run: mvn -f back-end/api-learn-link/pom.xml clean package
 
     - name: Gerar artefato Github com o .jar gerado
       uses: actions/upload-artifact@v4
       with:
-        name: aplicacao #nome armazenado p artefato
+        name: backend-jar
         path: back-end/api-learn-link/target/*.jar
 
-    - name: Gerar artefato Github com os arquivos .sh
-      uses: actions/upload-artifact@v4        
+    - name: Gerar artefato Github com os scripts do backend
+      uses: actions/upload-artifact@v4
       with:
-        name: scripts
-        path: .github/scripts/*.sh     #pegar os scripts do prof dps
+        name: backend-scripts
+        path: .github/scripts/*.sh
+
+    # Build do Frontend
+    - name: Configurar Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+
+    - name: Instalar dependências do frontend
+      run: npm install --prefix front-end
+
+    - name: Build do frontend
+      run: npm run build --prefix front-end
+
+    - name: Gerar artefato Github com os arquivos do build do frontend
+      uses: actions/upload-artifact@v4
+      with:
+        name: frontend-build
+        path: front-end/
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
 
     steps:
-    - name: Recuperar artefato #baixa os artefatos gerados no job de build
+    # Deploy do Backend
+    - name: Recuperar artefato do backend
       uses: actions/download-artifact@v4
       with:
-        name: aplicacao
-        path: ./
+        name: backend-jar
+        path: ./backend/
 
-    - name: Recuperar scripts
+    - name: Recuperar scripts do backend
       uses: actions/download-artifact@v4
       with:
-        name: scripts
-        path: ./        
+        name: backend-scripts
+        path: ./backend-scripts/
 
-    - name: Criar arquivo .pem a partir da variável DEPLOY_KEY e fazer o chmod 400 nele
-      id: setup-key
+    - name: Criar arquivo .pem para o backend
+      id: setup-key-backend
       env:
         DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
       run: |
         echo "$DEPLOY_KEY" >> $HOME/${{ secrets.NOME_ARQUIVO_PEM }}
         chmod 400 $HOME/${{ secrets.NOME_ARQUIVO_PEM }}
 
-    - name: Enviar o JAR p/ a EC2 #mudar dps c as configs da ec2
+    - name: Enviar o JAR do backend para a EC2
       uses: appleboy/scp-action@master
       with:
         host: ${{ secrets.DEPLOY_HOST }}
         username: ubuntu
         key: ${{ secrets.DEPLOY_KEY }}
-        source: "./*.jar"
+        source: "./backend/*.jar"
         target: "/home/ubuntu/deploy-api/"
 
-    - name: Enviar os Scripts p/ a EC2 #mesma coisa
+    - name: Enviar scripts do backend para a EC2
       uses: appleboy/scp-action@master
       with:
         host: ${{ secrets.DEPLOY_HOST }}
         username: ubuntu
         key: ${{ secrets.DEPLOY_KEY }}
-        source: "./*.sh"
+        source: "./backend-scripts/*.sh"
         target: "/home/ubuntu/deploy-api/"
 
-    - name: Conectar via SSH à EC2 privada para implantar e reiniciar a API
+    - name: Conectar via SSH à EC2 para reiniciar o backend
       run: |
         ssh -o StrictHostKeyChecking=no -i $HOME/${{ secrets.NOME_ARQUIVO_PEM }} ubuntu@${{ secrets.DEPLOY_HOST }} '
-          echo "${{ secrets.DEPLOY_KEY }}" > ${{ secrets.NOME_ARQUIVO_PEM }}
-          chmod 400 "${{ secrets.NOME_ARQUIVO_PEM }}"
-          scp -i ${{ secrets.NOME_ARQUIVO_PEM }} back/${{ secrets.NOME_ARQUIVO_JAR }} ubuntu@${{ secrets.IP_PRIVADO_EC2 }}:/home/ubuntu
-          scp -i ${{ secrets.NOME_ARQUIVO_PEM }} back/*.sh ubuntu@${{ secrets.IP_PRIVADO_EC2 }}:/home/ubuntu
-          ssh -i ${{ secrets.NOME_ARQUIVO_PEM }} ubuntu@${{ secrets.IP_PRIVADO_EC2 }} "sh /home/ubuntu/api-restart.sh"
-          rm ${{ secrets.NOME_ARQUIVO_PEM }}          
+          sh /home/ubuntu/deploy-api/api-restart.sh
         '
 
+    # Deploy do Frontend
+    - name: Recuperar artefato do frontend
+      uses: actions/download-artifact@v4
+      with:
+        name: frontend-build
+        path: ./frontend/
+
+    - name: Criar arquivo .pem para o frontend
+      id: setup-key-frontend
+      env:
+        DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+      run: |
+        echo "$DEPLOY_KEY" >> $HOME/${{ secrets.NOME_ARQUIVO_PEM }}
+        chmod 400 $HOME/${{ secrets.NOME_ARQUIVO_PEM }}
+
+    - name: Enviar arquivos do frontend para a EC2
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.DEPLOY_HOST }}
+        username: ubuntu
+        key: ${{ secrets.DEPLOY_KEY }}
+        source: "./frontend/*"
+        target: "/var/www/html/"
+
+    - name: Conectar via SSH à EC2 para reiniciar o servidor web
+      run: |
+        ssh -o StrictHostKeyChecking=no -i $HOME/${{ secrets.NOME_ARQUIVO_PEM }} ubuntu@${{ secrets.DEPLOY_HOST }} '
+          sudo systemctl restart nginx
+        '
