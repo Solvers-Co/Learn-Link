@@ -65,6 +65,6 @@ jobs:
 
     - name: Reiniciar servidor web
       run: |
-        ssh -o StrictHostKeyChecking=no -i $HOME/${{ secrets.NOME_ARQUIVO_PEM }} ubuntu@${{ secrets.DEPLOY_HOST }} '
+        ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key ubuntu@${{ secrets.DEPLOY_HOST }} '
           sudo systemctl restart nginx
         '
