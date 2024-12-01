@@ -39,9 +39,15 @@ jobs:
         name: frontend-build
         path: ./build
 
+    - name: Configurar chave SSH
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/deploy_key
+        chmod 600 ~/.ssh/deploy_key
+
     - name: Ajustar permissões no diretório /var/www/html/
       run: |
-        ssh -o StrictHostKeyChecking=no -i $HOME/${{ secrets.NOME_ARQUIVO_PEM }} ubuntu@${{ secrets.DEPLOY_HOST }} '
+        ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key ubuntu@${{ secrets.DEPLOY_HOST }} '
           sudo chown -R ubuntu:ubuntu /var/www/html &&
           sudo chmod -R 755 /var/www/html
         '
