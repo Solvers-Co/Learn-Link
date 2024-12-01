@@ -63,6 +63,12 @@ jobs:
         source: "./build/*"
         target: "/var/www/html/"
 
+    - name: Instalar Nginx se necessário
+      run: |
+        ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key ubuntu@${{ secrets.DEPLOY_HOST }} '
+          sudo apt update && sudo apt install -y nginx
+        '
+
     - name: Reiniciar servidor web
       run: |
         ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key ubuntu@${{ secrets.DEPLOY_HOST }} '
