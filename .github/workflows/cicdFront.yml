@@ -48,6 +48,8 @@ jobs:
     - name: Ajustar permissões no diretório /var/www/html/
       run: |
         ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key ubuntu@${{ secrets.DEPLOY_HOST }} '
+          # Garantir que o diretório existe
+          sudo mkdir -p /var/www/html &&
           sudo chown -R ubuntu:ubuntu /var/www/html &&
           sudo chmod -R 755 /var/www/html
         '
