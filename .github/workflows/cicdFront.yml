@@ -1,0 +1,76 @@
+name: CI/CD para Frontend React
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Atualização do código
+      uses: actions/checkout@v2
+
+    - name: Configurar Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+
+    - name: Instalar dependências
+      run: npm install --prefix front-end
+
+    - name: Build da aplicação
+      run: CI='' npm run build --prefix front-end --no-lint
+
+    - name: Gerar artefato
+      uses: actions/upload-artifact@v4
+      with:
+        name: frontend-build
+        path: front-end/build
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Recuperar artefato
+      uses: actions/download-artifact@v4
+      with:
+        name: frontend-build
+        path: ./build
+
+    - name: Configurar chave SSH
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/deploy_key
+        chmod 600 ~/.ssh/deploy_key
+
+    - name: Ajustar permissões no diretório /var/www/html/
+      run: |
+        ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key ubuntu@${{ secrets.DEPLOY_HOST }} '
+          # Garantir que o diretório existe
+          sudo mkdir -p /var/www/html &&
+          sudo chown -R ubuntu:ubuntu /var/www/html &&
+          sudo chmod -R 755 /var/www/html
+        '
+        
+    - name: Enviar arquivos para EC2
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.DEPLOY_HOST }}
+        username: ubuntu
+        key: ${{ secrets.DEPLOY_KEY }}
+        source: "./build/*"
+        target: "/var/www/html/"
+
+    - name: Instalar Nginx se necessário
+      run: |
+        ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key ubuntu@${{ secrets.DEPLOY_HOST }} '
+          sudo apt update && sudo apt install -y nginx
+        '
+
+    - name: Reiniciar servidor web
+      run: |
+        ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key ubuntu@${{ secrets.DEPLOY_HOST }} '
+          sudo systemctl restart nginx
+        '
