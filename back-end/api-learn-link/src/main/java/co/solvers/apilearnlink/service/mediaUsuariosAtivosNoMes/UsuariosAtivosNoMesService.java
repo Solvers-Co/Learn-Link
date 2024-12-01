@@ -10,7 +10,8 @@ public class UsuariosAtivosNoMesService {
     private final MediaUsuariosAtivosNoMesRepository usuariosAtivosNoMesRepository;
 
     public Integer listagemUsuariosAtivosNoMes(Integer mes, Integer ano) {
-        return usuariosAtivosNoMesRepository.findUsuariosAtivosNoMes(mes, ano);
+        Integer usuariosAtivosNoMes = usuariosAtivosNoMesRepository.findUsuariosAtivosNoMes(mes, ano);
+        return usuariosAtivosNoMes != null ? usuariosAtivosNoMes : 0;
     }
 
 }

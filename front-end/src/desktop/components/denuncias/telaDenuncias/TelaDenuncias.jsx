@@ -174,7 +174,6 @@ const TelaDenuncias = () => {
                                 <button onClick={() => gerarRelatorio('txt', tipoDenuncia)} className={styles.relatButton}>TXT</button>
                                 <button onClick={() => gerarRelatorio('json', tipoDenuncia)} className={styles.relatButton}>JSON</button>
                                 <button onClick={() => gerarRelatorio('xml', tipoDenuncia)} className={styles.relatButton}>XML</button>
-                                <button onClick={() => gerarRelatorio('parquet', tipoDenuncia)} className={styles.relatButton}>PARQUET</button>
                                 <button onClick={() => setShowModal(false)} className={styles.relatButtonRed}>Cancelar</button>
                             </div>
                         </div>

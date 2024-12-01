@@ -16,6 +16,29 @@ function DadosKpi({ mes }) {
             try {
                 const canalResponse = await api.get(`/publicacoes/canal-com-maior-numero-de-publicacoes`, { params: { mes, ano } });
                 if (canalResponse.data && canalResponse.data.canal) {
+                    if (canalResponse.data.canal == 'MATEMATICA') {
+                        canalResponse.data.canal = 'Matemática';
+                    } else if (canalResponse.data.canal == 'HISTORIA') {
+                        canalResponse.data.canal = 'História';
+                    } else if (canalResponse.data.canal == 'GEOGRAFIA') {
+                        canalResponse.data.canal = 'Geografia';
+                    } else if (canalResponse.data.canal == 'QUIMICA') {
+                        canalResponse.data.canal = 'Química';
+                    } else if (canalResponse.data.canal == 'PORTUGUES') {
+                        canalResponse.data.canal = 'Português';
+                    } else if (canalResponse.data.canal == 'FISICA') {
+                        canalResponse.data.canal = 'Física';
+                    } else if (canalResponse.data.canal == 'BIOLOGIA') {
+                        canalResponse.data.canal = 'Biologia';
+                    } else if (canalResponse.data.canal == 'INGLES') {
+                        canalResponse.data.canal = 'Inglês';
+                    } else if (canalResponse.data.canal == 'FILOSOFIA') {
+                        canalResponse.data.canal = 'Filosofia';
+                    } else if (canalResponse.data.canal == 'SOCIOLOGIA') {
+                        canalResponse.data.canal = 'Sociologia';
+                    } else if (canalResponse.data.canal == 'DOACOES') {
+                        canalResponse.data.canal = 'Doações';
+                    }
                     setCanalComMaiorQtdPublicacoes(canalResponse.data);
                     setTemDadosCanal(true);
                 } else {

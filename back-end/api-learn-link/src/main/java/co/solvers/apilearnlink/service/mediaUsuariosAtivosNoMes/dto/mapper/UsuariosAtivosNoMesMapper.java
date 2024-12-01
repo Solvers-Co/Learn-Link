@@ -26,4 +26,14 @@ public class UsuariosAtivosNoMesMapper {
         }
         return dtos;
     }
+
+    public static List<UsuariosAtivosNoMesListagemDto> toDto(int mediaUsuariosAtivosNoMes) {
+        List<UsuariosAtivosNoMesListagemDto> dtos = new ArrayList<>();
+
+        UsuariosAtivosNoMesListagemDto dto = new UsuariosAtivosNoMesListagemDto();
+        dto.setUsuariosAtivos(mediaUsuariosAtivosNoMes);
+        dtos.add(dto);
+
+        return dtos;
+    }
 }

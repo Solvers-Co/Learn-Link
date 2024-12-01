@@ -8,6 +8,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface MediaUsuariosAtivosNoMesRepository extends JpaRepository<MediaUsuariosAtivosNoMes, Integer> {
-    @Query(value = "SELECT usuarios_ativos FROM view_usuarios_ativos_no_mes WHERE ano = :ano AND mes = :mes", nativeQuery = true)
-    Integer findUsuariosAtivosNoMes(@Param("mes") Integer mes, @Param("ano") Integer ano);
+        @Query(value = "SELECT usuarios_ativos FROM view_usuarios_ativos_no_mes WHERE ano = :ano AND mes = :mes", nativeQuery = true)
+        Integer findUsuariosAtivosNoMes(Integer mes, Integer ano);
 }
