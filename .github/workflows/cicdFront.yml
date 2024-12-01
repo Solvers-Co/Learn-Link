@@ -48,6 +48,13 @@ jobs:
         source: "./build/*"
         target: "/var/www/html/"
 
+    - name: Ajustar permissões no diretório /var/www/html/
+      run: |
+        ssh -o StrictHostKeyChecking=no -i $HOME/${{ secrets.NOME_ARQUIVO_PEM }} ubuntu@${{ secrets.DEPLOY_HOST }} '
+          sudo chown -R ubuntu:ubuntu /var/www/html &&
+          sudo chmod -R 755 /var/www/html
+        '
+
     - name: Reiniciar servidor web
       run: |
         ssh -o StrictHostKeyChecking=no -i $HOME/${{ secrets.NOME_ARQUIVO_PEM }} ubuntu@${{ secrets.DEPLOY_HOST }} '
