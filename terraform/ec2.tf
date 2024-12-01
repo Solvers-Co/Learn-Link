@@ -12,7 +12,7 @@ resource "aws_instance" "ec2-learnlink-frontend-1" {
   }
 
   security_groups = [aws_security_group.sg_learnlink_frontend.id]
-  key_name        = "aula_iac"
+  key_name        = aws_key_pair.learnlink_key_pair.key_name
   subnet_id       = aws_subnet.sn_learnlink_public_1.id
 }
 
@@ -30,7 +30,7 @@ resource "aws_instance" "ec2-learnlink-frontend-2" {
   }
 
   security_groups = [aws_security_group.sg_learnlink_frontend.id]
-  key_name        = "aula_iac"
+  key_name        = aws_key_pair.learnlink_key_pair.key_name
   subnet_id       = aws_subnet.sn_learnlink_public_2.id
 }
 
@@ -48,6 +48,6 @@ resource "aws_instance" "ec2-learnlink-backend" {
   }
 
   security_groups = [aws_security_group.sg_learnlink_backend.id]
-  key_name        = "aula_iac"
+  key_name        = aws_key_pair.learnlink_key_pair.key_name
   subnet_id       = aws_subnet.sn_learnlink_private.id
 }

@@ -38,7 +38,7 @@ INSERT INTO endereco (bairro, cidade, estado, cep) VALUES
 
 INSERT INTO usuario (nome, cpf, email, senha, tipo_status_id, especialidade_id, classificacao_id, tipo_usuario_id) VALUES
 -- usuarios mobile
-('Beatriz Nogueira', '19494278895', 'user@user.com', '$2a$10$CxEv59bJaqay65KqJ.ntpeKLJzJZfjqmY24tb.GG4RTfB.HTgsOz2', 2, null, null, 1),
+('Beatriz Nogueira', '19494278895', 'user@user.com', '$2a$10$CxEv59bJaqay65KqJ.ntpeKLJzJZfjqmY24tb.GG4RTfB.HTgsOz2', 2, 3, null, 1),
 ('Lucas Pereira', '78945612309', 'lucas.pereira@example.com', '@Aa12345', 2, 1, 3, 1),
 ('Mariana Silva', '85296374102', 'mariana.silva@example.com', '@Aa98765', 1, 2, 2, 1),
 ('João Fernandes', '95175385246', 'joao.fernandes@example.com', '@Aa24689', 2, 3, 1, 1),

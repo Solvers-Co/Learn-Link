@@ -6,6 +6,7 @@ import co.solvers.apilearnlink.domain.reacao.Reacao;
 import co.solvers.apilearnlink.domain.reacao.repository.ReacaoRepository;
 import co.solvers.apilearnlink.domain.tiporeacao.TipoReacao;
 import co.solvers.apilearnlink.domain.usuario.Usuario;
+import co.solvers.apilearnlink.exception.ConflitoException;
 import co.solvers.apilearnlink.exception.NaoEncontradoException;
 import co.solvers.apilearnlink.service.comentario.ComentarioService;
 import co.solvers.apilearnlink.service.publicacao.PublicacaoService;
@@ -13,7 +14,9 @@ import co.solvers.apilearnlink.service.reacao.dto.ReacaoCriarDto;
 import co.solvers.apilearnlink.service.tiporeacao.TipoReacaoService;
 import co.solvers.apilearnlink.service.usuario.UsuarioService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
@@ -33,6 +36,12 @@ public class ReacaoService {
         Comentario comentario = comentarioService.buscarPorId(idComentario);
         TipoReacao tipoReacao = tipoReacaoService.buscarPorNome(reacaoDto.getTipoReacao());
 
+        Optional<Reacao> reacaoOptional = reacaoRepository.findByUsuarioAndComentarioAndTipoReacao(usuario, comentario, tipoReacao);
+
+        if (reacaoOptional.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Você já reagiu este comentário!");
+        }
+
         reacao.setUsuario(usuario);
         reacao.setComentario(comentario);
         reacao.setTipoReacao(tipoReacao);
@@ -45,6 +54,12 @@ public class ReacaoService {
         Usuario usuario = usuarioService.buscarPorId(reacaoDto.getIdUsuario());
         Publicacao publicacao = publicacaoService.listarPorId(idPublicacao);
         TipoReacao tipoReacao = tipoReacaoService.buscarPorNome(reacaoDto.getTipoReacao());
+
+        Optional<Reacao> reacaoOptional = reacaoRepository.findByUsuarioAndPublicacaoAndTipoReacao(usuario, publicacao, tipoReacao);
+
+        if (reacaoOptional.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Você já reagiu esta publicação!");
+        }
 
         reacao.setUsuario(usuario);
         reacao.setPublicacao(publicacao);

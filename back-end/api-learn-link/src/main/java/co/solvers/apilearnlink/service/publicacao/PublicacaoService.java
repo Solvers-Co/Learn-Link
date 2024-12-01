@@ -5,7 +5,7 @@ import co.solvers.apilearnlink.domain.canal.repository.CanalRepository;
 import co.solvers.apilearnlink.domain.publicacao.Publicacao;
 import co.solvers.apilearnlink.domain.publicacao.PublicacaoStatus;
 import co.solvers.apilearnlink.domain.publicacao.repository.PublicacaoRepository;
-import co.solvers.apilearnlink.domain.respostaImagem.RespostaImagem;
+import co.solvers.apilearnlink.domain.respostaimagem.RespostaImagem;
 import co.solvers.apilearnlink.domain.tipopublicacao.TipoPublicacao;
 import co.solvers.apilearnlink.domain.tipopublicacao.repository.TipoPublicacaoRepository;
 import co.solvers.apilearnlink.domain.usuario.Usuario;
@@ -24,9 +24,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 import software.amazon.awssdk.core.SdkBytes;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.lambda.LambdaClient;
@@ -198,7 +196,7 @@ public class PublicacaoService {
     }
 
     public List<QuantidadePublicacaoDiaListagemDto> listarQuantidadeDePublicacaoPorDia(int mes, int ano) {
-        return publicacaoRepository.buscaQuantidadeDePublicacaoPorDia(mes, ano, PublicacaoStatus.ATIVO);
+        return publicacaoRepository.buscaQuantidadeDePublicacaoPorDia(mes, ano);
     }
 
     public List<QuantidadePublicacaoMesCanalListagemDto> buscaQuantidadePublicacoesEmCadaCanal(int mes, int ano) {

@@ -65,6 +65,7 @@ const TelaDenuncias = () => {
         setTipoDenuncia(e.target.value);
         setPublicacoesSelecionadas([]);
         setComentariosSelecionados([]);
+        setOrdenadoPorIa(false);
     };
 
     const toggleModoSelecao = () => setModoSelecao(!modoSelecao);
