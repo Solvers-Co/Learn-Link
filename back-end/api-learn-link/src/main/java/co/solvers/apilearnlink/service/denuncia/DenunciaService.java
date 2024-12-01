@@ -6,7 +6,6 @@ import co.solvers.apilearnlink.domain.denuncia.Denuncia;
 import co.solvers.apilearnlink.domain.denuncia.repository.DenunciaRespository;
 import co.solvers.apilearnlink.domain.publicacao.Publicacao;
 import co.solvers.apilearnlink.domain.publicacao.PublicacaoStatus;
-import co.solvers.apilearnlink.domain.respostaparquet.RespostaParquet;
 import co.solvers.apilearnlink.domain.usuario.Usuario;
 import co.solvers.apilearnlink.domain.views.comentariosDenunciados.ComentariosDenunciados;
 import co.solvers.apilearnlink.domain.views.publicacoesDenunciadas.PublicacoesDenunciadas;
@@ -381,54 +380,6 @@ public class DenunciaService {
     }
 
 
-    public static Resource gravarParquetDenuncias(List<?> denuncias) throws IOException {
-        String funcao = "arn:aws:lambda:us-east-1:718117031225:function:lamda-salvar-parquet";
-        Region region = Region.US_EAST_1;
-
-        LambdaClient awsLambda = LambdaClient.builder()
-                .region(region)
-                .build();
-
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        InvokeResponse res = null;
-        try {
-            Map<String, List> parametros = new HashMap<>();
-            parametros.put("denuncias", denuncias);
-            System.out.println(parametros);
-
-            SdkBytes payload = SdkBytes.fromUtf8String(objectMapper.writeValueAsString(parametros));
-
-            System.out.println("payload" + payload);
-            InvokeRequest request = InvokeRequest.builder()
-                    .functionName(funcao)
-                    .payload(payload)
-                    .build();
-
-            res = awsLambda.invoke(request);
-
-            String value = res.payload().asUtf8String();
-
-            System.out.println("value" + value);
-
-            RespostaParquet respostaParquet =
-                    objectMapper.readValue(value, RespostaParquet.class);
-
-            System.out.println();
-
-            System.out.println("status" + respostaParquet.status());
-            System.out.println("reposta:" + respostaParquet.parquet());
-
-            Resource resource = new ByteArrayResource(respostaParquet.parquet().getBytes());
-
-            return resource;
-        } catch (LambdaException | JsonProcessingException e) {
-            System.err.println(e.getMessage());
-        }
-
-        awsLambda.close();
-        return null;
-    }
 
     public List<ComentariosDenunciados> buscaComentariosDenunciados() {
         return denunciaRespository.buscaComentariosDenunciados(ComentarioStatus.ATIVO);
