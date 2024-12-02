@@ -79,15 +79,15 @@ function DadosKpi({ mes }) {
     return (
         <div className={styles["kpis"]}>
             {temDadosCanal && canalComMaiorQtdPublicacoes ? (
-                <Kpi TituloKpi="Canal com maior quantidade de publicações" ResultadoKpi={canalComMaiorQtdPublicacoes.canal} />
+                <Kpi TituloKpi="Canal com maior quantidade de publicações no mês" ResultadoKpi={canalComMaiorQtdPublicacoes.canal} />
             ) : (
-                <Kpi TituloKpi="Canal com maior quantidade de publicações" ResultadoKpi="---" />
+                <Kpi TituloKpi="Canal com maior quantidade de publicações no mês" ResultadoKpi="---" />
             )}
 
             {temDadosUsuarios && mediaUsuariosAtivos !== null ? (
-                <Kpi TituloKpi="Média de usuários ativos" ResultadoKpi={mediaUsuariosAtivos} />
+                <Kpi TituloKpi="Quantidade de usuários ativos no mês" ResultadoKpi={mediaUsuariosAtivos} />
             ) : (
-                <Kpi TituloKpi="Média de usuários ativos" ResultadoKpi="---" />
+                <Kpi TituloKpi="Quantidade de usuários ativos no mês" ResultadoKpi="---" />
             )}
         </div>
     );
