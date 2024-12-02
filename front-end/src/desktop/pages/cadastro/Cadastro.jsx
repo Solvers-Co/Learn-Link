@@ -23,6 +23,11 @@ const Cadastro = () => {
         setStateFunction(event.target.value);
     }
 
+    const handleCpfChange = (event) => {
+        const rawCpf = event.target.value.replace(/\D/g, ""); // Remove tudo que não é número
+        setCpf(rawCpf);
+    };
+
     const handleSave = () => {
         const usuarioNovo = {
             nome,
@@ -63,7 +68,7 @@ const Cadastro = () => {
         } else if (cpf.length < 11) {
             errorMessages.push("CPF deve ter 11 dígitos");
         } else if (cpf.length > 11) {
-            errorMessages.push("CPF deve ter 11 dígitos");
+            errorMessages.push("CPF deve ter 11 dígitos" + cpf);
         } else if (/[^0-9]/.test(cpf)) {
             errorMessages.push("CPF deve conter apenas números");
         } else if (cpf.trim() !== cpf) {
@@ -138,7 +143,7 @@ const Cadastro = () => {
                 <h3 className={styles['tituloInput']}>E-mail</h3>
                 <Input value={email} onChange={(e) => handleInputChange(e, setEmail)} placeholder="E-mail" />
                 <h3 className={styles['tituloInput']}>CPF</h3>
-                <InputMask className={styles.inputMask} mask={"999.999.999-99"} maskChar={null} placeholder="CPF" value={cpf} onChange={e => handleInputChange(e, setCpf)}></InputMask>
+                <InputMask className={styles.inputMask} mask={"999.999.999-99"} maskChar={null} placeholder="CPF" value={cpf} onChange={handleCpfChange}></InputMask>
                 <h3 className={styles['tituloInput']}>Senha</h3>
                 <Input value={senha} type="password" onChange={(e) => handleInputChange(e, setSenha)} placeholder="Senha" />
                 <h3 className={styles['tituloInput']}>Confirmar Senha</h3>

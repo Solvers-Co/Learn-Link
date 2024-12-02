@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: co.solvers.apilearnlink.service.denuncia.DenunciaServiceTest
+-------------------------------------------------------------------------------
+Tests run: 18, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.254 s -- in co.solvers.apilearnlink.service.denuncia.DenunciaServiceTest

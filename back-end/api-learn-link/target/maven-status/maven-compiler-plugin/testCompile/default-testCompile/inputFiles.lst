@@ -1,0 +1,13 @@
+/home/joaofe/Documentos/LearLink/Learn-Link/back-end/api-learn-link/src/test/java/co/solvers/apilearnlink/service/classificacao/ClassificacaoServiceTest.java
+/home/joaofe/Documentos/LearLink/Learn-Link/back-end/api-learn-link/src/test/java/co/solvers/apilearnlink/service/registrologin/RegistroLoginServiceTest.java
+/home/joaofe/Documentos/LearLink/Learn-Link/back-end/api-learn-link/src/test/java/co/solvers/apilearnlink/service/denuncia/DenunciaServiceTest.java
+/home/joaofe/Documentos/LearLink/Learn-Link/back-end/api-learn-link/src/test/java/co/solvers/apilearnlink/service/publicacao/PublicacaoServiceTest.java
+/home/joaofe/Documentos/LearLink/Learn-Link/back-end/api-learn-link/src/test/java/co/solvers/apilearnlink/service/canal/CanalServiceTest.java
+/home/joaofe/Documentos/LearLink/Learn-Link/back-end/api-learn-link/src/test/java/co/solvers/apilearnlink/service/tipostatus/TipoStatusServiceTest.java
+/home/joaofe/Documentos/LearLink/Learn-Link/back-end/api-learn-link/src/test/java/co/solvers/apilearnlink/service/usuario/UsuarioServiceTest.java
+/home/joaofe/Documentos/LearLink/Learn-Link/back-end/api-learn-link/src/test/java/co/solvers/apilearnlink/service/comentario/ComentarioServiceTest.java
+/home/joaofe/Documentos/LearLink/Learn-Link/back-end/api-learn-link/src/test/java/co/solvers/apilearnlink/service/livrosfuvest/LivrosFuvestServiceTest.java
+/home/joaofe/Documentos/LearLink/Learn-Link/back-end/api-learn-link/src/test/java/co/solvers/apilearnlink/service/mediausuariosativosnomes/UsuariosAtivosNoMesServiceTest.java
+/home/joaofe/Documentos/LearLink/Learn-Link/back-end/api-learn-link/src/test/java/co/solvers/apilearnlink/service/endereco/EnderecoServiceTest.java
+/home/joaofe/Documentos/LearLink/Learn-Link/back-end/api-learn-link/src/test/java/co/solvers/apilearnlink/api/controller/publicacao/PublicacaoControllerTest.java
+/home/joaofe/Documentos/LearLink/Learn-Link/back-end/api-learn-link/src/test/java/co/solvers/apilearnlink/service/especialidade/EspecialidadeServiceTest.java

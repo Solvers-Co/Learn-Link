@@ -1,12 +1,7 @@
 import axios from "axios";
 
-
-// const api = axios.create({
-//   baseURL: '/java-api', // Configura para usar o proxy
-// });
-
 const api = axios.create({
-    baseURL: "http://localhost:8080" 
+  baseURL: '/learnlink', // Configura para usar o proxy
 });
 
 api.interceptors.request.use(
