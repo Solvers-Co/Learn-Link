@@ -9,10 +9,6 @@ const getDaysInMonth = (year, month) => {
     return Array.from({ length: daysInMonth }, (_, index) => index + 1);
   };
 
-
-
-
-
 // Função para preencher dados com zero para dias ausentes
 const fillMissingDays = (data, daysInMonth, dateKey, quantityKey) => {
     if (!Array.isArray(daysInMonth)) {
@@ -31,8 +27,6 @@ const fillMissingDays = (data, daysInMonth, dateKey, quantityKey) => {
 
     return daysInMonth.map((day) => dataMap[day] || 0);
 };
-
-
 
 const GraficoLinhas = ({ data: initialPublicacoes, data1: initialComentarios }) => {
     const isDataEmpty = initialPublicacoes.length === 0 && initialComentarios.length === 0;

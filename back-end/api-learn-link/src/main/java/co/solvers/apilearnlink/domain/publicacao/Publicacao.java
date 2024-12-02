@@ -11,6 +11,7 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 
@@ -39,5 +40,14 @@ public class Publicacao {
     @OneToMany(mappedBy = "publicacao", cascade = CascadeType.REMOVE)
     List<Reacao> reacoes;
     private String urlImagem;
+
+    @PostLoad
+    @PostPersist
+    @PostUpdate
+    public void getDataHoraBrasilia() {
+        this.dataHora =  dataHora.atZone(ZoneId.of("UTC-3"))
+                .withZoneSameInstant(ZoneId.of("America/Sao_Paulo"))
+                .toLocalDateTime();
+    }
 
 }

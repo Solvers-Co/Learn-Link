@@ -9,8 +9,7 @@ const LivrosFuvest = () => {
     const [books, setBooks] = useState([]);
 
     useEffect(() => {
-        api
-            .get("/livros/listar")
+        api.get("/livros/listar")
             .then((response) => {
                 setBooks(response.data);
             })
@@ -19,8 +18,8 @@ const LivrosFuvest = () => {
             });
     }, []);
 
-    const livros2025 = books.filter((book) => book.anoVestibular === 2025);
-    const livros2026 = books.filter((book) => book.anoVestibular === 2026);
+    const livros2025 = books?.filter((book) => book.anoVestibular === 2025);
+    const livros2026 = books?.filter((book) => book.anoVestibular === 2026);
 
     return (
         <>
