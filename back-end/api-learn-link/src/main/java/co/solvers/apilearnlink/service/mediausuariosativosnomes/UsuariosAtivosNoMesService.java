@@ -1,22 +1,17 @@
 package co.solvers.apilearnlink.service.mediausuariosativosnomes;
 
-import co.solvers.apilearnlink.domain.views.mediaUsuariosAtivosNoMes.MediaUsuariosAtivosNoMes;
 import co.solvers.apilearnlink.domain.views.mediaUsuariosAtivosNoMes.repository.MediaUsuariosAtivosNoMesRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Service
 public class UsuariosAtivosNoMesService {
     private final MediaUsuariosAtivosNoMesRepository usuariosAtivosNoMesRepository;
 
-    public List<MediaUsuariosAtivosNoMes> listagemUsuariosAtivosNoMes() {
-        Integer mesAtual = LocalDate.now().getMonthValue();
-
-        return usuariosAtivosNoMesRepository.findByMes(mesAtual);
+    public Integer listagemUsuariosAtivosNoMes(Integer mes, Integer ano) {
+        Integer usuariosAtivosNoMes = usuariosAtivosNoMesRepository.findUsuariosAtivosNoMes(mes, ano);
+        return usuariosAtivosNoMes != null ? usuariosAtivosNoMes : 0;
     }
 
 }

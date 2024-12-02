@@ -235,13 +235,19 @@ CREATE VIEW view_usuarios_ativos_no_mes as
     SELECT 
     YEAR(registro_login) AS ano,
     MONTH(registro_login) AS mes,
-    COUNT(DISTINCT usuario_id) AS usuarios_ativos
+    COUNT(usuario_id) AS usuarios_ativos
 FROM 
     registro_login
 GROUP BY 
     YEAR(registro_login), MONTH(registro_login);
         
 -- select * from view_quantidade_reacoes_comentarios_do_usuario;
+-- select * from view_usuarios_ativos_no_mes;
+
+/* SELECT usuarios_ativos 
+FROM view_usuarios_ativos_no_mes 
+WHERE ano = 2024 AND mes = 10;
+*/
 
 -- select * from usuario;
 -- select * from publicacao;
