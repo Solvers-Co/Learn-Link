@@ -168,11 +168,11 @@ const Comentario = ({ quemCurtiu, id, nome, mensagem, horario, curtidas, idReaca
         navigate(`/perfil/${id}`);
     };
 
-        const nomeUsuarioLogado = sessionStorage.getItem('nome');
+    const nomeUsuarioLogado = sessionStorage.getItem('nome');
 
-        const idUsuario = sessionStorage.getItem('userId');
-    
-        const avatar = useMemo(() => generateInitials(nome), [nome]);
+    const idUsuario = sessionStorage.getItem('userId');
+
+    const avatar = useMemo(() => generateInitials(nome), [nome]);
 
     return (
         <>
@@ -188,18 +188,13 @@ const Comentario = ({ quemCurtiu, id, nome, mensagem, horario, curtidas, idReaca
 
                     {showPopup && (
                         <div className={Styles['popup']}>
-                            {nomeUsuarioLogado === nomePublicacao ? (
+                            {nomeUsuarioLogado === nome ? (
                                 <>
-                                    {nomeUsuarioLogado === nome ? (
-                                        <>
-                                            <div className={Styles['opcao']} onClick={() => { setShowPopup(false); setShowEditModal(true); }}>
-                                                <img src={Editar} alt="Editar" />
-                                                <span>Editar</span>
-                                            </div>
-                                            <div className={Styles['linhaPopup']}></div>
-                                        </>
-                                    ) : null}
-
+                                    <div className={Styles['opcao']} onClick={() => { setShowPopup(false); setShowEditModal(true); }}>
+                                        <img src={Editar} alt="Editar" />
+                                        <span>Editar</span>
+                                    </div>
+                                    <div className={Styles['linhaPopup']}></div>
                                     <div className={Styles['opcao']} onClick={() => { setShowPopup(false); setShowConfirmation(true); }}>
                                         <img src={Deletar} alt="Deletar" />
                                         <span>Excluir</span>
