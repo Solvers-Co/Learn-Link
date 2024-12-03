@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: co.solvers.apilearnlink.service.usuario.UsuarioServiceTest
 -------------------------------------------------------------------------------
-Tests run: 0, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.767 s -- in co.solvers.apilearnlink.service.usuario.UsuarioServiceTest
+Tests run: 0, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.407 s -- in co.solvers.apilearnlink.service.usuario.UsuarioServiceTest

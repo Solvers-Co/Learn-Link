@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: co.solvers.apilearnlink.service.publicacao.PublicacaoServiceTest
 -------------------------------------------------------------------------------
-Tests run: 33, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.218 s -- in co.solvers.apilearnlink.service.publicacao.PublicacaoServiceTest
+Tests run: 33, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.457 s -- in co.solvers.apilearnlink.service.publicacao.PublicacaoServiceTest
