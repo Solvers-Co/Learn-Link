@@ -11,7 +11,7 @@ variable "porta_https" {
 }
 
 variable "porta_ssh" {
-    description = "porta https"
+    description = "porta ssh"
     default = 22
     type = number
 }

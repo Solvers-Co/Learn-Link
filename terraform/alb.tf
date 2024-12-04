@@ -4,7 +4,7 @@ resource "aws_lb" "alb-learnlink-web" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.sg_learnlink_frontend.id]
-  subnets            = [aws_subnet.sn_learnlink_public_1.id, aws_subnet.sn_learnlink_public_2.id]  # Substitua pelas suas sub-redes
+  subnets            = [aws_subnet.sn_learnlink_public_1.id, aws_subnet.sn_learnlink_public_2.id]
 
   enable_deletion_protection = false
 }
