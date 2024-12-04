@@ -41,13 +41,9 @@ public class Publicacao {
     List<Reacao> reacoes;
     private String urlImagem;
 
-    @PostLoad
-    @PostPersist
-    @PostUpdate
-    public void getDataHoraBrasilia() {
-        this.dataHora =  dataHora.atZone(ZoneId.of("UTC-3"))
-                .withZoneSameInstant(ZoneId.of("America/Sao_Paulo"))
-                .toLocalDateTime();
+    @PrePersist
+    public void setDataHoraBrasilia() {
+        this.dataHora = LocalDateTime.now(ZoneId.of("America/Sao_Paulo"));
     }
 
 }
