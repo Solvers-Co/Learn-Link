@@ -1657,7 +1657,7 @@ INSERT INTO publicacao (conteudo, data_hora, tipo_publicacao_id, canal_id, usuar
 ('Dicas para escrever um artigo científico de sucesso', '2024-11-13 17:00:00', 1, 2, 22),
 ('A importância da leitura crítica de livros', '2024-11-14 11:00:00', 1, 2, 19),
 ('Os principais conceitos de economia para vestibular', '2024-11-15 09:00:00', 1, 8, 25),
-('Não sei por que esse caralho de ENEM existe', '2024-11-16 10:00:00', 1, 2, 20),
+('Tenho ódio de todos os professores!', '2024-11-16 10:00:00', 1, 2, 20),
 ('Odeio essa merda de matéria', '2024-11-17 12:00:00', 1, 2, 18),
 
 ('Matemática aplicada na resolução de problemas cotidianos', '2024-11-18 12:00:00', 1, 1, 19),
@@ -1698,7 +1698,7 @@ INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) VALUES
 ('Gostei da explicação, ficou bem didática.', '2024-11-19 10:00:00', 320, 22),
 ('Ótimo artigo sobre justiça, bem explicado.', '2024-11-20 14:00:00', 321, 25),
 ('Muito bom, a física quântica é um tema que interessa muito.', '2024-11-21 13:00:00', 322, 18),
-('Que o ENEM vá a merda!', '2024-11-22 09:00:00', 323, 19),
+('AAAAAAAAAAAAAAAAAAAAAAAA!', '2024-11-22 09:00:00', 323, 19),
 ('Péssimo conteúdo, nunca vou usar essa merda', '2024-11-23 12:00:00', 324, 20),
 ('Bem inútil essa publicação!', '2024-11-24 15:00:00', 325, 25);
 
