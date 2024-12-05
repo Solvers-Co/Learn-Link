@@ -34,6 +34,7 @@ import software.amazon.awssdk.services.lambda.model.LambdaException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 
 @Service
@@ -59,6 +60,11 @@ public class PublicacaoService {
         publicacao.setCanal(canal);
         publicacao.setUsuario(usuario);
         publicacao.setStatus(PublicacaoStatus.ATIVO);
+
+        ZoneId zoneId = ZoneId.of("America/Sao_Paulo");
+        LocalDateTime dataHoraAtual = LocalDateTime.now(zoneId);
+        publicacao.setDataHora(dataHoraAtual);
+
         if (publicacaoCriacaoRequestDto.getImagemUrl() != null) {
             uploadFoto(publicacaoCriacaoRequestDto.getImagemUrl(), publicacao);
         }

@@ -6,6 +6,7 @@ import co.solvers.apilearnlink.domain.reacao.Reacao;
 import co.solvers.apilearnlink.domain.tipopublicacao.TipoPublicacao;
 import co.solvers.apilearnlink.domain.usuario.Usuario;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -24,7 +25,7 @@ public class Publicacao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String conteudo;
-    @CreationTimestamp
+    @NotNull
     private LocalDateTime dataHora;
     @ManyToOne
     private TipoPublicacao tipoPublicacao;
@@ -40,10 +41,4 @@ public class Publicacao {
     @OneToMany(mappedBy = "publicacao", cascade = CascadeType.REMOVE)
     List<Reacao> reacoes;
     private String urlImagem;
-
-    @PrePersist
-    public void setDataHoraBrasilia() {
-        this.dataHora = LocalDateTime.now(ZoneId.of("America/Sao_Paulo"));
-    }
-
 }
