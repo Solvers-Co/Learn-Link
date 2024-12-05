@@ -57,6 +57,13 @@ resource "aws_security_group" "sg_learnlink_frontend" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  egress {
+    from_port   = var.porta_ssh
+    to_port     = var.porta_ssh
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   ingress {
     from_port   = var.porta_http
     to_port     = var.porta_http
