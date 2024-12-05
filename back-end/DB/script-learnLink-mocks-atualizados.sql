@@ -827,18 +827,6 @@ INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) VALUES
 ('A lei de Newton é fundamental para entender o movimento dos corpos.', '2024-03-07 01:20:00', 129, 19),
 ('Ela descreve como a força é proporcional à aceleração e massa.', '2024-03-07 01:40:00', 129, 22),
 
-('Para calcular a aceleração, divida a variação da velocidade pelo tempo.', '2024-03-09 13:40:00', 130, 8),
-('Certifique-se de usar as unidades corretas para a aceleração.', '2024-03-09 13:55:00', 130, 5),
-
-('A tabela periódica organiza os elementos com base em suas propriedades.', '2024-03-11 13:50:00', 131, 16),
-('Os metais, não-metais e gases nobres têm características distintas.', '2024-03-11 14:00:00', 131, 13),
-
-('O carbono é essencial para a vida, pois é a base das moléculas orgânicas.', '2024-03-13 13:10:00', 132, 22),
-('Ele é encontrado em todos os seres vivos, no formato de carboidratos, lipídios e proteínas.', '2024-03-13 13:30:00', 132, 9),
-
-('Direitos humanos protegem a dignidade de todos os seres humanos.', '2024-03-15 13:30:00', 133, 8),
-('Direitos fundamentais são aqueles que garantem a liberdade, igualdade e segurança.', '2024-03-15 13:40:00', 133, 14),
-
 ('O capitalismo e o socialismo possuem filosofias econômicas e sociais muito distintas.', '2024-03-17 10:00:00', 134, 16),
 ('Enquanto o capitalismo prioriza a propriedade privada, o socialismo visa a igualdade social.', '2024-03-17 10:20:00', 134, 10),
 
@@ -853,9 +841,6 @@ INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) VALUES
 
 ('A física está em tudo ao nosso redor, desde o movimento dos corpos até o funcionamento da luz.', '2024-03-25 09:30:00', 138, 10),
 ('Ela nos ajuda a entender as leis fundamentais do universo.', '2024-03-25 09:40:00', 138, 18),
-
-('O iluminismo trouxe novas ideias sobre liberdade e direitos do indivíduo.', '2024-03-27 13:25:00', 139, 14),
-('Essa corrente influenciou a Revolução Francesa e o surgimento da democracia moderna.', '2024-03-27 13:40:00', 139, 22),
 
 ('As contribuições de Sócrates, Platão e Aristóteles são fundamentais para a filosofia ocidental.', '2024-03-29 13:40:00', 140, 9),
 ('A filosofia antiga aborda questões sobre ética, política e conhecimento.', '2024-03-29 13:50:00', 140, 16),
@@ -902,9 +887,6 @@ INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) VALUES
 ('Monossílabos são palavras com uma sílaba, enquanto dissílabos possuem duas.', '2024-04-09 09:40:00', 146, 18),
 ('Já polissílabos possuem três ou mais sílabas.', '2024-04-09 09:50:00', 146, 22),
 
-('A fotossíntese é essencial para a produção de oxigênio no planeta.', '2024-04-11 10:00:00', 147, 10),
-('Sem a fotossíntese, as cadeias alimentares não funcionariam.', '2024-04-11 10:30:00', 147, 12),
-
 ('A Era Vargas é marcada por transformações políticas e sociais no Brasil.', '2024-04-13 09:30:00', 148, 5),
 ('O período foi caracterizado por um governo autoritário e intervencionista.', '2024-04-13 09:45:00', 148, 16),
 
@@ -913,12 +895,6 @@ INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) VALUES
 
 ('Ácidos liberam prótons em solução, enquanto as bases liberam íons hidróxido.', '2024-04-17 09:40:00', 150, 16),
 ('Esses dois tipos de substâncias são fundamentais para muitas reações químicas.', '2024-04-17 09:55:00', 150, 18),
-
-('As leis da termodinâmica são essenciais para entender como a energia se comporta.', '2024-04-19 09:15:00', 151, 20),
-('Elas são fundamentais para a física e para a engenharia.', '2024-04-19 09:40:00', 151, 16),
-
-('O estudo das migrações ajuda a entender o comportamento das populações ao longo do tempo.', '2024-04-21 09:30:00', 152, 18),
-('A geografia é essencial para analisar esses fluxos e suas consequências.', '2024-04-21 09:50:00', 152, 20),
 
 ('A secularização é um processo de distanciamento entre a religião e as instituições públicas.', '2024-04-23 09:40:00', 153, 22),
 ('Ela tem implicações profundas na sociedade, alterando valores e normas.', '2024-04-23 10:00:00', 153, 18),
@@ -1683,13 +1659,11 @@ INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) VALUES
 ('Excelente postagem, me ajudou muito.', '2024-11-04 10:00:00', 305, 22),
 ('Ótimo conteúdo, gostei bastante.', '2024-11-05 14:00:00', 306, 18),
 ('Achei a ideia interessante, vou tentar', '2024-11-06 12:00:00', 307, 25),
-('Esse tipo de conteúdo é muito útil para vestibulandos.', '2024-11-07 09:00:00', 308, 16),
-('Concordo com os pontos levantados, excelente postagem.', '2024-11-08 15:00:00', 309, 20),
-('Tema muito relevante para os dias de hoje.', '2024-11-09 13:00:00', 310, 19),
 ('Gostei do ponto sobre a globalização, tem tudo a ver com o mercado atual.', '2024-11-10 20:00:00', 311, 16),
 ('Adorei o conteúdo, me ajudou bastante nas minhas dúvidas.', '2024-11-11 11:00:00', 312, 22),
 ('Muito boa explicação sobre a Segunda Guerra.', '2024-11-12 17:00:00', 313, 21),
 ('O tema é realmente muito atual, muito bom!', '2024-11-13 13:00:00', 314, 18),
+('Tema bem legal', '2024-11-13 14:02:00', 314, 12),
 ('Ótima postagem sobre o impacto da mídia!', '2024-11-14 14:00:00', 315, 20),
 ('Tema muito pertinente para os tempos atuais.', '2024-11-15 09:00:00', 316, 22),
 ('Achei muito interessante, explicação muito clara.', '2024-11-16 15:00:00', 317, 16),
@@ -1711,7 +1685,8 @@ VALUES ('Como resolver um sistema de equações linear?', '2024-12-01 00:00:00',
 -- Comentários
 INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) 
 VALUES ('A solução é dada pelo método da substituição ou da comparação.', '2024-12-01 00:30:00', 326, 18),
-       ('Outro método muito eficaz é o da matriz inversa.', '2024-12-01 01:00:00', 326, 22);
+       ('Outro método muito eficaz é o da matriz inversa.', '2024-12-01 01:00:00', 326, 22),
+       ('Estava me perguntando isso hoje na aula...', '2024-12-01 01:01:00', 326, 12);
 
 -- Publicação 2
 INSERT INTO publicacao (conteudo, data_hora, tipo_publicacao_id, canal_id, usuario_id) 
@@ -1730,15 +1705,6 @@ VALUES ('Quais são os principais elementos da célula animal?', '2024-12-02 01:
 INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) 
 VALUES ('As células animais possuem núcleos, mitocôndrias e ribossomos.', '2024-12-02 01:30:00', 328, 22),
        ('Cada organela tem uma função específica na célula.', '2024-12-02 02:00:00', 328, 16);
-
--- Publicação 2
-INSERT INTO publicacao (conteudo, data_hora, tipo_publicacao_id, canal_id, usuario_id) 
-VALUES ('O que foi a Revolução Industrial?', '2024-12-02 07:00:00', 1, 4, 22);
-
--- Comentários
-INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) 
-VALUES ('A Revolução Industrial começou no século XVIII e transformou a produção.', '2024-12-02 07:30:00', 329, 20),
-       ('Foi um período de grande inovação tecnológica e mudanças sociais.', '2024-12-02 08:00:00', 329, 20);
 
 -- Publicação 1
 INSERT INTO publicacao (conteudo, data_hora, tipo_publicacao_id, canal_id, usuario_id) 
@@ -1764,8 +1730,7 @@ VALUES ('Como as reações químicas afetam o nosso corpo?', '2024-12-04 03:00:0
 
 -- Comentários
 INSERT INTO comentario (comentario, data_hora, publicacao_id, usuario_id) 
-VALUES ('Reações químicas acontecem continuamente no nosso corpo, como na digestão.', '2024-12-04 03:30:00', 332, 22),
-       ('Elas também estão presentes na respiração celular e na produção de energia.', '2024-12-04 04:00:00', 332, 20);
+VALUES ('Reações químicas acontecem continuamente no nosso corpo, como na digestão.', '2024-12-04 03:30:00', 332, 22);
 
 -- Publicação 2
 INSERT INTO publicacao (conteudo, data_hora, tipo_publicacao_id, canal_id, usuario_id) 
@@ -3994,3 +3959,600 @@ VALUES
     
     UPDATE publicacao SET status = 'ATIVO' WHERE id < 10000;
     UPDATE comentario SET status = 'ATIVO' WHERE id < 10000;
+    
+-- + publicações de NOVEMBRO
+INSERT INTO publicacao (conteudo, data_hora, tipo_publicacao_id, canal_id, usuario_id) VALUES
+('Como calcular a área de um triângulo de forma prática', '2024-11-01 09:00:00', 1, 1, 25),
+('Dicas para dominar o cálculo diferencial', '2024-11-01 15:00:00', 1, 1, 20),
+
+('Fatos curiosos sobre a Idade Média', '2024-11-02 18:00:00', 1, 4, 18),
+('Erros gramaticais comuns em redações', '2024-11-02 11:00:00', 1, 2, 22),
+
+('Desafios na preservação cultural', '2024-11-03 17:00:00', 1, 7, 15),
+
+('Como entender as leis de Newton', '2024-11-04 10:00:00', 1, 5, 19),
+('Estratégias para criar uma boa introdução de texto', '2024-11-04 14:00:00', 1, 2, 22),
+
+('A relevância da Ética na Filosofia Moderna', '2024-11-05 21:00:00', 1, 10, 25),
+('Como interpretar gráficos e tabelas', '2024-11-05 13:00:00', 1, 2, 20),
+('Impactos do capitalismo global', '2024-11-05 14:00:00', 1, 8, 22),
+
+('Transformações digitais e novas carreiras', '2024-11-06 16:00:00', 1, 8, 19),
+
+('A Primeira Guerra Mundial e suas consequências', '2024-11-07 17:00:00', 1, 4, 16),
+('Influência da tecnologia na comunicação moderna', '2024-11-07 19:00:00', 1, 8, 22),
+
+('Técnicas inovadoras na educação infantil', '2024-11-08 09:00:00', 1, 8, 21),
+('Psicologia do comportamento em grupos sociais', '2024-11-08 15:00:00', 1, 7, 20),
+
+('Fake news e seus impactos nas eleições', '2024-11-09 14:00:00', 1, 8, 18),
+('Passos para estruturar um trabalho acadêmico', '2024-11-09 18:00:00', 1, 2, 22),
+('O hábito da leitura como ferramenta de aprendizado', '2024-11-09 12:00:00', 1, 2, 19),
+
+('Economia circular e sustentabilidade', '2024-11-10 10:00:00', 1, 8, 25),
+
+('A importância do respeito aos professores', '2024-11-11 11:00:00', 1, 2, 20),
+('Como superar dificuldades em matérias específicas', '2024-11-11 12:00:00', 1, 2, 18),
+('A geometria no cotidiano: aplicações práticas', '2024-11-11 13:00:00', 1, 1, 19),
+
+('Por que estudar ética é essencial para a sociedade', '2024-11-12 09:00:00', 1, 10, 20),
+
+('Tecnologias emergentes e seu impacto na sala de aula', '2024-11-13 17:00:00', 1, 8, 18),
+('Truques para resolver problemas matemáticos', '2024-11-13 08:00:00', 1, 1, 21),
+
+('Brasil Colônia: transformações econômicas e sociais', '2024-11-14 15:00:00', 1, 4, 22),
+('As bases da Física Moderna explicadas', '2024-11-14 11:00:00', 1, 5, 20),
+
+('Diferenças culturais no conceito de liberdade', '2024-11-15 14:00:00', 1, 7, 19),
+('Pensamento crítico: como desenvolvê-lo', '2024-11-15 16:00:00', 1, 7, 18),
+
+('Organização e foco para estudar melhor', '2024-11-16 09:00:00', 1, 2, 16),
+
+('A ética nos negócios e o impacto social', '2024-11-17 20:00:00', 1, 10, 22),
+('Física Quântica descomplicada', '2024-11-17 18:00:00', 1, 5, 25),
+
+('Como a arte pode mudar perspectivas sociais', '2024-11-18 15:00:00', 1, 10, 16),
+
+('O futuro da biodiversidade no planeta', '2024-11-19 14:00:00', 1, 8, 25);
+
+
+-- + publicações de OUTUBRO
+INSERT INTO publicacao (conteudo, data_hora, tipo_publicacao_id, canal_id, usuario_id) VALUES
+('Introdução ao cálculo integral', '2024-10-01 09:00:00', 1, 1, 25),
+('História da Revolução Francesa', '2024-10-01 14:00:00', 1, 4, 22),
+
+('Erros comuns em redações dissertativas', '2024-10-02 10:00:00', 1, 2, 19),
+('Técnicas de estudo para física', '2024-10-02 16:00:00', 1, 5, 20),
+('A importância do pensamento crítico', '2024-10-02 18:00:00', 1, 7, 25),
+
+('O impacto das redes sociais na juventude', '2024-10-03 13:00:00', 1, 8, 21),
+
+('Como resolver equações exponenciais', '2024-10-04 11:00:00', 1, 1, 22),
+('Sociedade e cultura no Renascimento', '2024-10-04 15:00:00', 1, 4, 18),
+
+('Gramática aplicada à escrita acadêmica', '2024-10-05 09:00:00', 1, 2, 19),
+('O conceito de justiça na filosofia clássica', '2024-10-05 20:00:00', 1, 10, 20),
+
+('Estratégias para melhorar a leitura de gráficos', '2024-10-06 14:00:00', 1, 8, 25),
+
+('Como estudar de forma eficiente para provas de matemática', '2024-10-07 08:00:00', 1, 1, 19),
+('A evolução das tecnologias na educação', '2024-10-07 18:00:00', 1, 8, 22),
+
+('A importância da biodiversidade', '2024-10-08 10:00:00', 1, 7, 20),
+('História e economia no Brasil colonial', '2024-10-08 14:00:00', 1, 4, 16),
+
+('Física moderna: conceitos básicos', '2024-10-09 15:00:00', 1, 5, 25),
+('Como desenvolver boas práticas de estudo', '2024-10-09 11:00:00', 1, 2, 18),
+('O papel das mídias na formação de opinião', '2024-10-09 16:00:00', 1, 8, 21),
+
+('Técnicas para interpretar textos literários', '2024-10-10 13:00:00', 1, 2, 20),
+
+('A influência da ética no comportamento social', '2024-10-11 09:00:00', 1, 10, 22),
+
+('Como lidar com o estresse nos estudos', '2024-10-12 17:00:00', 1, 2, 19),
+('As bases científicas da sustentabilidade', '2024-10-12 14:00:00', 1, 7, 18),
+
+('Os desafios da preservação cultural', '2024-10-13 12:00:00', 1, 8, 22),
+('Filosofia e ética: como se relacionam', '2024-10-13 16:00:00', 1, 10, 20),
+('Redação: como desenvolver um bom argumento', '2024-10-13 18:00:00', 1, 2, 19),
+
+('A globalização e seus efeitos econômicos', '2024-10-14 10:00:00', 1, 8, 18),
+('O papel da arte no contexto social', '2024-10-14 14:00:00', 1, 10, 16),
+
+('Matemática aplicada ao cotidiano', '2024-10-15 09:00:00', 1, 1, 25),
+('Dicas para organização de estudos', '2024-10-15 19:00:00', 1, 2, 20),
+
+('História da Segunda Guerra Mundial', '2024-10-16 16:00:00', 1, 4, 22),
+('O impacto da ética nos negócios', '2024-10-16 14:00:00', 1, 10, 21),
+
+('Como resolver questões de geometria analítica', '2024-10-17 12:00:00', 1, 1, 19),
+
+('Educação básica e as novas metodologias', '2024-10-18 18:00:00', 1, 8, 25),
+
+('Psicologia comportamental e educação', '2024-10-19 10:00:00', 1, 7, 22),
+
+('Soluções para desafios ambientais', '2024-10-20 15:00:00', 1, 8, 20),
+
+('A importância da leitura crítica', '2024-10-21 14:00:00', 1, 2, 18),
+
+('Como criar mapas mentais para estudar', '2024-10-22 13:00:00', 1, 2, 19),
+('O papel da física no desenvolvimento tecnológico', '2024-10-22 10:00:00', 1, 5, 25),
+
+('Técnicas de revisão para provas finais', '2024-10-23 08:00:00', 1, 2, 21),
+
+('Os desafios da ética digital', '2024-10-24 20:00:00', 1, 10, 18),
+
+('Como melhorar a interpretação de textos', '2024-10-25 11:00:00', 1, 2, 19),
+
+('As mudanças climáticas e seus impactos globais', '2024-10-26 10:00:00', 1, 8, 25),
+
+('O Renascimento e a modernidade', '2024-10-27 15:00:00', 1, 4, 22),
+
+('Matemática no cotidiano escolar', '2024-10-28 16:00:00', 1, 1, 20),
+
+('A filosofia por trás da justiça social', '2024-10-29 12:00:00', 1, 10, 25),
+
+('A importância do pensamento interdisciplinar', '2024-10-30 18:00:00', 1, 7, 22),
+
+('Como estudar para as provas de química', '2024-10-31 13:00:00', 1, 5, 19),
+('Estratégias para dominar a redação no vestibular', '2024-10-31 15:00:00', 1, 2, 20);
+
+
+-- + publicações para SETEMBRO 
+INSERT INTO publicacao (conteudo, data_hora, tipo_publicacao_id, canal_id, usuario_id) VALUES
+('Conceitos básicos de álgebra linear', '2024-09-01 09:00:00', 1, 1, 19),
+
+('A importância da história na formação cultural', '2024-09-02 10:00:00', 1, 4, 22),
+('Como desenvolver bons hábitos de estudo', '2024-09-02 15:00:00', 1, 2, 21),
+
+('Redação: como evitar erros gramaticais', '2024-09-03 11:00:00', 1, 2, 19),
+('Os impactos da globalização nas culturas locais', '2024-09-03 14:00:00', 1, 8, 25),
+
+('Introdução à física moderna', '2024-09-04 08:00:00', 1, 5, 20),
+('Filosofia e ciência: um diálogo necessário', '2024-09-04 16:00:00', 1, 10, 22),
+
+('As principais causas da Primeira Guerra Mundial', '2024-09-05 09:00:00', 1, 4, 18),
+('Dicas para melhorar a interpretação de gráficos', '2024-09-05 12:00:00', 1, 2, 20),
+('Educação e tecnologia no século XXI', '2024-09-05 17:00:00', 1, 8, 21),
+
+('Como resolver problemas de geometria espacial', '2024-09-06 09:00:00', 1, 1, 25),
+('O papel da ética na sociedade contemporânea', '2024-09-06 14:00:00', 1, 10, 19),
+
+('História da Revolução Industrial', '2024-09-07 10:00:00', 1, 4, 16),
+('Estratégias para organizar seus estudos', '2024-09-07 16:00:00', 1, 2, 18),
+
+('Como criar mapas mentais eficientes', '2024-09-08 11:00:00', 1, 2, 20),
+
+('A física aplicada ao dia a dia', '2024-09-09 08:00:00', 1, 5, 22),
+('O impacto da mídia na política atual', '2024-09-09 18:00:00', 1, 8, 25),
+
+('Matemática básica para vestibulares', '2024-09-10 12:00:00', 1, 1, 19),
+
+('Os desafios da preservação ambiental', '2024-09-11 13:00:00', 1, 8, 21),
+('Dicas para melhorar a concentração nos estudos', '2024-09-11 15:00:00', 1, 2, 19),
+
+('Como interpretar textos históricos', '2024-09-12 10:00:00', 1, 4, 18),
+
+('A importância do pensamento crítico nas escolas', '2024-09-13 09:00:00', 1, 7, 20),
+
+('Redação: como desenvolver bons argumentos', '2024-09-14 14:00:00', 1, 2, 22),
+
+('A influência do Iluminismo na política moderna', '2024-09-15 10:00:00', 1, 4, 25),
+('Como resolver problemas de física no ENEM', '2024-09-15 17:00:00', 1, 5, 19),
+
+('Estratégias para melhorar a leitura de textos científicos', '2024-09-16 11:00:00', 1, 2, 18),
+
+('Educação financeira para jovens', '2024-09-17 10:00:00', 1, 8, 21),
+('A história da democracia no Brasil', '2024-09-17 14:00:00', 1, 4, 22),
+
+('Como melhorar a interpretação de textos literários', '2024-09-18 12:00:00', 1, 2, 20),
+
+('A importância do meio ambiente na sociedade', '2024-09-19 13:00:00', 1, 8, 25),
+('Conceitos básicos de estatística', '2024-09-19 16:00:00', 1, 1, 22),
+
+('Os desafios do ensino médio no Brasil', '2024-09-20 09:00:00', 1, 7, 19),
+
+('A ética e sua aplicação no dia a dia', '2024-09-21 11:00:00', 1, 10, 20),
+('Física: como estudar movimento uniformemente variado', '2024-09-21 15:00:00', 1, 5, 25),
+
+('Como desenvolver um planejamento de estudos eficiente', '2024-09-22 10:00:00', 1, 2, 18),
+
+('Os impactos das redes sociais no comportamento humano', '2024-09-23 14:00:00', 1, 8, 19),
+
+('Estratégias para criar uma boa redação no vestibular', '2024-09-24 13:00:00', 1, 2, 20),
+
+('História do Brasil: da colonização à independência', '2024-09-25 12:00:00', 1, 4, 22),
+('Matemática avançada: integrais e derivadas', '2024-09-25 15:00:00', 1, 1, 21),
+
+('A influência da globalização no mundo atual', '2024-09-26 09:00:00', 1, 8, 25),
+
+('Filosofia e cidadania: como se relacionam', '2024-09-27 10:00:00', 1, 10, 22),
+('Os principais desafios da educação básica', '2024-09-27 13:00:00', 1, 7, 19),
+
+('Como revisar conteúdos de física para provas', '2024-09-28 11:00:00', 1, 5, 20),
+
+('A importância da arte na construção social', '2024-09-29 10:00:00', 1, 10, 21),
+
+('Como resolver problemas complexos de matemática', '2024-09-30 09:00:00', 1, 1, 25),
+('A sustentabilidade no contexto global', '2024-09-30 14:00:00', 1, 8, 22);
+
+-- + para JULHO
+INSERT INTO publicacao (conteudo, data_hora, tipo_publicacao_id, canal_id, usuario_id) VALUES
+('Como estudar para provas com pouco tempo', '2024-07-16 08:00:00', 1, 2, 21),
+('A revolução científica e seu impacto na sociedade', '2024-07-16 14:00:00', 1, 4, 22),
+
+('Estratégias para resolver questões de física no vestibular', '2024-07-17 09:00:00', 1, 5, 20),
+('História das grandes navegações', '2024-07-17 12:00:00', 1, 4, 19),
+('Como escrever redações com temas ambientais', '2024-07-17 18:00:00', 1, 2, 18),
+
+('O papel da matemática no desenvolvimento tecnológico', '2024-07-18 10:00:00', 1, 1, 25),
+
+('Os desafios do ensino inclusivo no Brasil', '2024-07-19 11:00:00', 1, 7, 19),
+('Como desenvolver habilidades em interpretação de texto', '2024-07-19 15:00:00', 1, 2, 22),
+
+('Filosofia para iniciantes: o que você precisa saber', '2024-07-20 09:00:00', 1, 10, 20),
+('As mudanças climáticas e seus impactos globais', '2024-07-20 13:00:00', 1, 8, 25),
+
+('Como melhorar seu desempenho em geometria', '2024-07-21 10:00:00', 1, 1, 19),
+
+('A importância do ensino de história nas escolas', '2024-07-22 08:00:00', 1, 4, 18),
+('Os benefícios de criar mapas mentais para estudar', '2024-07-22 14:00:00', 1, 2, 21),
+
+('A ciência e a ética no século XXI', '2024-07-23 11:00:00', 1, 10, 22),
+
+('Como organizar um cronograma de estudos eficiente', '2024-07-24 09:00:00', 1, 2, 20),
+('Os principais marcos da Segunda Guerra Mundial', '2024-07-24 15:00:00', 1, 4, 19),
+
+('Redação no ENEM: como atingir a nota máxima', '2024-07-25 08:00:00', 1, 2, 18),
+('As aplicações práticas da física quântica', '2024-07-25 12:00:00', 1, 5, 22),
+('O impacto das redes sociais na juventude', '2024-07-25 18:00:00', 1, 8, 25),
+
+('Como melhorar suas habilidades em matemática básica', '2024-07-26 10:00:00', 1, 1, 19),
+
+('A evolução das ideias filosóficas na história', '2024-07-27 09:00:00', 1, 10, 20),
+('Como estudar história de forma eficiente', '2024-07-27 13:00:00', 1, 4, 21),
+
+('Os desafios da preservação do meio ambiente no Brasil', '2024-07-28 11:00:00', 1, 8, 22),
+
+('A importância da leitura crítica no vestibular', '2024-07-29 08:00:00', 1, 2, 18),
+('Como revisar física para o ENEM', '2024-07-29 14:00:00', 1, 5, 19),
+
+('Como resolver questões de matemática avançada', '2024-07-30 12:00:00', 1, 1, 25),
+
+('As bases da democracia moderna', '2024-07-31 10:00:00', 1, 7, 22),
+('Estratégias para manter a concentração nos estudos', '2024-07-31 15:00:00', 1, 2, 21);
+
+-- + para MAIO
+INSERT INTO publicacao (conteudo, data_hora, tipo_publicacao_id, canal_id, usuario_id) VALUES
+('Como estudar para o vestibular em grupo', '2024-05-01 09:00:00', 1, 2, 18),
+('A Revolução Francesa e suas consequências', '2024-05-01 14:00:00', 1, 4, 19),
+
+('Dicas para melhorar sua redação no ENEM', '2024-05-03 10:00:00', 1, 2, 22),
+('Os principais eventos da Idade Média', '2024-05-03 15:00:00', 1, 4, 21),
+
+('Como aplicar a física no cotidiano', '2024-05-05 11:00:00', 1, 5, 20),
+
+('Filosofia contemporânea: ideias e conceitos', '2024-05-07 09:00:00', 1, 10, 25),
+('A importância da matemática financeira', '2024-05-07 13:00:00', 1, 1, 22),
+
+('Redação: como estruturar uma introdução perfeita', '2024-05-10 08:00:00', 1, 2, 18),
+
+('Os desafios do sistema educacional brasileiro', '2024-05-12 14:00:00', 1, 8, 19),
+
+('Como revisar matemática antes da prova', '2024-05-14 12:00:00', 1, 1, 20),
+('A Guerra Fria e seu impacto global', '2024-05-14 16:00:00', 1, 4, 22),
+
+('Ciência e tecnologia: as revoluções do século XXI', '2024-05-17 11:00:00', 1, 8, 25),
+
+('Estratégias para organizar seus estudos', '2024-05-19 08:00:00', 1, 2, 21),
+('Os conceitos fundamentais da física moderna', '2024-05-19 13:00:00', 1, 5, 19),
+
+('Como a ética influencia as decisões políticas', '2024-05-22 10:00:00', 1, 10, 18),
+
+('A evolução da democracia ao longo da história', '2024-05-25 09:00:00', 1, 7, 22),
+('Os impactos das redes sociais na educação', '2024-05-25 15:00:00', 1, 8, 20),
+
+('Como dominar a interpretação de gráficos no ENEM', '2024-05-27 11:00:00', 1, 2, 19),
+
+('História do Brasil: os ciclos econômicos', '2024-05-30 14:00:00', 1, 4, 25),
+('Dicas para melhorar a concentração nos estudos', '2024-05-30 18:00:00', 1, 2, 21);
+
+-- + p ABRIL
+INSERT INTO publicacao (conteudo, data_hora, tipo_publicacao_id, canal_id, usuario_id) VALUES
+('Introdução ao estudo da história brasileira', '2024-04-01 09:00:00', 1, 4, 18),
+('Como resolver equações quadráticas', '2024-04-01 14:00:00', 1, 1, 22),
+
+('A importância da leitura crítica', '2024-04-02 10:00:00', 1, 2, 19),
+
+('Os impactos da Revolução Industrial no mundo moderno', '2024-04-03 09:00:00', 1, 4, 21),
+('Dicas para escrever uma introdução impactante na redação', '2024-04-03 15:00:00', 1, 2, 20),
+
+('O papel das redes sociais na comunicação atual', '2024-04-04 11:00:00', 1, 8, 25),
+('Como revisar matemática de forma eficiente', '2024-04-04 16:00:00', 1, 1, 18),
+
+('Estratégias para organizar seus estudos', '2024-04-05 08:00:00', 1, 2, 22),
+('Filosofia e ética: reflexões importantes', '2024-04-05 14:00:00', 1, 10, 20),
+
+('A história das grandes navegações', '2024-04-06 09:00:00', 1, 4, 19),
+
+('Como estudar para provas de física', '2024-04-07 11:00:00', 1, 5, 21),
+('A influência da globalização na economia mundial', '2024-04-07 15:00:00', 1, 8, 20),
+('Técnicas de estudo para biologia', '2024-04-07 17:00:00', 1, 3, 22),
+
+('Os conceitos básicos da física quântica', '2024-04-08 10:00:00', 1, 5, 19),
+
+('Como montar um plano de estudos', '2024-04-09 09:00:00', 1, 2, 18),
+('Os principais acontecimentos da Guerra Fria', '2024-04-09 14:00:00', 1, 4, 25),
+
+('Redação: como concluir de forma impactante', '2024-04-10 10:00:00', 1, 2, 20),
+
+('Dicas para melhorar a concentração nos estudos', '2024-04-11 08:00:00', 1, 2, 19),
+('A história da ciência no século XX', '2024-04-11 13:00:00', 1, 8, 22),
+
+('A filosofia grega e seu impacto na modernidade', '2024-04-12 09:00:00', 1, 10, 18),
+
+('Como interpretar questões de matemática no ENEM', '2024-04-13 08:00:00', 1, 1, 20),
+('Os desafios da preservação ambiental', '2024-04-13 15:00:00', 1, 8, 21),
+('Como revisar para a prova de química', '2024-04-13 17:00:00', 1, 3, 19),
+
+('Estratégias para tirar boas notas em história', '2024-04-14 09:00:00', 1, 4, 25),
+
+('As revoluções industriais e seus impactos', '2024-04-15 10:00:00', 1, 4, 19),
+
+('Técnicas para interpretar gráficos no vestibular', '2024-04-16 08:00:00', 1, 2, 22),
+('Os desafios da ética na ciência moderna', '2024-04-16 13:00:00', 1, 10, 20),
+
+('Como estudar biologia de forma eficiente', '2024-04-17 10:00:00', 1, 3, 18),
+
+('A evolução das democracias no século XIX', '2024-04-18 11:00:00', 1, 7, 21),
+('Estratégias para estudar física', '2024-04-18 15:00:00', 1, 5, 19),
+
+('Os benefícios de criar mapas mentais', '2024-04-19 08:00:00', 1, 2, 18),
+
+('Como escrever redações criativas', '2024-04-20 09:00:00', 1, 2, 22),
+('O impacto da globalização nas economias locais', '2024-04-20 14:00:00', 1, 8, 25),
+
+('Filosofia moderna e suas implicações', '2024-04-21 10:00:00', 1, 10, 20),
+
+('Os principais marcos históricos da Idade Média', '2024-04-22 09:00:00', 1, 4, 19),
+
+('Como revisar para a prova de história', '2024-04-23 08:00:00', 1, 4, 22),
+('Os conceitos básicos de genética', '2024-04-23 14:00:00', 1, 3, 20),
+
+('A física aplicada à tecnologia', '2024-04-24 10:00:00', 1, 5, 18),
+
+('Os benefícios da leitura crítica', '2024-04-25 09:00:00', 1, 2, 22),
+
+('Estratégias para melhorar o desempenho em matemática', '2024-04-26 08:00:00', 1, 1, 20),
+
+('Como organizar os estudos para o ENEM', '2024-04-27 09:00:00', 1, 2, 19),
+
+('Os desafios da educação no século XXI', '2024-04-28 10:00:00', 1, 7, 22),
+
+('Como revisar física antes do vestibular', '2024-04-29 08:00:00', 1, 5, 20),
+
+('O impacto das redes sociais no comportamento humano', '2024-04-30 11:00:00', 1, 8, 18),
+('Redação no ENEM: como evitar os erros mais comuns', '2024-04-30 15:00:00', 1, 2, 19);
+
+-- + p MARÇO
+INSERT INTO publicacao (conteudo, data_hora, tipo_publicacao_id, canal_id, usuario_id) VALUES
+('Como interpretar gráficos no ENEM', '2024-03-01 09:00:00', 1, 2, 19),
+('Os desafios da preservação ambiental no Brasil', '2024-03-01 14:00:00', 1, 8, 21),
+
+('A Revolução Francesa e seu impacto global', '2024-03-02 10:00:00', 1, 4, 18),
+
+('Estratégias para estudar química orgânica', '2024-03-03 09:00:00', 1, 3, 20),
+('Como melhorar a interpretação de textos', '2024-03-03 15:00:00', 1, 2, 22),
+
+('A importância do pensamento crítico', '2024-03-04 11:00:00', 1, 7, 25),
+('Os benefícios de estudar história do Brasil', '2024-03-04 16:00:00', 1, 4, 19),
+
+('Física moderna: conceitos introdutórios', '2024-03-05 08:00:00', 1, 5, 22),
+
+('Como criar um cronograma de estudos eficiente', '2024-03-06 09:00:00', 1, 2, 20),
+('O papel da ética nas decisões políticas', '2024-03-06 13:00:00', 1, 10, 25),
+
+('A influência das redes sociais na educação', '2024-03-07 11:00:00', 1, 8, 19),
+
+('Como revisar matemática antes das provas', '2024-03-08 09:00:00', 1, 1, 18),
+('Os principais eventos da Segunda Guerra Mundial', '2024-03-08 15:00:00', 1, 4, 21),
+
+('A filosofia grega e seu impacto atual', '2024-03-09 10:00:00', 1, 10, 20),
+('Como melhorar o desempenho nas redações do vestibular', '2024-03-09 16:00:00', 1, 2, 22),
+
+('A história das revoluções industriais', '2024-03-10 09:00:00', 1, 4, 19),
+
+('Como resolver problemas de física no ENEM', '2024-03-11 10:00:00', 1, 5, 21),
+('Dicas para estudar química inorgânica', '2024-03-11 14:00:00', 1, 3, 18),
+
+('A importância da leitura crítica nos estudos', '2024-03-12 09:00:00', 1, 2, 22),
+
+('Estratégias para organizar seus estudos', '2024-03-13 08:00:00', 1, 2, 19),
+('Filosofia e ética no mundo contemporâneo', '2024-03-13 13:00:00', 1, 10, 18),
+
+('Os conceitos básicos de física quântica', '2024-03-14 11:00:00', 1, 5, 20),
+
+('Como revisar história antes das provas', '2024-03-15 09:00:00', 1, 4, 22),
+('O impacto da globalização nas economias locais', '2024-03-15 15:00:00', 1, 8, 25),
+
+('Dicas para criar mapas mentais eficientes', '2024-03-16 08:00:00', 1, 2, 20),
+('Os principais marcos da Idade Média', '2024-03-16 12:00:00', 1, 4, 21),
+
+('Como estudar para as provas de biologia', '2024-03-17 09:00:00', 1, 3, 19),
+
+('Estratégias para estudar física para o vestibular', '2024-03-18 10:00:00', 1, 5, 18),
+('A história da ciência no século XX', '2024-03-18 14:00:00', 1, 8, 22),
+
+('Como revisar antes do vestibular', '2024-03-19 09:00:00', 1, 2, 20),
+
+('O papel da mídia nas democracias', '2024-03-20 10:00:00', 1, 7, 19),
+('A importância da ética na ciência', '2024-03-20 14:00:00', 1, 10, 25),
+
+('Filosofia moderna: conceitos básicos', '2024-03-21 11:00:00', 1, 10, 18),
+
+('Como melhorar a concentração nos estudos', '2024-03-22 09:00:00', 1, 2, 21),
+('Dicas para estudar redação para o ENEM', '2024-03-22 15:00:00', 1, 2, 22),
+
+('Os desafios da preservação ambiental', '2024-03-23 09:00:00', 1, 8, 20),
+
+('Como estudar história para o vestibular', '2024-03-24 08:00:00', 1, 4, 22),
+('O impacto das novas tecnologias na educação', '2024-03-24 14:00:00', 1, 8, 25),
+
+('Estratégias para estudar biologia molecular', '2024-03-25 09:00:00', 1, 3, 19),
+
+('Os principais conceitos de genética', '2024-03-26 10:00:00', 1, 3, 20),
+('Como melhorar a interpretação de questões', '2024-03-26 16:00:00', 1, 2, 22),
+
+('Dicas para revisar matemática antes das provas', '2024-03-27 08:00:00', 1, 1, 21),
+
+('O papel das redes sociais na comunicação', '2024-03-28 09:00:00', 1, 8, 18),
+
+('Filosofia antiga e suas implicações', '2024-03-29 10:00:00', 1, 10, 19),
+('Como organizar seus estudos para o vestibular', '2024-03-29 15:00:00', 1, 2, 25),
+
+('Os benefícios de estudar história moderna', '2024-03-30 09:00:00', 1, 4, 20),
+
+('Como revisar física para o ENEM', '2024-03-31 08:00:00', 1, 5, 21),
+('Dicas para estudar química orgânica', '2024-03-31 14:00:00', 1, 3, 18);
+
+-- + p FEVEREIRO
+INSERT INTO publicacao (conteudo, data_hora, tipo_publicacao_id, canal_id, usuario_id) VALUES
+('Como estudar matemática para o vestibular', '2024-02-01 09:00:00', 1, 1, 19),
+('A história da Revolução Industrial', '2024-02-01 15:00:00', 1, 4, 18),
+
+('Estratégias para criar mapas mentais', '2024-02-02 10:00:00', 1, 2, 22),
+
+('Como revisar física para as provas', '2024-02-03 08:00:00', 1, 5, 20),
+('A importância do pensamento crítico na educação', '2024-02-03 13:00:00', 1, 7, 21),
+
+('Os principais eventos da Idade Média', '2024-02-04 10:00:00', 1, 4, 25),
+
+('Dicas para estudar redação para o ENEM', '2024-02-05 09:00:00', 1, 2, 19),
+('Como melhorar a interpretação de textos', '2024-02-05 14:00:00', 1, 2, 20),
+('Os desafios das novas tecnologias no mercado de trabalho', '2024-02-05 18:00:00', 1, 8, 18),
+
+('A filosofia grega e sua influência na sociedade atual', '2024-02-06 11:00:00', 1, 10, 22),
+
+('Como organizar seus estudos para o ENEM', '2024-02-07 08:00:00', 1, 2, 25),
+('Os impactos da globalização na cultura', '2024-02-07 16:00:00', 1, 8, 19),
+
+('Como revisar biologia para as provas', '2024-02-08 09:00:00', 1, 3, 20),
+
+('A história do Brasil: descobrimento ao Império', '2024-02-09 08:00:00', 1, 4, 21),
+('Filosofia moderna e ética', '2024-02-09 12:00:00', 1, 10, 25),
+
+('Dicas para melhorar a concentração nos estudos', '2024-02-10 10:00:00', 1, 2, 22),
+
+('Os principais conceitos de química orgânica', '2024-02-11 09:00:00', 1, 3, 19),
+('Como estudar história moderna', '2024-02-11 15:00:00', 1, 4, 18),
+
+('Estratégias para resolver questões de física', '2024-02-12 08:00:00', 1, 5, 20),
+('O papel da mídia na sociedade atual', '2024-02-12 14:00:00', 1, 7, 25),
+
+('Os desafios da preservação ambiental', '2024-02-13 09:00:00', 1, 8, 19),
+
+('Como organizar uma rotina de estudos eficiente', '2024-02-14 10:00:00', 1, 2, 21),
+('Os conceitos básicos de genética', '2024-02-14 14:00:00', 1, 3, 22),
+
+('A história das grandes navegações', '2024-02-15 09:00:00', 1, 4, 20),
+
+('Dicas para criar redações nota 1000', '2024-02-16 08:00:00', 1, 2, 19),
+('Os principais conceitos de filosofia antiga', '2024-02-16 13:00:00', 1, 10, 22),
+
+('Como revisar química inorgânica', '2024-02-17 09:00:00', 1, 3, 18),
+
+('Os impactos das redes sociais na comunicação', '2024-02-18 10:00:00', 1, 8, 19),
+('Estratégias para estudar matemática no ENEM', '2024-02-18 16:00:00', 1, 1, 20),
+
+('A importância da história na formação cidadã', '2024-02-19 09:00:00', 1, 4, 21),
+
+('Como melhorar o desempenho em física', '2024-02-20 08:00:00', 1, 5, 19),
+('Os conceitos básicos de ética', '2024-02-20 11:00:00', 1, 10, 22),
+
+('Estratégias para revisar antes das provas', '2024-02-21 09:00:00', 1, 2, 20),
+
+('A globalização e os desafios para as economias emergentes', '2024-02-22 10:00:00', 1, 8, 21),
+
+('Dicas para organizar seus estudos de biologia', '2024-02-23 08:00:00', 1, 3, 19),
+
+('Como revisar história do Brasil', '2024-02-24 09:00:00', 1, 4, 22),
+
+('Estratégias para resolver problemas complexos de matemática', '2024-02-25 08:00:00', 1, 1, 20),
+('Os conceitos fundamentais de filosofia moderna', '2024-02-25 12:00:00', 1, 10, 25),
+
+('Como organizar um grupo de estudos eficiente', '2024-02-26 09:00:00', 1, 2, 22),
+
+('Os benefícios de revisar conteúdos regularmente', '2024-02-27 10:00:00', 1, 2, 19),
+
+('Como revisar física moderna para o vestibular', '2024-02-28 09:00:00', 1, 5, 20),
+('Dicas para estudar redação de forma eficiente', '2024-02-28 14:00:00', 1, 2, 18);
+
+-- + p JANEIRO
+INSERT INTO publicacao (conteudo, data_hora, tipo_publicacao_id, canal_id, usuario_id) VALUES
+('Como se preparar para o vestibular de matemática', '2024-01-01 08:00:00', 1, 1, 19),
+
+('Estratégias para resolver questões de química', '2024-01-02 09:00:00', 1, 3, 20),
+
+('A importância do estudo da filosofia no vestibular', '2024-01-03 10:00:00', 1, 10, 21),
+
+('O impacto da Revolução Industrial nas sociedades', '2024-01-04 11:00:00', 1, 4, 18),
+
+('Como estudar história para o ENEM', '2024-01-05 09:00:00', 1, 4, 25),
+
+('Dicas para escrever uma redação nota 1000', '2024-01-06 14:00:00', 1, 2, 22),
+
+('A evolução das ciências durante o Renascimento', '2024-01-07 08:00:00', 1, 4, 20),
+
+('Como melhorar seu desempenho em física', '2024-01-08 11:00:00', 1, 5, 19),
+
+('Estratégias para entender cálculo', '2024-01-09 09:00:00', 1, 1, 18),
+
+('Como estudar química orgânica para o vestibular', '2024-01-10 15:00:00', 1, 3, 25),
+
+('O que estudar para a prova de biologia', '2024-01-11 16:00:00', 1, 3, 22),
+
+('Técnicas para melhorar a concentração nos estudos', '2024-01-12 10:00:00', 1, 2, 19),
+
+('Como a filosofia pode ajudar no desenvolvimento pessoal', '2024-01-13 13:00:00', 1, 10, 23),
+
+('Estratégias para escrever um bom artigo científico', '2024-01-14 08:00:00', 1, 2, 20),
+
+('A importância de estudar as guerras mundiais', '2024-01-15 11:00:00', 1, 4, 25),
+
+('Como organizar seu tempo para estudar para o ENEM', '2024-01-16 14:00:00', 1, 2, 19),
+
+('O impacto das novas tecnologias na educação', '2024-01-17 09:00:00', 1, 8, 22),
+
+('A história da matemática no século XIX', '2024-01-18 13:00:00', 1, 1, 25),
+
+('Dicas para estudar filosofia de forma eficiente', '2024-01-19 10:00:00', 1, 10, 21),
+
+('Estratégias para memorizar conteúdo de biologia', '2024-01-20 11:00:00', 1, 3, 20),
+
+('Como resolver problemas de álgebra no ENEM', '2024-01-21 09:00:00', 1, 1, 19),
+
+('A importância de estudar para as provas de história', '2024-01-22 08:00:00', 1, 4, 22),
+
+('Como melhorar suas habilidades em redação', '2024-01-23 10:00:00', 1, 2, 18),
+
+('A contribuição da ciência para o mundo moderno', '2024-01-24 13:00:00', 1, 3, 20),
+
+('A importância do pensamento crítico nos estudos', '2024-01-25 09:00:00', 1, 7, 22),
+
+('O impacto da educação na sociedade', '2024-01-26 14:00:00', 1, 8, 19),
+
+('Como preparar uma boa apresentação acadêmica', '2024-01-27 11:00:00', 1, 2, 23),
+
+('Como estudar para provas de química de forma eficaz', '2024-01-28 09:00:00', 1, 3, 25),
+('A história das civilizações antigas', '2024-01-28 15:00:00', 1, 4, 18),
+
+('Técnicas de memorização para estudantes', '2024-01-29 10:00:00', 1, 2, 19),
+('Como melhorar a resolução de problemas de física', '2024-01-29 14:00:00', 1, 5, 22),
+
+('O impacto das redes sociais na aprendizagem', '2024-01-30 08:00:00', 1, 8, 20),
+('A história das artes durante o Renascimento', '2024-01-30 16:00:00', 1, 10, 19),
+('Como se preparar para o ENEM de forma eficiente', '2024-01-31 10:00:00', 1, 2, 25),
+('Estratégias para entender estatísticas e probabilidade', '2024-01-31 14:00:00', 1, 1, 22);
+
+
+
